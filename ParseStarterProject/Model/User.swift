@@ -14,6 +14,9 @@ class User: PFUser{
     dynamic var gradYear: Int = 1900
     dynamic var name: String?
     
+    // properties not for saving
+    var confirmPassword: String?
+    
     override class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
@@ -26,21 +29,23 @@ class User: PFUser{
     func validateUser() -> (valid: Bool, error: NSDictionary) {
         let errors = NSMutableDictionary()
         var errorMesage = ""
-        var validUser = true
         
         // validate user name
-        validUser = validateUserName(&errorMesage)
-        if (!validUser) {
+        if (!validateUserName(&errorMesage)) {
             errors.setValue(errorMesage, forKey: "NameError")
         }
         
-        // validate user password
-        validUser = validateUserPassword(&errorMesage)
-        if (!validUser) {
+        // Validate user password
+        if (!validateUserPassword(&errorMesage)) {
             errors.setValue(errorMesage, forKey: "PasswordError")
         }
         
-        return (validUser, errors)
+        // Validate confirm password
+        if (!validateConfirmPassword(&errorMesage)) {
+            errors.setValue(errorMesage, forKey: "ConfirmPasswordError")
+        }
+        
+        return (errors.count > 0, errors)
 
     }
     
@@ -58,6 +63,16 @@ class User: PFUser{
     func validateUserPassword(inout error: String) -> Bool {
         if ((self.password?.utf16.count) <= 3) {
             error = "Length of user password should larger than 3 characters"
+            return false
+        }
+        
+        return true
+    }
+    
+    // Validate Confirm Password
+    func validateConfirmPassword(inout error: String) -> Bool {
+        if (self.password != self.confirmPassword) {
+            error = "Passwords entered not match"
             return false
         }
         

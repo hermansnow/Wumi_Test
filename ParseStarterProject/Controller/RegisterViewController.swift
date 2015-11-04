@@ -14,7 +14,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var userPasswordTextField: UITextField!
     @IBOutlet weak var userConfirmPasswordTextField: UITextField!
     @IBOutlet weak var userEmailTextField: UITextField!
-    @IBOutlet weak var userInviteCodeTextField: UITextField!
+    @IBOutlet weak var graduationYearTextField: UITextField!
     
     var user = User()
     
@@ -25,30 +25,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.setLeftImageViewForTextField(self.userPasswordTextField)
         self.setLeftImageViewForTextField(self.userConfirmPasswordTextField)
         self.setLeftImageViewForTextField(self.userEmailTextField)
-        self.setLeftImageViewForTextField(self.userInviteCodeTextField)
-    }
-    
-    func setLeftImageViewForTextField(textField: UITextField) -> Void {
-        var imageName = ""
-        var leftImageView: UIImageView = UIImageView()
+        self.setLeftImageViewForTextField(self.graduationYearTextField)
         
-        switch textField {
-        case self.userNameTextField:
-            imageName = "Name"
-        case self.userPasswordTextField, self.userConfirmPasswordTextField:
-            imageName = "Password"
-        case self.userEmailTextField:
-            imageName = "Email"
-        default:
-            break;
-        }
-        
-        if (imageName.characters.count > 0) {
-            leftImageView = UIImageView(image: UIImage(named: imageName))
-            leftImageView.frame = CGRectMake(0, 0, 30, textField.bounds.height)
-            textField.leftView = leftImageView
-            textField.leftViewMode = UITextFieldViewMode.Always
-        }
+        // Set Date Picker for graduationYearTextField
+        let graduationYearPicker = UIDatePicker()
+        graduationYearPicker.datePickerMode = UIDatePickerMode.Date
+        self.graduationYearTextField.inputView = graduationYearPicker
     }
     
     // MARK:Actions
@@ -60,7 +42,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         signUpUser()
     }
     
-    // MARK:TextField Delegates
+    // MARK:TextField delegates and functions
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         let nextTag = textField.tag + 1;
         // Try to find next responder
@@ -78,48 +60,83 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         return false // We do not want UITextField to insert line-breaks.
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        self.resetTextField(textField)
-    }
-    
     func textFieldDidEndEditing(textField: UITextField) {
+        var error: String = ""
+        
+        // Validate input of each text field
         switch textField {
         case self.userNameTextField:
             self.user.username = textField.text
-            var error = ""
-            if (!user.validateUserName(&error)) {
-                self.highlightInvalidTextField(textField, error: error)
+            if (self.user.username?.characters.count > 0) {
+                user.validateUserName(&error)
             }
         case self.userPasswordTextField:
             self.user.password = textField.text
-            var error = ""
-            if (!user.validateUserPassword(&error)) {
-                self.highlightInvalidTextField(textField, error: error)
+            if let confirmPassword = self.user.confirmPassword {
+                if (confirmPassword.characters.count > 0) {
+                    user.validateConfirmPassword(&error)
+                    self.setRightImageViewForTextField(self.userConfirmPasswordTextField, error: error)
+                }
+            }
+            error = ""
+            if (self.user.password!.characters.count > 0) {
+                user.validateUserPassword(&error)
+            }
+        case self.userConfirmPasswordTextField:
+            self.user.confirmPassword = textField.text
+            if (self.user.confirmPassword!.characters.count > 0) {
+                user.validateConfirmPassword(&error)
             }
         case self.userEmailTextField:
             self.user.email = textField.text
         default:
              break
         }
+        
+        self.setRightImageViewForTextField(textField, error: error)
     }
     
-    func resetTextField(textField: UITextField) {
-        textField.layer.borderWidth = 1.0;
-        textField.layer.borderColor = UIColor.grayColor().CGColor;
+    // Right view of text field is used to show error image if the input is invalid
+    func setRightImageViewForTextField(textField: UITextField, error: String = "") {
+        if (error.characters.count == 0) {
+            textField.rightView = nil
+        }
+        else {
+            //Add Error right image view
+            let rightErrorView = UIImageView(image: UIImage(named: "Error"))
+            rightErrorView.frame = CGRectMake(0, 1, 30, textField.bounds.height - 2)
+            textField.rightView = rightErrorView
+            textField.rightViewMode = UITextFieldViewMode.Always
+        
+            //Log error
+            print("\(error)")
+        }
     }
     
-    func highlightInvalidTextField(textField: UITextField, error: String) {
+    // Left view of text field is used to place the icon
+    func setLeftImageViewForTextField(textField: UITextField) {
+        var imageName = ""
+        var leftImageView: UIImageView = UIImageView()
         
-        //highlightTextField in red
-        textField.layer.borderWidth = 1.0;
-        textField.layer.borderColor = UIColor.redColor().CGColor;
+        switch textField {
+        case self.userNameTextField:
+            imageName = "Name"
+        case self.userPasswordTextField, self.userConfirmPasswordTextField:
+            imageName = "Password"
+        case self.userEmailTextField:
+            imageName = "Email"
+        case self.graduationYearTextField:
+            imageName = "Grad"
+        default:
+            break;
+        }
         
-        //rounded corners
-        //textField.layer.cornerRadius = 5;
-        //textField.clipsToBounds = true;
-        
-        //Log error
-        print("\(error)")
+        if (imageName.characters.count > 0) {
+            leftImageView = UIImageView(image: UIImage(named: imageName))
+            leftImageView.frame = CGRectMake(0, 0, 30, textField.bounds.height)
+            textField.leftView = leftImageView
+            textField.leftViewMode = UITextFieldViewMode.Always
+        }
     }
     
     //# functions

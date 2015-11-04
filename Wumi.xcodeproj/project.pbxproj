@@ -16,11 +16,11 @@
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
-		DF5E3D3C1BE9460200F44FFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3B1BE9460200F44FFF /* ViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DF5E3D411BE9463F00F44FFF /* CustomLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* CustomLoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DF5E3D421BE9463F00F44FFF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; settings = {ASSET_TAGS = (); }; };
+		DF5E3D3C1BE9460200F44FFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3B1BE9460200F44FFF /* ViewController.swift */; };
+		DF5E3D411BE9463F00F44FFF /* CustomLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* CustomLoginViewController.swift */; };
+		DF5E3D421BE9463F00F44FFF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */; };
+		DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */; };
+		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */; };
 		DFD4A6101BE6CF3C00C8B09E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */; };
 		DFD4A6121BE6CF4200C8B09E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */; };
@@ -115,10 +115,10 @@
 		81BA81471A49DA1800E65899 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				814C3AC61B69877600E307BB /* Main.storyboard */,
+				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				DF5E3D3D1BE9461300F44FFF /* Controller */,
 				DF5E3D381BE9457900F44FFF /* Model */,
-				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				814C3AC61B69877600E307BB /* Main.storyboard */,
 			);
 			name = Project;
 			path = ParseStarterProject;
@@ -376,7 +376,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parse.Wumi;
 				PRODUCT_NAME = Wumi;
@@ -393,7 +393,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parse.Wumi;
 				PRODUCT_NAME = Wumi;
