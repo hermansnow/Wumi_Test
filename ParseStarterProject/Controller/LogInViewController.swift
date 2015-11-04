@@ -18,10 +18,10 @@ class LogInViewController: UIViewController, PFLogInViewControllerDelegate, PFSi
         super.viewDidAppear(animated)
         
         //if (PFUser.currentUser() == nil) {
-            self.loginViewController.fields = PFLogInFields.UsernameAndPassword | PFLogInFields.LogInButton | PFLogInFields.SignUpButton | PFLogInFields.PasswordForgotten | PFLogInFields.DismissButton
+            self.loginViewController.fields = [PFLogInFields.UsernameAndPassword, PFLogInFields.LogInButton, PFLogInFields.SignUpButton, PFLogInFields.PasswordForgotten, PFLogInFields.DismissButton]
             self.loginViewController.delegate = self
             self.loginViewController.signUpController?.delegate = self
-            var logInLogoTitle = UILabel()
+            let logInLogoTitle = UILabel()
             logInLogoTitle.text = "Wumi"
             self.loginViewController.logInView?.logo = logInLogoTitle
         //}

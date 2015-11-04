@@ -15,16 +15,16 @@ class CustomLoginViewController: UIViewController {
     
     @IBAction func logIn(sender: AnyObject) {
         
-        var userName = self.userName.text
-        var userPassword = self.userPassword.text
+        let userName = self.userName.text
+        let userPassword = self.userPassword.text
         
-        PFUser.logInWithUsernameInBackground(userName, password: userPassword) { (user, error) -> Void in
+        User.logInWithUsernameInBackground(userName!, password: userPassword!) { (user, error) -> Void in
             if (user != nil) {
-                var alert = UIAlertView(title: "Success", message: "Logged in", delegate: self, cancelButtonTitle: "OK")
+                let alert = UIAlertView(title: "Success", message: "Logged in", delegate: self, cancelButtonTitle: "OK")
                 alert.show()
             }
             else {
-                var alert = UIAlertView(title: "Failed", message: "\(error)", delegate: self, cancelButtonTitle: "OK")
+                let alert = UIAlertView(title: "Failed", message: "\(error)", delegate: self, cancelButtonTitle: "OK")
                 alert.show()
             }
         }

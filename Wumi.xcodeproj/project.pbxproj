@@ -10,14 +10,17 @@
 		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
 		814C3ACB1B69877600E307BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC81B69877600E307BB /* Images.xcassets */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
-		81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* ViewController.swift */; };
 		81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816B1A49DB6800E65899 /* Bolts.framework */; };
 		81BA81711A49DB6800E65899 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816C1A49DB6800E65899 /* Parse.framework */; };
 		81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81761A49E0D500E65899 /* libsqlite3.dylib */; };
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
-		DFD4A60C1BE6CA5F00C8B09E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD4A60B1BE6CA5F00C8B09E /* RegisterViewController.swift */; };
+		DF5E3D3C1BE9460200F44FFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3B1BE9460200F44FFF /* ViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DF5E3D411BE9463F00F44FFF /* CustomLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* CustomLoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DF5E3D421BE9463F00F44FFF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; settings = {ASSET_TAGS = (); }; };
 		DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */; };
 		DFD4A6101BE6CF3C00C8B09E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */; };
 		DFD4A6121BE6CF4200C8B09E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */; };
@@ -25,18 +28,15 @@
 		DFD4A6161BE6D09A00C8B09E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6151BE6D09A00C8B09E /* Security.framework */; };
 		DFD4A6181BE6D0A000C8B09E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6171BE6D0A000C8B09E /* StoreKit.framework */; };
 		DFD4A61A1BE6D0C500C8B09E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6191BE6D0C500C8B09E /* libz.dylib */; };
-		DFD4A61C1BE6E70D00C8B09E /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD4A61B1BE6E70D00C8B09E /* LogInViewController.swift */; };
 		DFD4A61D1BE6E93D00C8B09E /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81801A49E10C00E65899 /* ParseUI.framework */; };
-		DFD4A6211BE6F74E00C8B09E /* CustomLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD4A6201BE6F74E00C8B09E /* CustomLoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		814C3AC81B69877600E307BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		81BA81451A49DA1800E65899 /* ParseStarterProject-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ParseStarterProject-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81BA81451A49DA1800E65899 /* Wumi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wumi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		81BA814C1A49DA1800E65899 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		81BA816B1A49DB6800E65899 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		81BA816C1A49DB6800E65899 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		81BA816D1A49DB6800E65899 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
@@ -46,7 +46,11 @@
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
-		DFD4A60B1BE6CA5F00C8B09E /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		DF5E3D3B1BE9460200F44FFF /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Controller/ViewController.swift; sourceTree = "<group>"; };
+		DF5E3D3E1BE9463F00F44FFF /* CustomLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomLoginViewController.swift; path = Controller/CustomLoginViewController.swift; sourceTree = "<group>"; };
+		DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = Controller/LogInViewController.swift; sourceTree = "<group>"; };
+		DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = Controller/RegisterViewController.swift; sourceTree = "<group>"; };
+		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -54,8 +58,6 @@
 		DFD4A6151BE6D09A00C8B09E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DFD4A6171BE6D0A000C8B09E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DFD4A6191BE6D0C500C8B09E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		DFD4A61B1BE6E70D00C8B09E /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
-		DFD4A6201BE6F74E00C8B09E /* CustomLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +97,7 @@
 		81BA813C1A49DA1800E65899 = {
 			isa = PBXGroup;
 			children = (
-				81BA81471A49DA1800E65899 /* ParseStarterProject */,
+				81BA81471A49DA1800E65899 /* Project */,
 				814C3AC51B69877600E307BB /* Resources */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
 				81BA81461A49DA1800E65899 /* Products */,
@@ -105,21 +107,20 @@
 		81BA81461A49DA1800E65899 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				81BA81451A49DA1800E65899 /* ParseStarterProject-Swift.app */,
+				81BA81451A49DA1800E65899 /* Wumi.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		81BA81471A49DA1800E65899 /* ParseStarterProject */ = {
+		81BA81471A49DA1800E65899 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				DF5E3D3D1BE9461300F44FFF /* Controller */,
+				DF5E3D381BE9457900F44FFF /* Model */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				81BA814C1A49DA1800E65899 /* ViewController.swift */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
-				DFD4A60B1BE6CA5F00C8B09E /* RegisterViewController.swift */,
-				DFD4A61B1BE6E70D00C8B09E /* LogInViewController.swift */,
-				DFD4A6201BE6F74E00C8B09E /* CustomLoginViewController.swift */,
 			);
+			name = Project;
 			path = ParseStarterProject;
 			sourceTree = "<group>";
 		};
@@ -154,12 +155,31 @@
 			name = "System Frameworks";
 			sourceTree = "<group>";
 		};
+		DF5E3D381BE9457900F44FFF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DF5E3D441BE9465000F44FFF /* User.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		DF5E3D3D1BE9461300F44FFF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DF5E3D3E1BE9463F00F44FFF /* CustomLoginViewController.swift */,
+				DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */,
+				DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */,
+				DF5E3D3B1BE9460200F44FFF /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		81BA81441A49DA1800E65899 /* ParseStarterProject-Swift */ = {
+		81BA81441A49DA1800E65899 /* Wumi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "ParseStarterProject-Swift" */;
+			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Wumi" */;
 			buildPhases = (
 				81BA81411A49DA1800E65899 /* Sources */,
 				81BA81421A49DA1800E65899 /* Frameworks */,
@@ -170,9 +190,9 @@
 			);
 			dependencies = (
 			);
-			name = "ParseStarterProject-Swift";
+			name = Wumi;
 			productName = ParseStarterProject;
-			productReference = 81BA81451A49DA1800E65899 /* ParseStarterProject-Swift.app */;
+			productReference = 81BA81451A49DA1800E65899 /* Wumi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -182,7 +202,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Parse;
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
@@ -190,7 +210,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "ParseStarterProject-Swift" */;
+			buildConfigurationList = 81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "Wumi" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -203,7 +223,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				81BA81441A49DA1800E65899 /* ParseStarterProject-Swift */,
+				81BA81441A49DA1800E65899 /* Wumi */,
 			);
 		};
 /* End PBXProject section */
@@ -242,11 +262,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFD4A61C1BE6E70D00C8B09E /* LogInViewController.swift in Sources */,
-				DFD4A60C1BE6CA5F00C8B09E /* RegisterViewController.swift in Sources */,
-				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
+				DF5E3D411BE9463F00F44FFF /* CustomLoginViewController.swift in Sources */,
+				DF5E3D3C1BE9460200F44FFF /* ViewController.swift in Sources */,
+				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
+				DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */,
+				DF5E3D421BE9463F00F44FFF /* LogInViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
-				DFD4A6211BE6F74E00C8B09E /* CustomLoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +306,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -299,7 +321,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -336,7 +358,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -348,14 +370,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "ParseStarterProject-Swift";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parse.Wumi;
+				PRODUCT_NAME = Wumi;
 			};
 			name = Debug;
 		};
@@ -363,21 +387,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "ParseStarterProject-Swift";
+				PRODUCT_BUNDLE_IDENTIFIER = com.parse.Wumi;
+				PRODUCT_NAME = Wumi;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "ParseStarterProject-Swift" */ = {
+		81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "Wumi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81BA81621A49DA1800E65899 /* Debug */,
@@ -386,7 +412,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "ParseStarterProject-Swift" */ = {
+		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Wumi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81BA81651A49DA1800E65899 /* Debug */,
