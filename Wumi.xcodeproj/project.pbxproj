@@ -21,6 +21,8 @@
 		DF5E3D421BE9463F00F44FFF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */; };
 		DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
+		DFB7CC071BEA893C00BEACB7 /* GraduationYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPicker.swift */; settings = {ASSET_TAGS = (); }; };
+		DFB7CC0E1BEAB44E00BEACB7 /* SignUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* SignUpTextField.swift */; settings = {ASSET_TAGS = (); }; };
 		DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */; };
 		DFD4A6101BE6CF3C00C8B09E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */; };
 		DFD4A6121BE6CF4200C8B09E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */; };
@@ -51,6 +53,8 @@
 		DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = Controller/LogInViewController.swift; sourceTree = "<group>"; };
 		DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = Controller/RegisterViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
+		DFB7CC061BEA893C00BEACB7 /* GraduationYearPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraduationYearPicker.swift; path = View/GraduationYearPicker.swift; sourceTree = "<group>"; };
+		DFB7CC0D1BEAB44E00BEACB7 /* SignUpTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpTextField.swift; path = View/SignUpTextField.swift; sourceTree = "<group>"; };
 		DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -117,8 +121,9 @@
 			children = (
 				814C3AC61B69877600E307BB /* Main.storyboard */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				DF5E3D3D1BE9461300F44FFF /* Controller */,
 				DF5E3D381BE9457900F44FFF /* Model */,
+				DFB7CC081BEA894300BEACB7 /* View */,
+				DF5E3D3D1BE9461300F44FFF /* Controller */,
 			);
 			name = Project;
 			path = ParseStarterProject;
@@ -172,6 +177,15 @@
 				DF5E3D3B1BE9460200F44FFF /* ViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		DFB7CC081BEA894300BEACB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DFB7CC061BEA893C00BEACB7 /* GraduationYearPicker.swift */,
+				DFB7CC0D1BEAB44E00BEACB7 /* SignUpTextField.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,8 +278,10 @@
 			files = (
 				DF5E3D411BE9463F00F44FFF /* CustomLoginViewController.swift in Sources */,
 				DF5E3D3C1BE9460200F44FFF /* ViewController.swift in Sources */,
+				DFB7CC071BEA893C00BEACB7 /* GraduationYearPicker.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
 				DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */,
+				DFB7CC0E1BEAB44E00BEACB7 /* SignUpTextField.swift in Sources */,
 				DF5E3D421BE9463F00F44FFF /* LogInViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 			);
@@ -376,7 +392,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parse.Wumi;
 				PRODUCT_NAME = Wumi;
@@ -393,7 +409,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parse.Wumi;
 				PRODUCT_NAME = Wumi;

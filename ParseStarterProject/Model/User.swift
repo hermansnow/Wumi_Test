@@ -11,7 +11,7 @@ import Parse
 class User: PFUser{
     
     //Extended properties for PFUser
-    dynamic var gradYear: Int = 1900
+    dynamic var graduationYear: Int = 0
     dynamic var name: String?
     
     // properties not for saving
@@ -26,7 +26,15 @@ class User: PFUser{
         }
     }
     
-    func validateUser() -> (valid: Bool, error: NSDictionary) {
+    override func signUpInBackgroundWithBlock(block: PFBooleanResultBlock?) {
+        super.signUpInBackgroundWithBlock(block)
+        
+        // Save extended properties
+        self.setObject(self.graduationYear, forKey: "graduationYear")
+        self.saveInBackgroundWithBlock(block)
+    }
+    
+    func validateUserWithBlock(block: (valid: Bool, error: NSDictionary) -> Void) {
         let errors = NSMutableDictionary()
         var errorMesage = ""
         
@@ -45,7 +53,7 @@ class User: PFUser{
             errors.setValue(errorMesage, forKey: "ConfirmPasswordError")
         }
         
-        return (errors.count > 0, errors)
+        block(valid: errors.count == 0, error: errors)
 
     }
     
