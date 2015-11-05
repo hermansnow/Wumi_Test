@@ -21,6 +21,7 @@
 		DF5E3D421BE9463F00F44FFF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */; };
 		DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
+		DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */; settings = {ASSET_TAGS = (); }; };
 		DFB7CC071BEA893C00BEACB7 /* GraduationYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPicker.swift */; settings = {ASSET_TAGS = (); }; };
 		DFB7CC0E1BEAB44E00BEACB7 /* SignUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* SignUpTextField.swift */; settings = {ASSET_TAGS = (); }; };
 		DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */; };
@@ -53,6 +54,7 @@
 		DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = Controller/LogInViewController.swift; sourceTree = "<group>"; };
 		DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = Controller/RegisterViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
+		DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HyperLinkTextView.swift; path = View/HyperLinkTextView.swift; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* GraduationYearPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraduationYearPicker.swift; path = View/GraduationYearPicker.swift; sourceTree = "<group>"; };
 		DFB7CC0D1BEAB44E00BEACB7 /* SignUpTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpTextField.swift; path = View/SignUpTextField.swift; sourceTree = "<group>"; };
 		DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -126,7 +128,7 @@
 				DF5E3D3D1BE9461300F44FFF /* Controller */,
 			);
 			name = Project;
-			path = ParseStarterProject;
+			path = Wumi;
 			sourceTree = "<group>";
 		};
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
@@ -184,6 +186,7 @@
 			children = (
 				DFB7CC061BEA893C00BEACB7 /* GraduationYearPicker.swift */,
 				DFB7CC0D1BEAB44E00BEACB7 /* SignUpTextField.swift */,
+				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */,
 				DFB7CC0E1BEAB44E00BEACB7 /* SignUpTextField.swift in Sources */,
 				DF5E3D421BE9463F00F44FFF /* LogInViewController.swift in Sources */,
+				DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

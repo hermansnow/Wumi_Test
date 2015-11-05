@@ -68,31 +68,31 @@
             </objects>
             <point key="canvasLocation" x="1271.5" y="596.5"/>
         </scene>
-        <!--Custom Login View Controller-->
+        <!--Sign In-->
         <scene sceneID="Fgq-w8-jaW">
             <objects>
-                <viewController id="MiQ-mq-orP" customClass="CustomLoginViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Sign In" modalTransitionStyle="flipHorizontal" id="MiQ-mq-orP" customClass="CustomLoginViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pu7-qh-bcc"/>
                         <viewControllerLayoutGuide type="bottom" id="YVI-kz-Knm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="A2b-1d-91g">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4nO-wK-21H">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4nO-wK-21H">
                                 <rect key="frame" x="0.0" y="200" width="375" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="17P-tJ-7bZ">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="17P-tJ-7bZ">
                                 <rect key="frame" x="0.0" y="238" width="375" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="WUMI" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OaE-pm-o6g">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="WUMI" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OaE-pm-o6g">
                                 <rect key="frame" x="140" y="136" width="95" height="40"/>
                                 <animations/>
                                 <constraints>
@@ -101,7 +101,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPR-fl-YJv">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPR-fl-YJv">
                                 <rect key="frame" x="159" y="328" width="55" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Log In">
@@ -112,14 +112,14 @@
                                     <segue destination="bhq-mu-3Aa" kind="show" id="awa-rB-Mdi"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktZ-aT-qIK">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktZ-aT-qIK">
                                 <rect key="frame" x="160" y="629" width="55" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Sign Up">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="JHq-b6-pjD" kind="presentation" modalPresentationStyle="currentContext" modalTransitionStyle="coverVertical" id="ZrU-cA-o0o"/>
+                                    <segue destination="JHq-b6-pjD" kind="show" id="ZrU-cA-o0o"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -148,6 +148,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="userName" destination="4nO-wK-21H" id="8he-RT-Xci"/>
                         <outlet property="userPassword" destination="17P-tJ-7bZ" id="BNf-ot-wOM"/>
@@ -176,20 +177,20 @@
             </objects>
             <point key="canvasLocation" x="2451.5" y="805.5"/>
         </scene>
-        <!--Register View Controller-->
+        <!--Create New Account-->
         <scene sceneID="QDQ-KZ-a17">
             <objects>
-                <viewController id="JHq-b6-pjD" customClass="RegisterViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Create New Account" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="JHq-b6-pjD" customClass="RegisterViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Sp1-Ej-zDv"/>
                         <viewControllerLayoutGuide type="bottom" id="dEY-hU-Ugt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="NcS-qe-PKa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SignUpLogo" translatesAutoresizingMaskIntoConstraints="NO" id="X4w-Dr-4na">
-                                <rect key="frame" x="131" y="68" width="112" height="113"/>
+                                <rect key="frame" x="131" y="20" width="112" height="113"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="X4w-Dr-4na" secondAttribute="height" multiplier="1:1" constant="-1" id="Jts-3O-9gP"/>
                                     <constraint firstAttribute="height" constant="200" id="m1d-Wt-P2u"/>
@@ -201,10 +202,10 @@
                                 </variation>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="YVl-9t-sF7">
-                                <rect key="frame" x="0.0" y="189" width="375" height="434"/>
+                                <rect key="frame" x="0.0" y="141" width="375" height="418"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uv7-ls-9nz" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="38" y="20" width="300" height="39"/>
+                                        <rect key="frame" x="38" y="20" width="300" height="38"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Huc-Tw-Gnl"/>
@@ -220,8 +221,8 @@
                                             <outlet property="delegate" destination="JHq-b6-pjD" id="BIF-p3-hpp"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LGz-wl-95f" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="38" y="67" width="300" height="39"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LGz-wl-95f" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="68" width="300" height="38"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
@@ -229,8 +230,8 @@
                                             <outlet property="delegate" destination="JHq-b6-pjD" id="fV0-SM-I2o"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lu0-VS-oWt" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="38" y="114" width="300" height="39"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lu0-VS-oWt" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="113" width="300" height="38"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
@@ -238,8 +239,8 @@
                                             <outlet property="delegate" destination="JHq-b6-pjD" id="gF2-K0-LSt"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WXP-L5-dTa" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="38" y="161" width="300" height="39"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WXP-L5-dTa" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="160" width="300" height="38"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
@@ -247,8 +248,8 @@
                                             <outlet property="delegate" destination="JHq-b6-pjD" id="Hlx-h8-7iH"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Graduation Year" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UwY-NM-LlZ" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="38" y="208" width="300" height="39"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="5" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Graduation Year" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UwY-NM-LlZ" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="207" width="300" height="39"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -256,12 +257,12 @@
                                             <outlet property="delegate" destination="JHq-b6-pjD" id="0lR-WK-Jpt"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZjV-VX-M1g">
-                                        <rect key="frame" x="110" y="280" width="156" height="39"/>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZjV-VX-M1g">
+                                        <rect key="frame" x="91" y="278" width="194" height="38"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="ZjV-VX-M1g" secondAttribute="height" multiplier="4:1" id="qNG-1h-QUh"/>
+                                            <constraint firstAttribute="width" secondItem="ZjV-VX-M1g" secondAttribute="height" multiplier="5:1" id="qNG-1h-QUh"/>
                                         </constraints>
                                         <state key="normal" title="Sign Up">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -271,10 +272,17 @@
                                             <action selector="signUp:" destination="JHq-b6-pjD" eventType="touchUpInside" id="6Ru-2Z-wMh"/>
                                         </connections>
                                     </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" text="Already has account? Sign in" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3d-pg-J1L" customClass="HyperLinkTextView" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="91" y="324" width="194" height="32"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="UwY-NM-LlZ" firstAttribute="top" secondItem="WXP-L5-dTa" secondAttribute="bottom" constant="8" symbolic="YES" id="04O-qN-dBM"/>
+                                    <constraint firstItem="y3d-pg-J1L" firstAttribute="top" secondItem="ZjV-VX-M1g" secondAttribute="bottom" constant="8" symbolic="YES" id="0jc-oM-bOw"/>
                                     <constraint firstItem="WXP-L5-dTa" firstAttribute="top" secondItem="lu0-VS-oWt" secondAttribute="bottom" constant="8" symbolic="YES" id="2I2-l0-uAV"/>
                                     <constraint firstItem="ZjV-VX-M1g" firstAttribute="top" secondItem="UwY-NM-LlZ" secondAttribute="bottom" multiplier="1.1" constant="8" symbolic="YES" id="3Yr-zt-7dl"/>
                                     <constraint firstItem="WXP-L5-dTa" firstAttribute="height" secondItem="uv7-ls-9nz" secondAttribute="height" id="79M-hf-ILg"/>
@@ -286,6 +294,7 @@
                                     <constraint firstItem="LGz-wl-95f" firstAttribute="centerX" secondItem="uv7-ls-9nz" secondAttribute="centerX" id="NoJ-N9-b8v"/>
                                     <constraint firstItem="uv7-ls-9nz" firstAttribute="top" secondItem="YVl-9t-sF7" secondAttribute="top" constant="20" symbolic="YES" id="PBb-V6-QPW"/>
                                     <constraint firstAttribute="bottom" secondItem="ZjV-VX-M1g" secondAttribute="bottom" constant="115" id="Qpl-wg-kGl"/>
+                                    <constraint firstItem="y3d-pg-J1L" firstAttribute="width" secondItem="ZjV-VX-M1g" secondAttribute="width" id="ReN-hc-92C"/>
                                     <constraint firstItem="ZjV-VX-M1g" firstAttribute="height" secondItem="uv7-ls-9nz" secondAttribute="height" id="TWJ-XO-5ze"/>
                                     <constraint firstItem="LGz-wl-95f" firstAttribute="height" secondItem="uv7-ls-9nz" secondAttribute="height" id="U7S-LW-Uzq"/>
                                     <constraint firstItem="uv7-ls-9nz" firstAttribute="height" secondItem="YVl-9t-sF7" secondAttribute="height" multiplier="0.09" id="cdj-L1-nnZ"/>
@@ -295,10 +304,12 @@
                                     <constraint firstItem="LGz-wl-95f" firstAttribute="top" secondItem="uv7-ls-9nz" secondAttribute="bottom" constant="8" symbolic="YES" id="o0e-7d-PHM"/>
                                     <constraint firstItem="UwY-NM-LlZ" firstAttribute="height" secondItem="uv7-ls-9nz" secondAttribute="height" id="o2q-F3-tX9"/>
                                     <constraint firstItem="uv7-ls-9nz" firstAttribute="centerX" secondItem="YVl-9t-sF7" secondAttribute="centerX" id="oRl-Wy-BvV"/>
+                                    <constraint firstItem="y3d-pg-J1L" firstAttribute="height" secondItem="ZjV-VX-M1g" secondAttribute="height" multiplier="0.8" id="q9h-qe-Aqk"/>
                                     <constraint firstItem="lu0-VS-oWt" firstAttribute="width" secondItem="uv7-ls-9nz" secondAttribute="width" id="qmZ-HV-RCB"/>
                                     <constraint firstItem="WXP-L5-dTa" firstAttribute="width" secondItem="uv7-ls-9nz" secondAttribute="width" id="sqb-FJ-bVi"/>
                                     <constraint firstItem="lu0-VS-oWt" firstAttribute="height" secondItem="uv7-ls-9nz" secondAttribute="height" id="uMN-ae-M3A"/>
                                     <constraint firstItem="lu0-VS-oWt" firstAttribute="centerX" secondItem="YVl-9t-sF7" secondAttribute="centerX" id="ucI-xS-Uas"/>
+                                    <constraint firstItem="y3d-pg-J1L" firstAttribute="centerX" secondItem="ZjV-VX-M1g" secondAttribute="centerX" id="waZ-PO-lhi"/>
                                     <constraint firstItem="lu0-VS-oWt" firstAttribute="top" secondItem="LGz-wl-95f" secondAttribute="bottom" constant="8" symbolic="YES" id="yj0-CZ-h8Q"/>
                                 </constraints>
                                 <variation key="default">
@@ -315,11 +326,14 @@
                             <constraint firstItem="YVl-9t-sF7" firstAttribute="top" secondItem="X4w-Dr-4na" secondAttribute="bottom" id="3XI-vo-Sa8"/>
                             <constraint firstItem="dEY-hU-Ugt" firstAttribute="top" secondItem="YVl-9t-sF7" secondAttribute="bottom" id="4xR-5u-vZn"/>
                             <constraint firstItem="YVl-9t-sF7" firstAttribute="leading" secondItem="NcS-qe-PKa" secondAttribute="leadingMargin" constant="-20" id="7Px-Xe-neN"/>
+                            <constraint firstItem="X4w-Dr-4na" firstAttribute="top" relation="lessThanOrEqual" secondItem="Sp1-Ej-zDv" secondAttribute="bottom" constant="20" id="9kc-B3-gq8"/>
                             <constraint firstItem="YVl-9t-sF7" firstAttribute="leading" secondItem="NcS-qe-PKa" secondAttribute="leading" id="Bat-ww-rhz"/>
                             <constraint firstItem="YVl-9t-sF7" firstAttribute="top" secondItem="X4w-Dr-4na" secondAttribute="bottom" constant="8" symbolic="YES" id="Cnl-Z5-Sra"/>
+                            <constraint firstItem="X4w-Dr-4na" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Sp1-Ej-zDv" secondAttribute="bottom" constant="10" id="E5T-iJ-pvw"/>
                             <constraint firstItem="dEY-hU-Ugt" firstAttribute="top" secondItem="YVl-9t-sF7" secondAttribute="bottom" id="HB0-dp-xeP"/>
                             <constraint firstItem="YVl-9t-sF7" firstAttribute="leading" secondItem="NcS-qe-PKa" secondAttribute="leading" id="HCB-cx-n0l"/>
                             <constraint firstItem="X4w-Dr-4na" firstAttribute="width" secondItem="NcS-qe-PKa" secondAttribute="width" multiplier="0.3" id="L8C-D9-UIz"/>
+                            <constraint firstItem="X4w-Dr-4na" firstAttribute="top" secondItem="Sp1-Ej-zDv" secondAttribute="bottom" multiplier="2" constant="8" symbolic="YES" id="LPV-2t-pAS"/>
                             <constraint firstItem="YVl-9t-sF7" firstAttribute="centerX" secondItem="NcS-qe-PKa" secondAttribute="centerX" id="PsR-li-0jj"/>
                             <constraint firstItem="YVl-9t-sF7" firstAttribute="leading" secondItem="NcS-qe-PKa" secondAttribute="leadingMargin" id="XfP-bp-HK3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YVl-9t-sF7" secondAttribute="trailing" id="YKg-6v-e77"/>
@@ -335,6 +349,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="LPV-2t-pAS"/>
+                                <exclude reference="pQu-g5-jdw"/>
                                 <exclude reference="3XI-vo-Sa8"/>
                                 <exclude reference="7Px-Xe-neN"/>
                                 <exclude reference="Bat-ww-rhz"/>
@@ -352,11 +368,13 @@
                             </mask>
                         </variation>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="graduationYearTextField" destination="UwY-NM-LlZ" id="O0y-sA-A7y"/>
                         <outlet property="logoImageView" destination="X4w-Dr-4na" id="Nwf-ik-txf"/>
+                        <outlet property="signInLabel" destination="y3d-pg-J1L" id="M3K-44-V7A"/>
                         <outlet property="signUpButton" destination="ZjV-VX-M1g" id="iho-qY-lNa"/>
                         <outlet property="signUpScrollView" destination="YVl-9t-sF7" id="ZhK-nz-ipl"/>
                         <outlet property="userConfirmPasswordTextField" destination="lu0-VS-oWt" id="REn-od-Be5"/>

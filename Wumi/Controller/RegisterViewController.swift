@@ -18,14 +18,19 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var userConfirmPasswordTextField: SignUpTextField!
     @IBOutlet weak var userEmailTextField: SignUpTextField!
     @IBOutlet weak var graduationYearTextField: SignUpTextField!
+    @IBOutlet weak var signInLabel: HyperLinkTextView!
     
     var user = User()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set background image for the view
+        // Set current view
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "SignUpBackground")!)
+        self.automaticallyAdjustsScrollViewInsets = true
+        
+        // Hide Back button on navigation controller
+        //self.navigationItem.hidesBackButton = true
         
         // Set button layer
         signUpButton.layer.cornerRadius = 20; //half of the width
@@ -60,6 +65,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
         self.graduationYearTextField.inputView = graduationYearPicker
         self.graduationYearTextField.inputAccessoryView = inputToolBar(self.graduationYearTextField)
+        
+        // Set hyperlink labels
+        self.signInLabel.text = ""
+        self.signInLabel.hyperLinkActions = ["<si>": ["target": self, "selector": "redirectSignIn:"]]
+        self.signInLabel.hyperLinkText = "Already has account? ##<si>Sign in"
     }
     
     // Dismiss inputView when touching any other areas on the screen
@@ -69,20 +79,25 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK:Actions
-    @IBAction func Cancel(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     @IBAction func signUp(sender: UIButton) {
         signUpUser()
     }
     
+    func doneToolButtonClicked(sender: UIBarButtonItem){
+        dismissInputView()
+    }
+    
     //Calls this function when the tap is recognized to dismiss input view
-    func dismissInputView(){
+    func dismissInputView() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         self.view.endEditing(true)
         self.signUpScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
+    
+    func redirectSignIn(sender: HyperLinkTextView) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     
     func signUpUser() -> Bool {
         
@@ -226,9 +241,5 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
         
         return toolbar
-    }
-    
-    func doneToolButtonClicked(sender: UIBarButtonItem){
-        self.view.endEditing(true)
     }
 }

@@ -30,7 +30,7 @@ class GraduationYearPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewData
         self.setupYearList()
     }
     
-    func setupYearList() {
+    private func setupYearList() {
         let currentYear = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
         
         for year in 1960...currentYear {
