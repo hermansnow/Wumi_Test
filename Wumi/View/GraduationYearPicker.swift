@@ -33,10 +33,11 @@ class GraduationYearPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewData
     private func setupYearList() {
         let currentYear = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
         
-        for year in 1960...currentYear {
+        self.years.append(0) // Use 0 for empty input
+        
+        for var year = currentYear; year >= 1964; year-- {
             self.years.append(year)
         }
-        self.years.append(0) // Use 0 for empty input
         
         self.delegate = self
         self.dataSource = self

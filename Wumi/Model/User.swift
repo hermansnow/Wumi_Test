@@ -8,7 +8,7 @@
 
 import Parse
 
-class User: PFUser{
+class User: PFUser {
     
     //Extended properties for PFUser
     dynamic var graduationYear: Int = 0
@@ -26,9 +26,7 @@ class User: PFUser{
         }
     }
     
-    override func signUpInBackgroundWithBlock(block: PFBooleanResultBlock?) {
-        super.signUpInBackgroundWithBlock(block)
-        
+    func addProfileInBackgroundWithBlock(block: PFBooleanResultBlock?) {
         // Save extended properties
         self.setObject(self.graduationYear, forKey: "graduationYear")
         self.saveInBackgroundWithBlock(block)

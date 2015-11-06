@@ -16,14 +16,17 @@
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
-		DF5E3D3C1BE9460200F44FFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3B1BE9460200F44FFF /* ViewController.swift */; };
 		DF5E3D411BE9463F00F44FFF /* CustomLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* CustomLoginViewController.swift */; };
 		DF5E3D421BE9463F00F44FFF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */; };
 		DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
-		DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */; settings = {ASSET_TAGS = (); }; };
-		DFB7CC071BEA893C00BEACB7 /* GraduationYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPicker.swift */; settings = {ASSET_TAGS = (); }; };
-		DFB7CC0E1BEAB44E00BEACB7 /* SignUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* SignUpTextField.swift */; settings = {ASSET_TAGS = (); }; };
+		DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */; };
+		DFB7CC071BEA893C00BEACB7 /* GraduationYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPicker.swift */; };
+		DFB7CC0E1BEAB44E00BEACB7 /* SignUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* SignUpTextField.swift */; };
+		DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D3B1BEC623E00D6FEBC /* InvitationCodeViewController.swift */; };
+		DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D3D1BEC626800D6FEBC /* SignUpAccountViewController.swift */; };
+		DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */; };
+		DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */; };
 		DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */; };
 		DFD4A6101BE6CF3C00C8B09E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */; };
 		DFD4A6121BE6CF4200C8B09E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */; };
@@ -49,7 +52,6 @@
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
-		DF5E3D3B1BE9460200F44FFF /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Controller/ViewController.swift; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* CustomLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomLoginViewController.swift; path = Controller/CustomLoginViewController.swift; sourceTree = "<group>"; };
 		DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = Controller/LogInViewController.swift; sourceTree = "<group>"; };
 		DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = Controller/RegisterViewController.swift; sourceTree = "<group>"; };
@@ -57,6 +59,10 @@
 		DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HyperLinkTextView.swift; path = View/HyperLinkTextView.swift; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* GraduationYearPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraduationYearPicker.swift; path = View/GraduationYearPicker.swift; sourceTree = "<group>"; };
 		DFB7CC0D1BEAB44E00BEACB7 /* SignUpTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpTextField.swift; path = View/SignUpTextField.swift; sourceTree = "<group>"; };
+		DFBD2D3B1BEC623E00D6FEBC /* InvitationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationCodeViewController.swift; path = Controller/InvitationCodeViewController.swift; sourceTree = "<group>"; };
+		DFBD2D3D1BEC626800D6FEBC /* SignUpAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpAccountViewController.swift; path = Controller/SignUpAccountViewController.swift; sourceTree = "<group>"; };
+		DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationCode.swift; path = Model/InvitationCode.swift; sourceTree = "<group>"; };
+		DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddProfileViewController.swift; path = Controller/AddProfileViewController.swift; sourceTree = "<group>"; };
 		DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -166,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				DF5E3D441BE9465000F44FFF /* User.swift */,
+				DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -176,7 +183,9 @@
 				DF5E3D3E1BE9463F00F44FFF /* CustomLoginViewController.swift */,
 				DF5E3D3F1BE9463F00F44FFF /* LogInViewController.swift */,
 				DF5E3D401BE9463F00F44FFF /* RegisterViewController.swift */,
-				DF5E3D3B1BE9460200F44FFF /* ViewController.swift */,
+				DFBD2D3B1BEC623E00D6FEBC /* InvitationCodeViewController.swift */,
+				DFBD2D3D1BEC626800D6FEBC /* SignUpAccountViewController.swift */,
+				DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -279,8 +288,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,
 				DF5E3D411BE9463F00F44FFF /* CustomLoginViewController.swift in Sources */,
-				DF5E3D3C1BE9460200F44FFF /* ViewController.swift in Sources */,
+				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
+				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,
+				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* GraduationYearPicker.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
 				DF5E3D431BE9463F00F44FFF /* RegisterViewController.swift in Sources */,

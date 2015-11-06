@@ -19,7 +19,7 @@ class SignUpTextField: UITextField {
     
     // Right view of text field is used to show error image if the input is invalid
     func setRightErrorViewForTextFieldWithErrorMessage(error: String = "") {
-        if (error.characters.count > 0) {
+        if error.characters.count > 0 {
             let rightErrorView = UIImageView(image: UIImage(named: "Error"))
             
             // Set frame of the right image view

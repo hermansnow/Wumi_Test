@@ -19,7 +19,7 @@ class CustomLoginViewController: UIViewController {
         let userPassword = self.userPassword.text
         
         User.logInWithUsernameInBackground(userName!, password: userPassword!) { (user, error) -> Void in
-            if (user != nil) {
+            if user != nil {
                 let alert = UIAlertView(title: "Success", message: "Logged in", delegate: self, cancelButtonTitle: "OK")
                 alert.show()
             }
