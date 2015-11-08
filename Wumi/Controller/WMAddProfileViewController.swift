@@ -1,5 +1,5 @@
 //
-//  AddProfileViewController.swift
+//  WMAddProfileViewController.swift
 //  Wumi
 //
 //  Created by Zhe Cheng on 11/6/15.
@@ -8,9 +8,10 @@
 
 import UIKit
 
-class AddProfileViewController: RegisterViewController {
+class WMAddProfileViewController: WMRegisterViewController {
 
-    @IBOutlet weak var graduationYearTextField: SignUpTextField!
+    @IBOutlet weak var userDisplayName: WMDataInputTextField!
+    @IBOutlet weak var graduationYearTextField: WMDataInputTextField!
     
     var user = User()
     
@@ -18,10 +19,11 @@ class AddProfileViewController: RegisterViewController {
         super.viewDidLoad()
         
         // Set left image icon for each text field
+        self.setLeftImageViewForTextField(self.userDisplayName)
         self.setLeftImageViewForTextField(self.graduationYearTextField)
         
         // Set Date Picker for graduationYearTextField
-        let graduationYearPicker = GraduationYearPicker()
+        let graduationYearPicker = WMGraduationYearPicker()
         graduationYearPicker.onYearSelected = { (year: Int) in
             if year == 0 {
                 self.graduationYearTextField.text = nil
@@ -56,6 +58,8 @@ class AddProfileViewController: RegisterViewController {
             else {
                 self.navigationController?.popToRootViewControllerAnimated(true) // Finished Sign Up, back to root of the navigation view controller stack (assume to be the sign-in view)
             }
+            
+            self.success = success
         }
     }
     
@@ -64,6 +68,8 @@ class AddProfileViewController: RegisterViewController {
         
         // Validate input of each text field
         switch textField {
+        case self.userDisplayName:
+            self.user.displayName = self.userDisplayName.text
         case self.graduationYearTextField:
             if let graduationYear = self.graduationYearTextField.text {
                 if graduationYear.characters.count > 0 {
@@ -74,16 +80,18 @@ class AddProfileViewController: RegisterViewController {
             break
         }
         
-        if let field = textField as? SignUpTextField {
+        if let field = textField as? WMDataInputTextField {
             field.setRightErrorViewForTextFieldWithErrorMessage(error)
         }
     }
     
     // Left view of text field is used to place specific icon
-    func setLeftImageViewForTextField(textField: SignUpTextField) {
+    func setLeftImageViewForTextField(textField: WMDataInputTextField) {
         var imageName = ""
         
         switch textField {
+        case self.userDisplayName:
+            imageName = "Name"
         case self.graduationYearTextField:
             imageName = "Grad"
         default:

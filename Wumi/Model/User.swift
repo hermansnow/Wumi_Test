@@ -12,7 +12,7 @@ class User: PFUser {
     
     //Extended properties for PFUser
     dynamic var graduationYear: Int = 0
-    dynamic var name: String?
+    dynamic var displayName: String?
     
     // properties not for saving
     var confirmPassword: String?
@@ -26,9 +26,27 @@ class User: PFUser {
         }
     }
     
+    override init() {
+        super.init()
+    }
+    
+    init(pfUser: PFUser?) {
+        super.init()
+        
+        if let user = pfUser {
+            self.objectId = user.objectId
+            self.username = user.username
+            self.password = user.password
+            self.email = user.email
+            self.graduationYear = user["graduationYear"] as! Int
+            self.displayName = user["name"] as? String
+        }
+    }
+    
     func addProfileInBackgroundWithBlock(block: PFBooleanResultBlock?) {
         // Save extended properties
         self.setObject(self.graduationYear, forKey: "graduationYear")
+        self.setObject(self.displayName!, forKey: "name")
         self.saveInBackgroundWithBlock(block)
     }
     
@@ -52,10 +70,9 @@ class User: PFUser {
         }
         
         block(valid: errors.count == 0, error: errors)
-
     }
     
-    // Validate User Name
+    // Validate Username
     func validateUserName(inout error: String) -> Bool {
         if ((self.username?.utf16.count) <= 3) {
             error = "Length of user name should larger than 3 characters"

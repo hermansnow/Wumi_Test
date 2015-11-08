@@ -1,5 +1,5 @@
 //
-//  SignUpTextField.swift
+//  WMDataInputTextField.swift
 //  Wumi
 //
 //  Created by Herman on 11/4/15.
@@ -7,14 +7,17 @@
 //
 
 import UIKit
-import QuartzCore
 
-class SignUpTextField: UITextField {
+class WMDataInputTextField: UITextField {
 
     override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
-        
         self.layer.cornerRadius = 10
+        self.clearsOnBeginEditing = false
+        self.borderStyle = .RoundedRect
+        self.layer.borderWidth = 1.0
+        self.backgroundColor = UIColor.whiteColor()
+        
+        super.drawRect(rect)
     }
     
     // Right view of text field is used to show error image if the input is invalid

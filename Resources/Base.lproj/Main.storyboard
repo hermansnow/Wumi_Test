@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H0F-Uw-KhX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H0F-Uw-KhX">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--Log In View Controller-->
+        <!--View Controller-->
         <scene sceneID="BdD-Ln-ZKa">
             <objects>
-                <viewController id="KKC-xh-EYk" customClass="LogInViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="KKC-xh-EYk" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AIc-Vq-D4o"/>
                         <viewControllerLayoutGuide type="bottom" id="Y9r-4f-LOG"/>
@@ -69,100 +69,10 @@
             </objects>
             <point key="canvasLocation" x="1271.5" y="596.5"/>
         </scene>
-        <!--Sign In-->
-        <scene sceneID="Fgq-w8-jaW">
-            <objects>
-                <viewController title="Sign In" modalTransitionStyle="flipHorizontal" id="MiQ-mq-orP" customClass="CustomLoginViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pu7-qh-bcc"/>
-                        <viewControllerLayoutGuide type="bottom" id="YVI-kz-Knm"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="A2b-1d-91g">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4nO-wK-21H">
-                                <rect key="frame" x="0.0" y="8" width="375" height="30"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="17P-tJ-7bZ">
-                                <rect key="frame" x="0.0" y="46" width="375" height="30"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="WUMI" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OaE-pm-o6g">
-                                <rect key="frame" x="140" y="8" width="95" height="40"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="95" id="ljE-0E-kDP"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPR-fl-YJv">
-                                <rect key="frame" x="159" y="8" width="55" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Log In">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="logIn:" destination="MiQ-mq-orP" eventType="touchUpInside" id="SQi-oP-5nI"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktZ-aT-qIK">
-                                <rect key="frame" x="160" y="565" width="55" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Sign Up">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="JHq-b6-pjD" kind="show" id="78z-no-7p2"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="pPR-fl-YJv" firstAttribute="top" secondItem="pu7-qh-bcc" secondAttribute="bottom" multiplier="5" constant="8" symbolic="YES" id="47b-vX-xav"/>
-                            <constraint firstItem="17P-tJ-7bZ" firstAttribute="centerX" secondItem="4nO-wK-21H" secondAttribute="centerX" id="5mp-as-Qmb"/>
-                            <constraint firstItem="4nO-wK-21H" firstAttribute="top" secondItem="pu7-qh-bcc" secondAttribute="bottom" multiplier="3" constant="8" symbolic="YES" id="E99-OQ-IT3"/>
-                            <constraint firstItem="4nO-wK-21H" firstAttribute="top" secondItem="pu7-qh-bcc" secondAttribute="bottom" constant="136" id="FKy-KK-ZDv"/>
-                            <constraint firstItem="pPR-fl-YJv" firstAttribute="width" secondItem="ktZ-aT-qIK" secondAttribute="width" id="Jfu-RJ-Lbq"/>
-                            <constraint firstItem="OaE-pm-o6g" firstAttribute="centerX" secondItem="4nO-wK-21H" secondAttribute="centerX" id="OD8-Ve-WSe"/>
-                            <constraint firstItem="pPR-fl-YJv" firstAttribute="height" secondItem="ktZ-aT-qIK" secondAttribute="height" id="Pvz-cT-KnH"/>
-                            <constraint firstItem="17P-tJ-7bZ" firstAttribute="width" secondItem="4nO-wK-21H" secondAttribute="width" id="TVL-l5-CHJ"/>
-                            <constraint firstItem="17P-tJ-7bZ" firstAttribute="top" secondItem="4nO-wK-21H" secondAttribute="bottom" constant="8" symbolic="YES" id="V4j-NM-Qxe"/>
-                            <constraint firstAttribute="trailing" secondItem="17P-tJ-7bZ" secondAttribute="trailing" id="Y71-Kg-Zur"/>
-                            <constraint firstItem="pPR-fl-YJv" firstAttribute="leading" secondItem="A2b-1d-91g" secondAttribute="leading" constant="159" id="YDh-os-Wkh"/>
-                            <constraint firstItem="4nO-wK-21H" firstAttribute="leading" secondItem="A2b-1d-91g" secondAttribute="leading" id="cMV-2n-gjU"/>
-                            <constraint firstItem="YVI-kz-Knm" firstAttribute="top" secondItem="ktZ-aT-qIK" secondAttribute="bottom" constant="8" symbolic="YES" id="f17-GG-oYH"/>
-                            <constraint firstItem="OaE-pm-o6g" firstAttribute="top" secondItem="pu7-qh-bcc" secondAttribute="bottom" multiplier="2" constant="8" symbolic="YES" id="lZ2-M4-ace"/>
-                            <constraint firstItem="ktZ-aT-qIK" firstAttribute="centerX" secondItem="17P-tJ-7bZ" secondAttribute="centerX" id="wiJ-dk-S9S"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="FKy-KK-ZDv"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="Fl7-MF-aEV"/>
-                    <connections>
-                        <outlet property="userName" destination="4nO-wK-21H" id="8he-RT-Xci"/>
-                        <outlet property="userPassword" destination="17P-tJ-7bZ" id="BNf-ot-wOM"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="07B-ac-NST" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2438.5" y="1157.5"/>
-        </scene>
-        <!--View Controller-->
+        <!--ParseUI Log In View Controller-->
         <scene sceneID="jBD-hI-vsP">
             <objects>
-                <viewController id="bhq-mu-3Aa" sceneMemberID="viewController">
+                <viewController id="bhq-mu-3Aa" customClass="ParseUILogInViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2SG-Rs-ZkO"/>
                         <viewControllerLayoutGuide type="bottom" id="t4p-3o-112"/>
@@ -181,7 +91,7 @@
         <!--Verify Invitation Code-->
         <scene sceneID="QDQ-KZ-a17">
             <objects>
-                <viewController title="Verify Invitation Code" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="JHq-b6-pjD" customClass="InvitationCodeViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Verify Invitation Code" automaticallyAdjustsScrollViewInsets="NO" id="JHq-b6-pjD" customClass="WMInvitationCodeViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Sp1-Ej-zDv"/>
                         <viewControllerLayoutGuide type="bottom" id="dEY-hU-Ugt"/>
@@ -190,8 +100,8 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SignUpLogo" translatesAutoresizingMaskIntoConstraints="NO" id="X4w-Dr-4na">
-                                <rect key="frame" x="131" y="20" width="112" height="112"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="X4w-Dr-4na">
+                                <rect key="frame" x="131" y="20" width="113" height="113"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="X4w-Dr-4na" secondAttribute="height" multiplier="1:1" id="Jts-3O-9gP"/>
@@ -204,10 +114,10 @@
                                 </variation>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="YVl-9t-sF7">
-                                <rect key="frame" x="0.0" y="140" width="375" height="419"/>
+                                <rect key="frame" x="0.0" y="141" width="375" height="418"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Invitation Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uv7-ls-9nz" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="37" y="99" width="300" height="37.5"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Invitation Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uv7-ls-9nz" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="100" width="300" height="37"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Huc-Tw-Gnl"/>
@@ -223,31 +133,31 @@
                                             <outlet property="delegate" destination="JHq-b6-pjD" id="BIF-p3-hpp"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZjV-VX-M1g">
-                                        <rect key="frame" x="92" y="281" width="190" height="38"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZjV-VX-M1g" customClass="WMButton" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="95" y="282" width="185" height="37"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ZjV-VX-M1g" secondAttribute="height" multiplier="5:1" id="qNG-1h-QUh"/>
                                         </constraints>
-                                        <state key="normal" title="Next">
+                                        <state key="normal" title="Verify">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="nextProcess:" destination="JHq-b6-pjD" eventType="touchUpInside" id="XpG-o9-Rch"/>
-                                            <segue destination="GQw-5c-dGe" kind="show" id="Dad-SE-vqE"/>
+                                            <segue destination="GQw-5c-dGe" kind="show" identifier="Show Next Register Form" id="Dad-SE-vqE"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Already has account? Sign in" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3d-pg-J1L" customClass="HyperLinkTextView" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="92.5" y="327" width="190" height="30.5"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Already has account? Sign in" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3d-pg-J1L" customClass="WMHyperLinkTextView" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="95" y="327" width="185" height="29"/>
                                         <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please input app invitation code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yzi-ED-GrE">
-                                        <rect key="frame" x="37" y="50" width="300" height="20.5"/>
+                                        <rect key="frame" x="38" y="50" width="300" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
@@ -340,7 +250,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Title" id="ceG-Bj-MUJ">
+                    <navigationItem key="navigationItem" title="Sign Up" id="ceG-Bj-MUJ">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="P0p-nn-OyM">
                             <connections>
                                 <action selector="cancel:" destination="JHq-b6-pjD" id="KwR-LF-H5l"/>
@@ -349,17 +259,17 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="formScrollView" destination="YVl-9t-sF7" id="XZF-FO-FGM"/>
                         <outlet property="invitationCodeTextField" destination="uv7-ls-9nz" id="Lbb-ov-eyg"/>
                         <outlet property="logoImageView" destination="X4w-Dr-4na" id="Nwf-ik-txf"/>
                         <outlet property="processButton" destination="ZjV-VX-M1g" id="1Fy-xt-nJ5"/>
                         <outlet property="signInLabel" destination="y3d-pg-J1L" id="M3K-44-V7A"/>
-                        <outlet property="signUpScrollView" destination="YVl-9t-sF7" id="ZhK-nz-ipl"/>
                         <outlet property="titleLabel" destination="Yzi-ED-GrE" id="bFY-sf-zZr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q36-Ly-gLD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3064.5" y="1157.5"/>
+            <point key="canvasLocation" x="2932.5" y="2033.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WJ1-Np-Coo">
@@ -384,7 +294,7 @@
         <!--Create New Account-->
         <scene sceneID="NlG-wl-9xt">
             <objects>
-                <viewController title="Create New Account" modalTransitionStyle="crossDissolve" id="GQw-5c-dGe" customClass="SignUpAccountViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Create New Account" modalTransitionStyle="crossDissolve" id="GQw-5c-dGe" customClass="WMSignUpAccountViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DQ5-Nk-5Uq"/>
                         <viewControllerLayoutGuide type="bottom" id="x67-2j-3zd"/>
@@ -393,8 +303,8 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SignUpLogo" translatesAutoresizingMaskIntoConstraints="NO" id="3Xm-iF-1zZ">
-                                <rect key="frame" x="131" y="20" width="112" height="112"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="3Xm-iF-1zZ">
+                                <rect key="frame" x="131" y="20" width="113" height="113"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="4u7-yu-NT6"/>
@@ -407,10 +317,10 @@
                                 </variation>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="NYC-XZ-NVR">
-                                <rect key="frame" x="0.0" y="140" width="375" height="419"/>
+                                <rect key="frame" x="0.0" y="141" width="375" height="418"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pL6-PP-PYB" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="37.5" y="20" width="300" height="37.5"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pL6-PP-PYB" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="20" width="300" height="37"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="jkt-xi-I6g"/>
@@ -426,8 +336,8 @@
                                             <outlet property="delegate" destination="GQw-5c-dGe" id="wrB-Vq-8Q5"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G3i-aw-ob4" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="37.5" y="65" width="300" height="37.5"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G3i-aw-ob4" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="65" width="300" height="37"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
@@ -435,8 +345,8 @@
                                             <outlet property="delegate" destination="GQw-5c-dGe" id="ugb-vb-BO9"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O7J-uu-be6" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="37.5" y="110" width="300" height="38"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O7J-uu-be6" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="110" width="300" height="37"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
@@ -444,8 +354,8 @@
                                             <outlet property="delegate" destination="GQw-5c-dGe" id="jN9-iN-wiu"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6d5-vd-YcI" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="37.5" y="155.5" width="300" height="38"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6d5-vd-YcI" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="155" width="300" height="37"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
@@ -453,8 +363,8 @@
                                             <outlet property="delegate" destination="GQw-5c-dGe" id="PSy-TW-lUm"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qab-q7-gmc">
-                                        <rect key="frame" x="92.5" y="278.5" width="190" height="38"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qab-q7-gmc" customClass="WMButton" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="95" y="276" width="185" height="37"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -466,7 +376,7 @@
                                         </state>
                                         <connections>
                                             <action selector="nextProcess:" destination="GQw-5c-dGe" eventType="touchUpInside" id="1G5-8Q-gmn"/>
-                                            <segue destination="xWV-4c-tDk" kind="show" identifier="Add Profile" id="Ev7-OF-qfZ"/>
+                                            <segue destination="xWV-4c-tDk" kind="show" identifier="Show Next Register Form" id="Ev7-OF-qfZ"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -533,28 +443,28 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="ukm-YP-GW3"/>
                                 <exclude reference="ULz-iW-D5W"/>
-                                <exclude reference="atF-NX-vBf"/>
-                                <exclude reference="IuO-bj-FCW"/>
-                                <exclude reference="tfF-77-Q9b"/>
-                                <exclude reference="LbX-QY-aba"/>
-                                <exclude reference="epo-2F-q3R"/>
+                                <exclude reference="ukm-YP-GW3"/>
                                 <exclude reference="1Ni-b7-67o"/>
-                                <exclude reference="fYi-1L-Uqn"/>
-                                <exclude reference="Qv4-uK-q5S"/>
-                                <exclude reference="bx8-9e-VlV"/>
-                                <exclude reference="DVH-1C-Bc3"/>
-                                <exclude reference="VAw-hE-M4L"/>
                                 <exclude reference="Bxu-Hw-F79"/>
-                                <exclude reference="jy0-i2-doj"/>
+                                <exclude reference="DVH-1C-Bc3"/>
+                                <exclude reference="IuO-bj-FCW"/>
+                                <exclude reference="LbX-QY-aba"/>
+                                <exclude reference="Qv4-uK-q5S"/>
+                                <exclude reference="VAw-hE-M4L"/>
+                                <exclude reference="atF-NX-vBf"/>
+                                <exclude reference="bx8-9e-VlV"/>
+                                <exclude reference="epo-2F-q3R"/>
+                                <exclude reference="fYi-1L-Uqn"/>
+                                <exclude reference="tfF-77-Q9b"/>
                                 <exclude reference="Tnd-42-ufB"/>
+                                <exclude reference="jy0-i2-doj"/>
                             </mask>
                         </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Title" id="l3r-Qh-A3X">
+                    <navigationItem key="navigationItem" title="Sign Up" id="l3r-Qh-A3X">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="asW-ov-DVt">
                             <connections>
                                 <action selector="cancel:" destination="GQw-5c-dGe" id="yeY-F9-Yyl"/>
@@ -563,9 +473,9 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="formScrollView" destination="NYC-XZ-NVR" id="2Fr-Ep-WdP"/>
                         <outlet property="logoImageView" destination="3Xm-iF-1zZ" id="sdD-ci-snR"/>
                         <outlet property="processButton" destination="qab-q7-gmc" id="8MC-7Z-HxO"/>
-                        <outlet property="signUpScrollView" destination="NYC-XZ-NVR" id="AQe-5L-aCJ"/>
                         <outlet property="userConfirmPasswordTextField" destination="O7J-uu-be6" id="mrp-nh-eEP"/>
                         <outlet property="userEmailTextField" destination="6d5-vd-YcI" id="Qo6-eC-cBS"/>
                         <outlet property="userNameTextField" destination="pL6-PP-PYB" id="MV1-d2-GUf"/>
@@ -574,12 +484,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BH3-7E-xOC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3566.5" y="1157.5"/>
+            <point key="canvasLocation" x="3470.5" y="2033.5"/>
         </scene>
         <!--Add Profile-->
         <scene sceneID="irO-LC-yXA">
             <objects>
-                <viewController title="Add Profile" modalTransitionStyle="crossDissolve" id="xWV-4c-tDk" customClass="AddProfileViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add Profile" modalTransitionStyle="crossDissolve" id="xWV-4c-tDk" customClass="WMAddProfileViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i2f-OS-ye4"/>
                         <viewControllerLayoutGuide type="bottom" id="NG5-gl-c0P"/>
@@ -588,8 +498,8 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SignUpLogo" translatesAutoresizingMaskIntoConstraints="NO" id="3j4-9l-hFA">
-                                <rect key="frame" x="131" y="20" width="112" height="112"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="3j4-9l-hFA">
+                                <rect key="frame" x="131" y="20" width="113" height="113"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="3j4-9l-hFA" secondAttribute="height" multiplier="1:1" id="bWv-Aw-NyV"/>
@@ -602,10 +512,10 @@
                                 </variation>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="YG6-3J-LhB">
-                                <rect key="frame" x="0.0" y="140" width="375" height="419"/>
+                                <rect key="frame" x="0.0" y="141" width="375" height="418"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Graduation Year" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Js-v8-3tS" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="37" y="20" width="300" height="37.5"/>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Js-v8-3tS" customClass="SignUpTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="20" width="300" height="37"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="esp-iX-wCr"/>
@@ -621,14 +531,14 @@
                                             <outlet property="delegate" destination="xWV-4c-tDk" id="uOk-6a-Lgs"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AeM-Ak-xWb">
-                                        <rect key="frame" x="92.5" y="267.5" width="190" height="38"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AeM-Ak-xWb" customClass="WMButton" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="95" y="278" width="185" height="37"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="AeM-Ak-xWb" secondAttribute="height" multiplier="5:1" id="dKf-aQ-eoU"/>
                                         </constraints>
-                                        <state key="normal" title="Done">
+                                        <state key="normal" title="Add Profile">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -636,20 +546,46 @@
                                             <action selector="nextProcess:" destination="xWV-4c-tDk" eventType="touchUpInside" id="qiU-dY-A5k"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Graduation Year" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fcx-6h-Cn0" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="65" width="300" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Re3-gc-dwa"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Re3-gc-dwa"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="delegate" destination="xWV-4c-tDk" id="5vL-ev-BeL"/>
+                                        </connections>
+                                    </textField>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="Fcx-6h-Cn0" firstAttribute="top" secondItem="8Js-v8-3tS" secondAttribute="bottom" constant="8" symbolic="YES" id="1ly-f6-Yxm"/>
                                     <constraint firstItem="AeM-Ak-xWb" firstAttribute="height" secondItem="8Js-v8-3tS" secondAttribute="height" id="4Lh-hL-qjj"/>
+                                    <constraint firstItem="AeM-Ak-xWb" firstAttribute="top" secondItem="Fcx-6h-Cn0" secondAttribute="bottom" multiplier="2.65" constant="8" symbolic="YES" id="6ld-j9-dvi"/>
+                                    <constraint firstItem="Fcx-6h-Cn0" firstAttribute="height" secondItem="8Js-v8-3tS" secondAttribute="height" id="BwZ-5Y-vMP"/>
                                     <constraint firstItem="AeM-Ak-xWb" firstAttribute="centerX" secondItem="8Js-v8-3tS" secondAttribute="centerX" id="CbH-El-PrT"/>
+                                    <constraint firstItem="Fcx-6h-Cn0" firstAttribute="width" secondItem="8Js-v8-3tS" secondAttribute="width" id="Gja-zp-6P7"/>
                                     <constraint firstItem="8Js-v8-3tS" firstAttribute="centerX" secondItem="YG6-3J-LhB" secondAttribute="centerX" id="Jhw-Xn-2fL"/>
                                     <constraint firstItem="8Js-v8-3tS" firstAttribute="width" secondItem="YG6-3J-LhB" secondAttribute="width" multiplier="0.8" id="LJa-lF-PWp"/>
                                     <constraint firstAttribute="trailing" secondItem="8Js-v8-3tS" secondAttribute="trailing" constant="37" id="S5V-3p-sAE"/>
                                     <constraint firstItem="8Js-v8-3tS" firstAttribute="height" secondItem="YG6-3J-LhB" secondAttribute="height" multiplier="0.09" id="SCN-Xq-aDK"/>
+                                    <constraint firstItem="Fcx-6h-Cn0" firstAttribute="centerX" secondItem="8Js-v8-3tS" secondAttribute="centerX" id="kgM-hm-M6A"/>
                                     <constraint firstItem="AeM-Ak-xWb" firstAttribute="top" secondItem="8Js-v8-3tS" secondAttribute="bottom" multiplier="4.5" constant="8" symbolic="YES" id="kvb-HP-kNW"/>
                                     <constraint firstItem="8Js-v8-3tS" firstAttribute="top" secondItem="YG6-3J-LhB" secondAttribute="top" constant="20" symbolic="YES" id="oUw-TE-PjR"/>
                                     <constraint firstAttribute="bottom" secondItem="AeM-Ak-xWb" secondAttribute="bottom" constant="115" id="si3-5d-VgY"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="kvb-HP-kNW"/>
+                                    </mask>
+                                </variation>
                             </scrollView>
                         </subviews>
                         <animations/>
@@ -684,26 +620,26 @@
                             <mask key="constraints">
                                 <exclude reference="BbV-MF-YUV"/>
                                 <exclude reference="pLX-nr-Yjt"/>
-                                <exclude reference="CTx-PQ-vBb"/>
-                                <exclude reference="2ER-ie-h4B"/>
-                                <exclude reference="qqf-Ga-AK6"/>
                                 <exclude reference="1RT-fe-T94"/>
+                                <exclude reference="1oG-Cr-Y6o"/>
+                                <exclude reference="2ER-ie-h4B"/>
+                                <exclude reference="2Oy-cq-etQ"/>
+                                <exclude reference="544-K5-FhW"/>
+                                <exclude reference="CTx-PQ-vBb"/>
+                                <exclude reference="QZC-S3-w54"/>
+                                <exclude reference="Yc6-YI-m7C"/>
+                                <exclude reference="eCX-Ui-z8S"/>
                                 <exclude reference="f59-em-gG7"/>
                                 <exclude reference="m7X-Mg-UGu"/>
-                                <exclude reference="1oG-Cr-Y6o"/>
-                                <exclude reference="544-K5-FhW"/>
-                                <exclude reference="eCX-Ui-z8S"/>
-                                <exclude reference="QZC-S3-w54"/>
-                                <exclude reference="2Oy-cq-etQ"/>
-                                <exclude reference="Yc6-YI-m7C"/>
-                                <exclude reference="utx-nZ-aAv"/>
+                                <exclude reference="qqf-Ga-AK6"/>
                                 <exclude reference="oTj-pT-VIS"/>
+                                <exclude reference="utx-nZ-aAv"/>
                             </mask>
                         </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Title" id="e1m-dy-v89">
+                    <navigationItem key="navigationItem" title="Sign Up" id="e1m-dy-v89">
                         <barButtonItem key="leftBarButtonItem" title="Skip" id="r9G-RC-58W">
                             <connections>
                                 <action selector="cancel:" destination="xWV-4c-tDk" id="3s7-IT-Ca7"/>
@@ -712,15 +648,16 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="graduationYearTextField" destination="8Js-v8-3tS" id="jH3-3x-v2Q"/>
+                        <outlet property="formScrollView" destination="YG6-3J-LhB" id="WlL-TA-4AA"/>
+                        <outlet property="graduationYearTextField" destination="Fcx-6h-Cn0" id="eua-K0-8KA"/>
                         <outlet property="logoImageView" destination="3j4-9l-hFA" id="yYM-Me-6xy"/>
                         <outlet property="processButton" destination="AeM-Ak-xWb" id="7Nv-it-Ron"/>
-                        <outlet property="signUpScrollView" destination="YG6-3J-LhB" id="Grv-WL-LqA"/>
+                        <outlet property="userDisplayName" destination="8Js-v8-3tS" id="s4U-mz-3s5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exc-P4-uwY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4070.5" y="1157.5"/>
+            <point key="canvasLocation" x="3996.5" y="2033.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="cGE-4Q-4GX">
@@ -734,15 +671,288 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="MiQ-mq-orP" kind="relationship" relationship="rootViewController" id="vk9-t3-Akz"/>
+                        <segue destination="7Y3-rS-esY" kind="relationship" relationship="rootViewController" id="ICZ-Ld-MRt"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="drS-cL-IW3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1851.5" y="1157.5"/>
         </scene>
+        <!--Sign In-->
+        <scene sceneID="PNx-Bb-zlt">
+            <objects>
+                <viewController title="Sign In" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="7Y3-rS-esY" customClass="WMSigninViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="En1-l2-4ds"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fb7-j7-CPR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qeK-vd-cwP">
+                        <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="806-sB-Xut">
+                                <rect key="frame" x="131" y="20" width="113" height="57"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="806-sB-Xut" secondAttribute="height" multiplier="2:1" id="ZQF-Nq-tuq"/>
+                                    <constraint firstAttribute="height" constant="200" id="hQa-Fw-JwK"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="hQa-Fw-JwK"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="5j0-sr-Nab">
+                                <rect key="frame" x="0.0" y="85" width="375" height="474"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Or-bY-lUO" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="20" width="300" height="43"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="AT0-jG-liN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="AT0-jG-liN"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="delegate" destination="7Y3-rS-esY" id="HMz-Vr-RqM"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ABK-jG-QZb" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="71" width="300" height="43"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="TCz-AK-v0w"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="TCz-AK-v0w"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="delegate" destination="7Y3-rS-esY" id="kjD-d8-S9Y"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dwk-KI-Sgv" customClass="WMButton" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="38" y="122" width="300" height="43"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Dwk-KI-Sgv" secondAttribute="height" multiplier="5:1" id="ms5-HL-V67"/>
+                                        </constraints>
+                                        <state key="normal" title="Sign In">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="ms5-HL-V67"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="SignIn:" destination="7Y3-rS-esY" eventType="touchUpInside" id="b8h-eS-EP7"/>
+                                            <segue destination="SNN-Gs-X3M" kind="show" identifier="Launch Main View" id="O1r-lE-lrh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaL-pr-6El">
+                                        <rect key="frame" x="188" y="173" width="150" height="43"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="Join Now">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="JHq-b6-pjD" kind="show" id="g9b-ZT-6C9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WgU-bS-Xgf">
+                                        <rect key="frame" x="38" y="173" width="150" height="43"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="Forgot password?">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ABK-jG-QZb" firstAttribute="height" secondItem="0Or-bY-lUO" secondAttribute="height" id="0ft-vq-LMZ"/>
+                                    <constraint firstItem="Dwk-KI-Sgv" firstAttribute="centerX" secondItem="ABK-jG-QZb" secondAttribute="centerX" id="0nc-CL-DjE"/>
+                                    <constraint firstItem="ABK-jG-QZb" firstAttribute="height" secondItem="5j0-sr-Nab" secondAttribute="height" multiplier="0.09" id="2qx-6d-W7m"/>
+                                    <constraint firstItem="LaL-pr-6El" firstAttribute="trailing" secondItem="Dwk-KI-Sgv" secondAttribute="trailing" id="4bq-Cb-Yx5"/>
+                                    <constraint firstItem="ABK-jG-QZb" firstAttribute="centerX" secondItem="0Or-bY-lUO" secondAttribute="centerX" id="7lM-0h-FGS"/>
+                                    <constraint firstItem="LaL-pr-6El" firstAttribute="leading" secondItem="WgU-bS-Xgf" secondAttribute="trailing" id="8Y8-yt-ndw"/>
+                                    <constraint firstItem="Dwk-KI-Sgv" firstAttribute="height" secondItem="ABK-jG-QZb" secondAttribute="height" id="Ad6-xu-uIT"/>
+                                    <constraint firstItem="0Or-bY-lUO" firstAttribute="height" secondItem="5j0-sr-Nab" secondAttribute="height" multiplier="0.09" id="FjL-3K-EwQ"/>
+                                    <constraint firstItem="Dwk-KI-Sgv" firstAttribute="width" secondItem="ABK-jG-QZb" secondAttribute="width" id="G82-w1-LoK"/>
+                                    <constraint firstItem="ABK-jG-QZb" firstAttribute="centerX" secondItem="5j0-sr-Nab" secondAttribute="centerX" id="IGz-ap-HiR"/>
+                                    <constraint firstItem="0Or-bY-lUO" firstAttribute="top" secondItem="5j0-sr-Nab" secondAttribute="top" constant="20" symbolic="YES" id="JeY-pB-qsV"/>
+                                    <constraint firstItem="Dwk-KI-Sgv" firstAttribute="top" secondItem="ABK-jG-QZb" secondAttribute="bottom" constant="8" symbolic="YES" id="Jfm-Ee-Pvx"/>
+                                    <constraint firstItem="ABK-jG-QZb" firstAttribute="width" secondItem="0Or-bY-lUO" secondAttribute="width" id="Mr1-87-jqw"/>
+                                    <constraint firstItem="ABK-jG-QZb" firstAttribute="width" secondItem="5j0-sr-Nab" secondAttribute="width" multiplier="0.8" id="NG1-U6-OM3"/>
+                                    <constraint firstAttribute="bottom" secondItem="Dwk-KI-Sgv" secondAttribute="bottom" constant="115" id="Nam-Mm-JjY"/>
+                                    <constraint firstItem="0Or-bY-lUO" firstAttribute="centerX" secondItem="5j0-sr-Nab" secondAttribute="centerX" id="OuR-Yc-QeM"/>
+                                    <constraint firstItem="WgU-bS-Xgf" firstAttribute="leading" secondItem="Dwk-KI-Sgv" secondAttribute="leading" id="SBU-sS-Rd1"/>
+                                    <constraint firstItem="ABK-jG-QZb" firstAttribute="width" secondItem="5j0-sr-Nab" secondAttribute="width" multiplier="0.8" id="VFP-a1-lrH"/>
+                                    <constraint firstItem="Dwk-KI-Sgv" firstAttribute="top" secondItem="LaL-pr-6El" secondAttribute="bottom" constant="8" symbolic="YES" id="VXJ-Jw-Ms1"/>
+                                    <constraint firstItem="WgU-bS-Xgf" firstAttribute="height" secondItem="Dwk-KI-Sgv" secondAttribute="height" id="WjZ-AM-1jx"/>
+                                    <constraint firstAttribute="trailing" secondItem="Dwk-KI-Sgv" secondAttribute="trailing" constant="37" id="bdi-9X-epk"/>
+                                    <constraint firstAttribute="trailing" secondItem="ABK-jG-QZb" secondAttribute="trailing" constant="37" id="d7p-zw-tnl"/>
+                                    <constraint firstItem="LaL-pr-6El" firstAttribute="height" secondItem="Dwk-KI-Sgv" secondAttribute="height" id="dGU-Nb-kfw"/>
+                                    <constraint firstItem="LaL-pr-6El" firstAttribute="top" secondItem="Dwk-KI-Sgv" secondAttribute="bottom" constant="8" symbolic="YES" id="gja-4f-1hj"/>
+                                    <constraint firstItem="WgU-bS-Xgf" firstAttribute="width" secondItem="Dwk-KI-Sgv" secondAttribute="width" multiplier="0.5" id="kcE-1M-9XK"/>
+                                    <constraint firstItem="ABK-jG-QZb" firstAttribute="top" secondItem="0Or-bY-lUO" secondAttribute="bottom" constant="8" symbolic="YES" id="lkN-5C-3s9"/>
+                                    <constraint firstItem="WgU-bS-Xgf" firstAttribute="centerY" secondItem="LaL-pr-6El" secondAttribute="centerY" id="qAK-la-NHV"/>
+                                    <constraint firstItem="ABK-jG-QZb" firstAttribute="top" secondItem="5j0-sr-Nab" secondAttribute="top" constant="20" symbolic="YES" id="sbX-P8-evW"/>
+                                    <constraint firstItem="WgU-bS-Xgf" firstAttribute="top" secondItem="Dwk-KI-Sgv" secondAttribute="bottom" constant="8" symbolic="YES" id="u7q-QN-rhN"/>
+                                    <constraint firstItem="0Or-bY-lUO" firstAttribute="width" secondItem="5j0-sr-Nab" secondAttribute="width" multiplier="0.8" id="z9h-jt-Gyk"/>
+                                    <constraint firstItem="LaL-pr-6El" firstAttribute="width" secondItem="Dwk-KI-Sgv" secondAttribute="width" multiplier="0.5" id="zVS-hk-Om2"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="IGz-ap-HiR"/>
+                                        <exclude reference="VFP-a1-lrH"/>
+                                        <exclude reference="d7p-zw-tnl"/>
+                                        <exclude reference="sbX-P8-evW"/>
+                                        <exclude reference="VXJ-Jw-Ms1"/>
+                                    </mask>
+                                </variation>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="top" secondItem="806-sB-Xut" secondAttribute="bottom" id="5IF-bg-VRj"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="top" secondItem="806-sB-Xut" secondAttribute="bottom" id="7QQ-bg-U0u"/>
+                            <constraint firstItem="806-sB-Xut" firstAttribute="width" secondItem="qeK-vd-cwP" secondAttribute="width" multiplier="0.3" id="8Jg-s3-u0b"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="leading" secondItem="qeK-vd-cwP" secondAttribute="leading" id="CJB-kS-S2n"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="top" secondItem="806-sB-Xut" secondAttribute="bottom" constant="8" symbolic="YES" id="Cnl-pT-Pay"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="bottom" secondItem="Fb7-j7-CPR" secondAttribute="top" id="HO7-si-yYB"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="centerX" secondItem="806-sB-Xut" secondAttribute="centerX" id="IKy-rg-l6J"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="height" secondItem="qeK-vd-cwP" secondAttribute="height" multiplier="0.6" id="JMF-gP-Bxt"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="leading" secondItem="qeK-vd-cwP" secondAttribute="leadingMargin" constant="-20" id="Oax-Ao-43f"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="top" secondItem="806-sB-Xut" secondAttribute="bottom" constant="8" symbolic="YES" id="U8Z-Q1-NcH"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="leading" secondItem="qeK-vd-cwP" secondAttribute="leading" id="WD5-wj-6MS"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="width" secondItem="qeK-vd-cwP" secondAttribute="width" id="WoL-d7-klq"/>
+                            <constraint firstItem="806-sB-Xut" firstAttribute="top" relation="greaterThanOrEqual" secondItem="En1-l2-4ds" secondAttribute="bottom" constant="10" id="aPd-4h-Vrp"/>
+                            <constraint firstItem="806-sB-Xut" firstAttribute="centerX" secondItem="qeK-vd-cwP" secondAttribute="centerX" id="dOg-J5-mH2"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="leading" secondItem="qeK-vd-cwP" secondAttribute="leadingMargin" id="gBV-c2-pz4"/>
+                            <constraint firstItem="Fb7-j7-CPR" firstAttribute="top" secondItem="5j0-sr-Nab" secondAttribute="bottom" id="hTe-nk-RZX"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="centerX" secondItem="qeK-vd-cwP" secondAttribute="centerX" id="mOo-Z3-nVf"/>
+                            <constraint firstItem="Fb7-j7-CPR" firstAttribute="top" secondItem="5j0-sr-Nab" secondAttribute="bottom" id="nWW-8J-3nH"/>
+                            <constraint firstItem="806-sB-Xut" firstAttribute="top" relation="lessThanOrEqual" secondItem="En1-l2-4ds" secondAttribute="bottom" constant="20" id="oB2-L1-Qma"/>
+                            <constraint firstItem="806-sB-Xut" firstAttribute="top" secondItem="En1-l2-4ds" secondAttribute="bottom" multiplier="3" constant="8" symbolic="YES" id="oUP-gI-LsR"/>
+                            <constraint firstAttribute="trailing" secondItem="5j0-sr-Nab" secondAttribute="trailing" id="vch-qz-qt6"/>
+                            <constraint firstItem="806-sB-Xut" firstAttribute="top" secondItem="En1-l2-4ds" secondAttribute="bottom" multiplier="2" constant="8" symbolic="YES" id="xE4-m6-oFg"/>
+                            <constraint firstItem="5j0-sr-Nab" firstAttribute="top" secondItem="806-sB-Xut" secondAttribute="top" id="yN1-4N-0Q2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5j0-sr-Nab" secondAttribute="trailing" id="yjR-rv-ynd"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="xE4-m6-oFg"/>
+                                <exclude reference="oUP-gI-LsR"/>
+                                <exclude reference="5IF-bg-VRj"/>
+                                <exclude reference="Oax-Ao-43f"/>
+                                <exclude reference="CJB-kS-S2n"/>
+                                <exclude reference="mOo-Z3-nVf"/>
+                                <exclude reference="gBV-c2-pz4"/>
+                                <exclude reference="yjR-rv-ynd"/>
+                                <exclude reference="yN1-4N-0Q2"/>
+                                <exclude reference="JMF-gP-Bxt"/>
+                                <exclude reference="U8Z-Q1-NcH"/>
+                                <exclude reference="WoL-d7-klq"/>
+                                <exclude reference="vch-qz-qt6"/>
+                                <exclude reference="7QQ-bg-U0u"/>
+                                <exclude reference="hTe-nk-RZX"/>
+                                <exclude reference="nWW-8J-3nH"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Sign In" id="Yrx-jj-c9n"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="formScrollView" destination="5j0-sr-Nab" id="F6W-hw-8gj"/>
+                        <outlet property="logoImageView" destination="806-sB-Xut" id="iYp-tS-Kyb"/>
+                        <outlet property="passwordTextField" destination="ABK-jG-QZb" id="he0-zI-gQX"/>
+                        <outlet property="usernameTextField" destination="0Or-bY-lUO" id="pVq-0Y-iTJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lDQ-QD-aBM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2415.5" y="1157.5"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="Oud-mm-z6O">
+            <objects>
+                <tableViewController id="Cb4-n4-RtF" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1ro-un-6fW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SYD-5M-b1d">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SYD-5M-b1d" id="A4v-kg-MOB">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Cb4-n4-RtF" id="4DY-PK-avJ"/>
+                            <outlet property="delegate" destination="Cb4-n4-RtF" id="Tuv-ju-A1m"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Item" id="2oi-c7-H6h"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Aai-Af-OyT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3690.5" y="633.5"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="4xu-ev-eK6">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="SNN-Gs-X3M" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="fT3-wm-oAn">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Cb4-n4-RtF" kind="relationship" relationship="viewControllers" id="4eK-Mi-OHc"/>
+                        <segue destination="9qw-c0-twB" kind="relationship" relationship="viewControllers" id="c9K-cb-86z"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nlI-5Q-JqP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3107" y="1158"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="13g-e8-Q6D">
+            <objects>
+                <viewController id="9qw-c0-twB" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BGM-VB-ag1"/>
+                        <viewControllerLayoutGuide type="bottom" id="wsc-iy-jiL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gbK-hq-kWR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="vRu-rm-CLq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MTc-Bf-kFN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3690.5" y="1359.5"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="SignUpLogo" width="1024" height="768"/>
+        <image name="Logo" width="217" height="114"/>
     </resources>
 </document>

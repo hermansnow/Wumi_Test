@@ -1,5 +1,5 @@
 //
-//  InvitationCodeViewController.swift
+//  WMInvitationCodeViewController.swift
 //  Wumi
 //
 //  Created by Zhe Cheng on 11/5/15.
@@ -8,14 +8,13 @@
 
 import UIKit
 
-class InvitationCodeViewController: RegisterViewController {
+class WMInvitationCodeViewController: WMRegisterViewController {
     
-    @IBOutlet weak var invitationCodeTextField: SignUpTextField!
+    @IBOutlet weak var invitationCodeTextField: WMDataInputTextField!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var signInLabel: HyperLinkTextView!
+    @IBOutlet weak var signInLabel: WMHyperLinkTextView!
 
     var invitationCode = InvitationCode()
-    var verified = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,18 +27,10 @@ class InvitationCodeViewController: RegisterViewController {
         super.viewDidLayoutSubviews()
         
         // Set hyperlink labels
-        self.signInLabel.hyperLinkActions = ["<si>": ["target": self, "selector": "redirectSignIn:"]]
-        self.signInLabel.hyperLinkText = "Already has account? ##<si>Sign in"
+        self.signInLabel.hyperLinkActions = ["<SignIn>": ["target": self, "selector": "redirectSignIn:"]]
+        self.signInLabel.hyperLinkText = "Already has an account? ##<SignIn>Sign in"
         self.signInLabel.parseHyperLinkText()
     }
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "Next To New Account" {
-            return self.verified
-        }
-        return true
-    }
-    
     
     // MARK: Actions
     override func finishForm() {
@@ -50,11 +41,11 @@ class InvitationCodeViewController: RegisterViewController {
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
-            self.verified = verified
+            self.success = verified
         })
     }
     
-    func redirectSignIn(sender: HyperLinkTextView) {
+    func redirectSignIn(sender: WMHyperLinkTextView) {
         self.navigationController?.popToRootViewControllerAnimated(true) // The root view controller is designed to be the Sign In View Controller
     }
 }

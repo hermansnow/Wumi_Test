@@ -1,5 +1,5 @@
 //
-//  SignUpAccountViewController.swift
+//  WMSignUpAccountViewController.swift
 //  Wumi
 //
 //  Created by Zhe Cheng on 11/5/15.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class SignUpAccountViewController: RegisterViewController {
+class WMSignUpAccountViewController: WMRegisterViewController {
     
-    @IBOutlet weak var userNameTextField: SignUpTextField!
-    @IBOutlet weak var userPasswordTextField: SignUpTextField!
-    @IBOutlet weak var userConfirmPasswordTextField: SignUpTextField!
-    @IBOutlet weak var userEmailTextField: SignUpTextField!
+    @IBOutlet weak var userNameTextField: WMDataInputTextField!
+    @IBOutlet weak var userPasswordTextField: WMDataInputTextField!
+    @IBOutlet weak var userConfirmPasswordTextField: WMDataInputTextField!
+    @IBOutlet weak var userEmailTextField: WMDataInputTextField!
     
     var user = User()
     
@@ -28,8 +28,8 @@ class SignUpAccountViewController: RegisterViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "Add Profile" {
-            if let addProfileViewController = segue.destinationViewController as? AddProfileViewController {
+        if segue.identifier == "Show Next Register Form" {
+            if let addProfileViewController = segue.destinationViewController as? WMAddProfileViewController {
                 addProfileViewController.user = self.user
             }
         }
@@ -44,10 +44,7 @@ class SignUpAccountViewController: RegisterViewController {
         dismissInputView()
     }
     
-    func signUpUser() -> Bool {
-        
-        var signUpSuccessed = true
-        
+    func signUpUser() -> Void {
         dismissInputView()
         
         self.user.validateUserWithBlock { (valid, error) -> Void in
@@ -56,9 +53,9 @@ class SignUpAccountViewController: RegisterViewController {
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.showViewController(alert, sender: self)
             }
-            signUpSuccessed = valid
+            self.success = valid
         }
-        if !signUpSuccessed { return false }
+        if !self.success { return }
         
         self.user.signUpInBackgroundWithBlock { (success, error) -> Void in
             if !success {
@@ -66,11 +63,8 @@ class SignUpAccountViewController: RegisterViewController {
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
-            signUpSuccessed = success
+            self.success = success
         }
-        if !signUpSuccessed { return false }
-        
-        return signUpSuccessed
     }
     
     // MARK:TextField delegates and functions
@@ -107,13 +101,13 @@ class SignUpAccountViewController: RegisterViewController {
             break
         }
         
-        if let field = textField as? SignUpTextField {
+        if let field = textField as? WMDataInputTextField {
             field.setRightErrorViewForTextFieldWithErrorMessage(error)
         }
     }
     
     // Left view of text field is used to place specific icon
-    func setLeftImageViewForTextField(textField: SignUpTextField) {
+    func setLeftImageViewForTextField(textField: WMDataInputTextField) {
         var imageName = ""
         
         switch textField {
@@ -127,6 +121,8 @@ class SignUpAccountViewController: RegisterViewController {
             break;
         }
         
-        textField.setLeftImageViewForTextField(UIImage(named: imageName))
+        if let image = UIImage(named: imageName) {
+            textField.setLeftImageViewForTextField(image)
+        }
     }
 }

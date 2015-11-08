@@ -1,5 +1,5 @@
 //
-//  GraduationYearPicker.swift
+//  WMGraduationYearPicker.swift
 //  Wumi
 //
 //  Created by Herman on 11/4/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GraduationYearPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
+class WMGraduationYearPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var years = [Int]()
     

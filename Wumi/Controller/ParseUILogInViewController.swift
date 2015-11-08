@@ -1,5 +1,5 @@
 //
-//  LogInViewController.swift
+//  ParseUILogInViewController.swift
 //  ParseStarterProject-Swift
 //
 //  Created by Zhe Cheng on 11/1/15.
@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import ParseUI
 
-class LogInViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
+class ParseUILogInViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
     
     var loginViewController: PFLogInViewController! = PFLogInViewController()
     
