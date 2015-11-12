@@ -19,6 +19,10 @@ class WMTextFieldViewController: UIViewController, UITextFieldDelegate {
         self.formScrollView.scrollEnabled = true
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissInputView")
         self.formScrollView.addGestureRecognizer(tap)
+        
+        // Setup keyboard Listener
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
     // MARK: Actions
@@ -32,6 +36,35 @@ class WMTextFieldViewController: UIViewController, UITextFieldDelegate {
     func dismissInputView() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         self.view.endEditing(true)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        let keyboardInfo = notification.userInfo as! Dictionary<String, NSValue>
+        if let keyboardRect = keyboardInfo["UIKeyboardFrameEndUserInfoKey"]?.CGRectValue() {
+            if let textField = self.firstResponderTextField() {
+                // Scroll form if showing key board
+                var offsetY = self.formScrollView.contentOffset.y
+                if self.formScrollView.frame.height - textField.frame.height - textField.frame.origin.y < keyboardRect.size.height {
+                    let previousTag = textField.tag - 1;
+                    // Try to find next responder
+                    if let previousTextField = textField.superview?.viewWithTag(previousTag) as? UITextField {
+                        offsetY = previousTextField.frame.origin.y
+                    }
+                }
+                else {
+                    let previousTag = textField.tag - 1;
+                    // Try to find next responder
+                    if let previousTextField = textField.superview?.viewWithTag(previousTag) as? UITextField {
+                        offsetY = min(previousTextField.frame.origin.y, offsetY)
+                    }
+                }
+                self.formScrollView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: true)
+            }
+
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
         self.formScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
         
@@ -52,14 +85,16 @@ class WMTextFieldViewController: UIViewController, UITextFieldDelegate {
         return false // We do not want UITextField to insert line-breaks.
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        var offsetY: CGFloat = 0.0
-        let previousTag = textField.tag - 1;
-        // Try to find next responder
-        if let previousTextField = textField.superview?.viewWithTag(previousTag) as? UITextField {
-            offsetY = previousTextField.frame.origin.y
+    // Find first responder text field
+    func firstResponderTextField() -> UITextField? {
+        for view in self.formScrollView.subviews {
+            if let textField = view as? UITextField{
+                if textField.isFirstResponder() {
+                    return textField
+                }
+            }
         }
         
-        self.formScrollView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: true)
+        return nil
     }
 }

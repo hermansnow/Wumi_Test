@@ -13,8 +13,6 @@ class WMRegisterViewController: WMTextFieldViewController {
     @IBOutlet weak var processButton: UIButton!
     @IBOutlet weak var logoImageView: UIImageView!
     
-    var success = false // Flag used for indicating whether processButton action successed or not
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,7 +24,7 @@ class WMRegisterViewController: WMTextFieldViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         
         // Set Logo view
-        self.logoImageView.image = UIImage(named: "Logo")
+        self.logoImageView.image = UIImage(named: "Profile")
         self.logoImageView.sizeToFit()
         
         // Set button layer
@@ -34,13 +32,6 @@ class WMRegisterViewController: WMTextFieldViewController {
         
         // Hide Back button on navigation controller
         self.navigationItem.hidesBackButton = true
-    }
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "Show Next Register Form" {
-            return self.success
-        }
-        return true
     }
     
     // Frame will change after ViewWillAppear because of AutoLayout. 
@@ -59,16 +50,9 @@ class WMRegisterViewController: WMTextFieldViewController {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
-    // Action for the processButton
-    @IBAction func nextProcess(sender: UIButton) {
-        self.finishForm()
-    }
-    
     // Dismiss inputView when touching any other areas on the screen
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.dismissInputView()
         super.touchesBegan(touches, withEvent: event)
     }
-    
-    func finishForm() { }
 }

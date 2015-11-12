@@ -33,7 +33,7 @@ class WMInvitationCodeViewController: WMRegisterViewController {
     }
     
     // MARK: Actions
-    override func finishForm() {
+    @IBAction func verifyCode(sender: AnyObject) {
         self.invitationCode.invitationCode = self.invitationCodeTextField.text
         self.invitationCode.verifyCodeWhithBlock({ (verified) -> Void in
             if !verified {
@@ -41,7 +41,9 @@ class WMInvitationCodeViewController: WMRegisterViewController {
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
-            self.success = verified
+            else {
+                self.performSegueWithIdentifier("Show New Account Form", sender: self)
+            }
         })
     }
     

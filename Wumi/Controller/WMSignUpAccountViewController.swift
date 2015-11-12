@@ -21,14 +21,14 @@ class WMSignUpAccountViewController: WMRegisterViewController {
         super.viewDidLoad()
         
         // Set left image icon for each text field
-        self.setLeftImageViewForTextField(self.userNameTextField)
-        self.setLeftImageViewForTextField(self.userPasswordTextField)
-        self.setLeftImageViewForTextField(self.userConfirmPasswordTextField)
-        self.setLeftImageViewForTextField(self.userEmailTextField)
+        self.setLeftIconForTextField(self.userNameTextField)
+        self.setLeftIconForTextField(self.userPasswordTextField)
+        self.setLeftIconForTextField(self.userConfirmPasswordTextField)
+        self.setLeftIconForTextField(self.userEmailTextField)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "Show Next Register Form" {
+        if segue.identifier == "Show Profile Form" {
             if let addProfileViewController = segue.destinationViewController as? WMAddProfileViewController {
                 addProfileViewController.user = self.user
             }
@@ -36,34 +36,29 @@ class WMSignUpAccountViewController: WMRegisterViewController {
     }
     
     // MARK:Actions
-    override func finishForm() {
-        signUpUser()
-    }
-    
-    func doneToolButtonClicked(sender: UIBarButtonItem){
-        dismissInputView()
-    }
-    
-    func signUpUser() -> Void {
+    @IBAction func signUpUser(sender: AnyObject) {
         dismissInputView()
         
+        // Validate user inputs
         self.user.validateUserWithBlock { (valid, error) -> Void in
             if !valid {
                 let alert = UIAlertController(title: "Failed", message: "Invalid user information: \(error)", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-                self.showViewController(alert, sender: self)
-            }
-            self.success = valid
-        }
-        if !self.success { return }
-        
-        self.user.signUpInBackgroundWithBlock { (success, error) -> Void in
-            if !success {
-                let alert = UIAlertController(title: "Failed", message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
-            self.success = success
+            else {
+                // Sign up user asynchronously
+                self.user.signUpInBackgroundWithBlock { (success, error) -> Void in
+                    if !success {
+                        let alert = UIAlertController(title: "Failed", message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                    else {
+                        self.performSegueWithIdentifier("Show Profile Form", sender: self)
+                    }
+                }
+            }
         }
     }
     
@@ -107,7 +102,7 @@ class WMSignUpAccountViewController: WMRegisterViewController {
     }
     
     // Left view of text field is used to place specific icon
-    func setLeftImageViewForTextField(textField: WMDataInputTextField) {
+    func setLeftIconForTextField(textField: WMDataInputTextField) {
         var imageName = ""
         
         switch textField {

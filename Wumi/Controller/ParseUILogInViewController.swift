@@ -24,6 +24,7 @@ class ParseUILogInViewController: UIViewController, PFLogInViewControllerDelegat
             let logInLogoTitle = UILabel()
             logInLogoTitle.text = "Wumi"
             self.loginViewController.logInView?.logo = logInLogoTitle
+        self.presentViewController(self.loginViewController, animated: true, completion: nil)
         //}
     }
     

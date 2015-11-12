@@ -12,6 +12,8 @@ import Parse
 class WMSigninViewController: WMTextFieldViewController {
 
     @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var usernameTextField: WMDataInputTextField!
     @IBOutlet weak var passwordTextField: WMDataInputTextField!
     
@@ -29,8 +31,20 @@ class WMSigninViewController: WMTextFieldViewController {
             self.logoImageView.image = image
         }
         
+        // Set sign up button
+        self.signUpButton.setTitleColor(UIColor.yellowColor(), forState: .Normal)
+        
+        // Set forgot password button
+        self.forgotPasswordButton.setTitleColor(UIColor.yellowColor(), forState: .Normal)
+        
         // Hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        // Get current user
+        //if let pfUser = User.currentUser() {
+        //    self.user = User.copyFromPFUser(pfUser)
+        //    self.performSegueWithIdentifier("Launch Main View", sender: self)
+        //}
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
@@ -43,6 +57,7 @@ class WMSigninViewController: WMTextFieldViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print("\(self.user)")
     }
     
     // MARK: Actions
@@ -57,7 +72,34 @@ class WMSigninViewController: WMTextFieldViewController {
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
-            self.user = User(pfUser: pfUser)
+            else {
+                self.user = User.copyFromPFUser(pfUser)
+                self.performSegueWithIdentifier("Launch Main View", sender: self)
+            }
         }
+    }
+    
+    @IBAction func forgotPassword(sender: AnyObject) {
+        let alert = UIAlertController(title: "Reset Password", message: "Please enter the email address for your account", preferredStyle: .Alert)
+        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            textField.placeholder = "Email"
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            if let textField = alert.textFields?.first {
+                User.requestPasswordResetForEmailInBackground(textField.text!, block: { (success, error) -> Void in
+                    if !success {
+                        let alert = UIAlertController(title: "Failed", message: "\(error)", preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                    else {
+                        let alert = UIAlertController(title: "Request Sent", message: "An email has been sent", preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                })
+            }
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }

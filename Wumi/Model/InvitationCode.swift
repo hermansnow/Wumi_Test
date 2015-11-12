@@ -6,7 +6,6 @@
 //  Copyright © 2015 Parse. All rights reserved.
 //
 
-import UIKit
 import Parse
 
 class InvitationCode: PFObject, PFSubclassing {

@@ -11,8 +11,8 @@ import Parse
 class User: PFUser {
     
     //Extended properties for PFUser
-    dynamic var graduationYear: Int = 0
-    dynamic var displayName: String?
+    @NSManaged var graduationYear: Int
+    @NSManaged var name: String?
     
     // properties not for saving
     var confirmPassword: String?
@@ -26,27 +26,25 @@ class User: PFUser {
         }
     }
     
-    override init() {
-        super.init()
-    }
-    
-    init(pfUser: PFUser?) {
-        super.init()
+    class func copyFromPFUser(pfUser: PFUser?) -> User? {
+        var user: User?
         
-        if let user = pfUser {
-            self.objectId = user.objectId
-            self.username = user.username
-            self.password = user.password
-            self.email = user.email
-            self.graduationYear = user["graduationYear"] as! Int
-            self.displayName = user["name"] as? String
+        if let currentPFUser = pfUser {
+            user = User.objectWithoutDataWithObjectId(currentPFUser.objectId)
+            user!.username = currentPFUser.username
+            user!.password = currentPFUser.password
+            user!.email = currentPFUser.email
+            user!.graduationYear = currentPFUser["graduationYear"] as! Int
+            user!.name = currentPFUser["name"] as? String
         }
+        
+        return user
     }
     
     func addProfileInBackgroundWithBlock(block: PFBooleanResultBlock?) {
         // Save extended properties
-        self.setObject(self.graduationYear, forKey: "graduationYear")
-        self.setObject(self.displayName!, forKey: "name")
+        //self.setObject(self.graduationYear, forKey: "graduationYear")
+        //self.setObject(self.displayName!, forKey: "name")
         self.saveInBackgroundWithBlock(block)
     }
     

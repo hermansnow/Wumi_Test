@@ -10,7 +10,7 @@ import UIKit
 
 class WMAddProfileViewController: WMRegisterViewController {
 
-    @IBOutlet weak var userDisplayName: WMDataInputTextField!
+    @IBOutlet weak var userName: WMDataInputTextField!
     @IBOutlet weak var graduationYearTextField: WMDataInputTextField!
     
     var user = User()
@@ -19,8 +19,8 @@ class WMAddProfileViewController: WMRegisterViewController {
         super.viewDidLoad()
         
         // Set left image icon for each text field
-        self.setLeftImageViewForTextField(self.userDisplayName)
-        self.setLeftImageViewForTextField(self.graduationYearTextField)
+        self.setLeftIconForTextField(self.userName)
+        self.setLeftIconForTextField(self.graduationYearTextField)
         
         // Set Date Picker for graduationYearTextField
         let graduationYearPicker = WMGraduationYearPicker()
@@ -37,16 +37,12 @@ class WMAddProfileViewController: WMRegisterViewController {
         
     }
     
-    // MARK:Actions
-    override func finishForm() {
-        AddProfile()
-    }
-    
+    // MARK:Actions    
     func doneToolButtonClicked(sender: UIBarButtonItem){
         dismissInputView()
     }
     
-    func AddProfile() -> Void {
+    @IBAction func addProfile(sender: AnyObject) {
         dismissInputView()
         
         self.user.addProfileInBackgroundWithBlock { (success, error) -> Void in
@@ -58,8 +54,6 @@ class WMAddProfileViewController: WMRegisterViewController {
             else {
                 self.navigationController?.popToRootViewControllerAnimated(true) // Finished Sign Up, back to root of the navigation view controller stack (assume to be the sign-in view)
             }
-            
-            self.success = success
         }
     }
     
@@ -68,8 +62,8 @@ class WMAddProfileViewController: WMRegisterViewController {
         
         // Validate input of each text field
         switch textField {
-        case self.userDisplayName:
-            self.user.displayName = self.userDisplayName.text
+        case self.userName:
+            self.user.name = self.userName.text
         case self.graduationYearTextField:
             if let graduationYear = self.graduationYearTextField.text {
                 if graduationYear.characters.count > 0 {
@@ -86,11 +80,11 @@ class WMAddProfileViewController: WMRegisterViewController {
     }
     
     // Left view of text field is used to place specific icon
-    func setLeftImageViewForTextField(textField: WMDataInputTextField) {
+    func setLeftIconForTextField(textField: WMDataInputTextField) {
         var imageName = ""
         
         switch textField {
-        case self.userDisplayName:
+        case self.userName:
             imageName = "Name"
         case self.graduationYearTextField:
             imageName = "Grad"
