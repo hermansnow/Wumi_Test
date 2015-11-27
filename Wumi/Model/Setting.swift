@@ -12,19 +12,23 @@ class Setting: NSObject {
     enum SettingType {
         case DisclosureCell
         case SwitchCell
-        case NumberInputCell
+        case ButtonCell
+        case DisplayCell
     }
     
+    var identifier: String
     var title: String?
     var type: SettingType
-    var showDetailText = false
+    var detail: String?
     var relatedUserDefaultKey: String?
+    var seletor: Selector?
     
-    init(title: String, type: SettingType, showDetailText: Bool, userDefaultKey: String) {
+    init(identifier: String, title: String?, type: SettingType, detail: String?, selector: Selector?, userDefaultKey: String?) {
+        self.identifier = identifier
         self.title = title
         self.type = type
-        self.showDetailText = showDetailText
+        self.detail = detail
+        self.seletor = selector
         self.relatedUserDefaultKey = userDefaultKey
     }
-    
 }

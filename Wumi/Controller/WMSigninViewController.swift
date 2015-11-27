@@ -17,8 +17,6 @@ class WMSigninViewController: WMTextFieldViewController {
     @IBOutlet weak var usernameTextField: WMDataInputTextField!
     @IBOutlet weak var passwordTextField: WMDataInputTextField!
     
-    var user: User?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,23 +39,17 @@ class WMSigninViewController: WMTextFieldViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         // Get current user
-        //if let pfUser = User.currentUser() {
-        //    self.user = User.copyFromPFUser(pfUser)
-        //    self.performSegueWithIdentifier("Launch Main View", sender: self)
-        //}
+        if User.currentUser() != nil {
+            self.performSegueWithIdentifier("Directly Launch Main View", sender: self)
+        }
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "Launch Main View" {
-            print(self.user)
-            return self.user != nil
+        if identifier == "Launch Main View" || identifier == "Directly Launch Main View" {
+            return User.currentUser() != nil
         }
         
         return true
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("\(self.user)")
     }
     
     // MARK: Actions
@@ -73,7 +65,6 @@ class WMSigninViewController: WMTextFieldViewController {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
             else {
-                self.user = User.copyFromPFUser(pfUser)
                 self.performSegueWithIdentifier("Launch Main View", sender: self)
             }
         }

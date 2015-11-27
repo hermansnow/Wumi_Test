@@ -41,6 +41,18 @@ class User: PFUser {
         return user
     }
     
+    override class func currentUser() -> User? {
+        var user: User?
+        
+        if let pfUser = super.currentUser() {
+            if pfUser.objectId != nil {
+                user = User.copyFromPFUser(pfUser)
+            }
+        }
+        
+        return user
+    }
+    
     func addProfileInBackgroundWithBlock(block: PFBooleanResultBlock?) {
         // Save extended properties
         //self.setObject(self.graduationYear, forKey: "graduationYear")

@@ -20,6 +20,9 @@
 		DF5E3D421BE9463F00F44FFF /* ParseUILogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3F1BE9463F00F44FFF /* ParseUILogInViewController.swift */; };
 		DF5E3D431BE9463F00F44FFF /* WMRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D401BE9463F00F44FFF /* WMRegisterViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
+		DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */; };
+		DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */; };
+		DFA74C231C02BAFB00609E83 /* WMEditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C221C02BAFB00609E83 /* WMEditProfileTableViewController.swift */; };
 		DFA8B0991BEB30F300D5B5DD /* WMHyperLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA8B0981BEB30F300D5B5DD /* WMHyperLinkTextView.swift */; };
 		DFB7CC071BEA893C00BEACB7 /* WMGraduationYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* WMGraduationYearPicker.swift */; };
 		DFB7CC0E1BEAB44E00BEACB7 /* WMDataInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* WMDataInputTextField.swift */; };
@@ -30,7 +33,6 @@
 		DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */; };
 		DFBD2D431BEC7DF400D6FEBC /* WMAddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D421BEC7DF400D6FEBC /* WMAddProfileViewController.swift */; };
 		DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D441BEEF8F800D6FEBC /* Setting.swift */; };
-		DFBD2D471BEEFCB900D6FEBC /* WMProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D461BEEFCB900D6FEBC /* WMProfileTableViewController.swift */; };
 		DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */; };
 		DFD4A6101BE6CF3C00C8B09E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */; };
 		DFD4A6121BE6CF4200C8B09E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */; };
@@ -60,6 +62,9 @@
 		DF5E3D3F1BE9463F00F44FFF /* ParseUILogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseUILogInViewController.swift; path = Controller/ParseUILogInViewController.swift; sourceTree = "<group>"; };
 		DF5E3D401BE9463F00F44FFF /* WMRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMRegisterViewController.swift; path = Controller/WMRegisterViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
+		DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMUserTableViewController.swift; path = Controller/WMUserTableViewController.swift; sourceTree = "<group>"; };
+		DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMMainTabBarController.swift; path = Controller/WMMainTabBarController.swift; sourceTree = "<group>"; };
+		DFA74C221C02BAFB00609E83 /* WMEditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMEditProfileTableViewController.swift; path = Controller/WMEditProfileTableViewController.swift; sourceTree = "<group>"; };
 		DFA8B0981BEB30F300D5B5DD /* WMHyperLinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMHyperLinkTextView.swift; path = View/WMHyperLinkTextView.swift; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* WMGraduationYearPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMGraduationYearPicker.swift; path = View/WMGraduationYearPicker.swift; sourceTree = "<group>"; };
 		DFB7CC0D1BEAB44E00BEACB7 /* WMDataInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMDataInputTextField.swift; path = View/WMDataInputTextField.swift; sourceTree = "<group>"; };
@@ -70,7 +75,6 @@
 		DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationCode.swift; path = Model/InvitationCode.swift; sourceTree = "<group>"; };
 		DFBD2D421BEC7DF400D6FEBC /* WMAddProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMAddProfileViewController.swift; path = Controller/WMAddProfileViewController.swift; sourceTree = "<group>"; };
 		DFBD2D441BEEF8F800D6FEBC /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Setting.swift; path = Model/Setting.swift; sourceTree = "<group>"; };
-		DFBD2D461BEEFCB900D6FEBC /* WMProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMProfileTableViewController.swift; path = Controller/WMProfileTableViewController.swift; sourceTree = "<group>"; };
 		DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -196,7 +200,9 @@
 				DFBD2D3B1BEC623E00D6FEBC /* WMInvitationCodeViewController.swift */,
 				DFBD2D3D1BEC626800D6FEBC /* WMSignUpAccountViewController.swift */,
 				DFBD2D421BEC7DF400D6FEBC /* WMAddProfileViewController.swift */,
-				DFBD2D461BEEFCB900D6FEBC /* WMProfileTableViewController.swift */,
+				DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */,
+				DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */,
+				DFA74C221C02BAFB00609E83 /* WMEditProfileTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -306,14 +312,16 @@
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* WMAddProfileViewController.swift in Sources */,
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
+				DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* WMSignUpAccountViewController.swift in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* WMGraduationYearPicker.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
 				DFB861461BEDBA7E0075014A /* WMTextFieldViewController.swift in Sources */,
+				DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */,
 				DF5E3D431BE9463F00F44FFF /* WMRegisterViewController.swift in Sources */,
 				DFB7CC0E1BEAB44E00BEACB7 /* WMDataInputTextField.swift in Sources */,
+				DFA74C231C02BAFB00609E83 /* WMEditProfileTableViewController.swift in Sources */,
 				DF5E3D421BE9463F00F44FFF /* ParseUILogInViewController.swift in Sources */,
-				DFBD2D471BEEFCB900D6FEBC /* WMProfileTableViewController.swift in Sources */,
 				DFA8B0991BEB30F300D5B5DD /* WMHyperLinkTextView.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 			);
