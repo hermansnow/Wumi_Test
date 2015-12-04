@@ -10,6 +10,7 @@ import UIKit
 
 class WMGraduationYearPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    var currentYear = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
     var years = [Int]()
     
     var year: Int = 0 {
@@ -31,8 +32,6 @@ class WMGraduationYearPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDa
     }
     
     private func setupYearList() {
-        let currentYear = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
-        
         self.years.append(0) // Use 0 for empty input
         
         for var year = currentYear; year >= 1964; year-- {
@@ -43,8 +42,15 @@ class WMGraduationYearPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDa
         self.dataSource = self
     }
     
-    // Mark: UIPicker Delegate / Data Source
+    func setSelectRowForYear(year: Int?) {
+        var row = 0
+        if year != nil {
+            row = currentYear - year! + 1
+        }
+        self.selectRow(row, inComponent: 0, animated: true)
+    }
     
+    // Mark: UIPicker Delegate / Data Source
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }

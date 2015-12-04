@@ -9,7 +9,10 @@
 import UIKit
 import Parse
 
-class WMEditProfileTableViewController: UITableViewController {
+class WMEditProfileTableViewController: UITableViewController, UIPickerViewDelegate {
+    
+    @IBOutlet weak var userNameLabel: UILabel!
+    
     
     var accountSettings = [Setting]()
     var personalSettings = [Setting]()
@@ -34,54 +37,6 @@ class WMEditProfileTableViewController: UITableViewController {
     }
     
     // MARK: tableview delegates
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.sections.count
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section < self.sections.count ? self.sections[section].count : 0
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell
-        let cellIdentifier = "Profile Cell"
-        
-        // Reuse cell
-        if let reuseCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
-            cell = reuseCell
-        }
-        else {
-            cell = UITableViewCell(style: .Value1, reuseIdentifier: cellIdentifier)
-        }
-        
-        // Get related setting
-        if let setting = settingForIndexPath(indexPath) {
-            // Set display name for the cell
-            cell.textLabel!.text = setting.title
-            
-            // Set accessory view
-            switch setting.type {
-            case .DisclosureCell:
-                cell.accessoryType = .DisclosureIndicator
-                cell.accessoryView = nil
-            case .DisplayCell:
-                cell.accessoryType = .None
-                cell.accessoryView = nil
-            default:
-                break
-            }
-            
-            // Set detail text
-            cell.detailTextLabel?.text = setting.detail
-        }
-        
-        return cell
-    }
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.view.endEditing(true)
         
@@ -93,11 +48,35 @@ class WMEditProfileTableViewController: UITableViewController {
     }
     
     // MARK: Actions
-    func eventHandlerForSetting(setting: Setting, withCell: UITableViewCell) {
+    func eventHandlerForSetting(setting: Setting, withCell cell: UITableViewCell) {
         switch setting.identifier {
+        case "Graduation Year":
+            cell.accessoryView!.becomeFirstResponder()
+        case "Log Out":
+            let alert = UIAlertController(title: "Log Out?", message: "Logout will not delete any data. You can still log in with this account. ", preferredStyle: .ActionSheet)
+            alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { (UIAlertAction) -> Void in
+                PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
+                    if error != nil {
+                        // TODO alert
+                    }
+                    else {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let loginViewController = storyboard.instantiateViewControllerWithIdentifier("Log In View Controller")
+                        self.presentViewController(loginViewController, animated: true, completion: nil)
+                    }
+                })
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         default:
             break
         }
+    }
+    
+    func doneToolButtonClicked(sender: UIBarButtonItem){
+        self.view.endEditing(true)
+        
     }
     
     // MARK: Helper functions
@@ -109,13 +88,31 @@ class WMEditProfileTableViewController: UITableViewController {
     }
     
     func setupAccountSettings() {
-        self.accountSettings.append(Setting(identifier: "Account", title: "Account", type: .DisplayCell, detail: user.username, selector:nil ,userDefaultKey:nil))
-        self.accountSettings.append(Setting(identifier: "Password", title: "Password", type: .DisclosureCell, detail: nil, selector:nil ,userDefaultKey:nil))
+        self.accountSettings.append(Setting(identifier: "Account", type: .PlainText))
+        self.userNameLabel.text = user.username
+        self.accountSettings.append(Setting(identifier: "Password", type: .Disclosure))
+        self.accountSettings.append(Setting(identifier: "Email", type: .Disclosure))
     }
     
     func setupPersonalSettings() {
-        self.personalSettings.append(Setting(identifier: "Name", title: "Name", type: .DisclosureCell, detail: user.name, selector:nil ,userDefaultKey: nil))
-        self.personalSettings.append(Setting(identifier: "Graduation Year", title: "Graduation Year", type: .DisclosureCell, detail: "\(user.graduationYear)", selector: nil, userDefaultKey: nil))
+        self.personalSettings.append(Setting(identifier: "Name", type: .Disclosure, name: "Name", value: user.name))
+        // Setup year picker
+        let graduationYearTextField = WMDataInputTextField()
+        let graduationYearPicker = WMGraduationYearPicker()
+        graduationYearPicker.onYearSelected = { (year: Int) in
+            if year == 0 {
+                graduationYearTextField.text = nil
+            }
+            else {
+                graduationYearTextField.text = String(year)
+            }
+        }
+        graduationYearPicker.setSelectRowForYear(user.graduationYear)
+        graduationYearTextField.inputView = graduationYearPicker
+        graduationYearTextField.inputAccessoryView = inputToolBar(graduationYearTextField)
+        //let setting = Setting(identifier: "Graduation Year", title: "Graduation Year", type: .PickerCell, detail: "\(user.graduationYear)")
+        //setting.accessaryView = graduationYearTextField
+        //self.personalSettings.append(setting)
     }
     
     func settingForIndexPath(indexPath: NSIndexPath) -> Setting? {
@@ -128,6 +125,20 @@ class WMEditProfileTableViewController: UITableViewController {
         }
         
         return self.sections[indexPath.section][indexPath.row]
+    }
+    
+    // MARK:View components functions
+    func inputToolBar(textField: UITextField) -> UIToolbar {
+        
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
+        toolbar.barStyle = .Default;
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneToolButtonClicked:")
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        
+        return toolbar
     }
     
     

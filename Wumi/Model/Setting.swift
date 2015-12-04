@@ -10,25 +10,29 @@ import UIKit
 
 class Setting: NSObject {
     enum SettingType {
-        case DisclosureCell
-        case SwitchCell
-        case ButtonCell
-        case DisplayCell
+        case Disclosure
+        case Switch
+        case Picker
+        case Button
+        case PlainText
     }
     
     var identifier: String
-    var title: String?
     var type: SettingType
-    var detail: String?
+    var name: String?
+    var value: String?
     var relatedUserDefaultKey: String?
     var seletor: Selector?
     
-    init(identifier: String, title: String?, type: SettingType, detail: String?, selector: Selector?, userDefaultKey: String?) {
+    init(identifier: String, type: SettingType) {
         self.identifier = identifier
-        self.title = title
         self.type = type
-        self.detail = detail
-        self.seletor = selector
-        self.relatedUserDefaultKey = userDefaultKey
+    }
+    
+    init(identifier: String, type: SettingType, name: String?, value: String?) {
+        self.identifier = identifier
+        self.type = type
+        self.name = name
+        self.value = value
     }
 }
