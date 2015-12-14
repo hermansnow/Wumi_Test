@@ -17,13 +17,14 @@
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		DF5E3D411BE9463F00F44FFF /* WMSigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* WMSigninViewController.swift */; };
-		DF5E3D421BE9463F00F44FFF /* ParseUILogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3F1BE9463F00F44FFF /* ParseUILogInViewController.swift */; };
 		DF5E3D431BE9463F00F44FFF /* WMRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D401BE9463F00F44FFF /* WMRegisterViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */; };
 		DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */; };
 		DFA74C231C02BAFB00609E83 /* WMEditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C221C02BAFB00609E83 /* WMEditProfileTableViewController.swift */; };
 		DFA8B0991BEB30F300D5B5DD /* WMHyperLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA8B0981BEB30F300D5B5DD /* WMHyperLinkTextView.swift */; };
+		DFB4152D1C1E75B000835EFE /* WMEditSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB4152C1C1E75B000835EFE /* WMEditSettingTableViewCell.swift */; };
+		DFB4152F1C1E77AE00835EFE /* WMEditSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB4152E1C1E77AE00835EFE /* WMEditSettingCell.xib */; };
 		DFB7CC071BEA893C00BEACB7 /* WMGraduationYearPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* WMGraduationYearPicker.swift */; };
 		DFB7CC0E1BEAB44E00BEACB7 /* WMDataInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* WMDataInputTextField.swift */; };
 		DFB861461BEDBA7E0075014A /* WMTextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB861451BEDBA7E0075014A /* WMTextFieldViewController.swift */; };
@@ -59,13 +60,14 @@
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* WMSigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMSigninViewController.swift; path = Controller/WMSigninViewController.swift; sourceTree = "<group>"; };
-		DF5E3D3F1BE9463F00F44FFF /* ParseUILogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseUILogInViewController.swift; path = Controller/ParseUILogInViewController.swift; sourceTree = "<group>"; };
 		DF5E3D401BE9463F00F44FFF /* WMRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMRegisterViewController.swift; path = Controller/WMRegisterViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMUserTableViewController.swift; path = Controller/WMUserTableViewController.swift; sourceTree = "<group>"; };
 		DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMMainTabBarController.swift; path = Controller/WMMainTabBarController.swift; sourceTree = "<group>"; };
 		DFA74C221C02BAFB00609E83 /* WMEditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMEditProfileTableViewController.swift; path = Controller/WMEditProfileTableViewController.swift; sourceTree = "<group>"; };
 		DFA8B0981BEB30F300D5B5DD /* WMHyperLinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMHyperLinkTextView.swift; path = View/WMHyperLinkTextView.swift; sourceTree = "<group>"; };
+		DFB4152C1C1E75B000835EFE /* WMEditSettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMEditSettingTableViewCell.swift; path = View/WMEditSettingTableViewCell.swift; sourceTree = "<group>"; };
+		DFB4152E1C1E77AE00835EFE /* WMEditSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WMEditSettingCell.xib; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* WMGraduationYearPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMGraduationYearPicker.swift; path = View/WMGraduationYearPicker.swift; sourceTree = "<group>"; };
 		DFB7CC0D1BEAB44E00BEACB7 /* WMDataInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMDataInputTextField.swift; path = View/WMDataInputTextField.swift; sourceTree = "<group>"; };
 		DFB861451BEDBA7E0075014A /* WMTextFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMTextFieldViewController.swift; path = Controller/WMTextFieldViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			children = (
 				814C3AC61B69877600E307BB /* Main.storyboard */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
+				DFB4152E1C1E77AE00835EFE /* WMEditSettingCell.xib */,
 				DF5E3D381BE9457900F44FFF /* Model */,
 				DFB7CC081BEA894300BEACB7 /* View */,
 				DF5E3D3D1BE9461300F44FFF /* Controller */,
@@ -193,18 +196,33 @@
 		DF5E3D3D1BE9461300F44FFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				DFB861451BEDBA7E0075014A /* WMTextFieldViewController.swift */,
-				DF5E3D3E1BE9463F00F44FFF /* WMSigninViewController.swift */,
-				DF5E3D3F1BE9463F00F44FFF /* ParseUILogInViewController.swift */,
-				DF5E3D401BE9463F00F44FFF /* WMRegisterViewController.swift */,
-				DFBD2D3B1BEC623E00D6FEBC /* WMInvitationCodeViewController.swift */,
-				DFBD2D3D1BEC626800D6FEBC /* WMSignUpAccountViewController.swift */,
-				DFBD2D421BEC7DF400D6FEBC /* WMAddProfileViewController.swift */,
-				DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */,
 				DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */,
-				DFA74C221C02BAFB00609E83 /* WMEditProfileTableViewController.swift */,
+				DFB861451BEDBA7E0075014A /* WMTextFieldViewController.swift */,
+				DFB4152B1C1E706F00835EFE /* SignIn/SignUp */,
+				DFB4152A1C1E705C00835EFE /* Settings */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		DFB4152A1C1E705C00835EFE /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */,
+				DFA74C221C02BAFB00609E83 /* WMEditProfileTableViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		DFB4152B1C1E706F00835EFE /* SignIn/SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				DFBD2D421BEC7DF400D6FEBC /* WMAddProfileViewController.swift */,
+				DF5E3D3E1BE9463F00F44FFF /* WMSigninViewController.swift */,
+				DF5E3D401BE9463F00F44FFF /* WMRegisterViewController.swift */,
+				DFBD2D3D1BEC626800D6FEBC /* WMSignUpAccountViewController.swift */,
+				DFBD2D3B1BEC623E00D6FEBC /* WMInvitationCodeViewController.swift */,
+			);
+			name = SignIn/SignUp;
 			sourceTree = "<group>";
 		};
 		DFB7CC081BEA894300BEACB7 /* View */ = {
@@ -214,6 +232,7 @@
 				DFB7CC0D1BEAB44E00BEACB7 /* WMDataInputTextField.swift */,
 				DFA8B0981BEB30F300D5B5DD /* WMHyperLinkTextView.swift */,
 				DFB861471BEDBDF60075014A /* WMButton.swift */,
+				DFB4152C1C1E75B000835EFE /* WMEditSettingTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -279,6 +298,7 @@
 			files = (
 				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
 				814C3ACB1B69877600E307BB /* Images.xcassets in Resources */,
+				DFB4152F1C1E77AE00835EFE /* WMEditSettingCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +328,7 @@
 			files = (
 				DFBD2D3C1BEC623E00D6FEBC /* WMInvitationCodeViewController.swift in Sources */,
 				DFB861481BEDBDF60075014A /* WMButton.swift in Sources */,
+				DFB4152D1C1E75B000835EFE /* WMEditSettingTableViewCell.swift in Sources */,
 				DF5E3D411BE9463F00F44FFF /* WMSigninViewController.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* WMAddProfileViewController.swift in Sources */,
@@ -321,7 +342,6 @@
 				DF5E3D431BE9463F00F44FFF /* WMRegisterViewController.swift in Sources */,
 				DFB7CC0E1BEAB44E00BEACB7 /* WMDataInputTextField.swift in Sources */,
 				DFA74C231C02BAFB00609E83 /* WMEditProfileTableViewController.swift in Sources */,
-				DF5E3D421BE9463F00F44FFF /* ParseUILogInViewController.swift in Sources */,
 				DFA8B0991BEB30F300D5B5DD /* WMHyperLinkTextView.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 			);

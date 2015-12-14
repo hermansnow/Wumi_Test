@@ -968,11 +968,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/WMEditProfileTableViewController.swift"
-            timestampString = "470906071.860373"
+            timestampString = "471767500.743243"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "eventHandlerForSetting(_:withCell:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -999,13 +999,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Wumi/Controller/WMEditProfileTableViewController.swift"
-            timestampString = "470906071.860373"
+            filePath = "Wumi/Controller/WMUserTableViewController.swift"
+            timestampString = "470903653.144375"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "setupPersonalSettings()"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1015,13 +1015,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Wumi/Controller/WMUserTableViewController.swift"
-            timestampString = "470903653.144375"
+            filePath = "Wumi/Controller/WMEditProfileTableViewController.swift"
+            timestampString = "471767500.743243"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "setupAccountSettingCell(_:ForRow:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

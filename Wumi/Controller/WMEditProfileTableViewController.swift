@@ -11,23 +11,19 @@ import Parse
 
 class WMEditProfileTableViewController: UITableViewController, UIPickerViewDelegate {
     
-    @IBOutlet weak var userNameLabel: UILabel!
-    
-    
-    var accountSettings = [Setting]()
-    var personalSettings = [Setting]()
-    var sections = [[Setting]]()
     var user = User()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.backBarButtonItem?.enabled = true
+        
+        self.tableView.registerNib(UINib(nibName: "WMEditSettingCell", bundle: nil), forCellReuseIdentifier: "Setting Cell")
+        
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
         // Get log in user
         user = User.currentUser()!
-        
-        setupSections()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -37,13 +33,39 @@ class WMEditProfileTableViewController: UITableViewController, UIPickerViewDeleg
     }
     
     // MARK: tableview delegates
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 3
+        case 1:
+            return 2
+        default:
+            return 0
+        }
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell:WMEditSettingTableViewCell = tableView.dequeueReusableCellWithIdentifier("Setting Cell") as! WMEditSettingTableViewCell
+        
+        switch indexPath.section {
+        case 0:
+            setupAccountSettingCell(cell, ForRow: indexPath.row)
+        case 1:
+            setupPersonalSettingCell(cell, ForRow: indexPath.row)
+        default: break
+        }
+        return cell
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.view.endEditing(true)
         
-        if let setting = settingForIndexPath(indexPath) {
-            if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-                eventHandlerForSetting(setting, withCell: cell)
-            }
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) as! WMEditSettingTableViewCell? {
+            eventHandlerForSetting(cell.setting!, withCell: cell)
         }
     }
     
@@ -80,51 +102,26 @@ class WMEditProfileTableViewController: UITableViewController, UIPickerViewDeleg
     }
     
     // MARK: Helper functions
-    func setupSections() {
-        setupAccountSettings()
-        setupPersonalSettings()
-        self.sections.append(self.accountSettings)
-        self.sections.append(self.personalSettings)
+    func setupAccountSettingCell(cell:WMEditSettingTableViewCell, ForRow row:Int) {
+        switch row {
+        case 0:
+            cell.initWithSetting(Setting(identifier: "UserName", type: .DisplayOnly, value: user.username))
+        case 1:
+            cell.initWithSetting(Setting(identifier: "Password", type: .Disclosure, value: nil))
+        case 2:
+            cell.initWithSetting(Setting(identifier: "Email", type: .Input, value: user.email))
+        default: break
+        }
     }
     
-    func setupAccountSettings() {
-        self.accountSettings.append(Setting(identifier: "Account", type: .PlainText))
-        self.userNameLabel.text = user.username
-        self.accountSettings.append(Setting(identifier: "Password", type: .Disclosure))
-        self.accountSettings.append(Setting(identifier: "Email", type: .Disclosure))
-    }
-    
-    func setupPersonalSettings() {
-        self.personalSettings.append(Setting(identifier: "Name", type: .Disclosure, name: "Name", value: user.name))
-        // Setup year picker
-        let graduationYearTextField = WMDataInputTextField()
-        let graduationYearPicker = WMGraduationYearPicker()
-        graduationYearPicker.onYearSelected = { (year: Int) in
-            if year == 0 {
-                graduationYearTextField.text = nil
-            }
-            else {
-                graduationYearTextField.text = String(year)
-            }
+    func setupPersonalSettingCell(cell:WMEditSettingTableViewCell, ForRow row:Int) {
+        switch row {
+        case 0:
+            cell.initWithSetting(Setting(identifier: "Name", type: .Input, value: user.name))
+        case 1:
+            cell.initWithSetting(Setting(identifier: "Name", type: .Input, value: user.name))
+        default: break
         }
-        graduationYearPicker.setSelectRowForYear(user.graduationYear)
-        graduationYearTextField.inputView = graduationYearPicker
-        graduationYearTextField.inputAccessoryView = inputToolBar(graduationYearTextField)
-        //let setting = Setting(identifier: "Graduation Year", title: "Graduation Year", type: .PickerCell, detail: "\(user.graduationYear)")
-        //setting.accessaryView = graduationYearTextField
-        //self.personalSettings.append(setting)
-    }
-    
-    func settingForIndexPath(indexPath: NSIndexPath) -> Setting? {
-        if indexPath.section >= self.sections.count {
-            return nil
-        }
-        
-        if indexPath.row >= self.sections[indexPath.section].count {
-            return nil
-        }
-        
-        return self.sections[indexPath.section][indexPath.row]
     }
     
     // MARK:View components functions

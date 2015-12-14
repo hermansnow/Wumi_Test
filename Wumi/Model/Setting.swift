@@ -14,7 +14,8 @@ class Setting: NSObject {
         case Switch
         case Picker
         case Button
-        case PlainText
+        case DisplayOnly
+        case Input
     }
     
     var identifier: String
@@ -24,9 +25,11 @@ class Setting: NSObject {
     var relatedUserDefaultKey: String?
     var seletor: Selector?
     
-    init(identifier: String, type: SettingType) {
+    init(identifier: String, type: SettingType, value: String?) {
         self.identifier = identifier
         self.type = type
+        self.name = identifier
+        self.value = value
     }
     
     init(identifier: String, type: SettingType, name: String?, value: String?) {

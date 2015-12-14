@@ -14,8 +14,8 @@ class WMUserTableViewController: UITableViewController {
     @IBOutlet weak var userDisplayName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
     
-    var sections: [[Setting]] = [[Setting(identifier: "User Profile", type: .Disclosure)],
-                                 [Setting(identifier:"Log Out", type: .Button)]]
+    var sections: [[Setting]] = [[Setting(identifier: "User Profile", type: .Disclosure, value: nil)],
+                                 [Setting(identifier:"Log Out", type: .Button, value: nil)]]
     var userDefault = NSUserDefaults.standardUserDefaults()
     var user = User()
     
