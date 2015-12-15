@@ -46,5 +46,12 @@ class WMEditSettingTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    func initWithSetting(setting:Setting?, WithTextFieldDelegate delegate:UITextFieldDelegate) {
+        if setting != nil {
+            self.textField.delegate = delegate
+            initWithSetting(setting)
+        }
+    }
 
 }

@@ -9,7 +9,9 @@
 import UIKit
 import Parse
 
-class WMEditProfileTableViewController: UITableViewController, UIPickerViewDelegate {
+class WMEditProfileTableViewController: UITableViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var navBar: UINavigationBar!
     
     var user = User()
     
@@ -35,6 +37,17 @@ class WMEditProfileTableViewController: UITableViewController, UIPickerViewDeleg
     // MARK: tableview delegates
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Account Information"
+        case 1:
+            return "Personal Information"
+        default:
+            return nil
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,36 +82,45 @@ class WMEditProfileTableViewController: UITableViewController, UIPickerViewDeleg
         }
     }
     
-    // MARK: Actions
-    func eventHandlerForSetting(setting: Setting, withCell cell: UITableViewCell) {
-        switch setting.identifier {
-        case "Graduation Year":
-            cell.accessoryView!.becomeFirstResponder()
-        case "Log Out":
-            let alert = UIAlertController(title: "Log Out?", message: "Logout will not delete any data. You can still log in with this account. ", preferredStyle: .ActionSheet)
-            alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { (UIAlertAction) -> Void in
-                PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
-                    if error != nil {
-                        // TODO alert
-                    }
-                    else {
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        let loginViewController = storyboard.instantiateViewControllerWithIdentifier("Log In View Controller")
-                        self.presentViewController(loginViewController, animated: true, completion: nil)
-                    }
-                })
-                
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        default:
-            break
+    // MARK: textfield delegates
+    func textFieldDidEndEditing(textField: UITextField) {
+        if let cell = textField.superview?.superview as! WMEditSettingTableViewCell? {
+            switch cell.setting!.identifier {
+            case "Email":
+                self.user.email = textField.text
+            case "Name":
+                self.user.name = textField.text
+            default: break
+            }
         }
     }
     
-    func doneToolButtonClicked(sender: UIBarButtonItem){
+    // MARK: Actions
+    @IBAction func cancel(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func saveProfile(sender: UIBarButtonItem) {
         self.view.endEditing(true)
         
+        self.user.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if !success {
+                let alert = UIAlertController(title: "Failed", message: "Failed in editting profile: \(error)", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            else {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        })
+    }
+    
+    
+    func eventHandlerForSetting(setting: Setting, withCell cell: UITableViewCell) {
+        switch setting.identifier {
+        default:
+            break
+        }
     }
     
     // MARK: Helper functions
@@ -109,7 +131,7 @@ class WMEditProfileTableViewController: UITableViewController, UIPickerViewDeleg
         case 1:
             cell.initWithSetting(Setting(identifier: "Password", type: .Disclosure, value: nil))
         case 2:
-            cell.initWithSetting(Setting(identifier: "Email", type: .Input, value: user.email))
+            cell.initWithSetting(Setting(identifier: "Email", type: .Input, value: user.email), WithTextFieldDelegate:self)
         default: break
         }
     }
@@ -117,26 +139,10 @@ class WMEditProfileTableViewController: UITableViewController, UIPickerViewDeleg
     func setupPersonalSettingCell(cell:WMEditSettingTableViewCell, ForRow row:Int) {
         switch row {
         case 0:
-            cell.initWithSetting(Setting(identifier: "Name", type: .Input, value: user.name))
+            cell.initWithSetting(Setting(identifier: "Name", type: .Input, value: user.name), WithTextFieldDelegate:self)
         case 1:
-            cell.initWithSetting(Setting(identifier: "Name", type: .Input, value: user.name))
+            cell.initWithSetting(Setting(identifier: "Name", type: .Input, value: user.name), WithTextFieldDelegate:self)
         default: break
         }
     }
-    
-    // MARK:View components functions
-    func inputToolBar(textField: UITextField) -> UIToolbar {
-        
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
-        toolbar.barStyle = .Default;
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneToolButtonClicked:")
-        
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        
-        return toolbar
-    }
-    
-    
 }

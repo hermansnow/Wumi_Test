@@ -14,8 +14,10 @@ class WMUserTableViewController: UITableViewController {
     @IBOutlet weak var userDisplayName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
     
-    var sections: [[Setting]] = [[Setting(identifier: "User Profile", type: .Disclosure, value: nil)],
-                                 [Setting(identifier:"Log Out", type: .Button, value: nil)]]
+    var sections: [[Setting]] =
+        [[Setting(identifier: "User Profile", type: .DisplayOnly, value: nil)],
+        [Setting(identifier: "Contact", type: .Disclosure, value: nil)],
+        [Setting(identifier:"Log Out", type: .Button, value: nil)]]
     var userDefault = NSUserDefaults.standardUserDefaults()
     var user = User()
     
@@ -23,7 +25,9 @@ class WMUserTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         // Get log in user
         self.user = User.currentUser()!
         
@@ -33,9 +37,9 @@ class WMUserTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
         self.tableView.reloadData()
+        
+        super.viewDidAppear(animated)
     }
     
     // MARK: tableview delegates
@@ -54,6 +58,8 @@ class WMUserTableViewController: UITableViewController {
         switch setting.identifier {
         case "User Profile":
             self.performSegueWithIdentifier("Edit Profile", sender: self)
+        case "Cantact":
+            self.performSegueWithIdentifier("Contact Settings", sender: self)
         case "Log Out":
             self.logoutUser()
         default:
