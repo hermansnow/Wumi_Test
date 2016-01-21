@@ -1,5 +1,5 @@
 //
-//  WMSigninViewController.swift
+//  SigninViewController.swift
 //  Wumi
 //
 //  Created by Zhe Cheng on 11/1/15.
@@ -9,43 +9,30 @@
 import UIKit
 import Parse
 
-class WMSigninViewController: WMTextFieldViewController {
+class SigninViewController: UIViewController {
 
     @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
-    @IBOutlet weak var usernameTextField: WMDataInputTextField!
-    @IBOutlet weak var passwordTextField: WMDataInputTextField!
+    @IBOutlet weak var usernameTextField: DataInputTextField!
+    @IBOutlet weak var passwordTextField: DataInputTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set background image
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "SignInBackground")!)
-        
-        // Set logo image view
-        self.logoImageView.contentMode = .ScaleAspectFill //set contentMode to scale aspect to fit
-        if let image = UIImage(named: "Logo") {
-            self.logoImageView.image = image
-        }
-        
-        // Set sign up button
-        self.signUpButton.setTitleColor(UIColor.yellowColor(), forState: .Normal)
-        
-        // Set forgot password button
-        self.forgotPasswordButton.setTitleColor(UIColor.yellowColor(), forState: .Normal)
         
         // Hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         // Get current user
         if User.currentUser() != nil {
-            self.performSegueWithIdentifier("Directly Launch Main View", sender: self)
+            //self.performSegueWithIdentifier("Launch Main View", sender: self)
         }
     }
     
+    // Perform segues: "Launch Main View" to main view
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "Launch Main View" || identifier == "Directly Launch Main View" {
+        if identifier == "Launch Main View" {
             return User.currentUser() != nil
         }
         
@@ -60,9 +47,7 @@ class WMSigninViewController: WMTextFieldViewController {
         
         User.logInWithUsernameInBackground(userName!, password: userPassword!) { (pfUser, error) -> Void in
             if pfUser == nil {
-                let alert = UIAlertController(title: "Failed", message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
             }
             else {
                 self.performSegueWithIdentifier("Launch Main View", sender: self)
@@ -79,14 +64,10 @@ class WMSigninViewController: WMTextFieldViewController {
             if let textField = alert.textFields?.first {
                 User.requestPasswordResetForEmailInBackground(textField.text!, block: { (success, error) -> Void in
                     if !success {
-                        let alert = UIAlertController(title: "Failed", message: "\(error)", preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
                     }
                     else {
-                        let alert = UIAlertController(title: "Request Sent", message: "An email has been sent", preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        Helper.PopupInformationBox(self, boxTitle: "Request Sent", message: "Please check your registered email account for resetting password")
                     }
                 })
             }

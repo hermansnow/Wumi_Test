@@ -10,7 +10,7 @@ import UIKit
 
 class WMInvitationCodeViewController: WMRegisterViewController {
     
-    @IBOutlet weak var invitationCodeTextField: WMDataInputTextField!
+    @IBOutlet weak var invitationCodeTextField: DataInputTextField!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var signInLabel: WMHyperLinkTextView!
 
