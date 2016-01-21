@@ -16,9 +16,11 @@
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
-		DF5E3D411BE9463F00F44FFF /* WMSigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* WMSigninViewController.swift */; };
+		CD07AB2F4EB8A23627CD1031 /* libPods-Wumi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD03B9783C38435913A8CED7 /* libPods-Wumi.a */; };
+		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D431BE9463F00F44FFF /* WMRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D401BE9463F00F44FFF /* WMRegisterViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
+		DF981D641C50CDE200C2D637 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF981D631C50CDE200C2D637 /* Helper.swift */; };
 		DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */; };
 		DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */; };
 		DFA74C231C02BAFB00609E83 /* WMEditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C221C02BAFB00609E83 /* WMEditProfileTableViewController.swift */; };
@@ -29,7 +31,7 @@
 		DFB7CC0E1BEAB44E00BEACB7 /* WMDataInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* WMDataInputTextField.swift */; };
 		DFB861461BEDBA7E0075014A /* WMTextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB861451BEDBA7E0075014A /* WMTextFieldViewController.swift */; };
 		DFB861481BEDBDF60075014A /* WMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB861471BEDBDF60075014A /* WMButton.swift */; };
-		DFBD2D3C1BEC623E00D6FEBC /* WMInvitationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D3B1BEC623E00D6FEBC /* WMInvitationCodeViewController.swift */; };
+		DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D3B1BEC623E00D6FEBC /* InvitationCodeViewController.swift */; };
 		DFBD2D3E1BEC626800D6FEBC /* WMSignUpAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D3D1BEC626800D6FEBC /* WMSignUpAccountViewController.swift */; };
 		DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */; };
 		DFBD2D431BEC7DF400D6FEBC /* WMAddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D421BEC7DF400D6FEBC /* WMAddProfileViewController.swift */; };
@@ -45,6 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		470E95EE1A1A92066C158A90 /* Pods-Wumi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.release.xcconfig"; sourceTree = "<group>"; };
+		4F748DB85E19BBF78797C9FF /* Pods-Wumi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.debug.xcconfig"; sourceTree = "<group>"; };
 		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		814C3AC81B69877600E307BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,9 +63,10 @@
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
-		DF5E3D3E1BE9463F00F44FFF /* WMSigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMSigninViewController.swift; path = Controller/WMSigninViewController.swift; sourceTree = "<group>"; };
+		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D401BE9463F00F44FFF /* WMRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMRegisterViewController.swift; path = Controller/WMRegisterViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
+		DF981D631C50CDE200C2D637 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMUserTableViewController.swift; path = Controller/WMUserTableViewController.swift; sourceTree = "<group>"; };
 		DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMMainTabBarController.swift; path = Controller/WMMainTabBarController.swift; sourceTree = "<group>"; };
 		DFA74C221C02BAFB00609E83 /* WMEditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMEditProfileTableViewController.swift; path = Controller/WMEditProfileTableViewController.swift; sourceTree = "<group>"; };
@@ -72,7 +77,7 @@
 		DFB7CC0D1BEAB44E00BEACB7 /* WMDataInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMDataInputTextField.swift; path = View/WMDataInputTextField.swift; sourceTree = "<group>"; };
 		DFB861451BEDBA7E0075014A /* WMTextFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMTextFieldViewController.swift; path = Controller/WMTextFieldViewController.swift; sourceTree = "<group>"; };
 		DFB861471BEDBDF60075014A /* WMButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMButton.swift; path = View/WMButton.swift; sourceTree = "<group>"; };
-		DFBD2D3B1BEC623E00D6FEBC /* WMInvitationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMInvitationCodeViewController.swift; path = Controller/WMInvitationCodeViewController.swift; sourceTree = "<group>"; };
+		DFBD2D3B1BEC623E00D6FEBC /* InvitationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationCodeViewController.swift; path = Controller/InvitationCodeViewController.swift; sourceTree = "<group>"; };
 		DFBD2D3D1BEC626800D6FEBC /* WMSignUpAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMSignUpAccountViewController.swift; path = Controller/WMSignUpAccountViewController.swift; sourceTree = "<group>"; };
 		DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationCode.swift; path = Model/InvitationCode.swift; sourceTree = "<group>"; };
 		DFBD2D421BEC7DF400D6FEBC /* WMAddProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMAddProfileViewController.swift; path = Controller/WMAddProfileViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +89,7 @@
 		DFD4A6151BE6D09A00C8B09E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DFD4A6171BE6D0A000C8B09E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DFD4A6191BE6D0C500C8B09E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		FD03B9783C38435913A8CED7 /* libPods-Wumi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wumi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,7 @@
 				81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */,
 				81BA81711A49DB6800E65899 /* Parse.framework in Frameworks */,
 				81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */,
+				CD07AB2F4EB8A23627CD1031 /* libPods-Wumi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +134,7 @@
 				814C3AC51B69877600E307BB /* Resources */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
 				81BA81461A49DA1800E65899 /* Products */,
+				886BE1747C5B159EE21BB7BB /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,6 +155,7 @@
 				DF5E3D381BE9457900F44FFF /* Model */,
 				DFB7CC081BEA894300BEACB7 /* View */,
 				DF5E3D3D1BE9461300F44FFF /* Controller */,
+				DF981D631C50CDE200C2D637 /* Helper.swift */,
 			);
 			name = Project;
 			path = Wumi;
@@ -168,6 +177,7 @@
 				81BA816E1A49DB6800E65899 /* ParseFacebookUtils.framework */,
 				81BA81801A49E10C00E65899 /* ParseUI.framework */,
 				81BA81751A49E0C500E65899 /* System Frameworks */,
+				FD03B9783C38435913A8CED7 /* libPods-Wumi.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -181,6 +191,15 @@
 				81BA81761A49E0D500E65899 /* libsqlite3.dylib */,
 			);
 			name = "System Frameworks";
+			sourceTree = "<group>";
+		};
+		886BE1747C5B159EE21BB7BB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4F748DB85E19BBF78797C9FF /* Pods-Wumi.debug.xcconfig */,
+				470E95EE1A1A92066C158A90 /* Pods-Wumi.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		DF5E3D381BE9457900F44FFF /* Model */ = {
@@ -217,10 +236,10 @@
 			isa = PBXGroup;
 			children = (
 				DFBD2D421BEC7DF400D6FEBC /* WMAddProfileViewController.swift */,
-				DF5E3D3E1BE9463F00F44FFF /* WMSigninViewController.swift */,
+				DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */,
 				DF5E3D401BE9463F00F44FFF /* WMRegisterViewController.swift */,
 				DFBD2D3D1BEC626800D6FEBC /* WMSignUpAccountViewController.swift */,
-				DFBD2D3B1BEC623E00D6FEBC /* WMInvitationCodeViewController.swift */,
+				DFBD2D3B1BEC623E00D6FEBC /* InvitationCodeViewController.swift */,
 			);
 			name = SignIn/SignUp;
 			sourceTree = "<group>";
@@ -244,10 +263,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Wumi" */;
 			buildPhases = (
+				C2904A9421A33D129E9303FF /* Check Pods Manifest.lock */,
 				81BA81411A49DA1800E65899 /* Sources */,
 				81BA81421A49DA1800E65899 /* Frameworks */,
 				81BA81431A49DA1800E65899 /* Resources */,
 				81CC85E11A49F6D40076DE19 /* Upload Symbol Files */,
+				8B37B31A82A038C2EF1814E4 /* Embed Pods Frameworks */,
+				2AA38410781F5A84E3D0301E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -305,6 +327,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2AA38410781F5A84E3D0301E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wumi/Pods-Wumi-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		81CC85E11A49F6D40076DE19 /* Upload Symbol Files */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -319,6 +356,36 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script will upload symbol files for your application,\n# so all your crash reports are going to be symbolicated\n\n# Important!\n# Before using the script, please initialize CloudCode folder and replace <path_to_cloudcode_folder> with the path to it\n#\n# Read more on Parse.com - https://parse.com/apps/quickstart#analytics/crashreporting/ios/\n############################################################\n\n\n# export PATH=/usr/local/bin:$PATH\n# cd <path_to_cloudcode_folder>\n\n# parse symbols -p \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\n";
 		};
+		8B37B31A82A038C2EF1814E4 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wumi/Pods-Wumi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C2904A9421A33D129E9303FF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -326,14 +393,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFBD2D3C1BEC623E00D6FEBC /* WMInvitationCodeViewController.swift in Sources */,
+				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,
 				DFB861481BEDBDF60075014A /* WMButton.swift in Sources */,
 				DFB4152D1C1E75B000835EFE /* WMEditSettingTableViewCell.swift in Sources */,
-				DF5E3D411BE9463F00F44FFF /* WMSigninViewController.swift in Sources */,
+				DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* WMAddProfileViewController.swift in Sources */,
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
 				DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */,
+				DF981D641C50CDE200C2D637 /* Helper.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* WMSignUpAccountViewController.swift in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* WMGraduationYearPicker.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
@@ -444,6 +512,7 @@
 		};
 		81BA81651A49DA1800E65899 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F748DB85E19BBF78797C9FF /* Pods-Wumi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -461,6 +530,7 @@
 		};
 		81BA81661A49DA1800E65899 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 470E95EE1A1A92066C158A90 /* Pods-Wumi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

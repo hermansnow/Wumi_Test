@@ -1,5 +1,5 @@
 //
-//  WMDataInputTextField.swift
+//  DataInputTextField.swift
 //  Wumi
 //
 //  Created by Herman on 11/4/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WMDataInputTextField: UITextField {
+class DataInputTextField: UITextField {
 
     override func drawRect(rect: CGRect) {
         self.layer.cornerRadius = 10

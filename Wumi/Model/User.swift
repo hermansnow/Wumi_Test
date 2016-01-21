@@ -10,11 +10,11 @@ import Parse
 
 class User: PFUser {
     
-    //Extended properties for PFUser
+    // Extended properties
     @NSManaged var graduationYear: Int
     @NSManaged var name: String?
     
-    // properties not for saving
+    // Properties should not be saved into PFUser
     var confirmPassword: String?
     
     override class func initialize() {
@@ -26,6 +26,7 @@ class User: PFUser {
         }
     }
     
+    // Return a User instance from a PFUser instance
     class func copyFromPFUser(pfUser: PFUser?) -> User? {
         var user: User?
         
@@ -41,6 +42,7 @@ class User: PFUser {
         return user
     }
     
+    // Get current login User instance
     override class func currentUser() -> User? {
         var user: User?
         
@@ -53,13 +55,14 @@ class User: PFUser {
         return user
     }
     
-    func addProfileInBackgroundWithBlock(block: PFBooleanResultBlock?) {
+    func EditInBackgroundWithBlock(block: PFBooleanResultBlock?) {
         // Save extended properties
         //self.setObject(self.graduationYear, forKey: "graduationYear")
         //self.setObject(self.displayName!, forKey: "name")
         self.saveInBackgroundWithBlock(block)
     }
     
+    // MARK: Validation Functions
     func validateUserWithBlock(block: (valid: Bool, error: NSDictionary) -> Void) {
         let errors = NSMutableDictionary()
         var errorMesage = ""

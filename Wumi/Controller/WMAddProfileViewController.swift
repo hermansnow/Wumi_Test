@@ -10,8 +10,8 @@ import UIKit
 
 class WMAddProfileViewController: WMRegisterViewController {
 
-    @IBOutlet weak var userName: WMDataInputTextField!
-    @IBOutlet weak var graduationYearTextField: WMDataInputTextField!
+    @IBOutlet weak var userName: DataInputTextField!
+    @IBOutlet weak var graduationYearTextField: DataInputTextField!
     
     var user = User()
     
@@ -45,7 +45,7 @@ class WMAddProfileViewController: WMRegisterViewController {
     @IBAction func addProfile(sender: AnyObject) {
         dismissInputView()
         
-        self.user.addProfileInBackgroundWithBlock { (success, error) -> Void in
+        self.user.EditInBackgroundWithBlock { (success, error) -> Void in
             if !success {
                 let alert = UIAlertController(title: "Failed", message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
@@ -74,13 +74,13 @@ class WMAddProfileViewController: WMRegisterViewController {
             break
         }
         
-        if let field = textField as? WMDataInputTextField {
+        if let field = textField as? DataInputTextField {
             field.setRightErrorViewForTextFieldWithErrorMessage(error)
         }
     }
     
     // Left view of text field is used to place specific icon
-    func setLeftIconForTextField(textField: WMDataInputTextField) {
+    func setLeftIconForTextField(textField: DataInputTextField) {
         var imageName = ""
         
         switch textField {

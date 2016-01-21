@@ -10,10 +10,10 @@ import UIKit
 
 class WMSignUpAccountViewController: WMRegisterViewController {
     
-    @IBOutlet weak var userNameTextField: WMDataInputTextField!
-    @IBOutlet weak var userPasswordTextField: WMDataInputTextField!
-    @IBOutlet weak var userConfirmPasswordTextField: WMDataInputTextField!
-    @IBOutlet weak var userEmailTextField: WMDataInputTextField!
+    @IBOutlet weak var userNameTextField: DataInputTextField!
+    @IBOutlet weak var userPasswordTextField: DataInputTextField!
+    @IBOutlet weak var userConfirmPasswordTextField: DataInputTextField!
+    @IBOutlet weak var userEmailTextField: DataInputTextField!
     
     var user = User()
     
@@ -96,13 +96,13 @@ class WMSignUpAccountViewController: WMRegisterViewController {
             break
         }
         
-        if let field = textField as? WMDataInputTextField {
+        if let field = textField as? DataInputTextField {
             field.setRightErrorViewForTextFieldWithErrorMessage(error)
         }
     }
     
     // Left view of text field is used to place specific icon
-    func setLeftIconForTextField(textField: WMDataInputTextField) {
+    func setLeftIconForTextField(textField: DataInputTextField) {
         var imageName = ""
         
         switch textField {
