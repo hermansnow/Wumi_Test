@@ -12,9 +12,6 @@ import Parse
 class SigninViewController: UIViewController {
 
     @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var signInButton: UIButton!
-    @IBOutlet weak var signUpButton: UIButton!
-    @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var usernameTextField: DataInputTextField!
     @IBOutlet weak var passwordTextField: DataInputTextField!
     

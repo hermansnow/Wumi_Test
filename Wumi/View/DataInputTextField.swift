@@ -9,7 +9,15 @@
 import UIKit
 
 class DataInputTextField: UITextField {
-
+    
+    private var dataInputDelegate: DataInputTextFieldDelegate?
+        
+    override  var delegate: UITextFieldDelegate? {
+        didSet {
+            dataInputDelegate = delegate as? DataInputTextFieldDelegate
+        }
+    }
+    
     override func drawRect(rect: CGRect) {
         self.layer.cornerRadius = 10
         self.clearsOnBeginEditing = false
@@ -50,5 +58,26 @@ class DataInputTextField: UITextField {
             self.leftViewMode = .Always
         }
     }
+    
+    // MARK:View components functions
+    func addInputToolBar() {
+        
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 44))
+        toolbar.barStyle = .Default;
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("doneToolButtonClicked:"))
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        
+        self.inputAccessoryView = toolbar
+    }
+    
+    func doneToolButtonClicked(sender: UIBarButtonItem) {
+        self.dataInputDelegate?.doneToolButtonClicked(sender)
+    }
+}
 
+@objc protocol DataInputTextFieldDelegate: UITextFieldDelegate {
+    func doneToolButtonClicked(sender: UIBarButtonItem);
 }

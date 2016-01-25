@@ -7,15 +7,18 @@
 //
 
 import Parse
+import UIKit
 
 class User: PFUser {
     
     // Extended properties
     @NSManaged var graduationYear: Int
     @NSManaged var name: String?
+    @NSManaged var profileImageFile: PFFile?
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
+    var profileImage: UIImage?
     
     override class func initialize() {
         struct Static {
@@ -35,10 +38,16 @@ class User: PFUser {
             user!.username = currentPFUser.username
             user!.password = currentPFUser.password
             user!.email = currentPFUser.email
-            user!.graduationYear = currentPFUser["graduationYear"] as! Int
-            user!.name = currentPFUser["name"] as? String
+            if let graduationYear = currentPFUser.objectForKey("graduationYear") as? Int {
+                user!.graduationYear = graduationYear
+            }
+            if let name = currentPFUser.objectForKey("name") as? String {
+                user!.name = name
+            }
+            if let profileImageFile = currentPFUser.objectForKey("profileImage") as? PFFile {
+                user!.profileImageFile = profileImageFile
+            }
         }
-        
         return user
     }
     
@@ -51,17 +60,63 @@ class User: PFUser {
                 user = User.copyFromPFUser(pfUser)
             }
         }
-        
         return user
     }
     
-    func EditInBackgroundWithBlock(block: PFBooleanResultBlock?) {
+    func editInBackgroundWithBlock(block: PFBooleanResultBlock?) {
         // Save extended properties
         //self.setObject(self.graduationYear, forKey: "graduationYear")
         //self.setObject(self.displayName!, forKey: "name")
         self.saveInBackgroundWithBlock(block)
     }
     
+    func loadProfileImageWithBlock(block: (valid: Bool, error: NSError?) -> Void) {
+        if profileImageFile == nil {
+            block(valid: false, error: NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            return
+        }
+        
+        profileImageFile!.getDataInBackgroundWithBlock { (imageData: NSData?, error: NSError?) -> Void in
+            if error == nil {
+                if let imageData = imageData {
+                    self.profileImage = UIImage(data: imageData)
+                }
+                block(valid: true, error: nil)
+            }
+            else {
+                block(valid: false, error: error)
+            }
+        }
+    }
+    
+    func saveProfileImageFileWithBlock(block: (valid: Bool, error: NSError?) -> Void) {
+        if profileImage == nil {
+            block(valid: false, error: NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            return
+        }
+        
+        if let imageData = scaleImage(profileImage!, ToSize: 1048576) {
+            profileImageFile = PFFile(data: imageData)
+            profileImageFile!.saveInBackgroundWithBlock(block)
+        }
+    }
+    
+    func scaleImage(image: UIImage, ToSize size: Int) -> NSData? {
+        var compress:CGFloat = 1.0;
+        var imageData:NSData?
+        
+        if let jpegData = UIImageJPEGRepresentation(image, compress) {
+            compress = CGFloat(size) / CGFloat(jpegData.length)
+            if compress < 1.0 {
+                imageData = UIImageJPEGRepresentation(image, compress);
+            }
+            else {
+                imageData = jpegData
+            }
+        }
+        return imageData;
+    }
+
     // MARK: Validation Functions
     func validateUserWithBlock(block: (valid: Bool, error: NSDictionary) -> Void) {
         let errors = NSMutableDictionary()

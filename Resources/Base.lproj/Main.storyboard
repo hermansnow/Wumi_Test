@@ -3,7 +3,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -27,117 +26,88 @@
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
-                                        <rect key="frame" x="0.0" y="114" width="375" height="444"/>
+                                        <rect key="frame" x="0.0" y="114" width="375" height="363"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="82t-oX-8W2">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="444"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="izv-Vt-sbK">
+                                                <rect key="frame" x="68" y="20" width="240" height="60"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBZ-Vh-PjR">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="111"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please verify the invitation code:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wG-Z6-9kJ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="240" height="16"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Invitation Code" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="p8g-H2-hJh" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="30" width="240" height="30"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="njF-On-joe">
-                                                        <rect key="frame" x="0.0" y="111" width="375" height="111"/>
-                                                        <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="izv-Vt-sbK">
-                                                                <rect key="frame" x="37.5" y="27" width="300" height="57"/>
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please verify the invitation code for Wumi:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wG-Z6-9kJ">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="255" height="16"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="M1P-O8-2oY">
-                                                                        <rect key="frame" x="0.0" y="27" width="300" height="30"/>
-                                                                        <subviews>
-                                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Invitation Code" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="p8g-H2-hJh" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
-                                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="light" returnKeyType="done"/>
-                                                                            </textField>
-                                                                        </subviews>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="300" id="GDC-5p-ulJ"/>
-                                                                        </constraints>
-                                                                    </stackView>
-                                                                </subviews>
-                                                            </stackView>
-                                                        </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <constraints>
-                                                            <constraint firstItem="izv-Vt-sbK" firstAttribute="centerX" secondItem="njF-On-joe" secondAttribute="centerX" id="gbq-W5-K3B"/>
-                                                            <constraint firstItem="izv-Vt-sbK" firstAttribute="centerY" secondItem="njF-On-joe" secondAttribute="centerY" id="hGl-Wq-c6d"/>
-                                                        </constraints>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="riH-Yh-hdi">
-                                                        <rect key="frame" x="0.0" y="222" width="375" height="111"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNh-Tw-8TD">
-                                                                <rect key="frame" x="87" y="40" width="200" height="30"/>
-                                                                <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="200" id="St8-2F-Y0U"/>
-                                                                </constraints>
-                                                                <state key="normal" title="Verify">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="SignIn:" destination="7Y3-rS-esY" eventType="touchUpInside" id="jZn-Ip-yej"/>
-                                                                    <action selector="verifyCode:" destination="JHq-b6-pjD" eventType="touchUpInside" id="gV2-Vn-sbr"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <constraints>
-                                                            <constraint firstItem="eNh-Tw-8TD" firstAttribute="centerX" secondItem="riH-Yh-hdi" secondAttribute="centerX" id="5I7-5o-6ZU"/>
-                                                            <constraint firstItem="eNh-Tw-8TD" firstAttribute="centerY" secondItem="riH-Yh-hdi" secondAttribute="centerY" id="rsy-hu-tFl"/>
-                                                        </constraints>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O3h-BY-kda">
-                                                        <rect key="frame" x="0.0" y="333" width="375" height="111"/>
-                                                        <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tb2-NA-yHN">
-                                                                <rect key="frame" x="102.5" y="43" width="170.5" height="26"/>
-                                                                <subviews>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKO-le-fla">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="170.5" height="26"/>
-                                                                        <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5S-hD-5T7">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="134.5" height="26"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                                <nil key="highlightedColor"/>
-                                                                            </label>
-                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBX-bx-J5D">
-                                                                                <rect key="frame" x="134.5" y="0.0" width="36" height="26"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                                                <state key="normal" title="Sign in"/>
-                                                                                <connections>
-                                                                                    <action selector="ReturnSignIn:" destination="JHq-b6-pjD" eventType="touchUpInside" id="bxz-EV-l2P"/>
-                                                                                </connections>
-                                                                            </button>
-                                                                        </subviews>
-                                                                    </stackView>
-                                                                </subviews>
-                                                            </stackView>
-                                                        </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <constraints>
-                                                            <constraint firstItem="Tb2-NA-yHN" firstAttribute="centerX" secondItem="O3h-BY-kda" secondAttribute="centerX" id="0wd-WK-pQh"/>
-                                                            <constraint firstItem="Tb2-NA-yHN" firstAttribute="centerY" secondItem="O3h-BY-kda" secondAttribute="centerY" id="2Oa-cw-led"/>
-                                                        </constraints>
-                                                    </view>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="light" returnKeyType="done"/>
+                                                    </textField>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="25b-lq-IeR"/>
+                                                    <constraint firstAttribute="width" constant="240" id="S4T-vz-LIu"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="82t-oX-8W2" firstAttribute="leading" secondItem="vMn-bf-4Bj" secondAttribute="leading" id="4HW-t5-DJz"/>
-                                            <constraint firstAttribute="bottom" secondItem="82t-oX-8W2" secondAttribute="bottom" id="BvN-dC-tQg"/>
-                                            <constraint firstAttribute="trailing" secondItem="82t-oX-8W2" secondAttribute="trailing" id="E9Z-RB-Yaq"/>
-                                            <constraint firstItem="82t-oX-8W2" firstAttribute="top" secondItem="vMn-bf-4Bj" secondAttribute="top" id="owy-c7-JhU"/>
+                                            <constraint firstItem="izv-Vt-sbK" firstAttribute="centerX" secondItem="vMn-bf-4Bj" secondAttribute="centerX" id="0Xe-Wp-A8L"/>
+                                            <constraint firstItem="izv-Vt-sbK" firstAttribute="top" secondItem="vMn-bf-4Bj" secondAttribute="top" constant="20" id="j5J-Eo-5El"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="riH-Yh-hdi">
+                                        <rect key="frame" x="0.0" y="477" width="375" height="81"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ku7-bO-Xln">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="61"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNh-Tw-8TD" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="137.5" y="0.0" width="100" height="30"/>
+                                                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="100" id="KkW-Sx-BIp"/>
+                                                            <constraint firstAttribute="height" constant="30" id="frm-Ld-LBy"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Verify">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="verifyCode:" destination="JHq-b6-pjD" eventType="touchUpInside" id="gV2-Vn-sbr"/>
+                                                        </connections>
+                                                    </button>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKO-le-fla">
+                                                        <rect key="frame" x="102.5" y="35" width="170.5" height="26"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5S-hD-5T7">
+                                                                <rect key="frame" x="0.0" y="0.0" width="134.5" height="26"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBX-bx-J5D">
+                                                                <rect key="frame" x="134.5" y="0.0" width="36" height="26"/>
+                                                                <accessibility key="accessibilityConfiguration">
+                                                                    <accessibilityTraits key="traits" link="YES"/>
+                                                                </accessibility>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                <state key="normal" title="Sign in"/>
+                                                                <connections>
+                                                                    <action selector="ReturnSignIn:" destination="JHq-b6-pjD" eventType="touchUpInside" id="bxz-EV-l2P"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="Ku7-bO-Xln" firstAttribute="top" secondItem="riH-Yh-hdi" secondAttribute="top" id="FGf-0d-0mb"/>
+                                            <constraint firstAttribute="trailing" secondItem="Ku7-bO-Xln" secondAttribute="trailing" id="FOv-AD-DtB"/>
+                                            <constraint firstAttribute="bottom" secondItem="Ku7-bO-Xln" secondAttribute="bottom" constant="20" id="MJ4-Jc-StA"/>
+                                            <constraint firstItem="Ku7-bO-Xln" firstAttribute="leading" secondItem="riH-Yh-hdi" secondAttribute="leading" id="eK8-kj-1TE"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -186,7 +156,7 @@
         <!--Create New Account-->
         <scene sceneID="NlG-wl-9xt">
             <objects>
-                <viewController title="Create New Account" modalTransitionStyle="crossDissolve" id="GQw-5c-dGe" customClass="WMSignUpAccountViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Create New Account" modalTransitionStyle="crossDissolve" id="GQw-5c-dGe" customClass="SignUpAccountViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DQ5-Nk-5Uq"/>
                         <viewControllerLayoutGuide type="bottom" id="x67-2j-3zd"/>
@@ -195,170 +165,171 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile" translatesAutoresizingMaskIntoConstraints="NO" id="3Xm-iF-1zZ">
-                                <rect key="frame" x="131" y="20" width="113" height="113"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="4u7-yu-NT6"/>
-                                    <constraint firstAttribute="width" secondItem="3Xm-iF-1zZ" secondAttribute="height" multiplier="1:1" id="NAI-xj-4zl"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="4u7-yu-NT6"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="NYC-XZ-NVR">
-                                <rect key="frame" x="0.0" y="140" width="375" height="418"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zCy-rf-ekW">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pL6-PP-PYB" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="59" y="20" width="300" height="37.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8B-dX-j4e">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Erc-jU-Xld">
+                                                <rect key="frame" x="127" y="20" width="120" height="120"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="120" id="SVi-7U-e43"/>
+                                                    <constraint firstAttribute="width" secondItem="Erc-jU-Xld" secondAttribute="height" multiplier="1:1" id="Su2-3A-Wlb"/>
+                                                </constraints>
+                                                <state key="normal" backgroundImage="Add">
+                                                    <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="addImage:" destination="GQw-5c-dGe" eventType="touchUpInside" id="Kes-jh-aW8"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="jkt-xi-I6g"/>
+                                            <constraint firstItem="Erc-jU-Xld" firstAttribute="centerY" secondItem="I8B-dX-j4e" secondAttribute="centerY" id="DUC-XJ-M5O"/>
+                                            <constraint firstItem="Erc-jU-Xld" firstAttribute="top" secondItem="I8B-dX-j4e" secondAttribute="top" constant="20" id="R7g-fl-P0i"/>
+                                            <constraint firstItem="Erc-jU-Xld" firstAttribute="centerX" secondItem="I8B-dX-j4e" secondAttribute="centerX" id="fYS-Lv-821"/>
+                                            <constraint firstAttribute="bottom" secondItem="Erc-jU-Xld" secondAttribute="bottom" constant="20" id="ipm-Me-Wm1"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="jkt-xi-I6g"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <outlet property="delegate" destination="GQw-5c-dGe" id="wrB-Vq-8Q5"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G3i-aw-ob4" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="59" y="65" width="300" height="38"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="GQw-5c-dGe" id="ugb-vb-BO9"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O7J-uu-be6" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="59" y="87" width="300" height="38.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="GQw-5c-dGe" id="jN9-iN-wiu"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6d5-vd-YcI" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="59" y="122" width="300" height="37.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="GQw-5c-dGe" id="PSy-TW-lUm"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qab-q7-gmc" customClass="WMButton" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="235" y="216" width="129" height="25.5"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="NYC-XZ-NVR">
+                                        <rect key="frame" x="0.0" y="160" width="375" height="329"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MxD-Vh-Ie7">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="329"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lQy-0g-aEQ">
+                                                        <rect key="frame" x="67" y="20" width="240" height="150"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pL6-PP-PYB" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="30" id="jkt-xi-I6g"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                                <variation key="default">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="jkt-xi-I6g"/>
+                                                                    </mask>
+                                                                </variation>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="GQw-5c-dGe" id="wrB-Vq-8Q5"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G3i-aw-ob4" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="40" width="240" height="30"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="GQw-5c-dGe" id="ugb-vb-BO9"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O7J-uu-be6" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="80" width="240" height="30"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="GQw-5c-dGe" id="jN9-iN-wiu"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6d5-vd-YcI" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="120" width="240" height="30"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="done"/>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="GQw-5c-dGe" id="PSy-TW-lUm"/>
+                                                                </connections>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="240" id="B4f-xQ-gB3"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="centerX" secondItem="MxD-Vh-Ie7" secondAttribute="centerX" id="EgH-IT-kux"/>
+                                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="top" secondItem="MxD-Vh-Ie7" secondAttribute="top" constant="20" id="ng5-U5-5Hm"/>
+                                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="centerY" secondItem="MxD-Vh-Ie7" secondAttribute="centerY" id="nvT-H6-0fR"/>
+                                                </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="nvT-H6-0fR"/>
+                                                    </mask>
+                                                </variation>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="qab-q7-gmc" secondAttribute="height" multiplier="5:1" id="yL6-jX-jT5"/>
+                                            <constraint firstAttribute="bottom" secondItem="MxD-Vh-Ie7" secondAttribute="bottom" id="7dT-K5-F92"/>
+                                            <constraint firstItem="MxD-Vh-Ie7" firstAttribute="centerY" secondItem="NYC-XZ-NVR" secondAttribute="centerY" id="8sB-NV-y9a"/>
+                                            <constraint firstItem="MxD-Vh-Ie7" firstAttribute="leading" secondItem="NYC-XZ-NVR" secondAttribute="leading" id="W1f-vC-JrF"/>
+                                            <constraint firstItem="MxD-Vh-Ie7" firstAttribute="top" secondItem="NYC-XZ-NVR" secondAttribute="top" id="Z1o-bT-sfo"/>
+                                            <constraint firstAttribute="trailing" secondItem="MxD-Vh-Ie7" secondAttribute="trailing" id="eQx-9W-I9D"/>
+                                            <constraint firstItem="MxD-Vh-Ie7" firstAttribute="centerX" secondItem="NYC-XZ-NVR" secondAttribute="centerX" id="xjb-zX-2ST"/>
                                         </constraints>
-                                        <state key="normal" title="Sign Up">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="signUpUser:" destination="GQw-5c-dGe" eventType="touchUpInside" id="fh9-fK-eNc"/>
-                                        </connections>
-                                    </button>
+                                    </scrollView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H2B-PG-4fN">
+                                        <rect key="frame" x="0.0" y="489" width="375" height="70"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="bc3-E3-lP1">
+                                                <rect key="frame" x="68" y="20" width="240" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2F-Qu-fJJ" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
+                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <state key="normal" title="Cancel">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="cancel:" destination="GQw-5c-dGe" eventType="touchUpInside" id="iUv-Pe-a2E"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qab-q7-gmc" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="140" y="0.0" width="100" height="30"/>
+                                                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" title="Sign Up">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="signUpUser:" destination="GQw-5c-dGe" eventType="touchUpInside" id="fh9-fK-eNc"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="auV-fM-aHi"/>
+                                                    <constraint firstAttribute="width" constant="240" id="rbl-oC-LHk"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="bc3-E3-lP1" firstAttribute="centerX" secondItem="H2B-PG-4fN" secondAttribute="centerX" id="cjm-4Q-i4o"/>
+                                            <constraint firstItem="bc3-E3-lP1" firstAttribute="centerY" secondItem="H2B-PG-4fN" secondAttribute="centerY" id="ex5-Rm-Jdf"/>
+                                            <constraint firstAttribute="bottom" secondItem="bc3-E3-lP1" secondAttribute="bottom" constant="20" id="wYu-aN-XU4"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="pL6-PP-PYB" firstAttribute="width" secondItem="NYC-XZ-NVR" secondAttribute="width" multiplier="0.8" id="49I-Lt-FlJ"/>
-                                    <constraint firstItem="pL6-PP-PYB" firstAttribute="centerX" secondItem="NYC-XZ-NVR" secondAttribute="centerX" id="5rf-uU-lIB"/>
-                                    <constraint firstItem="qab-q7-gmc" firstAttribute="top" secondItem="6d5-vd-YcI" secondAttribute="bottom" multiplier="1.4" constant="8" symbolic="YES" id="6VC-wd-7PS"/>
-                                    <constraint firstItem="G3i-aw-ob4" firstAttribute="height" secondItem="pL6-PP-PYB" secondAttribute="height" id="Bu3-E7-QMZ"/>
-                                    <constraint firstItem="O7J-uu-be6" firstAttribute="height" secondItem="G3i-aw-ob4" secondAttribute="height" id="QAs-v6-PIA"/>
-                                    <constraint firstItem="pL6-PP-PYB" firstAttribute="height" secondItem="NYC-XZ-NVR" secondAttribute="height" multiplier="0.09" id="Qmd-0S-8lz"/>
-                                    <constraint firstItem="6d5-vd-YcI" firstAttribute="height" secondItem="pL6-PP-PYB" secondAttribute="height" id="TOl-91-eOA"/>
-                                    <constraint firstItem="pL6-PP-PYB" firstAttribute="top" secondItem="NYC-XZ-NVR" secondAttribute="top" constant="20" symbolic="YES" id="Tfn-HM-Yuc"/>
-                                    <constraint firstAttribute="trailing" secondItem="pL6-PP-PYB" secondAttribute="trailing" constant="37" id="aMk-69-fcg"/>
-                                    <constraint firstItem="O7J-uu-be6" firstAttribute="height" secondItem="pL6-PP-PYB" secondAttribute="height" id="bVE-n0-Wtc"/>
-                                    <constraint firstItem="qab-q7-gmc" firstAttribute="centerX" secondItem="pL6-PP-PYB" secondAttribute="centerX" id="cNZ-02-Fka"/>
-                                    <constraint firstItem="O7J-uu-be6" firstAttribute="top" secondItem="G3i-aw-ob4" secondAttribute="bottom" constant="8" symbolic="YES" id="fa8-4q-fzg"/>
-                                    <constraint firstItem="G3i-aw-ob4" firstAttribute="centerX" secondItem="pL6-PP-PYB" secondAttribute="centerX" id="l5q-Cd-SQL"/>
-                                    <constraint firstItem="6d5-vd-YcI" firstAttribute="centerX" secondItem="pL6-PP-PYB" secondAttribute="centerX" id="lc3-6c-ReJ"/>
-                                    <constraint firstItem="qab-q7-gmc" firstAttribute="height" secondItem="pL6-PP-PYB" secondAttribute="height" id="lkd-vH-Am8"/>
-                                    <constraint firstItem="6d5-vd-YcI" firstAttribute="width" secondItem="pL6-PP-PYB" secondAttribute="width" id="oNN-4V-vHu"/>
-                                    <constraint firstItem="O7J-uu-be6" firstAttribute="centerX" secondItem="NYC-XZ-NVR" secondAttribute="centerX" id="rMu-Ra-Kwv"/>
-                                    <constraint firstItem="O7J-uu-be6" firstAttribute="width" secondItem="pL6-PP-PYB" secondAttribute="width" id="sBp-FH-H9A"/>
-                                    <constraint firstItem="6d5-vd-YcI" firstAttribute="top" secondItem="O7J-uu-be6" secondAttribute="bottom" constant="8" symbolic="YES" id="sg7-VY-c9h"/>
-                                    <constraint firstItem="G3i-aw-ob4" firstAttribute="top" secondItem="pL6-PP-PYB" secondAttribute="bottom" constant="8" symbolic="YES" id="svF-N9-85X"/>
-                                    <constraint firstAttribute="bottom" secondItem="qab-q7-gmc" secondAttribute="bottom" constant="115" id="vAO-H0-OkG"/>
-                                    <constraint firstItem="G3i-aw-ob4" firstAttribute="width" secondItem="pL6-PP-PYB" secondAttribute="width" id="w4b-r5-DvV"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="QAs-v6-PIA"/>
-                                    </mask>
-                                </variation>
-                            </scrollView>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="NYC-XZ-NVR" secondAttribute="trailing" id="1Ni-b7-67o"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="leading" secondItem="zBm-MK-qN8" secondAttribute="leading" id="B0a-yM-ki8"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="top" secondItem="3Xm-iF-1zZ" secondAttribute="bottom" id="Bxu-Hw-F79"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="width" secondItem="zBm-MK-qN8" secondAttribute="width" id="DVH-1C-Bc3"/>
-                            <constraint firstItem="3Xm-iF-1zZ" firstAttribute="width" secondItem="zBm-MK-qN8" secondAttribute="width" multiplier="0.3" id="FLd-CP-P9g"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="centerX" secondItem="3Xm-iF-1zZ" secondAttribute="centerX" id="Fsn-dA-qv2"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="top" secondItem="3Xm-iF-1zZ" secondAttribute="bottom" constant="8" symbolic="YES" id="IDS-Rq-cWM"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="leading" secondItem="zBm-MK-qN8" secondAttribute="leadingMargin" constant="-20" id="IuO-bj-FCW"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="centerX" secondItem="zBm-MK-qN8" secondAttribute="centerX" id="LbX-QY-aba"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="height" secondItem="zBm-MK-qN8" secondAttribute="height" multiplier="0.6" id="Qv4-uK-q5S"/>
-                            <constraint firstItem="3Xm-iF-1zZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DQ5-Nk-5Uq" secondAttribute="bottom" constant="10" id="SQM-8e-568"/>
-                            <constraint firstItem="x67-2j-3zd" firstAttribute="top" secondItem="NYC-XZ-NVR" secondAttribute="bottom" id="Tnd-42-ufB"/>
-                            <constraint firstItem="3Xm-iF-1zZ" firstAttribute="top" secondItem="DQ5-Nk-5Uq" secondAttribute="bottom" multiplier="3" constant="8" symbolic="YES" id="ULz-iW-D5W"/>
-                            <constraint firstAttribute="trailing" secondItem="NYC-XZ-NVR" secondAttribute="trailing" id="VAw-hE-M4L"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="top" secondItem="3Xm-iF-1zZ" secondAttribute="bottom" id="atF-NX-vBf"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="top" secondItem="3Xm-iF-1zZ" secondAttribute="bottom" constant="8" symbolic="YES" id="bx8-9e-VlV"/>
-                            <constraint firstItem="3Xm-iF-1zZ" firstAttribute="top" relation="lessThanOrEqual" secondItem="DQ5-Nk-5Uq" secondAttribute="bottom" constant="20" id="eLn-W6-D9h"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="leading" secondItem="zBm-MK-qN8" secondAttribute="leadingMargin" id="epo-2F-q3R"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="top" secondItem="3Xm-iF-1zZ" secondAttribute="top" id="fYi-1L-Uqn"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="bottom" secondItem="x67-2j-3zd" secondAttribute="top" id="iv4-pV-HCW"/>
-                            <constraint firstItem="x67-2j-3zd" firstAttribute="top" secondItem="NYC-XZ-NVR" secondAttribute="bottom" id="jy0-i2-doj"/>
-                            <constraint firstItem="3Xm-iF-1zZ" firstAttribute="centerX" secondItem="zBm-MK-qN8" secondAttribute="centerX" id="lTG-dM-BzK"/>
-                            <constraint firstItem="NYC-XZ-NVR" firstAttribute="leading" secondItem="zBm-MK-qN8" secondAttribute="leading" id="tfF-77-Q9b"/>
-                            <constraint firstItem="3Xm-iF-1zZ" firstAttribute="top" secondItem="DQ5-Nk-5Uq" secondAttribute="bottom" multiplier="2" constant="8" symbolic="YES" id="ukm-YP-GW3"/>
+                            <constraint firstAttribute="trailing" secondItem="zCy-rf-ekW" secondAttribute="trailing" id="EUO-Mc-Z6F"/>
+                            <constraint firstItem="zCy-rf-ekW" firstAttribute="leading" secondItem="zBm-MK-qN8" secondAttribute="leading" id="U6m-fp-sgG"/>
+                            <constraint firstItem="zCy-rf-ekW" firstAttribute="top" secondItem="DQ5-Nk-5Uq" secondAttribute="bottom" id="YJy-KM-Rlw"/>
+                            <constraint firstAttribute="bottom" secondItem="zCy-rf-ekW" secondAttribute="bottom" id="yW6-Jz-G5m"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="1Ni-b7-67o"/>
-                                <exclude reference="Bxu-Hw-F79"/>
-                                <exclude reference="DVH-1C-Bc3"/>
-                                <exclude reference="IuO-bj-FCW"/>
-                                <exclude reference="LbX-QY-aba"/>
-                                <exclude reference="Qv4-uK-q5S"/>
-                                <exclude reference="VAw-hE-M4L"/>
-                                <exclude reference="atF-NX-vBf"/>
-                                <exclude reference="bx8-9e-VlV"/>
-                                <exclude reference="epo-2F-q3R"/>
-                                <exclude reference="fYi-1L-Uqn"/>
-                                <exclude reference="tfF-77-Q9b"/>
-                                <exclude reference="ULz-iW-D5W"/>
-                                <exclude reference="ukm-YP-GW3"/>
-                                <exclude reference="Tnd-42-ufB"/>
-                                <exclude reference="jy0-i2-doj"/>
-                            </mask>
-                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Sign Up" id="l3r-Qh-A3X">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="asW-ov-DVt">
-                            <connections>
-                                <action selector="cancel:" destination="GQw-5c-dGe" id="yeY-F9-Yyl"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Sign Up" id="l3r-Qh-A3X"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addProfileImageButton" destination="Erc-jU-Xld" id="7ly-sM-dEB"/>
                         <outlet property="formScrollView" destination="NYC-XZ-NVR" id="2Fr-Ep-WdP"/>
-                        <outlet property="logoImageView" destination="3Xm-iF-1zZ" id="sdD-ci-snR"/>
-                        <outlet property="processButton" destination="qab-q7-gmc" id="8MC-7Z-HxO"/>
                         <outlet property="userConfirmPasswordTextField" destination="O7J-uu-be6" id="mrp-nh-eEP"/>
                         <outlet property="userEmailTextField" destination="6d5-vd-YcI" id="Qo6-eC-cBS"/>
                         <outlet property="userNameTextField" destination="pL6-PP-PYB" id="MV1-d2-GUf"/>
@@ -373,7 +344,7 @@
         <!--Add Profile-->
         <scene sceneID="irO-LC-yXA">
             <objects>
-                <viewController title="Add Profile" modalTransitionStyle="crossDissolve" id="xWV-4c-tDk" customClass="WMAddProfileViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add Profile" modalTransitionStyle="crossDissolve" id="xWV-4c-tDk" customClass="AddProfileViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i2f-OS-ye4"/>
                         <viewControllerLayoutGuide type="bottom" id="NG5-gl-c0P"/>
@@ -382,155 +353,167 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile" translatesAutoresizingMaskIntoConstraints="NO" id="3j4-9l-hFA">
-                                <rect key="frame" x="131" y="20" width="113" height="113"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="3j4-9l-hFA" secondAttribute="height" multiplier="1:1" id="bWv-Aw-NyV"/>
-                                    <constraint firstAttribute="height" constant="200" id="qQn-Nu-pFk"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="qQn-Nu-pFk"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="YG6-3J-LhB">
-                                <rect key="frame" x="0.0" y="140" width="375" height="418"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xbh-Bd-S4C">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Js-v8-3tS" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="59" y="20" width="300" height="37.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XHC-Gm-8R3">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile" translatesAutoresizingMaskIntoConstraints="NO" id="LpK-hU-FY8">
+                                                <rect key="frame" x="127" y="20" width="120" height="120"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="120" id="Bp7-11-mlo"/>
+                                                    <constraint firstAttribute="width" secondItem="LpK-hU-FY8" secondAttribute="height" multiplier="1:1" id="OX2-Tw-7aM"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="esp-iX-wCr"/>
+                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="top" secondItem="XHC-Gm-8R3" secondAttribute="top" multiplier="20" id="9IB-af-k7E"/>
+                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="centerY" secondItem="XHC-Gm-8R3" secondAttribute="centerY" id="H2X-id-5zh"/>
+                                            <constraint firstAttribute="trailing" secondItem="LpK-hU-FY8" secondAttribute="trailing" id="N0F-uw-qqo"/>
+                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="top" secondItem="XHC-Gm-8R3" secondAttribute="top" constant="20" id="iRr-be-znt"/>
+                                            <constraint firstAttribute="bottom" secondItem="LpK-hU-FY8" secondAttribute="bottom" multiplier="20" id="k8d-oR-Mrd"/>
+                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="leading" secondItem="XHC-Gm-8R3" secondAttribute="leading" id="nCz-Ok-bX0"/>
+                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="centerX" secondItem="XHC-Gm-8R3" secondAttribute="centerX" id="q43-J0-gPl"/>
+                                            <constraint firstAttribute="bottom" secondItem="LpK-hU-FY8" secondAttribute="bottom" constant="20" id="tCe-cR-bPZ"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next"/>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="esp-iX-wCr"/>
+                                                <exclude reference="9IB-af-k7E"/>
+                                                <exclude reference="N0F-uw-qqo"/>
+                                                <exclude reference="k8d-oR-Mrd"/>
+                                                <exclude reference="nCz-Ok-bX0"/>
                                             </mask>
                                         </variation>
-                                        <connections>
-                                            <outlet property="delegate" destination="xWV-4c-tDk" id="uOk-6a-Lgs"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AeM-Ak-xWb" customClass="WMButton" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="235" y="279" width="129" height="37"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="YG6-3J-LhB">
+                                        <rect key="frame" x="0.0" y="160" width="375" height="329"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxD-YJ-aWI">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="329"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zjZ-8N-hm5">
+                                                        <rect key="frame" x="67" y="20" width="240" height="70"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Js-v8-3tS" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="30" id="esp-iX-wCr"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                                <variation key="default">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="esp-iX-wCr"/>
+                                                                    </mask>
+                                                                </variation>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="xWV-4c-tDk" id="uOk-6a-Lgs"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Graduation Year" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fcx-6h-Cn0" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="40" width="240" height="30"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="30" id="Re3-gc-dwa"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                                                <variation key="default">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="Re3-gc-dwa"/>
+                                                                    </mask>
+                                                                </variation>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="xWV-4c-tDk" id="5vL-ev-BeL"/>
+                                                                </connections>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="240" id="rXx-Cv-YNl"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="zjZ-8N-hm5" firstAttribute="centerX" secondItem="jxD-YJ-aWI" secondAttribute="centerX" id="KV3-ZD-eeA"/>
+                                                    <constraint firstItem="zjZ-8N-hm5" firstAttribute="top" secondItem="jxD-YJ-aWI" secondAttribute="top" constant="20" id="gM6-1i-e5C"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="AeM-Ak-xWb" secondAttribute="height" multiplier="5:1" id="dKf-aQ-eoU"/>
+                                            <constraint firstAttribute="bottom" secondItem="jxD-YJ-aWI" secondAttribute="bottom" id="209-cY-XLJ"/>
+                                            <constraint firstItem="jxD-YJ-aWI" firstAttribute="centerX" secondItem="YG6-3J-LhB" secondAttribute="centerX" id="3sm-Y9-OdD"/>
+                                            <constraint firstItem="jxD-YJ-aWI" firstAttribute="top" secondItem="YG6-3J-LhB" secondAttribute="top" id="Eue-xG-61F"/>
+                                            <constraint firstItem="jxD-YJ-aWI" firstAttribute="leading" secondItem="YG6-3J-LhB" secondAttribute="leading" id="TF5-gy-I9a"/>
+                                            <constraint firstAttribute="trailing" secondItem="jxD-YJ-aWI" secondAttribute="trailing" id="n5t-W7-t8M"/>
+                                            <constraint firstItem="jxD-YJ-aWI" firstAttribute="centerY" secondItem="YG6-3J-LhB" secondAttribute="centerY" id="n7M-cD-ccF"/>
                                         </constraints>
-                                        <state key="normal" title="Add Profile">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addProfile:" destination="xWV-4c-tDk" eventType="touchUpInside" id="ELz-XH-8Ib"/>
-                                        </connections>
-                                    </button>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Graduation Year" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fcx-6h-Cn0" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="59" y="65" width="300" height="37.5"/>
+                                    </scrollView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0PQ-13-GzP">
+                                        <rect key="frame" x="0.0" y="489" width="375" height="70"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="wit-ZO-Ndh">
+                                                <rect key="frame" x="67" y="20" width="240" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oA2-ez-5NQ" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
+                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <state key="normal" title="Skip">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="cancel:" destination="GQw-5c-dGe" eventType="touchUpInside" id="OgG-P0-hzs"/>
+                                                            <action selector="skip:" destination="xWV-4c-tDk" eventType="touchUpInside" id="QpR-sH-Aoa"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Lj-Zo-yjN" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="140" y="0.0" width="100" height="30"/>
+                                                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" title="Add Profile">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="addProfile:" destination="xWV-4c-tDk" eventType="touchUpInside" id="wzf-Sp-KsD"/>
+                                                            <action selector="signUpUser:" destination="GQw-5c-dGe" eventType="touchUpInside" id="VDv-3y-i0f"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="Rkn-gQ-HM9"/>
+                                                    <constraint firstAttribute="width" constant="240" id="U6n-6k-HLu"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="Re3-gc-dwa"/>
+                                            <constraint firstAttribute="bottom" secondItem="wit-ZO-Ndh" secondAttribute="bottom" constant="20" id="JBi-m5-Eid"/>
+                                            <constraint firstItem="wit-ZO-Ndh" firstAttribute="centerX" secondItem="0PQ-13-GzP" secondAttribute="centerX" id="gAb-5V-WZd"/>
+                                            <constraint firstItem="wit-ZO-Ndh" firstAttribute="centerY" secondItem="0PQ-13-GzP" secondAttribute="centerY" id="htl-X7-T7h"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="Re3-gc-dwa"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <outlet property="delegate" destination="xWV-4c-tDk" id="5vL-ev-BeL"/>
-                                        </connections>
-                                    </textField>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="Fcx-6h-Cn0" firstAttribute="top" secondItem="8Js-v8-3tS" secondAttribute="bottom" constant="8" symbolic="YES" id="1ly-f6-Yxm"/>
-                                    <constraint firstItem="AeM-Ak-xWb" firstAttribute="height" secondItem="8Js-v8-3tS" secondAttribute="height" id="4Lh-hL-qjj"/>
-                                    <constraint firstItem="AeM-Ak-xWb" firstAttribute="top" secondItem="Fcx-6h-Cn0" secondAttribute="bottom" multiplier="2.65" constant="8" symbolic="YES" id="6ld-j9-dvi"/>
-                                    <constraint firstItem="Fcx-6h-Cn0" firstAttribute="height" secondItem="8Js-v8-3tS" secondAttribute="height" id="BwZ-5Y-vMP"/>
-                                    <constraint firstItem="AeM-Ak-xWb" firstAttribute="centerX" secondItem="8Js-v8-3tS" secondAttribute="centerX" id="CbH-El-PrT"/>
-                                    <constraint firstItem="Fcx-6h-Cn0" firstAttribute="width" secondItem="8Js-v8-3tS" secondAttribute="width" id="Gja-zp-6P7"/>
-                                    <constraint firstItem="8Js-v8-3tS" firstAttribute="centerX" secondItem="YG6-3J-LhB" secondAttribute="centerX" id="Jhw-Xn-2fL"/>
-                                    <constraint firstItem="8Js-v8-3tS" firstAttribute="width" secondItem="YG6-3J-LhB" secondAttribute="width" multiplier="0.8" id="LJa-lF-PWp"/>
-                                    <constraint firstAttribute="trailing" secondItem="8Js-v8-3tS" secondAttribute="trailing" constant="37" id="S5V-3p-sAE"/>
-                                    <constraint firstItem="8Js-v8-3tS" firstAttribute="height" secondItem="YG6-3J-LhB" secondAttribute="height" multiplier="0.09" id="SCN-Xq-aDK"/>
-                                    <constraint firstItem="Fcx-6h-Cn0" firstAttribute="centerX" secondItem="8Js-v8-3tS" secondAttribute="centerX" id="kgM-hm-M6A"/>
-                                    <constraint firstItem="AeM-Ak-xWb" firstAttribute="top" secondItem="8Js-v8-3tS" secondAttribute="bottom" multiplier="4.5" constant="8" symbolic="YES" id="kvb-HP-kNW"/>
-                                    <constraint firstItem="8Js-v8-3tS" firstAttribute="top" secondItem="YG6-3J-LhB" secondAttribute="top" constant="20" symbolic="YES" id="oUw-TE-PjR"/>
-                                    <constraint firstAttribute="bottom" secondItem="AeM-Ak-xWb" secondAttribute="bottom" constant="115" id="si3-5d-VgY"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="kvb-HP-kNW"/>
-                                    </mask>
-                                </variation>
-                            </scrollView>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="centerX" secondItem="IMo-Eb-l3v" secondAttribute="centerX" id="1RT-fe-T94"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="top" secondItem="3j4-9l-hFA" secondAttribute="top" id="1oG-Cr-Y6o"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="leading" secondItem="IMo-Eb-l3v" secondAttribute="leadingMargin" constant="-20" id="2ER-ie-h4B"/>
-                            <constraint firstAttribute="trailing" secondItem="YG6-3J-LhB" secondAttribute="trailing" id="2Oy-cq-etQ"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="height" secondItem="IMo-Eb-l3v" secondAttribute="height" multiplier="0.6" id="544-K5-FhW"/>
-                            <constraint firstItem="3j4-9l-hFA" firstAttribute="top" secondItem="i2f-OS-ye4" secondAttribute="bottom" multiplier="2" constant="8" symbolic="YES" id="BbV-MF-YUV"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="top" secondItem="3j4-9l-hFA" secondAttribute="bottom" id="CTx-PQ-vBb"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="top" secondItem="3j4-9l-hFA" secondAttribute="bottom" constant="8" symbolic="YES" id="Jf3-MX-x7W"/>
-                            <constraint firstItem="3j4-9l-hFA" firstAttribute="top" relation="lessThanOrEqual" secondItem="i2f-OS-ye4" secondAttribute="bottom" constant="20" id="Q6J-2b-KDs"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="width" secondItem="IMo-Eb-l3v" secondAttribute="width" id="QZC-S3-w54"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="centerX" secondItem="3j4-9l-hFA" secondAttribute="centerX" id="QbV-hQ-v3v"/>
-                            <constraint firstItem="3j4-9l-hFA" firstAttribute="centerX" secondItem="IMo-Eb-l3v" secondAttribute="centerX" id="R0y-iG-me1"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="top" secondItem="3j4-9l-hFA" secondAttribute="bottom" id="Yc6-YI-m7C"/>
-                            <constraint firstItem="3j4-9l-hFA" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i2f-OS-ye4" secondAttribute="bottom" constant="10" id="bET-kl-tVh"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="top" secondItem="3j4-9l-hFA" secondAttribute="bottom" constant="8" symbolic="YES" id="eCX-Ui-z8S"/>
-                            <constraint firstItem="3j4-9l-hFA" firstAttribute="width" secondItem="IMo-Eb-l3v" secondAttribute="width" multiplier="0.3" id="eOJ-Eb-Wnk"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="leading" secondItem="IMo-Eb-l3v" secondAttribute="leadingMargin" id="f59-em-gG7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="YG6-3J-LhB" secondAttribute="trailing" id="m7X-Mg-UGu"/>
-                            <constraint firstItem="NG5-gl-c0P" firstAttribute="top" secondItem="YG6-3J-LhB" secondAttribute="bottom" id="oTj-pT-VIS"/>
-                            <constraint firstItem="3j4-9l-hFA" firstAttribute="top" secondItem="i2f-OS-ye4" secondAttribute="bottom" multiplier="3" constant="8" symbolic="YES" id="pLX-nr-Yjt"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="leading" secondItem="IMo-Eb-l3v" secondAttribute="leading" id="qqf-Ga-AK6"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="leading" secondItem="IMo-Eb-l3v" secondAttribute="leading" id="sKI-Hl-f3V"/>
-                            <constraint firstItem="NG5-gl-c0P" firstAttribute="top" secondItem="YG6-3J-LhB" secondAttribute="bottom" id="utx-nZ-aAv"/>
-                            <constraint firstItem="YG6-3J-LhB" firstAttribute="bottom" secondItem="NG5-gl-c0P" secondAttribute="top" id="xXA-4g-Yfc"/>
+                            <constraint firstItem="xbh-Bd-S4C" firstAttribute="top" secondItem="i2f-OS-ye4" secondAttribute="bottom" id="CZa-gK-hAB"/>
+                            <constraint firstAttribute="bottom" secondItem="xbh-Bd-S4C" secondAttribute="bottom" id="VQN-Er-GVW"/>
+                            <constraint firstAttribute="trailing" secondItem="xbh-Bd-S4C" secondAttribute="trailing" id="qdA-98-1dm"/>
+                            <constraint firstItem="xbh-Bd-S4C" firstAttribute="leading" secondItem="IMo-Eb-l3v" secondAttribute="leading" id="vKi-am-VwV"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="1RT-fe-T94"/>
-                                <exclude reference="1oG-Cr-Y6o"/>
-                                <exclude reference="2ER-ie-h4B"/>
-                                <exclude reference="2Oy-cq-etQ"/>
-                                <exclude reference="544-K5-FhW"/>
-                                <exclude reference="CTx-PQ-vBb"/>
-                                <exclude reference="QZC-S3-w54"/>
-                                <exclude reference="Yc6-YI-m7C"/>
-                                <exclude reference="eCX-Ui-z8S"/>
-                                <exclude reference="f59-em-gG7"/>
-                                <exclude reference="m7X-Mg-UGu"/>
-                                <exclude reference="qqf-Ga-AK6"/>
-                                <exclude reference="BbV-MF-YUV"/>
-                                <exclude reference="pLX-nr-Yjt"/>
-                                <exclude reference="oTj-pT-VIS"/>
-                                <exclude reference="utx-nZ-aAv"/>
-                            </mask>
-                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Sign Up" id="e1m-dy-v89">
-                        <barButtonItem key="leftBarButtonItem" title="Skip" id="r9G-RC-58W">
-                            <connections>
-                                <action selector="cancel:" destination="xWV-4c-tDk" id="3s7-IT-Ca7"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Add Profile" id="e1m-dy-v89"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="formScrollView" destination="YG6-3J-LhB" id="WlL-TA-4AA"/>
                         <outlet property="graduationYearTextField" destination="Fcx-6h-Cn0" id="eua-K0-8KA"/>
-                        <outlet property="logoImageView" destination="3j4-9l-hFA" id="yYM-Me-6xy"/>
-                        <outlet property="processButton" destination="AeM-Ak-xWb" id="7Nv-it-Ron"/>
+                        <outlet property="profileImageView" destination="LpK-hU-FY8" id="ZQn-Me-UxE"/>
                         <outlet property="userName" destination="8Js-v8-3tS" id="JD5-th-NC5"/>
                     </connections>
                 </viewController>
@@ -711,7 +694,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kD7-rz-Xs1">
                                                         <rect key="frame" x="0.0" y="111.5" width="375" height="111"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="hOW-6k-jOo">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="hOW-6k-jOo">
                                                                 <rect key="frame" x="38" y="10.5" width="300" height="90"/>
                                                                 <subviews>
                                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="l1L-H6-ir9" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
@@ -740,7 +723,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kej-jG-Env">
                                                         <rect key="frame" x="0.0" y="222.5" width="375" height="111.5"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zvd-Zd-5F5">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zvd-Zd-5F5" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
                                                                 <rect key="frame" x="87" y="40.5" width="200" height="30"/>
                                                                 <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
@@ -831,11 +814,8 @@
                     <navigationItem key="navigationItem" title="Sign in" id="Yrx-jj-c9n"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="forgotPasswordButton" destination="wYQ-xO-wvN" id="DWN-ag-LW3"/>
                         <outlet property="logoImageView" destination="806-sB-Xut" id="iYp-tS-Kyb"/>
                         <outlet property="passwordTextField" destination="H3e-lr-45O" id="oga-v9-aBi"/>
-                        <outlet property="signInButton" destination="Zvd-Zd-5F5" id="etl-hP-kOm"/>
-                        <outlet property="signUpButton" destination="hiT-LA-ccp" id="fj7-f0-XPq"/>
                         <outlet property="usernameTextField" destination="l1L-H6-ir9" id="fen-FM-Si3"/>
                         <segue destination="SNN-Gs-X3M" kind="show" identifier="Launch Main View" id="STE-ef-OmP"/>
                         <segue destination="SNN-Gs-X3M" kind="show" identifier="Directly Launch Main View" animates="NO" id="dkX-58-aX1"/>
@@ -961,12 +941,29 @@
             </objects>
             <point key="canvasLocation" x="4888.5" y="2321.5"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ayd-FY-apx">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iD2-4g-fRl" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eOG-pl-hiC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CtK-iG-gWJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1890.5" y="1157.5"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Add" width="512" height="512"/>
         <image name="Logo" width="217" height="114"/>
         <image name="Profile" width="300" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dkX-58-aX1"/>
+        <segue reference="STE-ef-OmP"/>
     </inferredMetricsTieBreakers>
 </document>

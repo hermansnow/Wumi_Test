@@ -1,5 +1,5 @@
 //
-//  WMTextFieldViewController.swift
+//  ScrollTextFieldViewController.swift
 //  Wumi
 //
 //  Created by Herman on 11/6/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WMTextFieldViewController: UIViewController, UITextFieldDelegate {
+class ScrollTextFieldViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var formScrollView: UIScrollView!
     
@@ -94,7 +94,6 @@ class WMTextFieldViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         }
-        
         return nil
     }
 }

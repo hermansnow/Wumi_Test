@@ -1,5 +1,5 @@
 //
-//  WMButton.swift
+//  SystemButton.swift
 //  Wumi
 //
 //  Created by Herman on 11/6/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WMButton: UIButton {
+class SystemButton: UIButton {
 
     override func drawRect(rect: CGRect) {
         self.layer.cornerRadius = 20; //half of the width
