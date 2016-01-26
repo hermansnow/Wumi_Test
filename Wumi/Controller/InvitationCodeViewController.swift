@@ -23,8 +23,8 @@ class InvitationCodeViewController: UIViewController {
     
     // MARK: Actions
     @IBAction func verifyCode(sender: AnyObject) {
-        self.invitationCode.invitationCode = self.invitationCodeTextField.text
-        self.invitationCode.verifyCodeWhithBlock({ (verified) -> Void in
+        invitationCode.invitationCode = invitationCodeTextField.text
+        invitationCode.verifyCodeWhithBlock({ (verified) -> Void in
             if !verified {
                 Helper.PopupErrorAlert(self, errorMessage: "Invalid invitation code", dismissButtonTitle: "Cancel")
             }

@@ -23,7 +23,7 @@ class SigninViewController: UIViewController {
         
         // Get current user
         if User.currentUser() != nil {
-            //self.performSegueWithIdentifier("Launch Main View", sender: self)
+            performSegueWithIdentifier("Launch Main View", sender: self)
         }
     }
     
@@ -39,8 +39,8 @@ class SigninViewController: UIViewController {
     // MARK: Actions
     @IBAction func SignIn(sender: AnyObject) {
         
-        let userName = self.usernameTextField.text
-        let userPassword = self.passwordTextField.text
+        let userName = usernameTextField.text
+        let userPassword = passwordTextField.text
         
         User.logInWithUsernameInBackground(userName!, password: userPassword!) { (pfUser, error) -> Void in
             if pfUser == nil {
@@ -69,6 +69,6 @@ class SigninViewController: UIViewController {
                 })
             }
         }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        presentViewController(alert, animated: true, completion: nil)
     }
 }

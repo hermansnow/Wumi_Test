@@ -12,14 +12,16 @@ import Parse
 class WMUserTableViewController: UITableViewController {
     
     @IBOutlet weak var userDisplayName: UILabel!
+    @IBOutlet weak var userProfileImageView: UIImageView!
     @IBOutlet weak var userEmail: UILabel!
+    
+    var user = User.currentUser()!
     
     var sections: [[Setting]] =
         [[Setting(identifier: "User Profile", type: .DisplayOnly, value: nil)],
         [Setting(identifier: "Contact", type: .Disclosure, value: nil)],
         [Setting(identifier:"Log Out", type: .Button, value: nil)]]
     var userDefault = NSUserDefaults.standardUserDefaults()
-    var user = User()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,20 +30,21 @@ class WMUserTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        // Get log in user
-        self.user = User.currentUser()!
+        super.viewWillAppear(animated)
         
         // Show current user's profile
-        self.userDisplayName.text = user.name
-        self.userEmail.text = user.email
+        userDisplayName.text = user.name
+        userEmail.text = user.email
+        user.loadProfileImageWithBlock { (imageData, error) -> Void in
+            if error == nil && imageData != nil {
+                self.userProfileImageView.image = UIImage(data: imageData!)
+            }
+            else {
+                print("\(error)")
+            }
+        }
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        self.tableView.reloadData()
-        
-        super.viewDidAppear(animated)
-    }
-    
+
     // MARK: tableview delegates
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.view.endEditing(true)

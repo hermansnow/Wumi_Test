@@ -18,7 +18,6 @@ class User: PFUser {
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
-    var profileImage: UIImage?
     
     override class func initialize() {
         struct Static {
@@ -29,26 +28,27 @@ class User: PFUser {
         }
     }
     
-    // Return a User instance from a PFUser instance
-    class func copyFromPFUser(pfUser: PFUser?) -> User? {
-        var user: User?
-        
-        if let currentPFUser = pfUser {
-            user = User.objectWithoutDataWithObjectId(currentPFUser.objectId)
-            user!.username = currentPFUser.username
-            user!.password = currentPFUser.password
-            user!.email = currentPFUser.email
-            if let graduationYear = currentPFUser.objectForKey("graduationYear") as? Int {
-                user!.graduationYear = graduationYear
-            }
-            if let name = currentPFUser.objectForKey("name") as? String {
-                user!.name = name
-            }
-            if let profileImageFile = currentPFUser.objectForKey("profileImage") as? PFFile {
-                user!.profileImageFile = profileImageFile
-            }
+    // MARK: Initializers
+    override init() {
+        super.init()
+    }
+    
+    // Convenience initializer from a PFUser instance
+    convenience init(pfUser: PFUser) {
+        self.init()
+        self.username = pfUser.username
+        self.password = pfUser.password
+        self.email = pfUser.email
+        if let graduationYear = pfUser.objectForKey("graduationYear") as? Int {
+            self.graduationYear = graduationYear
         }
-        return user
+        if let name = pfUser.objectForKey("name") as? String {
+            self.name = name
+        }
+        if let profileImageFile = pfUser.objectForKey("profileImageFile") as? PFFile {
+            self.profileImageFile = profileImageFile
+            loadProfileImageWithBlock(nil) // Load the profile image into local cache in background thread
+        }
     }
     
     // Get current login User instance
@@ -57,7 +57,7 @@ class User: PFUser {
         
         if let pfUser = super.currentUser() {
             if pfUser.objectId != nil {
-                user = User.copyFromPFUser(pfUser)
+                user = User(pfUser: pfUser)
             }
         }
         return user
@@ -70,28 +70,40 @@ class User: PFUser {
         self.saveInBackgroundWithBlock(block)
     }
     
-    func loadProfileImageWithBlock(block: (valid: Bool, error: NSError?) -> Void) {
-        if profileImageFile == nil {
-            block(valid: false, error: NSError(domain: "wumi.com", code: 1, userInfo: nil))
-            return
-        }
-        
-        profileImageFile!.getDataInBackgroundWithBlock { (imageData: NSData?, error: NSError?) -> Void in
-            if error == nil {
-                if let imageData = imageData {
-                    self.profileImage = UIImage(data: imageData)
+    func loadProfileImageWithBlock(block: PFDataResultBlock?) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            var imageData: NSData?
+            var loadError: NSError?
+            if self.profileImageFile == nil {
+                loadError = NSError(domain: "wumi.com", code: 1, userInfo: nil)
+                return
+            }
+            
+            if ((self.profileImageFile?.isDataAvailable) != nil) {
+                do {
+                    imageData = try self.profileImageFile?.getData()
+                } catch {
+                    loadError = NSError(domain: "wumi.com", code: 2, userInfo: nil)
                 }
-                block(valid: true, error: nil)
             }
             else {
-                block(valid: false, error: error)
+                self.profileImageFile?.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                    imageData = data
+                    loadError = error
+                })
+            }
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                if block != nil {
+                    block!(imageData, loadError)
+                }
             }
         }
     }
     
-    func saveProfileImageFileWithBlock(block: (valid: Bool, error: NSError?) -> Void) {
+    func saveProfileImageFile(profileImage: UIImage?, WithBlock block: (success: Bool, error: NSError?) -> Void) {
         if profileImage == nil {
-            block(valid: false, error: NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
         }
         

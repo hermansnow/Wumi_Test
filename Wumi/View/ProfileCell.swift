@@ -1,5 +1,5 @@
 //
-//  WMEditSettingTableViewCell.Swift
+//  ProfileCell.Swift
 //  Wumi
 //
 //  Created by Zhe Cheng on 12/13/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WMEditSettingTableViewCell: UITableViewCell {
+class ProfileCell: UITableViewCell {
     
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!

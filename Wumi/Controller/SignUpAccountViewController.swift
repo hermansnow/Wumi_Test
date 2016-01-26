@@ -54,21 +54,22 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
                 Helper.PopupErrorAlert(self, errorMessage: "Invalid user information: \(error)", dismissButtonTitle: "Cancel")
             }
             else {
-                self.user.saveProfileImageFileWithBlock({ (success, error) -> Void in
-                    if !success {
-                        Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
-                    }
-                    else {
-                        // Sign up user asynchronously
-                        self.user.signUpInBackgroundWithBlock { (success, error) -> Void in
-                            if !success {
-                                Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
-                            }
-                            else {
-                                self.performSegueWithIdentifier("Show Profile Form", sender: self)
+                self.user.saveProfileImageFile(self.addProfileImageButton.backgroundImageForState(.Normal),
+                    WithBlock: { (success, error) -> Void in
+                        if !success {
+                            Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
+                        }
+                        else {
+                            // Sign up user asynchronously
+                            self.user.signUpInBackgroundWithBlock { (success, error) -> Void in
+                                if !success {
+                                    Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
+                                }
+                                else {
+                                    self.performSegueWithIdentifier("Show Profile Form", sender: self)
+                                }
                             }
                         }
-                    }
                 })
             }
         }
@@ -81,17 +82,9 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     
     // Click to select a image as profile image
     @IBAction func addImage(sender: AnyObject) {
-        let addImageSheet = UIAlertController(title: "Add Profile Image", message: "Choose a photo as your profile image.", preferredStyle: .ActionSheet)
-        
-        addImageSheet.addAction(UIAlertAction(title: "Camera", style: .Default, handler: { (action) -> Void in
-            self.openCamera()
-        }))
-        
-        addImageSheet.addAction(UIAlertAction(title: "Photo Library", style: .Default, handler: { (action) -> Void in
-            self.openPhotoLibrary()
-        }))
-        
-        addImageSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        let addImageSheet = SelectPhotoActionSheet(title: "Add Profile Image", message: "Choose a photo as your profile image.", preferredStyle: .ActionSheet)
+        addImageSheet.delegate = self
+        addImageSheet.launchViewController = self
         
         presentViewController(addImageSheet, animated: true, completion: nil)
     }
@@ -102,30 +95,30 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         
         // Validate input of each text field
         switch textField {
-        case self.userNameTextField:
-            self.user.username = textField.text
-            if self.user.username?.characters.count > 0 {
+        case userNameTextField:
+            user.username = textField.text
+            if user.username?.characters.count > 0 {
                 user.validateUserName(&error)
             }
-        case self.userPasswordTextField:
-            self.user.password = textField.text
-            if let confirmPassword = self.user.confirmPassword {
+        case userPasswordTextField:
+            user.password = textField.text
+            if let confirmPassword = user.confirmPassword {
                 if confirmPassword.characters.count > 0 {
                     user.validateConfirmPassword(&error)
-                    self.userConfirmPasswordTextField.setRightErrorViewForTextFieldWithErrorMessage(error)
+                    userConfirmPasswordTextField.setRightErrorViewForTextFieldWithErrorMessage(error)
                 }
             }
             error = ""
-            if self.user.password!.characters.count > 0 {
+            if user.password!.characters.count > 0 {
                 user.validateUserPassword(&error)
             }
-        case self.userConfirmPasswordTextField:
-            self.user.confirmPassword = textField.text
-            if self.user.confirmPassword!.characters.count > 0 {
+        case userConfirmPasswordTextField:
+            user.confirmPassword = textField.text
+            if user.confirmPassword!.characters.count > 0 {
                 user.validateConfirmPassword(&error)
             }
-        case self.userEmailTextField:
-            self.user.email = textField.text
+        case userEmailTextField:
+            user.email = textField.text
         default:
             break
         }
@@ -140,39 +133,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         picker.dismissViewControllerAnimated(true) { () -> Void in
             if let profileImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 self.addProfileImageButton.setBackgroundImage(profileImage, forState: .Normal)
-                self.user.profileImage = profileImage
             }
         }
-    }
-    
-    // Open Camera to take a photo
-    func openCamera() {
-        // Check whether camera device is available
-        if !UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            Helper.PopupErrorAlert(self, errorMessage: "Camera device is not available.", dismissButtonTitle: "OK")
-            return
-        }
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .Camera
-        imagePicker.mediaTypes = ["\(kUTTypePNG)"]
-        
-        presentViewController(imagePicker, animated: true, completion: nil)
-    }
-    
-    // Open local photo library
-    func openPhotoLibrary() {
-        // Check whether photo library is available
-        if !UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
-            Helper.PopupErrorAlert(self, errorMessage: "Photo library is not available.", dismissButtonTitle: "OK")
-            return
-        }
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .PhotoLibrary
-        
-        presentViewController(imagePicker, animated: true, completion: nil)
     }
 }

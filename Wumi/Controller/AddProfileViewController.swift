@@ -14,7 +14,7 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
     @IBOutlet weak var userName: DataInputTextField!
     @IBOutlet weak var graduationYearTextField: DataInputTextField!
     
-    var user = User()
+    var user:User = User.currentUser()!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +29,12 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
                 self.graduationYearTextField.text = String(year)
             }
         }
-        self.graduationYearTextField.inputView = graduationYearPicker
-        self.graduationYearTextField.addInputToolBar()
+        graduationYearTextField.inputView = graduationYearPicker
+        graduationYearTextField.addInputToolBar()
         
-        user = User.currentUser()!
-        user.loadProfileImageWithBlock { (valid, error) -> Void in
-            if valid {
-                self.profileImageView.image = self.user.profileImage
+        user.loadProfileImageWithBlock { (imageData, error) -> Void in
+            if error == nil && imageData != nil {
+                self.profileImageView.image = UIImage(data: imageData!)
             }
             else {
                 Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
@@ -57,12 +56,14 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
     @IBAction func addProfile(sender: AnyObject) {
         dismissInputView()
         
-        self.user.editInBackgroundWithBlock { (success, error) -> Void in
+        user.editInBackgroundWithBlock { (success, error) -> Void in
             if !success {
                 Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
             }
             else {
-                self.navigationController?.popToRootViewControllerAnimated(true) // Finished Sign Up, back to root of the navigation view controller stack (assume to be the sign-in view)。 Sign-in view should automatically navigate to main view since this sign-up user is stored as current user
+                // Finished Sign Up, back to root of the navigation view controller stack (assume to be the sign-in view). 
+                // Sign-in view should automatically navigate to main view since this sign-up user is stored as current user.
+                self.navigationController?.popToRootViewControllerAnimated(true)
             }
         }
     }
@@ -81,12 +82,12 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
         
         // Validate input of each text field
         switch textField {
-        case self.userName:
-            self.user.name = self.userName.text
-        case self.graduationYearTextField:
-            if let graduationYear = self.graduationYearTextField.text {
+        case userName:
+            user.name = userName.text
+        case graduationYearTextField:
+            if let graduationYear = graduationYearTextField.text {
                 if graduationYear.characters.count > 0 {
-                    self.user.graduationYear = Int(graduationYear)!
+                    user.graduationYear = Int(graduationYear)!
                 }
             }
         default:
