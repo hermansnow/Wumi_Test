@@ -19,7 +19,7 @@ class User: PFUser {
     // Properties should not be saved into PFUser
     var confirmPassword: String?
     
-    override class func initialize() {
+    /*override class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
         }
@@ -27,9 +27,10 @@ class User: PFUser {
              self.registerSubclass() // Register the subclass
         }
     }
+    */
     
     // MARK: Initializers
-    override init() {
+    /*override init() {
         super.init()
     }
     
@@ -62,13 +63,7 @@ class User: PFUser {
         }
         return user
     }
-    
-    func editInBackgroundWithBlock(block: PFBooleanResultBlock?) {
-        // Save extended properties
-        //self.setObject(self.graduationYear, forKey: "graduationYear")
-        //self.setObject(self.displayName!, forKey: "name")
-        self.saveInBackgroundWithBlock(block)
-    }
+    */
     
     func loadProfileImageWithBlock(block: PFDataResultBlock?) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {

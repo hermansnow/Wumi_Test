@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7Y3-rS-esY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H0F-Uw-KhX">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -38,7 +38,7 @@
                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Invitation Code" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="p8g-H2-hJh" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Invitation Code" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="p8g-H2-hJh" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="30" width="240" height="30"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -203,7 +203,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lQy-0g-aEQ">
                                                         <rect key="frame" x="67" y="20" width="240" height="150"/>
                                                         <subviews>
-                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pL6-PP-PYB" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="pL6-PP-PYB" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="jkt-xi-I6g"/>
@@ -219,7 +219,7 @@
                                                                     <outlet property="delegate" destination="GQw-5c-dGe" id="wrB-Vq-8Q5"/>
                                                                 </connections>
                                                             </textField>
-                                                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G3i-aw-ob4" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="G3i-aw-ob4" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="40" width="240" height="30"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
@@ -227,7 +227,7 @@
                                                                     <outlet property="delegate" destination="GQw-5c-dGe" id="ugb-vb-BO9"/>
                                                                 </connections>
                                                             </textField>
-                                                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O7J-uu-be6" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="O7J-uu-be6" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="80" width="240" height="30"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
@@ -235,7 +235,7 @@
                                                                     <outlet property="delegate" destination="GQw-5c-dGe" id="jN9-iN-wiu"/>
                                                                 </connections>
                                                             </textField>
-                                                            <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6d5-vd-YcI" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="6d5-vd-YcI" customClass="WMDataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="120" width="240" height="30"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="done"/>
@@ -398,7 +398,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zjZ-8N-hm5">
                                                         <rect key="frame" x="67" y="20" width="240" height="70"/>
                                                         <subviews>
-                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Js-v8-3tS" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8Js-v8-3tS" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="esp-iX-wCr"/>
@@ -414,7 +414,7 @@
                                                                     <outlet property="delegate" destination="xWV-4c-tDk" id="uOk-6a-Lgs"/>
                                                                 </connections>
                                                             </textField>
-                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Graduation Year" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fcx-6h-Cn0" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Graduation Year" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Fcx-6h-Cn0" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="40" width="240" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="Re3-gc-dwa"/>
@@ -615,8 +615,8 @@
                         <outlet property="userDisplayName" destination="os6-Z6-Qi3" id="GxB-Gz-teX"/>
                         <outlet property="userEmail" destination="HMQ-I4-ZGD" id="cYK-ln-ezZ"/>
                         <outlet property="userProfileImageView" destination="UUW-Ao-Zhy" id="dTS-tD-15b"/>
-                        <segue destination="B2B-h7-mOv" kind="presentation" identifier="Edit Profile" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="7Ka-OQ-a4W"/>
                         <segue destination="9UK-Go-n9S" kind="show" identifier="Contact Settings" id="H78-sQ-KYB"/>
+                        <segue destination="2XV-As-BRZ" kind="show" identifier="Edit Profile" id="RrV-Im-Ybs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kq2-V6-Ayb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -634,7 +634,7 @@
                         <sections>
                             <tableViewSection id="LFf-eU-K2d">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Image Cell" rowHeight="81" id="gS8-T5-fy6">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Image Cell" rowHeight="81" id="gS8-T5-fy6">
                                         <rect key="frame" x="0.0" y="99" width="375" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="gS8-T5-fy6" id="Zkn-dY-zgj">
@@ -653,9 +653,6 @@
                                                         <constraint firstAttribute="width" secondItem="ndK-xa-YAi" secondAttribute="height" multiplier="1:1" id="zOV-2S-Q2g"/>
                                                     </constraints>
                                                     <state key="normal" backgroundImage="Profile"/>
-                                                    <connections>
-                                                        <action selector="updateProfileImage:" destination="2XV-As-BRZ" eventType="touchUpInside" id="wDG-9T-dLR"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -674,11 +671,11 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Setting Cell" textLabel="u96-XC-r0q" detailTextLabel="gHy-NI-5k7" style="IBUITableViewCellStyleValue1" id="zjO-3O-wlU">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Profile Setting Cell" textLabel="u96-XC-r0q" detailTextLabel="gHy-NI-5k7" style="IBUITableViewCellStyleValue1" id="zjO-3O-wlU">
                                         <rect key="frame" x="0.0" y="180" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="zjO-3O-wlU" id="nUU-Wa-GVe">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u96-XC-r0q">
@@ -689,7 +686,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Account name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gHy-NI-5k7">
-                                                    <rect key="frame" x="235.5" y="12" width="104.5" height="19.5"/>
+                                                    <rect key="frame" x="255.5" y="12" width="104.5" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
@@ -750,12 +747,28 @@
                             </tableViewSection>
                             <tableViewSection id="C2w-3e-587">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Label Cell" id="stX-4c-ksu">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Setting Cell" textLabel="qAA-lo-ang" detailTextLabel="a1W-Hb-axz" style="IBUITableViewCellStyleValue1" id="stX-4c-ksu">
                                         <rect key="frame" x="0.0" y="348" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="stX-4c-ksu" id="Lcq-vv-0Ab">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qAA-lo-ang">
+                                                    <rect key="frame" x="15" y="12" width="43" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Please enter your display name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a1W-Hb-axz">
+                                                    <rect key="frame" x="114.5" y="12" width="225.5" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Label Cell" id="UXj-ya-C1i">
@@ -786,12 +799,13 @@
                     <connections>
                         <outlet property="accountNameLabel" destination="gHy-NI-5k7" id="idA-ck-0Gg"/>
                         <outlet property="emailLabel" destination="HU3-tD-lHF" id="kqA-Ir-tZ1"/>
+                        <outlet property="nameLabel" destination="a1W-Hb-axz" id="13g-ha-GuR"/>
                         <outlet property="userProfileImageButton" destination="ndK-xa-YAi" id="Rc2-Ec-Mz2"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bj4-Pg-K6R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5475.5" y="1427.5"/>
+            <point key="canvasLocation" x="4797.5" y="1157.5"/>
         </scene>
         <!--Sign In-->
         <scene sceneID="PNx-Bb-zlt">
@@ -828,13 +842,13 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="hOW-6k-jOo">
                                                                 <rect key="frame" x="38" y="10.5" width="300" height="90"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="l1L-H6-ir9" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="l1L-H6-ir9" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="light" returnKeyType="done"/>
                                                                     </textField>
-                                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="H3e-lr-45O" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="H3e-lr-45O" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="60" width="300" height="30"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
@@ -949,7 +963,6 @@
                         <outlet property="passwordTextField" destination="H3e-lr-45O" id="oga-v9-aBi"/>
                         <outlet property="usernameTextField" destination="l1L-H6-ir9" id="fen-FM-Si3"/>
                         <segue destination="SNN-Gs-X3M" kind="show" identifier="Launch Main View" id="STE-ef-OmP"/>
-                        <segue destination="SNN-Gs-X3M" kind="show" identifier="Directly Launch Main View" animates="NO" id="dkX-58-aX1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lDQ-QD-aBM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1026,24 +1039,6 @@
             </objects>
             <point key="canvasLocation" x="3702.5" y="1427.5"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="7Ni-Gb-VbO">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="B2B-h7-mOv" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ili-vy-s4l">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="2XV-As-BRZ" kind="relationship" relationship="rootViewController" id="2BL-3Y-RFU"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mYa-4Y-HNI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4888.5" y="1427.5"/>
-        </scene>
         <!--Table View Controller-->
         <scene sceneID="dyA-Uu-Xcp">
             <objects>
@@ -1070,23 +1065,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B4W-y8-pIo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4888.5" y="2321.5"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ayd-FY-apx">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iD2-4g-fRl" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eOG-pl-hiC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CtK-iG-gWJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1890.5" y="1157.5"/>
+            <point key="canvasLocation" x="4822.5" y="2043.5"/>
         </scene>
     </scenes>
     <resources>
@@ -1094,7 +1073,4 @@
         <image name="Logo" width="217" height="114"/>
         <image name="Profile" width="300" height="300"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="STE-ef-OmP"/>
-    </inferredMetricsTieBreakers>
 </document>

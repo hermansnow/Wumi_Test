@@ -37,7 +37,7 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
                 self.profileImageView.image = UIImage(data: imageData!)
             }
             else {
-                Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
+                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
             }
         }
     }
@@ -56,9 +56,9 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
     @IBAction func addProfile(sender: AnyObject) {
         dismissInputView()
         
-        user.editInBackgroundWithBlock { (success, error) -> Void in
+        user.saveInBackgroundWithBlock { (success, error) -> Void in
             if !success {
-                Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
+                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
             }
             else {
                 // Finished Sign Up, back to root of the navigation view controller stack (assume to be the sign-in view). 

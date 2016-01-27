@@ -26,7 +26,7 @@ class InvitationCodeViewController: UIViewController {
         invitationCode.invitationCode = invitationCodeTextField.text
         invitationCode.verifyCodeWhithBlock({ (verified) -> Void in
             if !verified {
-                Helper.PopupErrorAlert(self, errorMessage: "Invalid invitation code", dismissButtonTitle: "Cancel")
+                Helper.PopupErrorAlert(self, errorMessage: "Invalid invitation code")
             }
             else {
                 self.performSegueWithIdentifier("Show New Account Form", sender: self)

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 
 class WMUserTableViewController: UITableViewController {
     
@@ -73,7 +72,7 @@ class WMUserTableViewController: UITableViewController {
     func logoutUser() {
         let alert = UIAlertController(title: "Log Out?", message: "Logout will not delete any data. You can still log in with this account. ", preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { (UIAlertAction) -> Void in
-            PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
+            User.logOutInBackgroundWithBlock({ (error) -> Void in
                 if error != nil {
                     // TODO alert
                 }

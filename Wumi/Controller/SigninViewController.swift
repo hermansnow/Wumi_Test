@@ -15,6 +15,8 @@ class SigninViewController: UIViewController {
     @IBOutlet weak var usernameTextField: DataInputTextField!
     @IBOutlet weak var passwordTextField: DataInputTextField!
     
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,18 +24,19 @@ class SigninViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         // Get current user
-        if User.currentUser() != nil {
-            performSegueWithIdentifier("Launch Main View", sender: self)
+        if let user = User.currentUser() {
+            if user.objectId != nil {
+                performSegueWithIdentifier("Launch Main View", sender: self)
+            }
         }
     }
     
-    // Perform segues: "Launch Main View" to main view
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "Launch Main View" {
-            return User.currentUser() != nil
-        }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
-        return true
+        if let user = User.currentUser() {
+            usernameTextField.text = user.username
+        }
     }
     
     // MARK: Actions
@@ -44,7 +47,7 @@ class SigninViewController: UIViewController {
         
         User.logInWithUsernameInBackground(userName!, password: userPassword!) { (pfUser, error) -> Void in
             if pfUser == nil {
-                Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
+                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
             }
             else {
                 self.performSegueWithIdentifier("Launch Main View", sender: self)
@@ -53,22 +56,19 @@ class SigninViewController: UIViewController {
     }
     
     @IBAction func forgotPassword(sender: AnyObject) {
-        let alert = UIAlertController(title: "Reset Password", message: "Please enter the email address for your account", preferredStyle: .Alert)
-        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
-            textField.placeholder = "Email"
+        Helper.PopupInputBox(self, boxTitle: "Reset Password", message: "Please enter the email address for your account",
+            numberOfFileds: 1, textValues: [["placeHolder": "Email"]]) { (inputValues) -> Void in
+                if let email = inputValues.first! {
+                    User.requestPasswordResetForEmailInBackground(email, block: { (success, error) -> Void in
+                        if !success {
+                            Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                        }
+                        else {
+                            Helper.PopupInformationBox(self, boxTitle: "Request Sent", message: "Please check your registered email account for resetting password")
+                        }
+                    })
+                }
+
         }
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            if let textField = alert.textFields?.first {
-                User.requestPasswordResetForEmailInBackground(textField.text!, block: { (success, error) -> Void in
-                    if !success {
-                        Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
-                    }
-                    else {
-                        Helper.PopupInformationBox(self, boxTitle: "Request Sent", message: "Please check your registered email account for resetting password")
-                    }
-                })
-            }
-        }))
-        presentViewController(alert, animated: true, completion: nil)
     }
 }

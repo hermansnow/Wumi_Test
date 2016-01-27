@@ -51,19 +51,19 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         // Validate user inputs
         self.user.validateUserWithBlock { (valid, error) -> Void in
             if !valid {
-                Helper.PopupErrorAlert(self, errorMessage: "Invalid user information: \(error)", dismissButtonTitle: "Cancel")
+                Helper.PopupErrorAlert(self, errorMessage: "Invalid user information: \(error)")
             }
             else {
                 self.user.saveProfileImageFile(self.addProfileImageButton.backgroundImageForState(.Normal),
-                    WithBlock: { (success, error) -> Void in
-                        if !success {
-                            Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
+                    WithBlock: { (saveImageSuccess, imageError) -> Void in
+                        if !saveImageSuccess {
+                            Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
                         }
                         else {
                             // Sign up user asynchronously
                             self.user.signUpInBackgroundWithBlock { (success, error) -> Void in
                                 if !success {
-                                    Helper.PopupErrorAlert(self, errorMessage: "\(error)", dismissButtonTitle: "Cancel")
+                                    Helper.PopupErrorAlert(self, errorMessage: "\(error)")
                                 }
                                 else {
                                     self.performSegueWithIdentifier("Show Profile Form", sender: self)
