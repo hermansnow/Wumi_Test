@@ -10,6 +10,7 @@ import UIKit
 import MobileCoreServices
 
 class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    // MARK: Properties
     
     @IBOutlet weak var addProfileImageButton: UIButton!
     @IBOutlet weak var userNameTextField: DataInputTextField!
@@ -18,6 +19,8 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     @IBOutlet weak var userEmailTextField: DataInputTextField!
     
     var user = User()
+    
+    // MARK: Life cycle functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +48,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     }
     
     // MARK:Actions
+    
     @IBAction func signUpUser(sender: AnyObject) {
         dismissInputView()
         
@@ -105,7 +109,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
             if let confirmPassword = user.confirmPassword {
                 if confirmPassword.characters.count > 0 {
                     user.validateConfirmPassword(&error)
-                    userConfirmPasswordTextField.setRightErrorViewForTextFieldWithErrorMessage(error)
+                    //userConfirmPasswordTextField.setRightErrorViewForTextFieldWithErrorMessage(error)
                 }
             }
             error = ""
@@ -124,7 +128,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         }
         
         if let field = textField as? DataInputTextField {
-            field.setRightErrorViewForTextFieldWithErrorMessage(error)
+            //field.setRightErrorViewForTextFieldWithErrorMessage(error)
         }
     }
     

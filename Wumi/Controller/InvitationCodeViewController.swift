@@ -22,6 +22,7 @@ class InvitationCodeViewController: UIViewController {
     }
     
     // MARK: Actions
+    
     @IBAction func verifyCode(sender: AnyObject) {
         invitationCode.invitationCode = invitationCodeTextField.text
         invitationCode.verifyCodeWhithBlock({ (verified) -> Void in

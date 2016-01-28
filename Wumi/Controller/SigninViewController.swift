@@ -7,15 +7,17 @@
 //
 
 import UIKit
-import Parse
 
 class SigninViewController: UIViewController {
-
+    // MARK: Properties
+    
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var usernameTextField: DataInputTextField!
     @IBOutlet weak var passwordTextField: DataInputTextField!
     
     var user: User?
+    
+    // MARK: Life cycle functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,14 +36,16 @@ class SigninViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Fill in the username field if current user exists
         if let user = User.currentUser() {
             usernameTextField.text = user.username
         }
     }
     
     // MARK: Actions
+    
+    // Sign in with username/ password filled in
     @IBAction func SignIn(sender: AnyObject) {
-        
         let userName = usernameTextField.text
         let userPassword = passwordTextField.text
         
@@ -55,6 +59,7 @@ class SigninViewController: UIViewController {
         }
     }
     
+    // Show a popup window to allow user request an email to reset password
     @IBAction func forgotPassword(sender: AnyObject) {
         Helper.PopupInputBox(self, boxTitle: "Reset Password", message: "Please enter the email address for your account",
             numberOfFileds: 1, textValues: [["placeHolder": "Email"]]) { (inputValues) -> Void in

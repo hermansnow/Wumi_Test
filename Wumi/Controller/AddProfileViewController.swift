@@ -8,20 +8,24 @@
 
 import UIKit
 
-class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFieldDelegate {
-
+class AddProfileViewController: ScrollTextFieldViewController {
+    // MARK: Properties
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var userName: DataInputTextField!
     @IBOutlet weak var graduationYearTextField: DataInputTextField!
     
-    var user:User = User.currentUser()!
+    var user: User = User.currentUser()!
+    
+    // MARK: Life cycle functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set Date Picker for graduationYearTextField
-        let graduationYearPicker = WMGraduationYearPicker()
-        graduationYearPicker.onYearSelected = { (year: Int) in
+        let graduationYearPickerView = GraduationYearPickerView(frame: CGRect(origin: CGPoint(x: 0, y: view.frame.height / 3 * 2),
+                                                                                size: CGSize(width: view.frame.width, height: view.frame.height / 3)))
+        graduationYearPickerView.onYearSelected = { (year: Int) in
             if year == 0 {
                 self.graduationYearTextField.text = nil
             }
@@ -29,8 +33,7 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
                 self.graduationYearTextField.text = String(year)
             }
         }
-        graduationYearTextField.inputView = graduationYearPicker
-        graduationYearTextField.addInputToolBar()
+        graduationYearTextField.inputView = graduationYearPickerView
         
         user.loadProfileImageWithBlock { (imageData, error) -> Void in
             if error == nil && imageData != nil {
@@ -52,7 +55,8 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
         profileImageView.clipsToBounds = true
     }
     
-    // MARK:Actions
+    // MARK: Actions
+    
     @IBAction func addProfile(sender: AnyObject) {
         dismissInputView()
         
@@ -72,11 +76,7 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
         self.navigationController?.popToRootViewControllerAnimated(true) // The root view controller is designed to be the Sign In View Controller
     }
     
-    
-    func doneToolButtonClicked(sender: UIBarButtonItem){
-        dismissInputView()
-    }
-    
+    // MARK: UItextField delegate functions
     func textFieldDidEndEditing(textField: UITextField) {
         let error: String = ""
         
@@ -98,6 +98,4 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
             field.setRightErrorViewForTextFieldWithErrorMessage(error)
         }
     }
-
-    
 }

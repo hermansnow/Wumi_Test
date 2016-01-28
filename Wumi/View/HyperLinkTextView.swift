@@ -1,5 +1,5 @@
 //
-//  WMHyperLinkTextView.swift
+//  HyperLinkTextView.swift
 //  Wumi
 //
 //  Created by Herman on 11/5/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WMHyperLinkTextView: UITextView {
+class HyperLinkTextView: UITextView {
 
     /*
     // Only override drawRect: if you perform custom drawing.

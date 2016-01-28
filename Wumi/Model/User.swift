@@ -10,6 +10,7 @@ import Parse
 import UIKit
 
 class User: PFUser {
+    // MARK: Properties
     
     // Extended properties
     @NSManaged var graduationYear: Int
@@ -19,7 +20,9 @@ class User: PFUser {
     // Properties should not be saved into PFUser
     var confirmPassword: String?
     
-    /*override class func initialize() {
+    // MARK: Initializer
+    
+    override class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
         }
@@ -27,44 +30,10 @@ class User: PFUser {
              self.registerSubclass() // Register the subclass
         }
     }
-    */
     
-    // MARK: Initializers
-    /*override init() {
-        super.init()
-    }
+    // MARK: Image functions
     
-    // Convenience initializer from a PFUser instance
-    convenience init(pfUser: PFUser) {
-        self.init()
-        self.username = pfUser.username
-        self.password = pfUser.password
-        self.email = pfUser.email
-        if let graduationYear = pfUser.objectForKey("graduationYear") as? Int {
-            self.graduationYear = graduationYear
-        }
-        if let name = pfUser.objectForKey("name") as? String {
-            self.name = name
-        }
-        if let profileImageFile = pfUser.objectForKey("profileImageFile") as? PFFile {
-            self.profileImageFile = profileImageFile
-            loadProfileImageWithBlock(nil) // Load the profile image into local cache in background thread
-        }
-    }
-    
-    // Get current login User instance
-    override class func currentUser() -> User? {
-        var user: User?
-        
-        if let pfUser = super.currentUser() {
-            if pfUser.objectId != nil {
-                user = User(pfUser: pfUser)
-            }
-        }
-        return user
-    }
-    */
-    
+    // Load profile image. This function will check whether the image in in local cache first. If not, then try download it from Parse server asynchronously in background
     func loadProfileImageWithBlock(block: PFDataResultBlock?) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             var imageData: NSData?
@@ -96,6 +65,7 @@ class User: PFUser {
         }
     }
     
+    // Save profile image to Parse file server
     func saveProfileImageFile(profileImage: UIImage?, WithBlock block: (success: Bool, error: NSError?) -> Void) {
         if profileImage == nil {
             block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: nil))
@@ -108,6 +78,7 @@ class User: PFUser {
         }
     }
     
+    // Compress image in JPEG format. The max size of image save in Parse server is 10.0MB
     func scaleImage(image: UIImage, ToSize size: Int) -> NSData? {
         var compress:CGFloat = 1.0;
         var imageData:NSData?
@@ -124,7 +95,9 @@ class User: PFUser {
         return imageData;
     }
 
-    // MARK: Validation Functions
+    // MARK: Validation functions
+    
+    // Validate user information
     func validateUserWithBlock(block: (valid: Bool, error: NSDictionary) -> Void) {
         let errors = NSMutableDictionary()
         var errorMesage = ""
@@ -147,33 +120,30 @@ class User: PFUser {
         block(valid: errors.count == 0, error: errors)
     }
     
-    // Validate Username
+    // Validate username
     func validateUserName(inout error: String) -> Bool {
         if ((self.username?.utf16.count) <= 3) {
             error = "Length of user name should larger than 3 characters"
             return false
         }
-        
         return true
     }
     
-    // Validate User Password
+    // Validate password
     func validateUserPassword(inout error: String) -> Bool {
         if ((self.password?.utf16.count) <= 3) {
             error = "Length of user password should larger than 3 characters"
             return false
         }
-        
         return true
     }
     
-    // Validate Confirm Password
+    // Validate comfirm password
     func validateConfirmPassword(inout error: String) -> Bool {
         if (self.password != self.confirmPassword) {
             error = "Passwords entered not match"
             return false
         }
-        
         return true
     }
     

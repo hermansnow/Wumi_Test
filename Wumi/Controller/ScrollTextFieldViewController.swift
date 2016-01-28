@@ -26,6 +26,7 @@ class ScrollTextFieldViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: Actions
+    
     // Dismiss inputView when touching any other areas on the screen
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         dismissInputView()
@@ -37,6 +38,8 @@ class ScrollTextFieldViewController: UIViewController, UITextFieldDelegate {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         self.view.endEditing(true)
     }
+    
+    // MARK: Actions
     
     func keyboardWillShow(notification: NSNotification) {
         let keyboardInfo = notification.userInfo as! Dictionary<String, NSValue>
@@ -68,7 +71,8 @@ class ScrollTextFieldViewController: UIViewController, UITextFieldDelegate {
         self.formScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
         
-    // MARK:TextField delegates and functions
+    // MARK:UITextField delegates and functions
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         let nextTag = textField.tag + 1;
         // Try to find next responder
