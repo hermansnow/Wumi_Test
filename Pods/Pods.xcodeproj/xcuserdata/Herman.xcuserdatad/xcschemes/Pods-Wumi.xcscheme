@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2B69E94013FAF68741A0FF91'
+               BlueprintIdentifier = 'D5C8D2923587C0DA81056A82'
                BlueprintName = 'Pods-Wumi'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-Wumi.a'>
+               BuildableName = 'Pods_Wumi.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

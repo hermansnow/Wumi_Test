@@ -58,23 +58,31 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
                 Helper.PopupErrorAlert(self, errorMessage: "Invalid user information: \(error)")
             }
             else {
-                self.user.saveProfileImageFile(self.addProfileImageButton.backgroundImageForState(.Normal),
-                    WithBlock: { (saveImageSuccess, imageError) -> Void in
-                        if !saveImageSuccess {
-                            Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
-                        }
-                        else {
-                            // Sign up user asynchronously
-                            self.user.signUpInBackgroundWithBlock { (success, error) -> Void in
-                                if !success {
-                                    Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                // Sign up user asynchronously
+                self.user.signUpInBackgroundWithBlock { (signUpSuccess, signUpError) -> Void in
+                    if !signUpSuccess {
+                        Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)")
+                    }
+                    else {
+                        // Save image file
+                        self.user.saveProfileImageFile(self.addProfileImageButton.backgroundImageForState(.Normal),
+                            WithBlock: { (saveImageSuccess, imageError) -> Void in
+                                if !saveImageSuccess {
+                                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
                                 }
                                 else {
-                                    self.performSegueWithIdentifier("Show Profile Form", sender: self)
+                                    self.user.saveInBackgroundWithBlock({ (saveSuccess, saveError) -> Void in
+                                        if !saveSuccess {
+                                            Helper.PopupErrorAlert(self, errorMessage: "\(saveError)")
+                                        }
+                                        else {
+                                            self.performSegueWithIdentifier("Show Profile Form", sender: self)
+                                        }
+                                    })
                                 }
-                            }
-                        }
-                })
+                            })
+                    }
+                }
             }
         }
     }

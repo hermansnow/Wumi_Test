@@ -6,16 +6,16 @@
 //  Copyright © 2015 Parse. All rights reserved.
 //
 
-import Parse
+import AVOSCloud
 import UIKit
 
-class User: PFUser {
+class User: AVUser {
     // MARK: Properties
     
     // Extended properties
     @NSManaged var graduationYear: Int
     @NSManaged var name: String?
-    @NSManaged var profileImageFile: PFFile?
+    @NSManaged var profileImageFile: AVFile?
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
@@ -34,7 +34,7 @@ class User: PFUser {
     // MARK: Image functions
     
     // Load profile image. This function will check whether the image in in local cache first. If not, then try download it from Parse server asynchronously in background
-    func loadProfileImageWithBlock(block: PFDataResultBlock?) {
+    func loadProfileImageWithBlock(block: AVDataResultBlock?) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             var imageData: NSData?
             var loadError: NSError?
@@ -43,19 +43,12 @@ class User: PFUser {
                 return
             }
             
-            if ((self.profileImageFile?.isDataAvailable) != nil) {
-                do {
-                    imageData = try self.profileImageFile?.getData()
-                } catch {
-                    loadError = NSError(domain: "wumi.com", code: 2, userInfo: nil)
-                }
-            }
-            else {
-                self.profileImageFile?.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                    imageData = data
-                    loadError = error
-                })
-            }
+            print("\(self.profileImageFile!.url)")
+            
+            self.profileImageFile?.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                imageData = data
+                loadError = error
+            })
             
             dispatch_async(dispatch_get_main_queue()) {
                 if block != nil {
@@ -73,7 +66,7 @@ class User: PFUser {
         }
         
         if let imageData = scaleImage(profileImage!, ToSize: 1048576) {
-            profileImageFile = PFFile(data: imageData)
+            profileImageFile = AVFile(data: imageData)
             profileImageFile!.saveInBackgroundWithBlock(block)
         }
     }

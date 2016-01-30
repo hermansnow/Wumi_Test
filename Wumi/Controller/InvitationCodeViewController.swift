@@ -36,6 +36,6 @@ class InvitationCodeViewController: UIViewController {
     }
     
     @IBAction func ReturnSignIn(sender: AnyObject) {
-        self.navigationController?.popToRootViewControllerAnimated(true) // The root view controller is designed to be the Sign In View Controller
+        Helper.RedirectToSignIn(self)
     }
 }

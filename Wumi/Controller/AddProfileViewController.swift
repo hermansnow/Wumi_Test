@@ -65,15 +65,13 @@ class AddProfileViewController: ScrollTextFieldViewController {
                 Helper.PopupErrorAlert(self, errorMessage: "\(error)")
             }
             else {
-                // Finished Sign Up, back to root of the navigation view controller stack (assume to be the sign-in view). 
-                // Sign-in view should automatically navigate to main view since this sign-up user is stored as current user.
-                self.navigationController?.popToRootViewControllerAnimated(true)
+                Helper.RedirectToSignIn(self)
             }
         }
     }
     
     @IBAction func skip(sender: AnyObject) {
-        self.navigationController?.popToRootViewControllerAnimated(true) // The root view controller is designed to be the Sign In View Controller
+        Helper.RedirectToSignIn(self)
     }
     
     // MARK: UItextField delegate functions

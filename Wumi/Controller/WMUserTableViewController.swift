@@ -72,16 +72,10 @@ class WMUserTableViewController: UITableViewController {
     func logoutUser() {
         let alert = UIAlertController(title: "Log Out?", message: "Logout will not delete any data. You can still log in with this account. ", preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { (UIAlertAction) -> Void in
-            User.logOutInBackgroundWithBlock({ (error) -> Void in
-                if error != nil {
-                    // TODO alert
-                }
-                else {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let loginViewController = storyboard.instantiateViewControllerWithIdentifier("Log In View Controller")
-                    self.presentViewController(loginViewController, animated: true, completion: nil)
-                }
-            })
+            User.logOut()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginViewController = storyboard.instantiateViewControllerWithIdentifier("Log In View Controller")
+            self.presentViewController(loginViewController, animated: true, completion: nil)
             
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
