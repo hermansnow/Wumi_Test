@@ -10,6 +10,13 @@ import UIKit
 
 class SystemButton: UIButton {
     
+    var recommanded = true {
+        didSet {
+            setBackgroundColor()
+            setNeedsDisplay()
+        }
+    }
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         
@@ -19,6 +26,15 @@ class SystemButton: UIButton {
         
         layer.cornerRadius = 15
         
-        backgroundColor = UIColor.orangeColor()
+        setBackgroundColor()
+    }
+    
+    func setBackgroundColor() {
+        if recommanded {
+            backgroundColor = UIColor.orangeColor()
+        }
+        else {
+            backgroundColor = UIColor.grayColor()
+        }
     }
 }

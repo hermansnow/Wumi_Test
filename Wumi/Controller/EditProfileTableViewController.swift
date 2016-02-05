@@ -27,6 +27,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         navigationItem.backBarButtonItem?.enabled = true
         
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine;
         
         // Initialize the graduation year picker view
         graduationYearPickerView.comfirmSelection = {

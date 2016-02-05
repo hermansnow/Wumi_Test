@@ -17,6 +17,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     @IBOutlet weak var userPasswordTextField: DataInputTextField!
     @IBOutlet weak var userConfirmPasswordTextField: DataInputTextField!
     @IBOutlet weak var userEmailTextField: DataInputTextField!
+    @IBOutlet weak var cancelButton: SystemButton!
     
     var user = User()
     
@@ -27,6 +28,9 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         
         // Hide navigation bar
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        // Set cancel button
+        cancelButton.recommanded = false
         
         // Set avatar image delegates
         addAvatarImageView.delegate = self

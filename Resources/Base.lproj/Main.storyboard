@@ -4,7 +4,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Verify Invitation Code-->
@@ -325,6 +324,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addAvatarImageView" destination="7uW-3M-JAF" id="Mjo-Jb-kwL"/>
+                        <outlet property="cancelButton" destination="c2F-Qu-fJJ" id="yrD-nI-oDq"/>
                         <outlet property="formScrollView" destination="NYC-XZ-NVR" id="2Fr-Ep-WdP"/>
                         <outlet property="userConfirmPasswordTextField" destination="O7J-uu-be6" id="mrp-nh-eEP"/>
                         <outlet property="userEmailTextField" destination="6d5-vd-YcI" id="Qo6-eC-cBS"/>
@@ -355,34 +355,22 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XHC-Gm-8R3">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile" translatesAutoresizingMaskIntoConstraints="NO" id="LpK-hU-FY8" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HNp-a7-om7" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
                                                 <rect key="frame" x="127" y="20" width="120" height="120"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="120" id="Bp7-11-mlo"/>
-                                                    <constraint firstAttribute="width" secondItem="LpK-hU-FY8" secondAttribute="height" multiplier="1:1" id="OX2-Tw-7aM"/>
+                                                    <constraint firstAttribute="height" constant="120" id="i6L-4c-2ZS"/>
+                                                    <constraint firstAttribute="width" secondItem="HNp-a7-om7" secondAttribute="height" multiplier="1:1" id="skb-L5-o46"/>
                                                 </constraints>
-                                            </imageView>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="top" secondItem="XHC-Gm-8R3" secondAttribute="top" multiplier="20" id="9IB-af-k7E"/>
-                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="centerY" secondItem="XHC-Gm-8R3" secondAttribute="centerY" id="H2X-id-5zh"/>
-                                            <constraint firstAttribute="trailing" secondItem="LpK-hU-FY8" secondAttribute="trailing" id="N0F-uw-qqo"/>
-                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="top" secondItem="XHC-Gm-8R3" secondAttribute="top" constant="20" id="iRr-be-znt"/>
-                                            <constraint firstAttribute="bottom" secondItem="LpK-hU-FY8" secondAttribute="bottom" multiplier="20" id="k8d-oR-Mrd"/>
-                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="leading" secondItem="XHC-Gm-8R3" secondAttribute="leading" id="nCz-Ok-bX0"/>
-                                            <constraint firstItem="LpK-hU-FY8" firstAttribute="centerX" secondItem="XHC-Gm-8R3" secondAttribute="centerX" id="q43-J0-gPl"/>
-                                            <constraint firstAttribute="bottom" secondItem="LpK-hU-FY8" secondAttribute="bottom" constant="20" id="tCe-cR-bPZ"/>
+                                            <constraint firstItem="HNp-a7-om7" firstAttribute="centerY" secondItem="XHC-Gm-8R3" secondAttribute="centerY" id="2SC-vR-uds"/>
+                                            <constraint firstItem="HNp-a7-om7" firstAttribute="centerX" secondItem="XHC-Gm-8R3" secondAttribute="centerX" id="RDg-ja-s42"/>
+                                            <constraint firstItem="HNp-a7-om7" firstAttribute="top" secondItem="XHC-Gm-8R3" secondAttribute="top" constant="20" id="dw9-dX-856"/>
+                                            <constraint firstAttribute="bottom" secondItem="HNp-a7-om7" secondAttribute="bottom" constant="20" id="ucI-gn-M9i"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="9IB-af-k7E"/>
-                                                <exclude reference="N0F-uw-qqo"/>
-                                                <exclude reference="k8d-oR-Mrd"/>
-                                                <exclude reference="nCz-Ok-bX0"/>
-                                            </mask>
-                                        </variation>
                                     </view>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="YG6-3J-LhB">
                                         <rect key="frame" x="0.0" y="160" width="375" height="329"/>
@@ -505,9 +493,10 @@
                     <navigationItem key="navigationItem" title="Add Profile" id="e1m-dy-v89"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="avatarImageView" destination="LpK-hU-FY8" id="tFZ-Q5-r6t"/>
+                        <outlet property="avatarImageView" destination="HNp-a7-om7" id="M96-IK-Ati"/>
                         <outlet property="formScrollView" destination="YG6-3J-LhB" id="WlL-TA-4AA"/>
                         <outlet property="graduationYearTextField" destination="Fcx-6h-Cn0" id="eua-K0-8KA"/>
+                        <outlet property="skipButton" destination="oA2-ez-5NQ" id="rGU-Kz-0gZ"/>
                         <outlet property="userName" destination="8Js-v8-3tS" id="JD5-th-NC5"/>
                     </connections>
                 </viewController>
@@ -627,19 +616,13 @@
                         <sections>
                             <tableViewSection id="LFf-eU-K2d">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Image Cell" rowHeight="81" id="gS8-T5-fy6">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Image Cell" rowHeight="81" id="gS8-T5-fy6">
                                         <rect key="frame" x="0.0" y="99" width="375" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="gS8-T5-fy6" id="Zkn-dY-zgj">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avatar" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cAU-uS-Srm">
-                                                    <rect key="frame" x="16" y="30" width="49" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j7S-ig-9Rg" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
                                                     <rect key="frame" x="264" y="5" width="70" height="70"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -647,18 +630,30 @@
                                                         <constraint firstAttribute="width" secondItem="j7S-ig-9Rg" secondAttribute="height" multiplier="1:1" id="WQT-40-NBv"/>
                                                     </constraints>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avatar" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cAU-uS-Srm">
+                                                    <rect key="frame" x="15" y="30" width="49" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="cAU-uS-Srm" firstAttribute="leading" secondItem="Zkn-dY-zgj" secondAttribute="leading" constant="15" id="C2b-7k-5jV"/>
                                                 <constraint firstAttribute="bottom" secondItem="j7S-ig-9Rg" secondAttribute="bottom" constant="5" id="J7Y-Iy-aAF"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="j7S-ig-9Rg" secondAttribute="trailing" id="QgO-f8-tRc"/>
                                                 <constraint firstItem="j7S-ig-9Rg" firstAttribute="centerY" secondItem="cAU-uS-Srm" secondAttribute="centerY" id="fF6-J9-KXr"/>
                                                 <constraint firstItem="cAU-uS-Srm" firstAttribute="centerY" secondItem="Zkn-dY-zgj" secondAttribute="centerY" id="iJc-vf-G9S"/>
                                                 <constraint firstItem="j7S-ig-9Rg" firstAttribute="top" secondItem="Zkn-dY-zgj" secondAttribute="top" constant="5" id="kPv-nG-tJN"/>
-                                                <constraint firstItem="cAU-uS-Srm" firstAttribute="leading" secondItem="Zkn-dY-zgj" secondAttribute="leadingMargin" constant="8" id="mIP-re-lvO"/>
+                                                <constraint firstItem="cAU-uS-Srm" firstAttribute="leading" secondItem="Zkn-dY-zgj" secondAttribute="leadingMargin" id="mIP-re-lvO"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="mIP-re-lvO"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Profile Setting Cell" textLabel="u96-XC-r0q" detailTextLabel="gHy-NI-5k7" style="IBUITableViewCellStyleValue1" id="zjO-3O-wlU">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" selectionStyle="none" indentationWidth="10" reuseIdentifier="Profile Setting Cell" textLabel="u96-XC-r0q" detailTextLabel="gHy-NI-5k7" style="IBUITableViewCellStyleValue1" id="zjO-3O-wlU">
                                         <rect key="frame" x="0.0" y="180" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="zjO-3O-wlU" id="nUU-Wa-GVe">
@@ -682,7 +677,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Setting Cell" textLabel="t39-Nn-O88" detailTextLabel="IxR-sF-e6B" style="IBUITableViewCellStyleValue1" id="bHo-9H-l77">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Setting Cell" textLabel="t39-Nn-O88" detailTextLabel="IxR-sF-e6B" style="IBUITableViewCellStyleValue1" id="bHo-9H-l77">
                                         <rect key="frame" x="0.0" y="224" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="bHo-9H-l77" id="oKM-L2-awo">
@@ -706,7 +701,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Setting Cell" textLabel="fEP-5f-2cK" detailTextLabel="HU3-tD-lHF" style="IBUITableViewCellStyleValue1" id="gAW-8F-Pui">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Profile Setting Cell" textLabel="fEP-5f-2cK" detailTextLabel="HU3-tD-lHF" style="IBUITableViewCellStyleValue1" id="gAW-8F-Pui">
                                         <rect key="frame" x="0.0" y="268" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="gAW-8F-Pui" id="Wui-GV-JnK">

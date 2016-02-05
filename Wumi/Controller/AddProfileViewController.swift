@@ -14,6 +14,7 @@ class AddProfileViewController: ScrollTextFieldViewController {
     @IBOutlet weak var avatarImageView: AvatarImageView!
     @IBOutlet weak var userName: DataInputTextField!
     @IBOutlet weak var graduationYearTextField: DataInputTextField!
+    @IBOutlet weak var skipButton: SystemButton!
     
     var avatarImage: UIImage?
     var user: User = User.currentUser()!
@@ -38,6 +39,9 @@ class AddProfileViewController: ScrollTextFieldViewController {
         
         // Set avatar image
         avatarImageView.image = avatarImage
+        
+        // Set skip button
+        skipButton.recommanded = false
     }
     
     // MARK: Actions
