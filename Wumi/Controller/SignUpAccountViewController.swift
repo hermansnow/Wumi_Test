@@ -9,10 +9,10 @@
 import UIKit
 import MobileCoreServices
 
-class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AvatarImageDelegate {
     // MARK: Properties
     
-    @IBOutlet weak var addProfileImageButton: UIButton!
+    @IBOutlet weak var addAvatarImageView: AvatarImageView!
     @IBOutlet weak var userNameTextField: DataInputTextField!
     @IBOutlet weak var userPasswordTextField: DataInputTextField!
     @IBOutlet weak var userConfirmPasswordTextField: DataInputTextField!
@@ -26,23 +26,18 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         super.viewDidLoad()
         
         // Hide navigation bar
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    // Frame will change after ViewWillAppear because of AutoLayout.
-    // All codes based on display frames should be called here after layouting subviews
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+        navigationController?.setNavigationBarHidden(true, animated: false)
         
-        // Set circular profile image button
-        addProfileImageButton.layer.cornerRadius = addProfileImageButton.frame.size.height / 2
-        addProfileImageButton.clipsToBounds = true
+        // Set avatar image delegates
+        addAvatarImageView.delegate = self
+        addAvatarImageView.image = UIImage(named: "Add")
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Show Profile Form" {
             if let addProfileViewController = segue.destinationViewController as? AddProfileViewController {
                 addProfileViewController.user = self.user
+                addProfileViewController.avatarImage = addAvatarImageView.image
             }
         }
     }
@@ -65,7 +60,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
                     }
                     else {
                         // Save image file
-                        self.user.saveProfileImageFile(self.addProfileImageButton.backgroundImageForState(.Normal),
+                        self.user.saveProfileImageFile(self.addAvatarImageView.image,
                             WithBlock: { (saveImageSuccess, imageError) -> Void in
                                 if !saveImageSuccess {
                                     Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
@@ -90,15 +85,6 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     // Cancel the registration process, back to the root of the view controller stack
     @IBAction func cancel(sender: AnyObject) {
         self.navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
-    // Click to select a image as profile image
-    @IBAction func addImage(sender: AnyObject) {
-        let addImageSheet = SelectPhotoActionSheet(title: "Add Profile Image", message: "Choose a photo as your profile image.", preferredStyle: .ActionSheet)
-        addImageSheet.delegate = self
-        addImageSheet.launchViewController = self
-        
-        presentViewController(addImageSheet, animated: true, completion: nil)
     }
     
     // MARK: TextField delegates and functions
@@ -134,18 +120,22 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         default:
             break
         }
-        
-        if let field = textField as? DataInputTextField {
-            //field.setRightErrorViewForTextFieldWithErrorMessage(error)
-        }
     }
     
     // MARK: UIImagePicker delegates and functions
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true) { () -> Void in
             if let profileImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.addProfileImageButton.setBackgroundImage(profileImage, forState: .Normal)
-            }
+                self.addAvatarImageView.image = profileImage            }
         }
+    }
+    
+    // MARK: AvatarImageView delegates and functions
+    func singleTap(imageView: AvatarImageView) {
+        let addImageSheet = SelectPhotoActionSheet(title: "Add Profile Image", message: "Choose a photo as your profile image.", preferredStyle: .ActionSheet)
+        addImageSheet.delegate = self
+        addImageSheet.launchViewController = self
+        
+        presentViewController(addImageSheet, animated: true, completion: nil)
     }
 }

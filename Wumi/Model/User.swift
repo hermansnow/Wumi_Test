@@ -15,7 +15,7 @@ class User: AVUser {
     // Extended properties
     @NSManaged var graduationYear: Int
     @NSManaged var name: String?
-    @NSManaged var profileImageFile: AVFile?
+    @NSManaged var avatarImageFile: AVFile?
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
@@ -38,14 +38,12 @@ class User: AVUser {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             var imageData: NSData?
             var loadError: NSError?
-            if self.profileImageFile == nil {
+            if self.avatarImageFile == nil {
                 loadError = NSError(domain: "wumi.com", code: 1, userInfo: nil)
                 return
             }
             
-            print("\(self.profileImageFile!.url)")
-            
-            self.profileImageFile?.getDataInBackgroundWithBlock({ (data, error) -> Void in
+            self.avatarImageFile?.getDataInBackgroundWithBlock({ (data, error) -> Void in
                 imageData = data
                 loadError = error
             })
@@ -66,8 +64,8 @@ class User: AVUser {
         }
         
         if let imageData = scaleImage(profileImage!, ToSize: 1048576) {
-            profileImageFile = AVFile(data: imageData)
-            profileImageFile!.saveInBackgroundWithBlock(block)
+            avatarImageFile = AVFile(data: imageData)
+            avatarImageFile!.saveInBackgroundWithBlock(block)
         }
     }
     

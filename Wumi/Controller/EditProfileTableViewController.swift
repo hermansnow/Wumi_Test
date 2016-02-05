@@ -10,7 +10,7 @@ import UIKit
 
 class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    @IBOutlet weak var userProfileImageButton: UIButton!
+    @IBOutlet weak var avatarImageView: AvatarImageView!
     @IBOutlet weak var accountNameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -64,7 +64,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         emailLabel.text = user.email
         user.loadProfileImageWithBlock { (imageData, error) -> Void in
             if error == nil && imageData != nil {
-                self.userProfileImageButton.setBackgroundImage(UIImage(data: imageData!), forState: .Normal)
+                self.avatarImageView.image = UIImage(data: imageData!)
             }
             else {
                 print("\(error)")
@@ -119,12 +119,14 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true) { () -> Void in
             if let profileImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.userProfileImageButton.setBackgroundImage(profileImage, forState: .Normal)
                 self.user.saveProfileImageFile(profileImage, WithBlock: { (saveImageSuccess, imageError) -> Void in
                     if saveImageSuccess {
                         self.user.saveInBackgroundWithBlock({ (success, error) -> Void in
                             if !success {
                                 Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                            }
+                            else {
+                                self.avatarImageView.image = profileImage
                             }
                         })
                     }

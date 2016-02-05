@@ -9,10 +9,16 @@
 import UIKit
 
 class SystemButton: UIButton {
-
-    override func drawRect(rect: CGRect) {
-        self.layer.cornerRadius = 20; //half of the width
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
         
-        super.drawRect(rect)
+        // Set up the values for this button. It is
+        // called here when the button first appears and is also called
+        // from the main ViewController when the app is reset.
+        
+        layer.cornerRadius = 15
+        
+        backgroundColor = UIColor.orangeColor()
     }
 }

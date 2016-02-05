@@ -11,10 +11,11 @@ import UIKit
 class AddProfileViewController: ScrollTextFieldViewController {
     // MARK: Properties
     
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var avatarImageView: AvatarImageView!
     @IBOutlet weak var userName: DataInputTextField!
     @IBOutlet weak var graduationYearTextField: DataInputTextField!
     
+    var avatarImage: UIImage?
     var user: User = User.currentUser()!
     
     // MARK: Life cycle functions
@@ -35,24 +36,8 @@ class AddProfileViewController: ScrollTextFieldViewController {
         }
         graduationYearTextField.inputView = graduationYearPickerView
         
-        user.loadProfileImageWithBlock { (imageData, error) -> Void in
-            if error == nil && imageData != nil {
-                self.profileImageView.image = UIImage(data: imageData!)
-            }
-            else {
-                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-            }
-        }
-    }
-    
-    // Frame will change after ViewWillAppear because of AutoLayout.
-    // All codes based on display frames should be called here after layouting subviews
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // Set circular profile image button
-        profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
-        profileImageView.clipsToBounds = true
+        // Set avatar image
+        avatarImageView.image = avatarImage
     }
     
     // MARK: Actions

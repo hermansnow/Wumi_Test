@@ -45,6 +45,7 @@
 		DFD4A6141BE6D08B00C8B09E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6131BE6D08B00C8B09E /* QuartzCore.framework */; };
 		DFD4A6161BE6D09A00C8B09E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6151BE6D09A00C8B09E /* Security.framework */; };
 		DFD4A6181BE6D0A000C8B09E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6171BE6D0A000C8B09E /* StoreKit.framework */; };
+		DFD89BE11C6422FE0073E080 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD89BE01C6422FE0073E080 /* AvatarImageView.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		DFD4A6131BE6D08B00C8B09E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DFD4A6151BE6D09A00C8B09E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DFD4A6171BE6D0A000C8B09E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DFD89BE01C6422FE0073E080 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +259,7 @@
 		DFB7CC081BEA894300BEACB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DFD89BE01C6422FE0073E080 /* AvatarImageView.swift */,
 				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
 				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
 				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
@@ -408,6 +411,7 @@
 				DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,
+				DFD89BE11C6422FE0073E080 /* AvatarImageView.swift in Sources */,
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
 				DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */,
 				DF981D641C50CDE200C2D637 /* Helper.swift in Sources */,
