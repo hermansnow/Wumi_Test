@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //AVOSCloud.setApplicationId("WtWKobgICmjMgPlmNBiVaeme-MdYXbMMI", clientKey: "OEKOIcQ7Wjnk4wuurFNlvmO1")
         
         // China Setting
+        Contact.registerSubclass()
         AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
         
         return true

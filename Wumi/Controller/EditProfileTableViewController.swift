@@ -179,7 +179,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func changeEmail() {
         Helper.PopupInputBox(self, boxTitle: "Edit Email", message: "Change your email address",
-            numberOfFileds: 1, textValues: [["originalValue": user.email!, "placeHolder": "Please enter your email address"]],
+            numberOfFileds: 1, textValues: [["originalValue": user.email, "placeHolder": "Please enter your email address"]],
             WithBlock: { (inputValues) -> Void in
                 let originalValue = self.user.email
                 self.user.email = inputValues[0]
@@ -197,7 +197,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func changeName() {
         Helper.PopupInputBox(self, boxTitle: "Edit Name", message: "Change your display name",
-            numberOfFileds: 1, textValues: [["originalValue": user.name!, "placeHolder": "Please enter your name"]],
+            numberOfFileds: 1, textValues: [["originalValue": user.name, "placeHolder": "Please enter your name"]],
             WithBlock: { (inputValues) -> Void in
                 let originalValue = self.user.name
                 self.user.name = inputValues[0]

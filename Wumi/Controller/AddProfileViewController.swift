@@ -65,8 +65,6 @@ class AddProfileViewController: ScrollTextFieldViewController {
     
     // MARK: UItextField delegate functions
     func textFieldDidEndEditing(textField: UITextField) {
-        let error: String = ""
-        
         // Validate input of each text field
         switch textField {
         case userName:
@@ -79,10 +77,6 @@ class AddProfileViewController: ScrollTextFieldViewController {
             }
         default:
             break
-        }
-        
-        if let field = textField as? DataInputTextField {
-            field.setRightErrorViewForTextFieldWithErrorMessage(error)
         }
     }
 }

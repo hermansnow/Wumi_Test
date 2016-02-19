@@ -17,6 +17,10 @@
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
+		DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACEF1C64D20B00F81491 /* Contact.swift */; settings = {ASSET_TAGS = (); }; };
+		DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */; settings = {ASSET_TAGS = (); }; };
+		DF72ACF51C65F79B00F81491 /* CountryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF41C65F79B00F81491 /* CountryListTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DF72ACF71C660B6400F81491 /* EditContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		DF981D641C50CDE200C2D637 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF981D631C50CDE200C2D637 /* Helper.swift */; };
 		DF9F05FD1C5B5F96008CA6DC /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F05FC1C5B5F96008CA6DC /* AVOSCloud.framework */; };
 		DF9F05FF1C5B5FC9008CA6DC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F05FE1C5B5FC9008CA6DC /* MobileCoreServices.framework */; };
@@ -45,7 +49,6 @@
 		DFD4A6141BE6D08B00C8B09E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6131BE6D08B00C8B09E /* QuartzCore.framework */; };
 		DFD4A6161BE6D09A00C8B09E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6151BE6D09A00C8B09E /* Security.framework */; };
 		DFD4A6181BE6D0A000C8B09E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6171BE6D0A000C8B09E /* StoreKit.framework */; };
-		DFD89BE11C6422FE0073E080 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD89BE01C6422FE0073E080 /* AvatarImageView.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +67,10 @@
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
+		DF72ACEF1C64D20B00F81491 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Model/Contact.swift; sourceTree = "<group>"; };
+		DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AvatarImageView.swift; path = View/AvatarImageView.swift; sourceTree = "<group>"; };
+		DF72ACF41C65F79B00F81491 /* CountryListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CountryListTableViewController.swift; path = Controller/CountryListTableViewController.swift; sourceTree = "<group>"; };
+		DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditContactTableViewController.swift; path = Controller/EditContactTableViewController.swift; sourceTree = "<group>"; };
 		DF981D631C50CDE200C2D637 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		DF9F05FC1C5B5F96008CA6DC /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		DF9F05FE1C5B5FC9008CA6DC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -92,7 +99,6 @@
 		DFD4A6131BE6D08B00C8B09E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DFD4A6151BE6D09A00C8B09E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DFD4A6171BE6D0A000C8B09E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		DFD89BE01C6422FE0073E080 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +217,7 @@
 				DF5E3D441BE9465000F44FFF /* User.swift */,
 				DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */,
 				DFBD2D441BEEF8F800D6FEBC /* Setting.swift */,
+				DF72ACEF1C64D20B00F81491 /* Contact.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -240,7 +247,9 @@
 			isa = PBXGroup;
 			children = (
 				DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */,
+				DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */,
 				DFA74C221C02BAFB00609E83 /* EditProfileTableViewController.swift */,
+				DF72ACF41C65F79B00F81491 /* CountryListTableViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -259,7 +268,7 @@
 		DFB7CC081BEA894300BEACB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DFD89BE01C6422FE0073E080 /* AvatarImageView.swift */,
+				DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */,
 				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
 				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
 				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
@@ -411,8 +420,10 @@
 				DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,
-				DFD89BE11C6422FE0073E080 /* AvatarImageView.swift in Sources */,
+				DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */,
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
+				DF72ACF71C660B6400F81491 /* EditContactTableViewController.swift in Sources */,
+				DF72ACF51C65F79B00F81491 /* CountryListTableViewController.swift in Sources */,
 				DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */,
 				DF981D641C50CDE200C2D637 /* Helper.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
@@ -421,6 +432,7 @@
 				DFACE2531C5A2E7A00C6D737 /* ContactTableViewController.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
 				DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */,
+				DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */,
 				DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */,
 				DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */,
 				DFA74C231C02BAFB00609E83 /* EditProfileTableViewController.swift in Sources */,

@@ -55,34 +55,36 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         self.user.validateUserWithBlock { (valid, error) -> Void in
             if !valid {
                 Helper.PopupErrorAlert(self, errorMessage: "Invalid user information: \(error)")
+                return
             }
-            else {
-                // Sign up user asynchronously
-                self.user.signUpInBackgroundWithBlock { (signUpSuccess, signUpError) -> Void in
-                    if !signUpSuccess {
-                        Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)")
+            
+            // Save image file
+            self.user.saveProfileImageFile(self.addAvatarImageView.image,
+                WithBlock: { (saveImageSuccess, imageError) -> Void in
+                    if !saveImageSuccess {
+                        Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
+                        return
                     }
-                    else {
-                        // Save image file
-                        self.user.saveProfileImageFile(self.addAvatarImageView.image,
-                            WithBlock: { (saveImageSuccess, imageError) -> Void in
-                                if !saveImageSuccess {
-                                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
-                                }
-                                else {
-                                    self.user.saveInBackgroundWithBlock({ (saveSuccess, saveError) -> Void in
-                                        if !saveSuccess {
-                                            Helper.PopupErrorAlert(self, errorMessage: "\(saveError)")
-                                        }
-                                        else {
-                                            self.performSegueWithIdentifier("Show Profile Form", sender: self)
-                                        }
-                                    })
-                                }
-                            })
+                    
+                    // Sign up user asynchronously
+                    self.user.signUpInBackgroundWithBlock { (signUpSuccess, signUpError) -> Void in
+                        if !signUpSuccess {
+                            Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)")
+                            return
+                        }
+                        
+                        // Create contact
+                        let userContact = Contact(user: self.user)
+                        userContact.saveInBackgroundWithBlock { (contactSaveSuccess, contactError) -> Void in
+                            if !contactSaveSuccess {
+                                Helper.PopupErrorAlert(self, errorMessage: "\(contactError)")
+                                return
+                            }
+                        }
+                        
+                        self.performSegueWithIdentifier("Show Profile Form", sender: self)
                     }
-                }
-            }
+            })
         }
     }
     

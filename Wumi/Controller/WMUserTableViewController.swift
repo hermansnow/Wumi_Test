@@ -60,7 +60,7 @@ class WMUserTableViewController: UITableViewController {
         switch setting.identifier {
         case "User Profile":
             self.performSegueWithIdentifier("Edit Profile", sender: self)
-        case "Cantact":
+        case "Contact":
             self.performSegueWithIdentifier("Contact Settings", sender: self)
         case "Log Out":
             self.logoutUser()

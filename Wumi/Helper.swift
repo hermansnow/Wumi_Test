@@ -39,7 +39,7 @@ class Helper {
         controller.presentViewController(alert, animated: true, completion: nil)
     }
     
-    static func PopupInputBox (controller: UIViewController, boxTitle: String, message: String, numberOfFileds: Int, textValues: [[String: String]], WithBlock block: (inputValues: [String?]) -> Void) {
+    static func PopupInputBox (controller: UIViewController, boxTitle: String, message: String, numberOfFileds: Int, textValues: [[String: String?]], WithBlock block: (inputValues: [String?]) -> Void) {
         let alert = UIAlertController(title: boxTitle, message: message, preferredStyle: .Alert)
         
         // Add an input text field
@@ -47,8 +47,13 @@ class Helper {
         for index in 0..<numberOfFileds {
             alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
                 // Set initial
-                textField.text = textValues[index]["originalValue"]
-                textField.placeholder = textValues[index]["placeHolder"]
+                if let originalValue = textValues[index]["originalValue"] {
+                    textField.text = originalValue
+                }
+                if let placeHolder = textValues[index]["placeHolder"] {
+                    textField.placeholder = placeHolder
+
+                }
                 textField.clearButtonMode = .WhileEditing
             }
         }
