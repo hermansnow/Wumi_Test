@@ -58,33 +58,37 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
                 return
             }
             
-            // Save image file
-            self.user.saveProfileImageFile(self.addAvatarImageView.image,
-                WithBlock: { (saveImageSuccess, imageError) -> Void in
+            // Sign up user asynchronously
+            self.user.signUpInBackgroundWithBlock { (signUpSuccess, signUpError) -> Void in
+                if !signUpSuccess {
+                    Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)")
+                    return
+                }
+                
+                // Create contact
+                let contact = Contact()
+                // Save avatar image file
+                contact.saveAvatarFile(self.addAvatarImageView.image, WithBlock: { (saveImageSuccess, imageError) -> Void in
                     if !saveImageSuccess {
                         Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
                         return
                     }
                     
-                    // Sign up user asynchronously
-                    self.user.signUpInBackgroundWithBlock { (signUpSuccess, signUpError) -> Void in
-                        if !signUpSuccess {
-                            Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)")
-                            return
+                    contact.saveInBackgroundWithBlock({ (saveContactSuccess, contactError) -> Void in
+                        if !saveContactSuccess {
+                            Helper.PopupErrorAlert(self, errorMessage: "\(contactError)" )
+                            return 
                         }
                         
-                        // Create contact
-                        let userContact = Contact(user: self.user)
-                        userContact.saveInBackgroundWithBlock { (contactSaveSuccess, contactError) -> Void in
-                            if !contactSaveSuccess {
-                                Helper.PopupErrorAlert(self, errorMessage: "\(contactError)")
-                                return
-                            }
-                        }
+                        print("\(contact)")
                         
-                        self.performSegueWithIdentifier("Show Profile Form", sender: self)
-                    }
-            })
+                        self.user.contact = contact
+                        self.user.saveInBackground()
+                    })
+                })
+                        
+                self.performSegueWithIdentifier("Show Profile Form", sender: self)
+            }
         }
     }
     
@@ -131,14 +135,15 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     // MARK: UIImagePicker delegates and functions
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true) { () -> Void in
-            if let profileImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.addAvatarImageView.image = profileImage            }
+            if let avatarImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                self.addAvatarImageView.image = avatarImage
+            }
         }
     }
     
     // MARK: AvatarImageView delegates and functions
     func singleTap(imageView: AvatarImageView) {
-        let addImageSheet = SelectPhotoActionSheet(title: "Add Profile Image", message: "Choose a photo as your profile image.", preferredStyle: .ActionSheet)
+        let addImageSheet = SelectPhotoActionSheet(title: "Add Avatar Image", message: "Choose a photo as your avatar image.", preferredStyle: .ActionSheet)
         addImageSheet.delegate = self
         addImageSheet.launchViewController = self
         

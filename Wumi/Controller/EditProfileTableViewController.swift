@@ -63,13 +63,19 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         // Show current user's account profile
         accountNameLabel.text = user.username
         emailLabel.text = user.email
-        user.loadProfileImageWithBlock { (imageData, error) -> Void in
-            if error == nil && imageData != nil {
-                self.avatarImageView.image = UIImage(data: imageData!)
+        user.contact.fetchIfNeededInBackgroundWithBlock { (result, contactError) -> Void in
+            if contactError != nil {
+                print("\(contactError)")
+                return
             }
-            else {
-                print("\(error)")
-            }
+            self.user.contact.loadAvatar(self.avatarImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
+                if imageError == nil && avatarImage != nil {
+                    self.avatarImageView.image = avatarImage
+                }
+                else {
+                    print("\(imageError)")
+                }
+            })
         }
         
         // Show current user's personal information
@@ -120,9 +126,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true) { () -> Void in
             if let profileImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.user.saveProfileImageFile(profileImage, WithBlock: { (saveImageSuccess, imageError) -> Void in
+                self.user.contact.saveAvatarFile(profileImage, WithBlock: { (saveImageSuccess, imageError) -> Void in
                     if saveImageSuccess {
-                        self.user.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        self.user.contact.saveInBackgroundWithBlock({ (success, error) -> Void in
                             if !success {
                                 Helper.PopupErrorAlert(self, errorMessage: "\(error)")
                             }

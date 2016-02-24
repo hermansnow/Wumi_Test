@@ -137,7 +137,7 @@
  Returns the relation object associated with the given key
  @param key The key that the relation is associated with.
  */
-- (AVRelation *)relationforKey:(NSString *)key;
+- (AVRelation *)relationForKey:(NSString *)key;
 
 #pragma mark -
 #pragma mark Array add and remove
@@ -660,5 +660,13 @@
  *  @param dict JSON dictionary
  */
 -(void)objectFromDictionary:(NSDictionary *)dict;
+
+@end
+
+#pragma mark - Deprecated API
+
+@interface AVObject (AVDeprecated)
+
+- (AVRelation *)relationforKey:(NSString *)key AV_DEPRECATED("Deprecated in AVOSCloud SDK 3.2.3. Use -[AVObject relationForKey:] instead.");
 
 @end

@@ -39,7 +39,7 @@ class SelectPhotoActionSheet: UIAlertController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self.delegate
         imagePicker.sourceType = .Camera
-        imagePicker.mediaTypes = ["\(kUTTypePNG)"]
+        imagePicker.mediaTypes = ["\(kUTTypeJPEG)"]
         
         if let parentViewController = self.launchViewController {
             parentViewController.presentViewController(imagePicker, animated: true, completion: nil)
@@ -57,6 +57,7 @@ class SelectPhotoActionSheet: UIAlertController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self.delegate
         imagePicker.sourceType = .PhotoLibrary
+        imagePicker.mediaTypes = ["\(kUTTypeImage)"]
         
         if let parentViewController = self.launchViewController {
             parentViewController.presentViewController(imagePicker, animated: true, completion: nil)

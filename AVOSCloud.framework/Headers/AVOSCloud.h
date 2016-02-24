@@ -71,22 +71,16 @@
 #import "AVAnalytics.h"
 #endif
 
-FOUNDATION_EXPORT NSString *const LCDefaultRESTAPIHost;
-FOUNDATION_EXPORT NSString *const LCFoundationCertificate;
-
 /**
  *  Storage Type
  */
-typedef NS_ENUM(int, AVStorageType) {
-    /// Qiniu
+typedef NS_ENUM(NSInteger, AVStorageType) {
     AVStorageTypeQiniu = 0,
-    
-    /// Parse
     AVStorageTypeParse,
-    
-    /// AWS S3
     AVStorageTypeS3,
 
+    /* Default service region */
+    AVStorageTypeDefault = AVStorageTypeQiniu
 } ;
 
 typedef enum AVLogLevel : NSUInteger {
@@ -97,6 +91,15 @@ typedef enum AVLogLevel : NSUInteger {
     AVLogLevelVerbose   = 1 << 3,
     AVLogLevelDefault   = AVLogLevelError | AVLogLevelWarning
 } AVLogLevel;
+
+typedef NS_ENUM(NSInteger, AVServiceRegion) {
+    AVServiceRegionCN = 1,
+    AVServiceRegionUS,
+    AVServiceRegionUrulu AV_DEPRECATED("Deprecated in AVOSCloud SDK 3.2.3. You should not use this value."),
+
+    /* Default service region */
+    AVServiceRegionDefault = AVServiceRegionCN
+};
 
 #define kAVDefaultNetworkTimeoutInterval 10.0
 
@@ -158,8 +161,6 @@ typedef enum AVLogLevel : NSUInteger {
  */
 +(void)clearLastModifyCache;
 
-+ (void)useAVCloud AV_DEPRECATED("2.3.3以后废除");
-
 /**
  *  Set third party file storage service. If uses China server, the default is Qiniu, if uses US server, the default is AWS S3.
  *  @param type Qiniu or AWS S3
@@ -167,14 +168,10 @@ typedef enum AVLogLevel : NSUInteger {
 + (void)setStorageType:(AVStorageType)type;
 
 /**
- *  Use LeanCloud US server.
+ * Use specified region.
+ * If not specified, AVServiceRegionCN will be used.
  */
-+ (void)useAVCloudUS;
-
-/**
- *  Use LeanCloud China Sever. Default option.
- */
-+ (void)useAVCloudCN;
++ (void)setServiceRegion:(AVServiceRegion)region;
 
 /**
  *  Get the timeout interval for network requests. Default is kAVDefaultNetworkTimeoutInterval (10 seconds)
@@ -297,6 +294,18 @@ typedef enum AVLogLevel : NSUInteger {
 #pragma mark - Deprecated API
 
 @interface AVOSCloud (AVDeprecated)
+
++ (void)useAVCloud AV_DEPRECATED("Deprecated in AVOSCloud SDK 2.3.3.");
+
+/**
+ * Use LeanCloud US server.
+ */
++ (void)useAVCloudUS AV_DEPRECATED("Deprecated in AVOSCloud SDK 3.2.3. Use +[AVOSCloud setServiceRegion:] instead.");
+
+/**
+ * Use LeanCloud China Sever. Default option.
+ */
++ (void)useAVCloudCN AV_DEPRECATED("Deprecated in AVOSCloud SDK 3.2.3. Use +[AVOSCloud setServiceRegion:] instead.");
 
 /**
  * Register remote notification with types.

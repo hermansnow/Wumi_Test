@@ -10,6 +10,10 @@ import UIKit
 
 class ContactTableViewController: UITableViewController {
 
+    @IBOutlet weak var avatarImageView: AvatarImageView!
+    
+    var contacts = [Contact]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,28 +23,45 @@ class ContactTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    func loadContacts() {
+        Contact.loadAllContact(contacts.count) { (results, error) -> Void in
+            if error != nil {
+                print("\(error)")
+                return
+            }
+            
+            self.contacts.appendContentsOf(results as! [Contact])
+        }
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return contacts.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCellWithIdentifier("Contact Cell", forIndexPath: indexPath) as! ContactTableViewCell
+        let contact = contacts[indexPath.row]
+        
+        contact.loadAvatar(cell.avatarImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
+            if imageError == nil && avatarImage != nil {
+                self.avatarImageView.image = avatarImage
+            }
+            else {
+                print("\(imageError)")
+            }
+        })
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

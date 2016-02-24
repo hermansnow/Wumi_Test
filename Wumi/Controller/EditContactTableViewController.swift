@@ -8,43 +8,33 @@
 
 import UIKit
 
-class EditContactTableViewController: UITableViewController {
+class EditContactTableViewController: UITableViewController, LocationListDelegate {
 
+    @IBOutlet weak var locationLabel: UILabel!
+    
     var user = User.currentUser()
     var contact: Contact!
+    var location: Location?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        Contact.getContactForUser(user) { (result, error) -> Void in
+        user.contact.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             if error != nil {
-                print("Error when creating contact for user " + "\(self.user)" + ": " + "\(error)")
-                return
-            }
-            if result == nil {
-                print("Contact for user: " + "\(self.user)" + " does not exist.")
+                print("Error when fetch contact for user " + "\(self.user)" + ": " + "\(error)")
                 return
             }
             
             if let contact = result as? Contact {
                 self.contact = contact
+                self.location = Location(Country: contact.country, City: contact.city)
+                self.displayContactInformation()
             }
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if contact != nil {
-            contact.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-            }
-        }
+    private func displayContactInformation() {
+        locationLabel.text = (location == nil || "\(location!)".isEmpty) ? "Please select your location" : "\(location!)"
     }
 
     // MARK: - Table view data source
@@ -58,51 +48,6 @@ class EditContactTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 2
     }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     // MARK: Tableview delegates
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -119,15 +64,33 @@ class EditContactTableViewController: UITableViewController {
         }
     }
     
-
+    // MARK: Save selected data
+    func finishLocationSelection(location: Location?) {
+        if let selectedLocation = location {
+            contact.country = selectedLocation.country
+            contact.city = selectedLocation.city
+            contact.saveInBackgroundWithBlock({ (success, error) -> Void in
+                if success {
+                    self.location = selectedLocation
+                    self.displayContactInformation() // Update cell
+                }
+                else {
+                    self.contact.country = self.location?.country
+                    self.contact.city = self.location?.city
+                    Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                }
+            })
+        }
+    }
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Show Country List" {
-            if let countryListViewController = segue.destinationViewController as? CountryListTableViewController {
-                countryListViewController.selectedCountry = contact.country
+            if let countryListViewController = segue.destinationViewController as? LocationListTableViewController {
+                countryListViewController.locationDelegate = self
+                countryListViewController.selectedLocation = Location(Country: contact.country, City: contact.city)
             }
         }
     }

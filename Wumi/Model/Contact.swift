@@ -12,20 +12,15 @@ class Contact: AVObject, AVSubclassing {
     // MARK: Properties
     
     // Extended properties
-    @NSManaged weak var user: User!
+    @NSManaged var avatarImageFile: AVFile?
     @NSManaged var city: String?
     @NSManaged var country: String?
     
     // MARK: Initializer and subclassing functions
     
     // Must have this init for subclassing AVObject
-    private override init() {
-        super.init();
-    }
-    
-    init(user: User) {
-        super.init();
-        self.user = user;
+    override init() {
+        super.init()
     }
     
     override class func initialize() {
@@ -42,32 +37,55 @@ class Contact: AVObject, AVSubclassing {
         return "Contact"
     }
     
-    // Database query functions
-    class func createContactForUser(user: User, WithBlock block: AVBooleanResultBlock?) -> Void {
-        getContactForUser(user) { (result, error) -> Void in
-            if error != nil {
-                print("Error when creating contact for user " + "\(user)" + ": " + "\(error)")
-                return
-            }
-            if result != nil {
-                print("Contact for user: " + "\(user)" + "exists.")
-                return
-            }
-            
-            let contact = Contact(user: user)
+    // Load avatar. This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background
+    func loadAvatar(size: CGSize, WithBlock block: AVImageResultBlock!) {
+        if avatarImageFile == nil {
             if block != nil {
-                contact.saveInBackgroundWithBlock(block)
+                block!(nil, NSError(domain: "wumi.com", code: 1, userInfo: nil))
             }
-            else {
-                contact.saveInBackground()
-            }
+            return
+        }
+        
+        avatarImageFile?.getThumbnail(true, width: Int32(size.width), height: Int32(size.height), withBlock: block)
+    }
+    
+    // Save avatar to cloud server
+    func saveAvatarFile(avatarImage: UIImage?, WithBlock block: (success: Bool, error: NSError?) -> Void) {
+        if avatarImage == nil {
+            block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            return
+        }
+        
+        if let imageData = scaleImage(avatarImage!, ToSize: 500) {
+            avatarImageFile = AVFile(name: "avatar.jpeg", data: imageData)
+            avatarImageFile!.saveInBackgroundWithBlock(block)
         }
     }
     
-    class func getContactForUser(user: User, WithBlock block: AVObjectResultBlock!) {
-        let query = Contact.query()
-        query.whereKey("user", equalTo: user)
+    // Compress image in JPEG format. The max size of image save in Parse server is 10.0MB
+    func scaleImage(image: UIImage, ToSize size: Int) -> NSData? {
+        var compress:CGFloat = 1.0;
+        var imageData:NSData?
         
-        query.getFirstObjectInBackgroundWithBlock(block)
+        if let jpegData = UIImageJPEGRepresentation(image, compress) {
+            compress = CGFloat(size) / CGFloat(jpegData.length)
+            if compress < 1.0 {
+                imageData = UIImageJPEGRepresentation(image, compress);
+            }
+            else {
+                imageData = jpegData
+            }
+        }
+        return imageData;
+    }
+    
+    class func loadAllContact(skip: Int, WithBlock block: AVArrayResultBlock!) {
+        let query = Contact.query()
+        query.cachePolicy = .CacheElseNetwork
+        query.maxCacheAge = 24 * 3600
+        
+        query.skip = skip
+        
+        query.findObjectsInBackgroundWithBlock(block)
     }
 }

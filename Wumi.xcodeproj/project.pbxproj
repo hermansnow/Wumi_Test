@@ -17,16 +17,18 @@
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
-		DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACEF1C64D20B00F81491 /* Contact.swift */; settings = {ASSET_TAGS = (); }; };
-		DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */; settings = {ASSET_TAGS = (); }; };
-		DF72ACF51C65F79B00F81491 /* CountryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF41C65F79B00F81491 /* CountryListTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DF72ACF71C660B6400F81491 /* EditContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACEF1C64D20B00F81491 /* Contact.swift */; };
+		DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */; };
+		DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */; };
+		DF72ACF71C660B6400F81491 /* EditContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */; };
 		DF981D641C50CDE200C2D637 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF981D631C50CDE200C2D637 /* Helper.swift */; };
 		DF9F05FD1C5B5F96008CA6DC /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F05FC1C5B5F96008CA6DC /* AVOSCloud.framework */; };
 		DF9F05FF1C5B5FC9008CA6DC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F05FE1C5B5FC9008CA6DC /* MobileCoreServices.framework */; };
 		DF9F06011C5B5FD3008CA6DC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F06001C5B5FD3008CA6DC /* CoreTelephony.framework */; };
 		DF9F06041C5B6004008CA6DC /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F06021C5B5FF0008CA6DC /* libicucore.tbd */; };
 		DF9F06061C5B6346008CA6DC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F06051C5B6346008CA6DC /* libz.tbd */; };
+		DF9F060E1C7B7280008CA6DC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F060D1C7B7280008CA6DC /* Location.swift */; };
+		DF9F06101C7BC72D008CA6DC /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */; };
 		DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */; };
 		DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */; };
 		DFA74C231C02BAFB00609E83 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C221C02BAFB00609E83 /* EditProfileTableViewController.swift */; };
@@ -69,7 +71,7 @@
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF72ACEF1C64D20B00F81491 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Model/Contact.swift; sourceTree = "<group>"; };
 		DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AvatarImageView.swift; path = View/AvatarImageView.swift; sourceTree = "<group>"; };
-		DF72ACF41C65F79B00F81491 /* CountryListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CountryListTableViewController.swift; path = Controller/CountryListTableViewController.swift; sourceTree = "<group>"; };
+		DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationListTableViewController.swift; path = Controller/LocationListTableViewController.swift; sourceTree = "<group>"; };
 		DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditContactTableViewController.swift; path = Controller/EditContactTableViewController.swift; sourceTree = "<group>"; };
 		DF981D631C50CDE200C2D637 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		DF9F05FC1C5B5F96008CA6DC /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
@@ -77,6 +79,8 @@
 		DF9F06001C5B5FD3008CA6DC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		DF9F06021C5B5FF0008CA6DC /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		DF9F06051C5B6346008CA6DC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		DF9F060D1C7B7280008CA6DC /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Model/Location.swift; sourceTree = "<group>"; };
+		DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewCell.swift; path = View/ContactTableViewCell.swift; sourceTree = "<group>"; };
 		DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMUserTableViewController.swift; path = Controller/WMUserTableViewController.swift; sourceTree = "<group>"; };
 		DFA74C201BF8215900609E83 /* WMMainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMMainTabBarController.swift; path = Controller/WMMainTabBarController.swift; sourceTree = "<group>"; };
 		DFA74C221C02BAFB00609E83 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileTableViewController.swift; path = Controller/EditProfileTableViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +222,7 @@
 				DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */,
 				DFBD2D441BEEF8F800D6FEBC /* Setting.swift */,
 				DF72ACEF1C64D20B00F81491 /* Contact.swift */,
+				DF9F060D1C7B7280008CA6DC /* Location.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -249,7 +254,7 @@
 				DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */,
 				DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */,
 				DFA74C221C02BAFB00609E83 /* EditProfileTableViewController.swift */,
-				DF72ACF41C65F79B00F81491 /* CountryListTableViewController.swift */,
+				DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
 				DFB861471BEDBDF60075014A /* SystemButton.swift */,
 				DFB4152C1C1E75B000835EFE /* ProfileCell.swift */,
+				DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -414,6 +420,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF9F06101C7BC72D008CA6DC /* ContactTableViewCell.swift in Sources */,
 				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,
 				DFB861481BEDBDF60075014A /* SystemButton.swift in Sources */,
 				DFB4152D1C1E75B000835EFE /* ProfileCell.swift in Sources */,
@@ -421,9 +428,10 @@
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,
 				DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */,
+				DF9F060E1C7B7280008CA6DC /* Location.swift in Sources */,
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
 				DF72ACF71C660B6400F81491 /* EditContactTableViewController.swift in Sources */,
-				DF72ACF51C65F79B00F81491 /* CountryListTableViewController.swift in Sources */,
+				DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */,
 				DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */,
 				DF981D641C50CDE200C2D637 /* Helper.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
