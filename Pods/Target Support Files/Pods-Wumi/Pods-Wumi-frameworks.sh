@@ -84,8 +84,8 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-Wumi/NXOAuth2Client.framework"
+  install_framework "Pods-Wumi/AFNetworking.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-Wumi/NXOAuth2Client.framework"
+  install_framework "Pods-Wumi/AFNetworking.framework"
 fi

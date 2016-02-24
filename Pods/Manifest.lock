@@ -1,10 +1,24 @@
 PODS:
-  - NXOAuth2Client (1.2.8)
+  - AFNetworking (3.0.4):
+    - AFNetworking/NSURLSession (= 3.0.4)
+    - AFNetworking/Reachability (= 3.0.4)
+    - AFNetworking/Security (= 3.0.4)
+    - AFNetworking/Serialization (= 3.0.4)
+    - AFNetworking/UIKit (= 3.0.4)
+  - AFNetworking/NSURLSession (3.0.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.0.4)
+  - AFNetworking/Security (3.0.4)
+  - AFNetworking/Serialization (3.0.4)
+  - AFNetworking/UIKit (3.0.4):
+    - AFNetworking/NSURLSession
 
 DEPENDENCIES:
-  - NXOAuth2Client (~> 1.2.8)
+  - AFNetworking (~> 3.0.4)
 
 SPEC CHECKSUMS:
-  NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
+  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
 
 COCOAPODS: 0.39.0

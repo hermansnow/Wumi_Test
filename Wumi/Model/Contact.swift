@@ -81,7 +81,7 @@ class Contact: AVObject, AVSubclassing {
     
     class func loadAllContact(skip: Int, WithBlock block: AVArrayResultBlock!) {
         let query = Contact.query()
-        query.cachePolicy = .CacheElseNetwork
+        query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 24 * 3600
         
         query.skip = skip

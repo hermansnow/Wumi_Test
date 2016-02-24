@@ -9,8 +9,6 @@
 import UIKit
 
 class ContactTableViewController: UITableViewController {
-
-    @IBOutlet weak var avatarImageView: AvatarImageView!
     
     var contacts = [Contact]()
     
@@ -22,16 +20,34 @@ class ContactTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: Selector("loadContacts"), forControlEvents: .ValueChanged)
+        tableView.addSubview(refreshControl!)
+        
+        loadContacts()
     }
     
     func loadContacts() {
-        Contact.loadAllContact(contacts.count) { (results, error) -> Void in
+        contacts.removeAll()
+        
+        Contact.loadAllContact(0) { (results, error) -> Void in
             if error != nil {
                 print("\(error)")
                 return
             }
             
             self.contacts.appendContentsOf(results as! [Contact])
+            
+            
+            if self.refreshControl!.refreshing {
+                self.refreshControl!.endRefreshing()
+            }
+            
+            self.tableView.reloadData()
         }
     }
 
@@ -51,14 +67,17 @@ class ContactTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Contact Cell", forIndexPath: indexPath) as! ContactTableViewCell
         let contact = contacts[indexPath.row]
         
+        cell.nameLabel.text = "Label"
         contact.loadAvatar(cell.avatarImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
             if imageError == nil && avatarImage != nil {
-                self.avatarImageView.image = avatarImage
+                cell.avatarImageView.image = avatarImage
             }
             else {
                 print("\(imageError)")
             }
         })
+        
+        
 
         return cell
     }

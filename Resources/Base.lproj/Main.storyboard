@@ -810,7 +810,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="4797.5" y="1157.5"/>
+            <point key="canvasLocation" x="5384.5" y="1157.5"/>
         </scene>
         <!--Sign In-->
         <scene sceneID="PNx-Bb-zlt">
@@ -988,9 +988,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="109.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XNz-Mq-35c" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="15" width="91" height="79"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XNz-Mq-35c" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
+                                            <rect key="frame" x="10" y="25" width="60" height="60"/>
                                             <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="XNz-Mq-35c" secondAttribute="height" multiplier="1:1" id="aFO-F6-Jwe"/>
+                                                <constraint firstAttribute="height" constant="60" id="pBs-up-aFx"/>
+                                            </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BC0-Fe-Nrb">
                                             <rect key="frame" x="107" y="26" width="42" height="21"/>
@@ -1002,9 +1006,11 @@
                                             <rect key="frame" x="321" y="40" width="46" height="30"/>
                                             <state key="normal" title="Button"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zfx-kA-yDx">
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zfx-kA-yDx" customClass="DOFavoriteButton" customModule="Wumi" customModuleProvider="target">
                                             <rect key="frame" x="267" y="40" width="46" height="30"/>
-                                            <state key="normal" title="Button"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="image" value="Email"/>
+                                            </userDefinedRuntimeAttributes>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lRY-7N-Ung">
                                             <rect key="frame" x="107" y="55" width="42" height="21"/>
@@ -1013,9 +1019,23 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="XNz-Mq-35c" secondAttribute="bottom" constant="20" id="0qF-We-54K"/>
+                                        <constraint firstItem="XNz-Mq-35c" firstAttribute="centerY" secondItem="A4v-kg-MOB" secondAttribute="centerY" id="IFm-v0-vXF"/>
+                                        <constraint firstItem="XNz-Mq-35c" firstAttribute="top" secondItem="A4v-kg-MOB" secondAttribute="top" constant="20" id="bbi-hc-X6b"/>
+                                        <constraint firstItem="XNz-Mq-35c" firstAttribute="leading" secondItem="A4v-kg-MOB" secondAttribute="leading" constant="10" id="bz0-d0-uv7"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="0qF-We-54K"/>
+                                            <exclude reference="bbi-hc-X6b"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarImageView" destination="XNz-Mq-35c" id="OL9-wO-eDY"/>
+                                    <outlet property="favoriteButton" destination="Zfx-kA-yDx" id="fMh-rq-8VH"/>
+                                    <outlet property="nameLabel" destination="BC0-Fe-Nrb" id="cPf-0J-yL6"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1024,11 +1044,11 @@
                             <outlet property="delegate" destination="Cb4-n4-RtF" id="Tuv-ju-A1m"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" systemItem="contacts" id="2oi-c7-H6h"/>
+                    <navigationItem key="navigationItem" id="ifg-8j-rcu"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aai-Af-OyT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3690.5" y="633.5"/>
+            <point key="canvasLocation" x="4277.5" y="633.5"/>
         </scene>
         <!--Main Tab Bar Controller-->
         <scene sceneID="4xu-ev-eK6">
@@ -1040,7 +1060,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Cb4-n4-RtF" kind="relationship" relationship="viewControllers" id="4eK-Mi-OHc"/>
+                        <segue destination="sKb-pl-sVC" kind="relationship" relationship="viewControllers" id="4eK-Mi-OHc"/>
                         <segue destination="00q-WZ-wOd" kind="relationship" relationship="viewControllers" id="7iQ-Wk-1Mk"/>
                     </connections>
                 </tabBarController>
@@ -1185,8 +1205,28 @@
             </objects>
             <point key="canvasLocation" x="5336.5" y="1844.5"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="UOk-Pg-Wks">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sKb-pl-sVC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="contacts" id="2oi-c7-H6h"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ind-Lr-ktW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Cb4-n4-RtF" kind="relationship" relationship="rootViewController" id="iGU-iA-jJj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hX5-y4-slT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3690.5" y="633.5"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Email" width="256" height="256"/>
         <image name="Logo" width="217" height="114"/>
         <image name="Profile" width="300" height="300"/>
     </resources>
