@@ -536,7 +536,7 @@
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="Profile" id="UUW-Ao-Zhy">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="Name" id="UUW-Ao-Zhy">
                                                     <rect key="frame" x="15" y="0.0" width="44" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
@@ -810,7 +810,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="5384.5" y="1157.5"/>
+            <point key="canvasLocation" x="4797.5" y="1166.5"/>
         </scene>
         <!--Sign In-->
         <scene sceneID="PNx-Bb-zlt">
@@ -996,12 +996,6 @@
                                                 <constraint firstAttribute="height" constant="60" id="pBs-up-aFx"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BC0-Fe-Nrb">
-                                            <rect key="frame" x="107" y="26" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g1w-MZ-xNY">
                                             <rect key="frame" x="321" y="40" width="46" height="30"/>
                                             <state key="normal" title="Button"/>
@@ -1009,12 +1003,18 @@
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zfx-kA-yDx" customClass="DOFavoriteButton" customModule="Wumi" customModuleProvider="target">
                                             <rect key="frame" x="267" y="40" width="46" height="30"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="image" value="Email"/>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="image" value="Favorite"/>
                                             </userDefinedRuntimeAttributes>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lRY-7N-Ung">
-                                            <rect key="frame" x="107" y="55" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Country, City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lRY-7N-Ung">
+                                            <rect key="frame" x="107" y="64" width="139" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BC0-Fe-Nrb">
+                                            <rect key="frame" x="107" y="25" width="139" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1035,6 +1035,7 @@
                                 <connections>
                                     <outlet property="avatarImageView" destination="XNz-Mq-35c" id="OL9-wO-eDY"/>
                                     <outlet property="favoriteButton" destination="Zfx-kA-yDx" id="fMh-rq-8VH"/>
+                                    <outlet property="locationLabel" destination="lRY-7N-Ung" id="CuV-Ed-YTN"/>
                                     <outlet property="nameLabel" destination="BC0-Fe-Nrb" id="cPf-0J-yL6"/>
                                 </connections>
                             </tableViewCell>
@@ -1045,8 +1046,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="ifg-8j-rcu"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="HgM-Wz-7PP" id="P3u-jB-Nfw"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aai-Af-OyT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="HgM-Wz-7PP">
+                    <connections>
+                        <outlet property="delegate" destination="Cb4-n4-RtF" id="9mS-k7-5fA"/>
+                        <outlet property="searchContentsController" destination="Cb4-n4-RtF" id="6Sa-B3-ap2"/>
+                        <outlet property="searchResultsDataSource" destination="Cb4-n4-RtF" id="SpQ-Dt-esH"/>
+                        <outlet property="searchResultsDelegate" destination="Cb4-n4-RtF" id="kcw-Lx-sIv"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="4277.5" y="633.5"/>
         </scene>
@@ -1203,7 +1215,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iz6-P4-LoI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5336.5" y="1844.5"/>
+            <point key="canvasLocation" x="5347.5" y="1971.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UOk-Pg-Wks">
@@ -1226,8 +1238,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Email" width="256" height="256"/>
+        <image name="Favorite" width="1331" height="1266"/>
         <image name="Logo" width="217" height="114"/>
-        <image name="Profile" width="300" height="300"/>
+        <image name="Name" width="462" height="462"/>
     </resources>
 </document>

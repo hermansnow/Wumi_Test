@@ -34,20 +34,14 @@ class WMUserTableViewController: UITableViewController {
         // Show current user's profile
         userDisplayName.text = user.name
         userEmail.text = user.email
-        user.contact.fetchIfNeededInBackgroundWithBlock { (result, contactError) -> Void in
-            if contactError != nil {
-                print("\(contactError)")
-                return
+        self.user.loadAvatar(self.userProfileImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
+            if imageError == nil && avatarImage != nil {
+                self.userProfileImageView.image = avatarImage
             }
-            self.user.contact.loadAvatar(self.userProfileImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
-                if imageError == nil && avatarImage != nil {
-                    self.userProfileImageView.image = avatarImage
-                }
-                else {
-                    print("\(imageError)")
-                }
-            })
-        }
+            else {
+                print("\(imageError)")
+            }
+        })
     }
 
     // MARK: tableview delegates

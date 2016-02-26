@@ -15,8 +15,6 @@ class SigninViewController: UIViewController {
     @IBOutlet weak var usernameTextField: DataInputTextField!
     @IBOutlet weak var passwordTextField: DataInputTextField!
     
-    var user: User?
-    
     // MARK: Life cycle functions
     
     override func viewDidLoad() {
@@ -28,6 +26,7 @@ class SigninViewController: UIViewController {
         // Get current user
         if let user = User.currentUser() {
             if user.objectId != nil {
+                user.fetchInBackgroundWithBlock(nil)
                 performSegueWithIdentifier("Launch Main View", sender: self)
             }
         }

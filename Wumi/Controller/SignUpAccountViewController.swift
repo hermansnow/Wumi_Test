@@ -58,37 +58,24 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
                 return
             }
             
-            // Sign up user asynchronously
-            self.user.signUpInBackgroundWithBlock { (signUpSuccess, signUpError) -> Void in
-                if !signUpSuccess {
-                    Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)")
+            // Save avatar image file
+            self.user.saveAvatarFile(self.addAvatarImageView.image, WithBlock: { (saveImageSuccess, imageError) -> Void in
+                if !saveImageSuccess {
+                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
                     return
                 }
                 
-                // Create contact
-                let contact = Contact()
-                // Save avatar image file
-                contact.saveAvatarFile(self.addAvatarImageView.image, WithBlock: { (saveImageSuccess, imageError) -> Void in
-                    if !saveImageSuccess {
-                        Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
+                // Sign up user asynchronously
+                self.user.signUpInBackgroundWithBlock { (signUpSuccess, signUpError) -> Void in
+                    if !signUpSuccess {
+                        Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)")
                         return
                     }
                     
-                    contact.saveInBackgroundWithBlock({ (saveContactSuccess, contactError) -> Void in
-                        if !saveContactSuccess {
-                            Helper.PopupErrorAlert(self, errorMessage: "\(contactError)" )
-                            return 
-                        }
-                        
-                        print("\(contact)")
-                        
-                        self.user.contact = contact
-                        self.user.saveInBackground()
-                    })
-                })
-                        
-                self.performSegueWithIdentifier("Show Profile Form", sender: self)
-            }
+                    self.performSegueWithIdentifier("Show Profile Form", sender: self)
+                }
+            })
+
         }
     }
     

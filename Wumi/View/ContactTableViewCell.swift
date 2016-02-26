@@ -12,6 +12,7 @@ class ContactTableViewCell: UITableViewCell {
 
     @IBOutlet weak var avatarImageView: AvatarImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var favoriteButton: DOFavoriteButton!
     
     override func drawRect(rect: CGRect) {

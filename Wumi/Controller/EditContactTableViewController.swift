@@ -13,23 +13,37 @@ class EditContactTableViewController: UITableViewController, LocationListDelegat
     @IBOutlet weak var locationLabel: UILabel!
     
     var user = User.currentUser()
-    var contact: Contact!
     var location: Location?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        user.contact.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-            if error != nil {
-                print("Error when fetch contact for user " + "\(self.user)" + ": " + "\(error)")
-                return
+        // Create contact if it is nil
+        if user.contact ==  nil {
+            user.contact = Contact()
+            user.saveInBackground()
+            displayContactInformation()
+        }
+        // Otherwise, fetch data from server
+        else {
+            user.contact!.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
+                if error != nil {
+                    print("Error when fetch contact for user " + "\(self.user)" + ": " + "\(error)")
+                    return
+                }
+                
+                if let contact = result as? Contact {
+                    self.location = Location(Country: contact.country, City: contact.city)
+                    self.displayContactInformation()
+                }
             }
-            
-            if let contact = result as? Contact {
-                self.contact = contact
-                self.location = Location(Country: contact.country, City: contact.city)
-                self.displayContactInformation()
-            }
+        }
+    }
+    
+    override func didMoveToParentViewController(parent: UIViewController?) {
+        if parent == nil {
+            // Save contact changes
+            user.contact?.saveInBackground()
         }
     }
     
@@ -67,19 +81,10 @@ class EditContactTableViewController: UITableViewController, LocationListDelegat
     // MARK: Save selected data
     func finishLocationSelection(location: Location?) {
         if let selectedLocation = location {
-            contact.country = selectedLocation.country
-            contact.city = selectedLocation.city
-            contact.saveInBackgroundWithBlock({ (success, error) -> Void in
-                if success {
-                    self.location = selectedLocation
-                    self.displayContactInformation() // Update cell
-                }
-                else {
-                    self.contact.country = self.location?.country
-                    self.contact.city = self.location?.city
-                    Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-                }
-            })
+            user.contact!.country = selectedLocation.country
+            user.contact!.city = selectedLocation.city
+            self.location = selectedLocation
+            self.displayContactInformation() // Update cell
         }
     }
     
@@ -90,7 +95,7 @@ class EditContactTableViewController: UITableViewController, LocationListDelegat
         if segue.identifier == "Show Country List" {
             if let countryListViewController = segue.destinationViewController as? LocationListTableViewController {
                 countryListViewController.locationDelegate = self
-                countryListViewController.selectedLocation = Location(Country: contact.country, City: contact.city)
+                countryListViewController.selectedLocation = Location(Country: user.contact!.country, City: user.contact!.city)
             }
         }
     }

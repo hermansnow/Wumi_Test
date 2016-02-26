@@ -27,21 +27,11 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         navigationItem.backBarButtonItem?.enabled = true
         
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine;
         
         // Initialize the graduation year picker view
         graduationYearPickerView.comfirmSelection = {
-            let originalValue = self.user.graduationYear
             self.user.graduationYear = self.graduationYearPickerView.year
-            self.user.saveInBackgroundWithBlock { (success, error) -> Void in
-                if success {
-                    self.loadUserData() // Update cell
-                }
-                else {
-                    self.user.graduationYear = originalValue // Revert original value back if failed in saving changes
-                    Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-                }
-            }
+            self.showGraduationLable()
             self.grayView.removeFromSuperview()
         }
         graduationYearPickerView.cancelSelection = {
@@ -49,45 +39,49 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         }
         graduationYearPickerView.translatesAutoresizingMaskIntoConstraints = false
         
+        // Initialize the gray mask
         grayView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        // Load user profile data
-        loadUserData()
         
-        super.viewWillAppear(animated)
-    }
-    
-    func loadUserData() {
-        // Show current user's account profile
-        accountNameLabel.text = user.username
-        emailLabel.text = user.email
-        user.contact.fetchIfNeededInBackgroundWithBlock { (result, contactError) -> Void in
-            if contactError != nil {
-                print("\(contactError)")
-                return
-            }
-            self.user.contact.loadAvatar(self.avatarImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
-                if imageError == nil && avatarImage != nil {
-                    self.avatarImageView.image = avatarImage
-                }
-                else {
-                    print("\(imageError)")
-                }
-            })
+        user.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
+            self.showUserData()
         }
-        
+    }
+    
+    override func didMoveToParentViewController(parent: UIViewController?) {
+        if parent == nil {
+            // Save user changes
+            user.saveInBackground()
+        }
+    }
+    
+    func showUserData() {
+        // Show current user's account profile
+        self.accountNameLabel.text = self.user.username
+        self.emailLabel.text = self.user.email
+        self.user.loadAvatar(self.avatarImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
+            if imageError == nil && avatarImage != nil {
+                self.avatarImageView.image = avatarImage
+            }
+            else {
+                print("\(imageError)")
+            }
+        })
+            
         // Show current user's personal information
-        nameLabel.text = user.name
-        if user.graduationYear == 0 {
-            graduationYearLabel.text = nil
+        self.nameLabel.text = self.user.name
+        showGraduationLable()
+    }
+    
+    func showGraduationLable() {
+        if self.user.graduationYear == 0 {
+            self.graduationYearLabel.text = nil
         }
         else {
-            graduationYearLabel.text = "\(user.graduationYear)"
+            self.graduationYearLabel.text = "\(self.user.graduationYear)"
         }
     }
     
+    // MARK: UITableView delegates
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.view.endEditing(true)
         
@@ -126,16 +120,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true) { () -> Void in
             if let profileImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.user.contact.saveAvatarFile(profileImage, WithBlock: { (saveImageSuccess, imageError) -> Void in
+                self.user.saveAvatarFile(profileImage, WithBlock: { (saveImageSuccess, imageError) -> Void in
                     if saveImageSuccess {
-                        self.user.contact.saveInBackgroundWithBlock({ (success, error) -> Void in
-                            if !success {
-                                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-                            }
-                            else {
-                                self.avatarImageView.image = profileImage
-                            }
-                        })
+                        self.avatarImageView.image = profileImage
                     }
                     else {
                         Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
@@ -170,15 +157,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                         self.user.confirmPassword = nil
                         return
                     }
-                    
-                    self.user.saveInBackgroundWithBlock { (success, error) -> Void in
-                        if !success {
-                            Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-                        }
-                        // Do not save anything in password properties
-                        self.user.password = nil
-                        self.user.confirmPassword = nil
-                    }
                 })
         })
     }
@@ -187,17 +165,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         Helper.PopupInputBox(self, boxTitle: "Edit Email", message: "Change your email address",
             numberOfFileds: 1, textValues: [["originalValue": user.email, "placeHolder": "Please enter your email address"]],
             WithBlock: { (inputValues) -> Void in
-                let originalValue = self.user.email
                 self.user.email = inputValues[0]
-                self.user.saveInBackgroundWithBlock { (success, error) -> Void in
-                    if success {
-                        self.loadUserData() // Update cell
-                    }
-                    else {
-                        self.user.email = originalValue // Revert original value back if failed in saving changes
-                        Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-                    }
-                }
+                self.emailLabel.text = self.user.email
         })
     }
     
@@ -205,17 +174,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         Helper.PopupInputBox(self, boxTitle: "Edit Name", message: "Change your display name",
             numberOfFileds: 1, textValues: [["originalValue": user.name, "placeHolder": "Please enter your name"]],
             WithBlock: { (inputValues) -> Void in
-                let originalValue = self.user.name
                 self.user.name = inputValues[0]
-                self.user.saveInBackgroundWithBlock { (success, error) -> Void in
-                    if success {
-                        self.loadUserData() // Update cell
-                    }
-                    else {
-                        self.user.name = originalValue // Revert original value back if failed in saving changes
-                        Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-                    }
-                }
+                self.nameLabel.text = self.user.name
         })
     }
     

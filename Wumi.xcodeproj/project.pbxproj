@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		6B954373D7493ACB0EB60392 /* Pods_Wumi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33D87BE4EEFA892880B719E7 /* Pods_Wumi.framework */; };
 		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
-		814C3ACB1B69877600E307BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC81B69877600E307BB /* Images.xcassets */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81761A49E0D500E65899 /* libsqlite3.dylib */; };
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
+		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACEF1C64D20B00F81491 /* Contact.swift */; };
@@ -57,7 +57,6 @@
 /* Begin PBXFileReference section */
 		33D87BE4EEFA892880B719E7 /* Pods_Wumi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wumi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		814C3AC81B69877600E307BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* Wumi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wumi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +66,8 @@
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		85ED570018BB3568AF00821C /* Pods-Wumi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.debug.xcconfig"; sourceTree = "<group>"; };
 		CFC9344F0D89380119BEACAE /* Pods-Wumi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.release.xcconfig"; sourceTree = "<group>"; };
+		DF159E151C7FF78800DB65FF /* Wumi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wumi-Bridging-Header.h"; sourceTree = "<group>"; };
+		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF72ACEF1C64D20B00F81491 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Model/Contact.swift; sourceTree = "<group>"; };
@@ -136,7 +137,7 @@
 		814C3AC51B69877600E307BB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				814C3AC81B69877600E307BB /* Images.xcassets */,
+				DF159E181C80231C00DB65FF /* Images.xcassets */,
 				814C3AC91B69877600E307BB /* Info.plist */,
 			);
 			path = Resources;
@@ -146,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				81BA81471A49DA1800E65899 /* Project */,
+				DF159E141C7FF74700DB65FF /* Supporting Files */,
 				814C3AC51B69877600E307BB /* Resources */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
 				81BA81461A49DA1800E65899 /* Products */,
@@ -169,7 +171,6 @@
 				DF5E3D381BE9457900F44FFF /* Model */,
 				DFB7CC081BEA894300BEACB7 /* View */,
 				DF5E3D3D1BE9461300F44FFF /* Controller */,
-				DF981D631C50CDE200C2D637 /* Helper.swift */,
 			);
 			name = Project;
 			path = Wumi;
@@ -213,6 +214,16 @@
 				CFC9344F0D89380119BEACAE /* Pods-Wumi.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		DF159E141C7FF74700DB65FF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DF981D631C50CDE200C2D637 /* Helper.swift */,
+				DF159E151C7FF78800DB65FF /* Wumi-Bridging-Header.h */,
+			);
+			name = "Supporting Files";
+			path = Wumi;
 			sourceTree = "<group>";
 		};
 		DF5E3D381BE9457900F44FFF /* Model */ = {
@@ -315,7 +326,7 @@
 		81BA813D1A49DA1800E65899 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Parse;
 				TargetAttributes = {
@@ -348,7 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
-				814C3ACB1B69877600E307BB /* Images.xcassets in Resources */,
+				DF159E191C80231C00DB65FF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +562,7 @@
 			baseConfigurationReference = 85ED570018BB3568AF00821C /* Pods-Wumi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -562,6 +574,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parse.Wumi;
 				PRODUCT_NAME = Wumi;
+				SWIFT_OBJC_BRIDGING_HEADER = "Wumi/Wumi-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -570,6 +584,7 @@
 			baseConfigurationReference = CFC9344F0D89380119BEACAE /* Pods-Wumi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -581,6 +596,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.parse.Wumi;
 				PRODUCT_NAME = Wumi;
+				SWIFT_OBJC_BRIDGING_HEADER = "Wumi/Wumi-Bridging-Header.h";
 			};
 			name = Release;
 		};
