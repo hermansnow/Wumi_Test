@@ -1,6 +1,7 @@
 Wumi.xcworkspace/xcuserdata/
 # Xcode
 .DS_Store
+Wumi/.DS_Store
 build/
 *.pbxuser
 !default.pbxuser
