@@ -59,9 +59,12 @@ class WMUserTableViewController: UITableViewController {
     func eventHandlerForSetting(setting: Setting, withCell: UITableViewCell) {
         switch setting.identifier {
         case "User Profile":
-            self.performSegueWithIdentifier("Edit Profile", sender: self)
+            let editProfileTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("editProfile") as! EditProfileTableViewController
+            self.revealViewController().frontViewController.navigationController?.pushViewController(editProfileTableViewController, animated: true)
         case "Contact":
-            self.performSegueWithIdentifier("Contact Settings", sender: self)
+//            self.performSegueWithIdentifier("Contact Settings", sender: self)
+            let editContactTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("editContact") as! EditContactTableViewController
+            self.revealViewController().frontViewController.navigationController?.pushViewController(editContactTableViewController, animated: true)
         case "Log Out":
             self.logoutUser()
         default:

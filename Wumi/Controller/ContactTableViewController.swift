@@ -10,6 +10,7 @@ import UIKit
 
 class ContactTableViewController: UITableViewController, UISearchResultsUpdating {
     
+    @IBOutlet weak var hamburgerMenuButton: UIBarButtonItem!
     var resultSearchController = UISearchController()
     
     var users = [User]()
@@ -41,6 +42,17 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
         tableView.addSubview(refreshControl!)
         
         loadUsers()
+        
+        // Add action for hamburgerMenuButton
+        if self.revealViewController() != nil {
+            hamburgerMenuButton.target = self.revealViewController()
+            hamburgerMenuButton.action = "revealToggle:"
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        self.revealViewController().revealToggleAnimated(false)
     }
     
     func loadUsers() {

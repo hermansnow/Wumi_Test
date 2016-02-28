@@ -14,6 +14,8 @@
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
+		B154FD161C82BB7200F4B62E /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B154FD151C82BB7200F4B62E /* SWRevealViewController.m */; };
+		B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15824021C82C40F00D314B3 /* ContactTableViewController.swift */; };
 		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
@@ -35,7 +37,6 @@
 		DFA74C231C02BAFB00609E83 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C221C02BAFB00609E83 /* EditProfileTableViewController.swift */; };
 		DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */; };
 		DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */; };
-		DFACE2531C5A2E7A00C6D737 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFACE2521C5A2E7A00C6D737 /* ContactTableViewController.swift */; };
 		DFB4152D1C1E75B000835EFE /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB4152C1C1E75B000835EFE /* ProfileCell.swift */; };
 		DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */; };
 		DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */; };
@@ -65,6 +66,9 @@
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		85ED570018BB3568AF00821C /* Pods-Wumi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.debug.xcconfig"; sourceTree = "<group>"; };
+		B154FD141C82BB7200F4B62E /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		B154FD151C82BB7200F4B62E /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		B15824021C82C40F00D314B3 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewController.swift; path = Controller/ContactTableViewController.swift; sourceTree = "<group>"; };
 		CFC9344F0D89380119BEACAE /* Pods-Wumi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.release.xcconfig"; sourceTree = "<group>"; };
 		DF159E151C7FF78800DB65FF /* Wumi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wumi-Bridging-Header.h"; sourceTree = "<group>"; };
 		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -88,7 +92,6 @@
 		DFA74C221C02BAFB00609E83 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileTableViewController.swift; path = Controller/EditProfileTableViewController.swift; sourceTree = "<group>"; };
 		DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HyperLinkTextView.swift; path = View/HyperLinkTextView.swift; sourceTree = "<group>"; };
 		DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectPhotoActionSheet.swift; path = Controller/SelectPhotoActionSheet.swift; sourceTree = "<group>"; };
-		DFACE2521C5A2E7A00C6D737 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewController.swift; path = Controller/ContactTableViewController.swift; sourceTree = "<group>"; };
 		DFB4152C1C1E75B000835EFE /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCell.swift; path = View/ProfileCell.swift; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraduationYearPickerView.swift; path = View/GraduationYearPickerView.swift; sourceTree = "<group>"; };
 		DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataInputTextField.swift; path = View/DataInputTextField.swift; sourceTree = "<group>"; };
@@ -216,6 +219,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B154FD0D1C82BA9300F4B62E /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B154FD141C82BB7200F4B62E /* SWRevealViewController.h */,
+				B154FD151C82BB7200F4B62E /* SWRevealViewController.m */,
+			);
+			name = SWRevealViewController;
+			sourceTree = "<group>";
+		};
 		DF159E141C7FF74700DB65FF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,7 +266,7 @@
 		DFACE2511C5A2E3B00C6D737 /* Contact */ = {
 			isa = PBXGroup;
 			children = (
-				DFACE2521C5A2E7A00C6D737 /* ContactTableViewController.swift */,
+				B15824021C82C40F00D314B3 /* ContactTableViewController.swift */,
 			);
 			name = Contact;
 			sourceTree = "<group>";
@@ -262,6 +274,7 @@
 		DFB4152A1C1E705C00835EFE /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				B154FD0D1C82BA9300F4B62E /* SWRevealViewController */,
 				DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */,
 				DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */,
 				DFA74C221C02BAFB00609E83 /* EditProfileTableViewController.swift */,
@@ -439,6 +452,7 @@
 				DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,
+				B154FD161C82BB7200F4B62E /* SWRevealViewController.m in Sources */,
 				DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */,
 				DF9F060E1C7B7280008CA6DC /* Location.swift in Sources */,
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
@@ -446,11 +460,11 @@
 				DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */,
 				DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */,
 				DF9F06121C7D93CC008CA6DC /* DOFavoriteButton.swift in Sources */,
+				B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */,
 				DF981D641C50CDE200C2D637 /* Helper.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */,
 				DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */,
-				DFACE2531C5A2E7A00C6D737 /* ContactTableViewController.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
 				DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */,
 				DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */,

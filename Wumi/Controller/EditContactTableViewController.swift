@@ -40,6 +40,18 @@ class EditContactTableViewController: UITableViewController, LocationListDelegat
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+        
+        super.viewWillDisappear(animated)
+    }
+    
     override func didMoveToParentViewController(parent: UIViewController?) {
         if parent == nil {
             // Save contact changes
