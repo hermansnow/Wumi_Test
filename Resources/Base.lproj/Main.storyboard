@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H0F-Uw-KhX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H0F-Uw-KhX">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -22,11 +22,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="558"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="114"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
-                                        <rect key="frame" x="0.0" y="114" width="375" height="363"/>
+                                        <rect key="frame" x="0.0" y="102" width="375" height="375"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="izv-Vt-sbK">
                                                 <rect key="frame" x="68" y="20" width="240" height="60"/>
@@ -63,7 +63,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="61"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNh-Tw-8TD" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
-                                                        <rect key="frame" x="138" y="0.0" width="100" height="30"/>
+                                                        <rect key="frame" x="137" y="0.0" width="100" height="30"/>
                                                         <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="KkW-Sx-BIp"/>
@@ -77,16 +77,16 @@
                                                         </connections>
                                                     </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKO-le-fla">
-                                                        <rect key="frame" x="102" y="35" width="171" height="26"/>
+                                                        <rect key="frame" x="102" y="35" width="170.5" height="26"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5S-hD-5T7">
-                                                                <rect key="frame" x="0.0" y="0.0" width="135" height="26"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="134.5" height="26"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBX-bx-J5D">
-                                                                <rect key="frame" x="135" y="0.0" width="36" height="26"/>
+                                                                <rect key="frame" x="134" y="0.0" width="36" height="26"/>
                                                                 <accessibility key="accessibilityConfiguration">
                                                                     <accessibilityTraits key="traits" link="YES"/>
                                                                 </accessibility>
@@ -828,24 +828,24 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="806-sB-Xut">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="114"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qp5-vZ-xrN">
-                                        <rect key="frame" x="0.0" y="114" width="375" height="445"/>
+                                        <rect key="frame" x="0.0" y="102" width="375" height="457"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="6uM-Dq-qLI">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="445"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="457"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPn-RR-0Ek">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="111.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="114.5"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kD7-rz-Xs1">
-                                                        <rect key="frame" x="0.0" y="111.5" width="375" height="111"/>
+                                                        <rect key="frame" x="0.0" y="114.5" width="375" height="114"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="hOW-6k-jOo">
-                                                                <rect key="frame" x="38" y="10.5" width="300" height="90"/>
+                                                                <rect key="frame" x="38" y="12" width="300" height="90"/>
                                                                 <subviews>
                                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="l1L-H6-ir9" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
@@ -871,10 +871,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kej-jG-Env">
-                                                        <rect key="frame" x="0.0" y="222.5" width="375" height="111.5"/>
+                                                        <rect key="frame" x="0.0" y="228.5" width="375" height="114.5"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zvd-Zd-5F5" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
-                                                                <rect key="frame" x="87" y="39" width="200" height="34"/>
+                                                                <rect key="frame" x="87" y="40" width="200" height="34"/>
                                                                 <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="200" id="xtx-R7-FUQ"/>
@@ -892,10 +892,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sDm-VM-a2l">
-                                                        <rect key="frame" x="0.0" y="334" width="375" height="111"/>
+                                                        <rect key="frame" x="0.0" y="343" width="375" height="114"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aVf-5i-kQz">
-                                                                <rect key="frame" x="56" y="43" width="264" height="26"/>
+                                                                <rect key="frame" x="56" y="44" width="264" height="26"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYQ-xO-wvN">
                                                                         <rect key="frame" x="0.0" y="0.0" width="88" height="26"/>
@@ -996,28 +996,50 @@
                                                 <constraint firstAttribute="height" constant="60" id="pBs-up-aFx"/>
                                             </constraints>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g1w-MZ-xNY">
-                                            <rect key="frame" x="321" y="40" width="46" height="30"/>
-                                            <state key="normal" title="Button"/>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zfx-kA-yDx" customClass="DOFavoriteButton" customModule="Wumi" customModuleProvider="target">
-                                            <rect key="frame" x="267" y="40" width="46" height="30"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="image" value="Favorite"/>
-                                            </userDefinedRuntimeAttributes>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Country, City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lRY-7N-Ung">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lRY-7N-Ung">
                                             <rect key="frame" x="107" y="64" width="139" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BC0-Fe-Nrb">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BC0-Fe-Nrb">
                                             <rect key="frame" x="107" y="25" width="139" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3wf-nT-rAh">
+                                            <rect key="frame" x="267" y="30" width="60" height="34"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zfx-kA-yDx" customClass="DOFavoriteButton" customModule="Wumi" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="34"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="image" value="Favorite"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="imageColorOn">
+                                                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="imageColorOff">
+                                                            <color key="value" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g1w-MZ-xNY" customClass="DOFavoriteButton" customModule="Wumi" customModuleProvider="target">
+                                                    <rect key="frame" x="30" y="0.0" width="30" height="34"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="image" value="More"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="XNz-Mq-35c" secondAttribute="bottom" constant="20" id="0qF-We-54K"/>
@@ -1046,7 +1068,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="ifg-8j-rcu">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="DaV-lP-fz2"/>
+                        <barButtonItem key="leftBarButtonItem" image="Menu" id="DaV-lP-fz2"/>
                     </navigationItem>
                     <connections>
                         <outlet property="HamburgerMenuButton" destination="DaV-lP-fz2" id="h2Q-km-pEN"/>
@@ -1079,7 +1101,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <segue destination="00q-WZ-wOd" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="ZeN-zm-dhV"/>
                         <segue destination="SNN-Gs-X3M" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="UdM-CQ-VNV"/>
@@ -1266,8 +1287,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Favorite" width="1331" height="1266"/>
-        <image name="Logo" width="217" height="114"/>
+        <image name="Favorite" width="50" height="50"/>
+        <image name="Logo" width="102" height="102"/>
+        <image name="Menu" width="25" height="25"/>
+        <image name="More" width="50" height="50"/>
         <image name="Name" width="462" height="462"/>
     </resources>
 </document>

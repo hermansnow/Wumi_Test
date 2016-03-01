@@ -8,14 +8,32 @@
 
 import UIKit
 
-class ContactTableViewController: UITableViewController, UISearchResultsUpdating {
+class ContactTableViewController: UITableViewController, UISearchControllerDelegate, UISearchResultsUpdating {
     
     @IBOutlet weak var hamburgerMenuButton: UIBarButtonItem!
     var resultSearchController = UISearchController()
     
+    var loadLimit = 5
+    
     var users = [User]()
     var filteredUsers = [User]()
+    var loadDisplayData = { (inout users: [User], results: [AnyObject!], error: NSError!) -> Void in
+        if error != nil {
+            print("\(error)")
+            return
+        }
+        
+        users.appendContentsOf(results as! [User])
     
+        var contacts = [Contact]()
+        for user in users {
+            if let contact = user.contact {
+                contacts.append(contact)
+            }
+            Contact.fetchAllIfNeeded(contacts)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,19 +47,21 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
         resultSearchController.searchResultsUpdater = self
         resultSearchController.dimsBackgroundDuringPresentation = true
         resultSearchController.searchBar.sizeToFit()
-        resultSearchController.hidesNavigationBarDuringPresentation = false;
+        resultSearchController.hidesNavigationBarDuringPresentation = true;
         
         definesPresentationContext = false;
-        navigationItem.titleView = resultSearchController.searchBar
+        tableView.tableHeaderView = resultSearchController.searchBar
         
         tableView.dataSource = self
         tableView.delegate = self
         
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: Selector("loadUsers"), forControlEvents: .ValueChanged)
+        refreshControl?.addTarget(self, action: Selector("reloadUsers"), forControlEvents: .ValueChanged)
         tableView.addSubview(refreshControl!)
         
-        loadUsers()
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        reloadUsers()
         
         // Add action for hamburgerMenuButton
         if self.revealViewController() != nil {
@@ -55,20 +75,23 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
         self.revealViewController().revealToggleAnimated(false)
     }
     
-    func loadUsers() {
-        User.loadAllUser(0, WithBlock: { (results, error) -> Void in
-            if error != nil {
-                print("\(error)")
-                return
-            }
-            
+    func reloadUsers() {
+        User.loadUsers(0, limit: loadLimit, WithBlock: { (results, error) -> Void in
             self.users.removeAll(keepCapacity: false)
-            self.users.appendContentsOf(results as! [User])
             
+            self.loadDisplayData(&self.users, results, error)
             
             if self.refreshControl!.refreshing {
                 self.refreshControl!.endRefreshing()
             }
+            
+            self.tableView.reloadData()
+        })
+    }
+    
+    func loadMoreUsers() {
+        User.loadUsers(self.users.count, limit: loadLimit, WithBlock: { (results, error) -> Void in
+            self.loadDisplayData(&self.users, results, error)
             
             self.tableView.reloadData()
         })
@@ -111,20 +134,37 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
                 print("\(imageError)")
             }
         })
-        user.contact?.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
-            if let contact = result as? Contact {
+        if let contact = user.contact {
                 cell.locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
-            }
-        })
+        }
         
-
         return cell
+    }
+    
+    // Load more contacts when dragging to bottom
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y;
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        if self.refreshControl!.refreshing {
+            return
+        }
+        
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= 10.0 {
+            loadMoreUsers()
+        }
     }
     
     // MARK: Search delegates
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        filteredUsers.removeAll(keepCapacity: false)
-        
-        
+        User.loadUsers(0, limit: loadLimit, WithName: searchController.searchBar.text!, WithBlock: { (results, error) -> Void in
+            self.filteredUsers.removeAll(keepCapacity: false)
+            
+            self.loadDisplayData(&self.filteredUsers, results, error)
+            
+            self.tableView.reloadData()
+        })
     }
 }

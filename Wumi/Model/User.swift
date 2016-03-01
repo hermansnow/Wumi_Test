@@ -129,13 +129,18 @@ class User: AVUser {
     }
     
     // MARK: Queries
-    class func loadAllUser(skip: Int, WithBlock block: AVArrayResultBlock!) {
+    class func loadUsers(skip: Int, limit: Int, WithName name: String = "", WithBlock block: AVArrayResultBlock!) {
         let query = User.query()
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 24 * 3600
         
         query.skip = skip
+        query.limit = limit
         query.orderByAscending("name")
+        
+        if !name.isEmpty {
+            query.whereKey("name", containsString: name)
+        }
         
         query.findObjectsInBackgroundWithBlock(block)
     }
