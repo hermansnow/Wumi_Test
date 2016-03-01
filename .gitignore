@@ -5,6 +5,7 @@ Wumi/.DS_Store
 build/
 *.pbxuser
 !default.pbxuser
+*.xcworkspace/xcuserdata/
 *.mode1v3
 !default.mode1v3
 *.mode2v3

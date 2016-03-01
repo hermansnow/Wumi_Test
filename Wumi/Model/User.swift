@@ -16,7 +16,9 @@ class User: AVUser {
     @NSManaged var avatarImageFile: AVFile?
     @NSManaged var graduationYear: Int
     @NSManaged var name: String?
+    @NSManaged var nameSearchIndex: String?
     @NSManaged weak var contact: Contact?
+    @NSManaged var favoriteUsers: AVRelation?
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
@@ -30,6 +32,41 @@ class User: AVUser {
         dispatch_once(&Static.onceToken) {
              self.registerSubclass() // Register the subclass
         }
+    }
+    
+    // MARK: Property functions
+    class func buildNameSearchIndex(name: String?) -> String? {
+        // Try parse the name as Mandarin Chinese
+        if let originalName = name {
+            let formatingName = NSMutableString(string: originalName) as CFMutableString
+            if CFStringTransform(formatingName, nil, kCFStringTransformMandarinLatin, false) && CFStringTransform(formatingName, nil, kCFStringTransformStripDiacritics, false) {
+                return (formatingName as String).lowercaseString
+            }
+            else {
+                return originalName.lowercaseString
+            }
+        }
+        else {
+            return nil
+        }
+    }
+    
+    func addFavoriteUser(favoriteUser: User!) {
+        // Do not allow favorite yourself
+        if self == favoriteUser { return }
+        
+        favoriteUsers!.addObject(favoriteUser)
+        
+        saveInBackground()
+    }
+    
+    func removeFavoriteUser(user: User!) {
+        // Do not allow favorite yourself
+        if self == user { return }
+        
+        favoriteUsers!.removeObject(user    )
+        
+        saveInBackground()
     }
     
     // MARK: Validation functions
@@ -136,10 +173,13 @@ class User: AVUser {
         
         query.skip = skip
         query.limit = limit
-        query.orderByAscending("name")
+        
+        // Sort results by name search index, then by original name
+        query.orderByAscending("nameSearchIndex")
+        query.addAscendingOrder("name")
         
         if !name.isEmpty {
-            query.whereKey("name", containsString: name)
+            query.whereKey("nameSearchIndex", containsString: User.buildNameSearchIndex(name))
         }
         
         query.findObjectsInBackgroundWithBlock(block)

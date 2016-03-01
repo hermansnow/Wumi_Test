@@ -188,6 +188,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             WithBlock: { (inputValues) -> Void in
                 self.user.name = inputValues[0]
                 self.nameLabel.text = self.user.name
+                self.user.nameSearchIndex = User.buildNameSearchIndex(self.user.name)
         })
     }
     

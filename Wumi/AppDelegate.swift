@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Contact.registerSubclass()
         
         // Set up AVOSCloud
-        AVOSCloud.setAllLogsEnabled(true)
+        //AVOSCloud.setAllLogsEnabled(true)
         AVOSCloud.setServiceRegion(.US)
         AVOSCloud.setApplicationId("WtWKobgICmjMgPlmNBiVaeme-MdYXbMMI", clientKey: "OEKOIcQ7Wjnk4wuurFNlvmO1")
         

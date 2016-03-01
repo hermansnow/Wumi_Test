@@ -15,6 +15,8 @@ class ContactTableViewCell: UITableViewCell {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var favoriteButton: DOFavoriteButton!
     
+    var delegate: ContactTableViewCellDelegate?
+    
     override func drawRect(rect: CGRect) {
         favoriteButton.imageColorOff = UIColor.brownColor()
         favoriteButton.imageColorOn = UIColor.orangeColor()
@@ -23,16 +25,31 @@ class ContactTableViewCell: UITableViewCell {
         favoriteButton.duration = 1.0 // default: 1.0
         
         favoriteButton.addTarget(self, action: Selector("tapped:"), forControlEvents: .TouchUpInside)
+        
+        contentView.layer.borderColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1).CGColor
+        contentView.layer.borderWidth = 5.0
     }
     
     func tapped(sender: DOFavoriteButton) {
         if sender.selected {
             // deselect
             sender.deselect()
-        } else {
+            if delegate != nil {
+                delegate!.removeFavorite(self)
+            }
+        }
+        else {
             // select with animation
             sender.select()
+            if delegate != nil {
+                delegate!.addFavorite(self)
+            }
         }
     }
     
+}
+
+@objc protocol ContactTableViewCellDelegate: NSObjectProtocol {
+    func addFavorite(cell: ContactTableViewCell);
+    func removeFavorite(cell: ContactTableViewCell);
 }

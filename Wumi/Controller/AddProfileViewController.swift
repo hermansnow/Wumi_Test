@@ -69,6 +69,7 @@ class AddProfileViewController: ScrollTextFieldViewController {
         switch textField {
         case userName:
             user.name = userName.text
+            user.nameSearchIndex = User.buildNameSearchIndex(user.name)
         case graduationYearTextField:
             if let graduationYear = graduationYearTextField.text {
                 if graduationYear.characters.count > 0 {

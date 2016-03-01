@@ -1,4 +1,4 @@
-//
+    //
 //  ContactTableViewController.swift
 //  Wumi
 //
@@ -8,22 +8,53 @@
 
 import UIKit
 
-class ContactTableViewController: UITableViewController, UISearchControllerDelegate, UISearchResultsUpdating {
+class ContactTableViewController: UITableViewController, ContactTableViewCellDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     
     @IBOutlet weak var hamburgerMenuButton: UIBarButtonItem!
-    var resultSearchController = UISearchController()
+    var resultSearchController: UISearchController!
     
-    var loadLimit = 5
+    var loadLimit = 100 // number of records load in each query
+    var searchTimeInterval = 0.3 // seconds to start search. UISearchController will only search results if end-users stop inputting with this time interval
     
-    var users = [User]()
-    var filteredUsers = [User]()
-    var loadDisplayData = { (inout users: [User], results: [AnyObject!], error: NSError!) -> Void in
+    var user = User.currentUser()
+    var users = [User]() // array of users records
+    var filteredUsers = [User]() // array of filter results
+    var favoriteUsers = [User]() // array of favorite users
+    var currentUsers: [User] {
+        get {
+            if resultSearchController.active {
+                return filteredUsers
+            }
+            else {
+                return users
+            }
+        }
+        set(results) {
+            if resultSearchController.active {
+                filteredUsers = results
+            }
+            else {
+                users = results
+            }
+        }
+    }
+    
+    var inputTimer: NSTimer?
+    var searchString: String = ""
+    
+    // Closure for fetch display data
+    var loadDisplayData = { (inout users: [User], AllowAppend append: Bool, LoadData results: [AnyObject!], WithError error: NSError!) -> Void in
         if error != nil {
             print("\(error)")
             return
         }
         
-        users.appendContentsOf(results as! [User])
+        if append {
+            users.appendContentsOf(results as! [User])
+        }
+        else {
+            users = results as! [User]
+        }
     
         var contacts = [Contact]()
         for user in users {
@@ -43,43 +74,59 @@ class ContactTableViewController: UITableViewController, UISearchControllerDeleg
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        // Initialize resultSearchController
         resultSearchController = UISearchController(searchResultsController: nil)
         resultSearchController.searchResultsUpdater = self
-        resultSearchController.dimsBackgroundDuringPresentation = true
-        resultSearchController.searchBar.sizeToFit()
+        resultSearchController.dimsBackgroundDuringPresentation = false
         resultSearchController.hidesNavigationBarDuringPresentation = true;
+        resultSearchController.searchBar.sizeToFit()
+        resultSearchController.searchBar.autocapitalizationType = .None;
+        resultSearchController.searchBar.barTintColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
         
-        definesPresentationContext = false;
+        // Initialize tableview
         tableView.tableHeaderView = resultSearchController.searchBar
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.separatorStyle = .None
+        tableView.backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
+        tableView.setContentOffset(CGPoint(x: 0.0, y: tableView.tableHeaderView!.frame.size.height), animated: true)
         
+        // Set delegates
         tableView.dataSource = self
         tableView.delegate = self
         
+        // Add UIRefreshControl
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: Selector("reloadUsers"), forControlEvents: .ValueChanged)
         tableView.addSubview(refreshControl!)
         
-        tableView.tableFooterView = UIView(frame: CGRectZero)
-        
-        reloadUsers()
-        
         // Add action for hamburgerMenuButton
-        if self.revealViewController() != nil {
-            hamburgerMenuButton.target = self.revealViewController()
+        if let revealViewController = self.revealViewController() {
+            hamburgerMenuButton.target = revealViewController
             hamburgerMenuButton.action = "revealToggle:"
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
+        
+        // Load favorite users for current user
+        self.user.favoriteUsers?.query().findObjectsInBackgroundWithBlock({ (results, error) -> Void in
+            self.favoriteUsers = results as! [User]
+        })
+        
+        // Load data
+        reloadUsers()
     }
     
     override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
         self.revealViewController().revealToggleAnimated(false)
     }
     
+    
+    // Reload users
     func reloadUsers() {
-        User.loadUsers(0, limit: loadLimit, WithBlock: { (results, error) -> Void in
-            self.users.removeAll(keepCapacity: false)
-            
-            self.loadDisplayData(&self.users, results, error)
+        // Load user lists
+        User.loadUsers(0, limit: loadLimit, WithName: searchString, WithBlock: { (results, error) -> Void in
+            self.loadDisplayData(&self.currentUsers, AllowAppend: false, LoadData: results, WithError: error)
             
             if self.refreshControl!.refreshing {
                 self.refreshControl!.endRefreshing()
@@ -91,7 +138,7 @@ class ContactTableViewController: UITableViewController, UISearchControllerDeleg
     
     func loadMoreUsers() {
         User.loadUsers(self.users.count, limit: loadLimit, WithBlock: { (results, error) -> Void in
-            self.loadDisplayData(&self.users, results, error)
+            self.loadDisplayData(&self.currentUsers, AllowAppend: true, LoadData: results, WithError: error)
             
             self.tableView.reloadData()
         })
@@ -106,36 +153,38 @@ class ContactTableViewController: UITableViewController, UISearchControllerDeleg
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if resultSearchController.active {
-            return filteredUsers.count
-        }
-        else {
-            return users.count
-        }
+        return currentUsers.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Contact Cell", forIndexPath: indexPath) as! ContactTableViewCell
         
-        let user: User
-        if resultSearchController.active {
-            user = filteredUsers[indexPath.row]
-        }
-        else {
-            user = users[indexPath.row]
-        }
-        
-        cell.nameLabel.text = user.name
-        user.loadAvatar(cell.avatarImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
-            if imageError == nil && avatarImage != nil {
-                cell.avatarImageView.image = avatarImage
+        if let user = currentUsers[safe: indexPath.row] {
+            cell.nameLabel.text = user.name
+            user.loadAvatar(cell.avatarImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
+                if imageError == nil && avatarImage != nil {
+                    cell.avatarImageView.image = avatarImage
+                }
+                else {
+                    print("\(imageError)")
+                }
+            })
+            if let contact = user.contact {
+                cell.locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
+            }
+            
+            // Set border color
+            cell.contentView.layer.borderColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1).CGColor
+            
+            if (favoriteUsers.indexOf(user) != nil) {
+                cell.favoriteButton.selected = true
             }
             else {
-                print("\(imageError)")
+                cell.favoriteButton.selected = false
             }
-        })
-        if let contact = user.contact {
-                cell.locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
+            
+            // Set delegate
+            cell.delegate = self
         }
         
         return cell
@@ -157,14 +206,42 @@ class ContactTableViewController: UITableViewController, UISearchControllerDeleg
         }
     }
     
+    // MARK: - Contact table view cell delegates
+    func addFavorite(cell: ContactTableViewCell) {
+        // get related user
+        if let indexPath = tableView.indexPathForCell(cell) {
+            if indexPath.section != 0 { return }
+            
+            user.addFavoriteUser(currentUsers[safe: indexPath.row])
+        }
+    }
+    
+    func removeFavorite(cell: ContactTableViewCell) {
+        // get related user
+        if let indexPath = tableView.indexPathForCell(cell) {
+            if indexPath.section != 0 { return }
+            
+            user.removeFavoriteUser(currentUsers[safe: indexPath.row])
+        }
+    }
+    
     // MARK: Search delegates
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        User.loadUsers(0, limit: loadLimit, WithName: searchController.searchBar.text!, WithBlock: { (results, error) -> Void in
+        if let searchInput = searchController.searchBar.text {
+            searchString = searchInput
+        }
+        
+        if !searchString.isEmpty {
+            // Stop input timer if one is running
+            if inputTimer != nil {
+                inputTimer!.invalidate()
+            }
+            // Restart a new timer
+            inputTimer = NSTimer.scheduledTimerWithTimeInterval(searchTimeInterval, target: self, selector: "reloadUsers", userInfo: nil, repeats: false)
+        }
+        else {
             self.filteredUsers.removeAll(keepCapacity: false)
-            
-            self.loadDisplayData(&self.filteredUsers, results, error)
-            
-            self.tableView.reloadData()
-        })
+            tableView.reloadData()
+        }
     }
 }
