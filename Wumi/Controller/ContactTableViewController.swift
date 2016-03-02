@@ -101,6 +101,7 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         
         // Add action for hamburgerMenuButton
         if let revealViewController = self.revealViewController() {
+            revealViewController.rearViewRevealOverdraw = 0
             hamburgerMenuButton.target = revealViewController
             hamburgerMenuButton.action = "revealToggle:"
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
@@ -117,8 +118,6 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        
-        self.revealViewController().revealToggleAnimated(false)
     }
     
     

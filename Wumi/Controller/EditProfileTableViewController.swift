@@ -49,13 +49,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBarHidden = false
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
-        
         super.viewWillDisappear(animated)
     }
     

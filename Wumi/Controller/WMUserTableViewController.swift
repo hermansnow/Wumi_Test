@@ -22,6 +22,10 @@ class WMUserTableViewController: UITableViewController {
         [Setting(identifier:"Log Out", type: .Button, value: nil)]]
     var userDefault = NSUserDefaults.standardUserDefaults()
     
+    var hasEnterMenu = false
+    
+    let DEFAULT_REVEAL_WIDTH: CGFloat = 260.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,6 +34,13 @@ class WMUserTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if let rearViewController = self.revealViewController() {
+            if hasEnterMenu {
+                rearViewController.rearViewRevealWidth = DEFAULT_REVEAL_WIDTH
+                rearViewController.revealToggleAnimated(true)
+            }
+        }
         
         // Show current user's profile
         userDisplayName.text = user.name
@@ -59,12 +70,15 @@ class WMUserTableViewController: UITableViewController {
     func eventHandlerForSetting(setting: Setting, withCell: UITableViewCell) {
         switch setting.identifier {
         case "User Profile":
-            let editProfileTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("editProfile") as! EditProfileTableViewController
-            self.revealViewController().frontViewController.navigationController?.pushViewController(editProfileTableViewController, animated: true)
+            self.revealViewController().rearViewRevealWidth = UIScreen.mainScreen().bounds.width
+            self.revealViewController().setFrontViewPosition(FrontViewPosition.Right, animated: true)
+            self.hasEnterMenu = true;
+            self.performSegueWithIdentifier("Edit Profile", sender: self)
         case "Contact":
-//            self.performSegueWithIdentifier("Contact Settings", sender: self)
-            let editContactTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("editContact") as! EditContactTableViewController
-            self.revealViewController().frontViewController.navigationController?.pushViewController(editContactTableViewController, animated: true)
+            self.revealViewController().rearViewRevealWidth = UIScreen.mainScreen().bounds.width
+            self.revealViewController().setFrontViewPosition(FrontViewPosition.Right, animated: true)
+            self.hasEnterMenu = true;
+            self.performSegueWithIdentifier("Contact Settings", sender: self)
         case "Log Out":
             self.logoutUser()
         default:
