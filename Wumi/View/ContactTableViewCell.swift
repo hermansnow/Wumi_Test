@@ -28,6 +28,9 @@ class ContactTableViewCell: UITableViewCell {
         
         contentView.layer.borderColor = Constants.UI.BackgroundColor.CGColor
         contentView.layer.borderWidth = 5.0
+        
+        // Set default avatar
+        avatarImageView.image = Constants.UI.AnonymousAvatarImage
     }
     
     func tapped(sender: DOFavoriteButton) {

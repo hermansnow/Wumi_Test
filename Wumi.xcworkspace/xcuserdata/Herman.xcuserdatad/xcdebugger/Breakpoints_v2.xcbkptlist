@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478568424.177091"
+            timestampString = "478645693.521968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478568424.177091"
+            timestampString = "478635517.63218"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
-            landmarkName = "reloadUsers()"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "loadMoreUsers()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478568424.177091"
+            timestampString = "478635517.63218"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "reloadUsers()"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "loadMoreUsers()"
             landmarkType = "5">
             <Locations>
                <Location
@@ -90,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478568424.177091"
+            timestampString = "478645693.521968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "addFavorite(_:)"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
+            landmarkName = "removeFavorite(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478568228.047489"
+            timestampString = "478630762.251547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
             landmarkName = "ContactTableViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -138,13 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478586966.531075"
+            timestampString = "478645693.521968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
-            landmarkName = "updateSearchResultsForSearchController(_:)"
-            landmarkType = "5">
+            startingLineNumber = "255"
+            endingLineNumber = "255">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -154,11 +152,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478568424.177091"
+            timestampString = "478645693.521968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -170,11 +168,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478568228.047489"
+            timestampString = "478630762.251547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "ContactTableViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -186,13 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478586966.531075"
+            timestampString = "478645693.521968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
-            landmarkName = "updateSearchResultsForSearchController(_:)"
-            landmarkType = "5">
+            startingLineNumber = "254"
+            endingLineNumber = "254">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -202,13 +198,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478586966.531075"
+            timestampString = "478645693.521968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
-            landmarkName = "updateSearchResultsForSearchController(_:)"
-            landmarkType = "5">
+            startingLineNumber = "259"
+            endingLineNumber = "259">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -218,11 +212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wumi/Controller/ContactTableViewController.swift"
-            timestampString = "478586814.276657"
+            timestampString = "478630762.251547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "ContactTableViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -241,6 +235,114 @@
             endingLineNumber = "162"
             landmarkName = "loadUsers(_:limit:WithName:WithBlock:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Wumi/Controller/LocationListTableViewController.swift"
+            timestampString = "478630294.13192"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "LocationListTableViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wumi.LocationListTableViewController.currentLocation.getter : Swift.Optional&lt;__ObjC.CLPlacemark&gt;"
+                  moduleName = "Wumi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Herman/Desktop/Swift/Wumi/Wumi_Test/Wumi/Controller/LocationListTableViewController.swift"
+                  timestampString = "478630294.157143"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wumi.LocationListTableViewController.currentLocation.setter : Swift.Optional&lt;__ObjC.CLPlacemark&gt;"
+                  moduleName = "Wumi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Herman/Desktop/Swift/Wumi/Wumi_Test/Wumi/Controller/LocationListTableViewController.swift"
+                  timestampString = "478630294.157353"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wumi.LocationListTableViewController.currentLocation.materializeForSet : Swift.Optional&lt;__ObjC.CLPlacemark&gt;"
+                  moduleName = "Wumi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Herman/Desktop/Swift/Wumi/Wumi_Test/Wumi/Controller/LocationListTableViewController.swift"
+                  timestampString = "478630294.157444"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wumi.LocationListTableViewController.init (Wumi.LocationListTableViewController.Type)(style : __C.UITableViewStyle) -&gt; Wumi.LocationListTableViewController"
+                  moduleName = "Wumi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Herman/Desktop/Swift/Wumi/Wumi_Test/Wumi/Controller/LocationListTableViewController.swift"
+                  timestampString = "478630294.157527"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "306">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wumi.LocationListTableViewController.init (Wumi.LocationListTableViewController.Type)(nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.NSBundle&gt;) -&gt; Wumi.LocationListTableViewController"
+                  moduleName = "Wumi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Herman/Desktop/Swift/Wumi/Wumi_Test/Wumi/Controller/LocationListTableViewController.swift"
+                  timestampString = "478630294.157622"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "392">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wumi.LocationListTableViewController.init (Wumi.LocationListTableViewController.Type)(coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Wumi.LocationListTableViewController&gt;"
+                  moduleName = "Wumi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Herman/Desktop/Swift/Wumi/Wumi_Test/Wumi/Controller/LocationListTableViewController.swift"
+                  timestampString = "478630294.1577"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "306">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

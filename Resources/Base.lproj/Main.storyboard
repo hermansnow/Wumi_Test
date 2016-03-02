@@ -536,7 +536,7 @@
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="Name" id="UUW-Ao-Zhy">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="Anonymous" id="UUW-Ao-Zhy">
                                                     <rect key="frame" x="15" y="0.0" width="44" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
@@ -1287,10 +1287,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Anonymous" width="462" height="462"/>
         <image name="Favorite" width="50" height="50"/>
         <image name="Logo" width="102" height="102"/>
         <image name="Menu" width="25" height="25"/>
         <image name="More" width="50" height="50"/>
-        <image name="Name" width="462" height="462"/>
     </resources>
 </document>

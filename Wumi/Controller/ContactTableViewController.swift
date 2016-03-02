@@ -160,6 +160,10 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         
         if let user = currentUsers[safe: indexPath.row] {
             cell.nameLabel.text = user.name
+            
+            // Reset avatar image
+            cell.avatarImageView.image = Constants.UI.AnonymousAvatarImage
+            // Load avatar image
             user.loadAvatar(cell.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
                 if imageError == nil && avatarImage != nil {
                     cell.avatarImageView.image = avatarImage
@@ -168,6 +172,7 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
                     print("\(imageError)")
                 }
             }
+            
             if let contact = user.contact {
                 cell.locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
             }
