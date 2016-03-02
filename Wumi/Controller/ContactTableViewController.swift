@@ -43,7 +43,7 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
     var searchString: String = ""
     
     // Closure for fetch display data
-    var loadDisplayData = { (inout users: [User], AllowAppend append: Bool, LoadData results: [AnyObject!], WithError error: NSError!) -> Void in
+    var fetchDisplayData = { (inout users: [User], AllowAppend append: Bool, LoadData results: [AnyObject!], WithError error: NSError!) -> Void in
         if error != nil {
             print("\(error)")
             return
@@ -81,7 +81,7 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         resultSearchController.hidesNavigationBarDuringPresentation = true;
         resultSearchController.searchBar.sizeToFit()
         resultSearchController.searchBar.autocapitalizationType = .None;
-        resultSearchController.searchBar.barTintColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
+        resultSearchController.searchBar.barTintColor = Constants.UI.BackgroundColor
         
         // Initialize tableview
         tableView.tableHeaderView = resultSearchController.searchBar
@@ -107,12 +107,12 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         }
         
         // Load favorite users for current user
-        self.user.favoriteUsers?.query().findObjectsInBackgroundWithBlock({ (results, error) -> Void in
+        self.user.favoriteUsers?.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
             self.favoriteUsers = results as! [User]
-        })
-        
-        // Load data
-        reloadUsers()
+            
+            // Load data
+            self.reloadUsers()
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -125,23 +125,23 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
     // Reload users
     func reloadUsers() {
         // Load user lists
-        User.loadUsers(0, limit: loadLimit, WithName: searchString, WithBlock: { (results, error) -> Void in
-            self.loadDisplayData(&self.currentUsers, AllowAppend: false, LoadData: results, WithError: error)
+        User.loadUsers(0, limit: loadLimit, WithName: searchString) { (results, error) -> Void in
+            self.fetchDisplayData(&self.currentUsers, AllowAppend: false, LoadData: results, WithError: error)
             
             if self.refreshControl!.refreshing {
                 self.refreshControl!.endRefreshing()
             }
             
             self.tableView.reloadData()
-        })
+        }
     }
     
     func loadMoreUsers() {
-        User.loadUsers(self.users.count, limit: loadLimit, WithBlock: { (results, error) -> Void in
-            self.loadDisplayData(&self.currentUsers, AllowAppend: true, LoadData: results, WithError: error)
+        User.loadUsers(self.users.count, limit: loadLimit) { (results, error) -> Void in
+            self.fetchDisplayData(&self.currentUsers, AllowAppend: true, LoadData: results, WithError: error)
             
             self.tableView.reloadData()
-        })
+        }
     }
 
     // MARK: - Table view data source
@@ -161,14 +161,14 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         
         if let user = currentUsers[safe: indexPath.row] {
             cell.nameLabel.text = user.name
-            user.loadAvatar(cell.avatarImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
+            user.loadAvatar(cell.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
                 if imageError == nil && avatarImage != nil {
                     cell.avatarImageView.image = avatarImage
                 }
                 else {
                     print("\(imageError)")
                 }
-            })
+            }
             if let contact = user.contact {
                 cell.locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
             }
@@ -231,15 +231,17 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
             searchString = searchInput
         }
         
+        // Stop input timer if one is running
+        if inputTimer != nil {
+            inputTimer!.invalidate()
+        }
+        
         if !searchString.isEmpty {
-            // Stop input timer if one is running
-            if inputTimer != nil {
-                inputTimer!.invalidate()
-            }
             // Restart a new timer
             inputTimer = NSTimer.scheduledTimerWithTimeInterval(searchTimeInterval, target: self, selector: "reloadUsers", userInfo: nil, repeats: false)
         }
         else {
+            
             self.filteredUsers.removeAll(keepCapacity: false)
             tableView.reloadData()
         }

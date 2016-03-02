@@ -70,14 +70,14 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         // Show current user's account profile
         self.accountNameLabel.text = self.user.username
         self.emailLabel.text = self.user.email
-        self.user.loadAvatar(self.avatarImageView.frame.size, WithBlock: { (avatarImage, imageError) -> Void in
+        self.user.loadAvatar(self.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
             if imageError == nil && avatarImage != nil {
                 self.avatarImageView.image = avatarImage
             }
             else {
                 print("\(imageError)")
             }
-        })
+        }
             
         // Show current user's personal information
         self.nameLabel.text = self.user.name
@@ -132,14 +132,14 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true) { () -> Void in
             if let profileImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.user.saveAvatarFile(profileImage, WithBlock: { (saveImageSuccess, imageError) -> Void in
+                self.user.saveAvatarFile(profileImage) { (saveImageSuccess, imageError) -> Void in
                     if saveImageSuccess {
                         self.avatarImageView.image = profileImage
                     }
                     else {
                         Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
                     }
-                })
+                }
             }
         }
     }
@@ -155,13 +155,12 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func changePassword() {
         Helper.PopupInputBox(self, boxTitle: "Change Password", message: "Please input a new password",
-            numberOfFileds: 2, textValues: [["placeHolder": "Please enter a new password"], ["placeHolder": "Please confirm the new password"]],
-            WithBlock: { (inputValues) -> Void in
+            numberOfFileds: 2, textValues: [["placeHolder": "Please enter a new password"], ["placeHolder": "Please confirm the new password"]]) { (inputValues) -> Void in
                 let newPassword = inputValues[0]
                 let confirmPassword = inputValues[1]
                 self.user.password = newPassword
                 self.user.confirmPassword = confirmPassword
-                self.user.validateUserWithBlock({ (valid, validateError) -> Void in
+                self.user.validateUserWithBlock { (valid, validateError) -> Void in
                     if !valid {
                         Helper.PopupErrorAlert(self, errorMessage: "\(validateError)")
                         // Do not save anything in password properties
@@ -169,27 +168,27 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                         self.user.confirmPassword = nil
                         return
                     }
-                })
-        })
+                }
+        }
     }
     
     func changeEmail() {
         Helper.PopupInputBox(self, boxTitle: "Edit Email", message: "Change your email address",
-            numberOfFileds: 1, textValues: [["originalValue": user.email, "placeHolder": "Please enter your email address"]],
-            WithBlock: { (inputValues) -> Void in
+            numberOfFileds: 1, textValues: [["originalValue": user.email, "placeHolder": "Please enter your email address"]]) { (inputValues) -> Void in
                 self.user.email = inputValues[0]
                 self.emailLabel.text = self.user.email
-        })
+        }
     }
     
     func changeName() {
         Helper.PopupInputBox(self, boxTitle: "Edit Name", message: "Change your display name",
-            numberOfFileds: 1, textValues: [["originalValue": user.name, "placeHolder": "Please enter your name"]],
-            WithBlock: { (inputValues) -> Void in
+            numberOfFileds: 1, textValues: [["originalValue": user.name, "placeHolder": "Please enter your name"]]) { (inputValues) -> Void in
                 self.user.name = inputValues[0]
                 self.nameLabel.text = self.user.name
-                self.user.nameSearchIndex = User.buildNameSearchIndex(self.user.name)
-        })
+                if let name = self.user.name {
+                    self.user.nameSearchIndex = name.toChinesePinyin()
+                }
+        }
     }
     
     func changeGraduationYear() {

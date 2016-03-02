@@ -26,7 +26,7 @@ class ContactTableViewCell: UITableViewCell {
         
         favoriteButton.addTarget(self, action: Selector("tapped:"), forControlEvents: .TouchUpInside)
         
-        contentView.layer.borderColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1).CGColor
+        contentView.layer.borderColor = Constants.UI.BackgroundColor.CGColor
         contentView.layer.borderWidth = 5.0
     }
     

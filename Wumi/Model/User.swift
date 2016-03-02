@@ -35,21 +35,6 @@ class User: AVUser {
     }
     
     // MARK: Property functions
-    class func buildNameSearchIndex(name: String?) -> String? {
-        // Try parse the name as Mandarin Chinese
-        if let originalName = name {
-            let formatingName = NSMutableString(string: originalName) as CFMutableString
-            if CFStringTransform(formatingName, nil, kCFStringTransformMandarinLatin, false) && CFStringTransform(formatingName, nil, kCFStringTransformStripDiacritics, false) {
-                return (formatingName as String).lowercaseString
-            }
-            else {
-                return originalName.lowercaseString
-            }
-        }
-        else {
-            return nil
-        }
-    }
     
     func addFavoriteUser(favoriteUser: User!) {
         // Do not allow favorite yourself
@@ -174,12 +159,20 @@ class User: AVUser {
         query.skip = skip
         query.limit = limit
         
-        // Sort results by name search index, then by original name
-        query.orderByAscending("nameSearchIndex")
-        query.addAscendingOrder("name")
-        
         if !name.isEmpty {
-            query.whereKey("nameSearchIndex", containsString: User.buildNameSearchIndex(name))
+            // In terms of Chinese input, search name only
+            if name.containChinese() {
+                query.whereKey("name", containsString: name)
+                // Sort results by name
+                query.orderByAscending("name")
+            }
+            else {
+                // In terms of English input, search name and pinyin
+                query.whereKey("nameSearchIndex", containsString: name)
+                // Sort results by name search index, then by original name
+                query.orderByAscending("nameSearchIndex")
+                query.addAscendingOrder("name")
+            }
         }
         
         query.findObjectsInBackgroundWithBlock(block)

@@ -131,7 +131,7 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
             var countryName: String?
             cell = tableView.dequeueReusableCellWithIdentifier("Country Cell", forIndexPath: indexPath)
             
-            countryName = countryList[indexPath.row]
+            countryName = countryList[safe: indexPath.row]
             cell.textLabel!.text = countryName
             
             // Add checkmark for selected country
@@ -153,7 +153,7 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
         case 0:
             selectedLocation = Location(Country: currentLocation?.country, City: currentLocation?.locality)
         case 1:
-            selectedLocation = Location(Country: countryList[indexPath.row], City: nil)
+            selectedLocation = Location(Country: countryList[safe: indexPath.row], City: nil)
         default:
             break
         }

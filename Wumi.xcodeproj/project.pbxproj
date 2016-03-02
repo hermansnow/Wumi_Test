@@ -17,14 +17,15 @@
 		B154FD161C82BB7200F4B62E /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B154FD151C82BB7200F4B62E /* SWRevealViewController.m */; };
 		B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15824021C82C40F00D314B3 /* ContactTableViewController.swift */; };
 		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
-		DF173EE81C86494400018B4A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EE71C86494400018B4A /* Extensions.swift */; };
+		DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEB1C86A55F00018B4A /* Constants.swift */; };
+		DF173EF21C86A58600018B4A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEF1C86A58600018B4A /* Extensions.swift */; };
+		DF173EF31C86A58600018B4A /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EF01C86A58600018B4A /* Helper.swift */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACEF1C64D20B00F81491 /* Contact.swift */; };
 		DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */; };
 		DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */; };
 		DF72ACF71C660B6400F81491 /* EditContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */; };
-		DF981D641C50CDE200C2D637 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF981D631C50CDE200C2D637 /* Helper.swift */; };
 		DF9F05FD1C5B5F96008CA6DC /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F05FC1C5B5F96008CA6DC /* AVOSCloud.framework */; };
 		DF9F05FF1C5B5FC9008CA6DC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F05FE1C5B5FC9008CA6DC /* MobileCoreServices.framework */; };
 		DF9F06011C5B5FD3008CA6DC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F06001C5B5FD3008CA6DC /* CoreTelephony.framework */; };
@@ -71,16 +72,17 @@
 		B154FD151C82BB7200F4B62E /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		B15824021C82C40F00D314B3 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewController.swift; path = Controller/ContactTableViewController.swift; sourceTree = "<group>"; };
 		CFC9344F0D89380119BEACAE /* Pods-Wumi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.release.xcconfig"; sourceTree = "<group>"; };
-		DF159E151C7FF78800DB65FF /* Wumi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wumi-Bridging-Header.h"; sourceTree = "<group>"; };
 		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		DF173EE71C86494400018B4A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DF173EEB1C86A55F00018B4A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "Supporting Files/Constants.swift"; sourceTree = "<group>"; };
+		DF173EEF1C86A58600018B4A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Supporting Files/Extensions.swift"; sourceTree = "<group>"; };
+		DF173EF01C86A58600018B4A /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Helper.swift; path = "Supporting Files/Helper.swift"; sourceTree = "<group>"; };
+		DF173EF51C86A73D00018B4A /* Wumi-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Wumi-Bridging-Header.h"; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF72ACEF1C64D20B00F81491 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Model/Contact.swift; sourceTree = "<group>"; };
 		DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AvatarImageView.swift; path = View/AvatarImageView.swift; sourceTree = "<group>"; };
 		DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationListTableViewController.swift; path = Controller/LocationListTableViewController.swift; sourceTree = "<group>"; };
 		DF72ACF61C660B6400F81491 /* EditContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditContactTableViewController.swift; path = Controller/EditContactTableViewController.swift; sourceTree = "<group>"; };
-		DF981D631C50CDE200C2D637 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		DF9F05FC1C5B5F96008CA6DC /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		DF9F05FE1C5B5FC9008CA6DC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		DF9F06001C5B5FD3008CA6DC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -233,9 +235,10 @@
 		DF159E141C7FF74700DB65FF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DF981D631C50CDE200C2D637 /* Helper.swift */,
-				DF159E151C7FF78800DB65FF /* Wumi-Bridging-Header.h */,
-				DF173EE71C86494400018B4A /* Extensions.swift */,
+				DF173EF51C86A73D00018B4A /* Wumi-Bridging-Header.h */,
+				DF173EEF1C86A58600018B4A /* Extensions.swift */,
+				DF173EF01C86A58600018B4A /* Helper.swift */,
+				DF173EEB1C86A55F00018B4A /* Constants.swift */,
 			);
 			name = "Supporting Files";
 			path = Wumi;
@@ -455,7 +458,8 @@
 				DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,
-				DF173EE81C86494400018B4A /* Extensions.swift in Sources */,
+				DF173EF31C86A58600018B4A /* Helper.swift in Sources */,
+				DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */,
 				B154FD161C82BB7200F4B62E /* SWRevealViewController.m in Sources */,
 				DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */,
 				DF9F060E1C7B7280008CA6DC /* Location.swift in Sources */,
@@ -465,7 +469,7 @@
 				DFA74C211BF8215900609E83 /* WMMainTabBarController.swift in Sources */,
 				DF9F06121C7D93CC008CA6DC /* DOFavoriteButton.swift in Sources */,
 				B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */,
-				DF981D641C50CDE200C2D637 /* Helper.swift in Sources */,
+				DF173EF21C86A58600018B4A /* Extensions.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */,
 				DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */,
