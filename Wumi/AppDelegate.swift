@@ -29,11 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Register classes
         Contact.registerSubclass()
         
+        // Set Navigation bar color
+        UINavigationBar.appearance().barTintColor = Constants.UI.ThemeColor
+        
         // Set up AVOSCloud
         //AVOSCloud.setAllLogsEnabled(true)
         AVOSCloud.setServiceRegion(.US)
         AVOSCloud.setApplicationId("WtWKobgICmjMgPlmNBiVaeme-MdYXbMMI", clientKey: "OEKOIcQ7Wjnk4wuurFNlvmO1")
-        
         // China Setting
         //AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
         

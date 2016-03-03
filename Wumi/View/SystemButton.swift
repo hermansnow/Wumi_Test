@@ -24,17 +24,20 @@ class SystemButton: UIButton {
         // called here when the button first appears and is also called
         // from the main ViewController when the app is reset.
         
-        layer.cornerRadius = 15
+        layer.cornerRadius = 3
+        
+        setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        titleLabel?.font = UIFont(name: ".SFUIText-Medium", size: 16)
         
         setBackgroundColor()
     }
     
     func setBackgroundColor() {
         if recommanded {
-            backgroundColor = UIColor.orangeColor()
+            layer.backgroundColor = Constants.UI.ThemeColor.CGColor
         }
         else {
-            backgroundColor = UIColor.grayColor()
+            layer.backgroundColor = Constants.UI.BackgroundColor.CGColor
         }
     }
 }

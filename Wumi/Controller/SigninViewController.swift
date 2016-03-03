@@ -11,6 +11,8 @@ import UIKit
 class SigninViewController: UIViewController {
     // MARK: Properties
     
+    @IBOutlet weak var logoView: UIView!
+    @IBOutlet weak var logoBorderLayerView: UIView!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var usernameTextField: DataInputTextField!
     @IBOutlet weak var passwordTextField: DataInputTextField!
@@ -30,6 +32,21 @@ class SigninViewController: UIViewController {
                 performSegueWithIdentifier("Launch Main View", sender: self)
             }
         }
+        
+        // Set layout and colors
+        logoView.backgroundColor = Constants.UI.ThemeColor
+        logoBorderLayerView.backgroundColor = UIColor.whiteColor()
+        logoBorderLayerView.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        // Set logo shadow
+        let logoLayer = logoImageView.layer
+        logoLayer.shadowColor = Constants.UI.ThemeColor.CGColor
+        logoLayer.shadowOffset = CGSize(width: 0, height: 2)
+        logoLayer.shadowOpacity = 1
+        logoLayer.shadowRadius = 3
+        
+        // Set text fields
+        passwordTextField.inputTextField.secureTextEntry = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -39,6 +56,19 @@ class SigninViewController: UIViewController {
         if let user = User.currentUser() {
             usernameTextField.text = user.username
         }
+    }
+    
+    // All codes based on display frames should be called here after layouting subviews
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Set circular logo image view
+        self.logoBorderLayerView.layer.cornerRadius = self.logoBorderLayerView.frame.size.width / 2
+        self.logoBorderLayerView.clipsToBounds = true
+        
+        // Redraw DataInput Text Field
+        usernameTextField.drawUnderlineBorder()
+        passwordTextField.drawUnderlineBorder()
     }
     
     // MARK: Actions

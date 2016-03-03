@@ -8,55 +8,74 @@
 
 import UIKit
 
-class DataInputTextField: UITextField {
+class DataInputTextField: UIView {
     
     private var dataInputDelegate: DataInputTextFieldDelegate?
-        
-    override  var delegate: UITextFieldDelegate? {
-        didSet {
-            dataInputDelegate = delegate as? DataInputTextFieldDelegate
+    
+    var inputTextField = UITextField()
+    var informationHolder = UIView()
+    
+    @IBInspectable var text: String? {
+        get {
+            return inputTextField.text
+        }
+        set (newValue) {
+            inputTextField.text = newValue
         }
     }
     
+    @IBInspectable var placeholder: String? {
+        get {
+            return inputTextField.placeholder
+        }
+        set (newValue) {
+            inputTextField.placeholder = newValue
+        }
+    }
+        
+    /*override var delegate: UITextFieldDelegate? {
+        didSet {
+            dataInputDelegate = delegate as? DataInputTextFieldDelegate
+        }
+    }*/
+    
     override func drawRect(rect: CGRect) {
-        self.layer.cornerRadius = 10
-        self.clearsOnBeginEditing = false
-        self.borderStyle = .RoundedRect
-        self.layer.borderWidth = 1.0
-        self.backgroundColor = UIColor.whiteColor()
+        // Set up textfield
+        inputTextField.font = UIFont(name: ".SFUIText-Light", size: 16)
+        inputTextField.clearsOnBeginEditing = false
+        inputTextField.clearButtonMode = .WhileEditing
+        
+        // Add underline
+        drawUnderlineBorder()
+        
+        //Stack View
+        let stackView = UIStackView()
+        stackView.axis = .Vertical;
+        stackView.distribution = .Fill;
+        stackView.alignment = .Fill;
+        stackView.spacing = 10;
+        
+        stackView.addArrangedSubview(inputTextField)
+        stackView.addArrangedSubview(informationHolder)
+        stackView.translatesAutoresizingMaskIntoConstraints = false;
+        
+        addSubview(stackView)
+        
+        //Constraints
+        stackView.leftAnchor.constraintEqualToAnchor(leftAnchor).active = true
+        stackView.rightAnchor.constraintEqualToAnchor(rightAnchor).active = true
+        stackView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
+        stackView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         
         super.drawRect(rect)
     }
     
-    // Right view of text field is used to show error image if the input is invalid
-    func setRightErrorViewForTextFieldWithErrorMessage(error: String = "") {
-        if error.characters.count > 0 {
-            let rightErrorView = UIImageView(image: UIImage(named: "Error"))
-            
-            // Set frame of the right image view
-            let viewSize = CGSize(width: self.bounds.height * 0.66, height: self.bounds.height * 0.66)
-            let viewOrigin = CGPoint(x: 0, y: (self.bounds.height - viewSize.height) / 2)
-            rightErrorView.frame = CGRect(origin: viewOrigin, size: viewSize)
-            
-            self.rightView = rightErrorView
-            self.rightViewMode = .Always
-            
-            //Log error
-            print("\(error)")
-        }
-        else {
-            self.rightView = nil // Remove error image if there is no more error message
-        }
-    }
-    
-    // Left view of text field is used to place the icon
-    func setLeftImageViewForTextField(image: UIImage?) {
-        if let leftImage = image {
-            let leftImageView = UIImageView(image: leftImage)
-            leftImageView.frame = CGRect(x: 0, y: 0, width: self.bounds.height, height: self.bounds.height)
-            self.leftView = leftImageView
-            self.leftViewMode = .Always
-        }
+    func drawUnderlineBorder() {
+        let underline = CALayer()
+        underline.frame = CGRectMake(0, inputTextField.frame.height - 1, inputTextField.frame.width, 1.0)
+        underline.backgroundColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0).CGColor
+        inputTextField.borderStyle = .None
+        inputTextField.layer.addSublayer(underline)
     }
     
     // MARK:View components functions
@@ -67,10 +86,9 @@ class DataInputTextField: UITextField {
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
         let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("doneToolButtonClicked:"))
-        
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
         
-        self.inputAccessoryView = toolbar
+        inputTextField.inputAccessoryView = toolbar
     }
     
     func doneToolButtonClicked(sender: UIBarButtonItem) {

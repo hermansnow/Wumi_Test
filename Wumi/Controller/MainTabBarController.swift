@@ -1,5 +1,5 @@
 //
-//  WMMainTabBarController.swift
+//  MainTabBarController.swift
 //  Wumi
 //
 //  Created by Zhe Cheng on 11/14/15.
@@ -8,5 +8,5 @@
 
 import UIKit
 
-class WMMainTabBarController: UITabBarController {
+class MainTabBarController: UITabBarController {
 }

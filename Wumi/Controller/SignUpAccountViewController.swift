@@ -52,14 +52,14 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         dismissInputView()
         
         // Validate user inputs
-        self.user.validateUserWithBlock { (valid, error) -> Void in
+        self.user.validateUser { (valid, error) -> Void in
             if !valid {
                 Helper.PopupErrorAlert(self, errorMessage: "Invalid user information: \(error)")
                 return
             }
             
             // Save avatar image file
-            self.user.saveAvatarFile(self.addAvatarImageView.image, WithBlock: { (saveImageSuccess, imageError) -> Void in
+            self.user.saveAvatarFile(self.addAvatarImageView.image) { (saveImageSuccess, imageError) -> Void in
                 if !saveImageSuccess {
                     Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
                     return
@@ -74,8 +74,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
                     
                     self.performSegueWithIdentifier("Show Profile Form", sender: self)
                 }
-            })
-
+            }
         }
     }
     

@@ -16,6 +16,8 @@ struct Constants {
         
         static let AnonymousAvatarImage = UIImage(named: "Anonymous")
         
+        static let ThemeColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
+        
     }
     
 } 

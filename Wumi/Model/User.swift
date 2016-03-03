@@ -54,10 +54,18 @@ class User: AVUser {
         saveInBackground()
     }
     
+    func isFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
+        let query = favoriteUsers!.query()
+        
+        query.whereKey("objectId", equalTo: user.objectId)
+        
+        query.countObjectsInBackgroundWithBlock(block)
+    }
+    
     // MARK: Validation functions
     
     // Validate user information
-    func validateUserWithBlock(block: (valid: Bool, error: NSDictionary) -> Void) {
+    func validateUser(block: (valid: Bool, error: NSDictionary) -> Void) {
         let errors = NSMutableDictionary()
         var errorMesage = ""
         
@@ -109,7 +117,7 @@ class User: AVUser {
     // MARK: Avatar functions
     
     // Load avatar. This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background
-    func loadAvatar(size: CGSize, WithBlock block: AVImageResultBlock!) {
+    func loadAvatar(size: CGSize, block: AVImageResultBlock!) {
         if avatarImageFile == nil {
             if block != nil {
                 block!(nil, NSError(domain: "wumi.com", code: 1, userInfo: nil))
@@ -121,7 +129,7 @@ class User: AVUser {
     }
     
     // Save avatar to cloud server
-    func saveAvatarFile(avatarImage: UIImage?, WithBlock block: (success: Bool, error: NSError?) -> Void) {
+    func saveAvatarFile(avatarImage: UIImage?, block: (success: Bool, error: NSError?) -> Void) {
         if avatarImage == nil {
             block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
@@ -151,9 +159,9 @@ class User: AVUser {
     }
     
     // MARK: Queries
-    class func loadUsers(skip: Int, limit: Int, WithName name: String = "", WithBlock block: AVArrayResultBlock!) {
+    class func loadUsers(skip: Int, limit: Int, WithName name: String = "", block: AVArrayResultBlock!) {
         let query = User.query()
-        query.cachePolicy = .NetworkElseCache
+        query.cachePolicy = .CacheElseNetwork
         query.maxCacheAge = 24 * 3600
         
         query.skip = skip
@@ -173,6 +181,9 @@ class User: AVUser {
                 query.orderByAscending("nameSearchIndex")
                 query.addAscendingOrder("name")
             }
+        }
+        else {
+            query.orderByAscending("nameSearchIndex")
         }
         
         query.findObjectsInBackgroundWithBlock(block)

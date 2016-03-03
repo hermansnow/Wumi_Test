@@ -35,7 +35,7 @@ class AddProfileViewController: ScrollTextFieldViewController {
                 self.graduationYearTextField.text = String(year)
             }
         }
-        graduationYearTextField.inputView = graduationYearPickerView
+        graduationYearTextField.inputTextField.inputView = graduationYearPickerView
         
         // Set avatar image
         avatarImageView.image = avatarImage

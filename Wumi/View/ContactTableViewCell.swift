@@ -19,9 +19,9 @@ class ContactTableViewCell: UITableViewCell {
     
     override func drawRect(rect: CGRect) {
         favoriteButton.imageColorOff = UIColor.brownColor()
-        favoriteButton.imageColorOn = UIColor.orangeColor()
-        favoriteButton.circleColor = UIColor.orangeColor()
-        favoriteButton.lineColor = UIColor.orangeColor()
+        favoriteButton.imageColorOn = Constants.UI.ThemeColor
+        favoriteButton.circleColor = Constants.UI.ThemeColor
+        favoriteButton.lineColor = Constants.UI.ThemeColor
         favoriteButton.duration = 1.0 // default: 1.0
         
         favoriteButton.addTarget(self, action: Selector("tapped:"), forControlEvents: .TouchUpInside)

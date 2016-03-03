@@ -156,7 +156,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 let confirmPassword = inputValues[1]
                 self.user.password = newPassword
                 self.user.confirmPassword = confirmPassword
-                self.user.validateUserWithBlock { (valid, validateError) -> Void in
+                self.user.validateUser { (valid, validateError) -> Void in
                     if !valid {
                         Helper.PopupErrorAlert(self, errorMessage: "\(validateError)")
                         // Do not save anything in password properties

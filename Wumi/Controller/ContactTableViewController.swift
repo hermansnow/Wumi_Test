@@ -13,7 +13,7 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
     @IBOutlet weak var hamburgerMenuButton: UIBarButtonItem!
     var resultSearchController: UISearchController!
     
-    var loadLimit = 100 // number of records load in each query
+    var loadLimit = 50 // number of records load in each query
     var searchTimeInterval = 0.3 // seconds to start search. UISearchController will only search results if end-users stop inputting with this time interval
     
     var user = User.currentUser()
@@ -87,7 +87,7 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         tableView.tableHeaderView = resultSearchController.searchBar
         tableView.tableFooterView = UIView(frame: CGRectZero)
         tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
+        tableView.backgroundColor = Constants.UI.BackgroundColor
         tableView.setContentOffset(CGPoint(x: 0.0, y: tableView.tableHeaderView!.frame.size.height), animated: true)
         
         // Set delegates
@@ -107,17 +107,15 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
         
-        // Load favorite users for current user
-        self.user.favoriteUsers?.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
-            self.favoriteUsers = results as! [User]
-            
-            // Load data
-            self.reloadUsers()
-        }
+        // Load data
+        self.reloadUsers()
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let cell = sender as? ContactTableViewCell, indexPath = tableView.indexPathForCell(cell),
+            contactViewController = segue.destinationViewController as? ContactViewController, selectedUser = currentUsers[safe: indexPath.row] {
+                contactViewController.user = selectedUser
+        }
     }
     
     
@@ -131,7 +129,13 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
                 self.refreshControl!.endRefreshing()
             }
             
-            self.tableView.reloadData()
+            // Load favorite users for current user
+            self.user.favoriteUsers?.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
+                self.favoriteUsers = results as! [User]
+                
+                // Reload table data
+                self.tableView.reloadData()
+            }
         }
     }
     
