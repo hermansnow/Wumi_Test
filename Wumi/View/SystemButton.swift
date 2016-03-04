@@ -34,10 +34,10 @@ class SystemButton: UIButton {
     
     func setBackgroundColor() {
         if recommanded {
-            layer.backgroundColor = Constants.UI.ThemeColor.CGColor
+            layer.backgroundColor = Constants.UI.Color.ThemeColor.CGColor
         }
         else {
-            layer.backgroundColor = Constants.UI.BackgroundColor.CGColor
+            layer.backgroundColor = Constants.UI.Color.BackgroundColor.CGColor
         }
     }
 }

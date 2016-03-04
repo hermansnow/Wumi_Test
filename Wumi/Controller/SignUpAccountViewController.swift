@@ -12,11 +12,13 @@ import MobileCoreServices
 class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AvatarImageDelegate {
     // MARK: Properties
     
+    @IBOutlet weak var avatarBorderLayerView: ColorGradientView!
+    @IBOutlet weak var avatarBackgroundView: ColorGradientView!
     @IBOutlet weak var addAvatarImageView: AvatarImageView!
-    @IBOutlet weak var userNameTextField: DataInputTextField!
-    @IBOutlet weak var userPasswordTextField: DataInputTextField!
-    @IBOutlet weak var userConfirmPasswordTextField: DataInputTextField!
-    @IBOutlet weak var userEmailTextField: DataInputTextField!
+    @IBOutlet weak var usernameTextField: DataInputTextField!
+    @IBOutlet weak var passwordTextField: DataInputTextField!
+    @IBOutlet weak var confirmPasswordTextField: DataInputTextField!
+    @IBOutlet weak var emailTextField: DataInputTextField!
     @IBOutlet weak var cancelButton: SystemButton!
     
     var user = User()
@@ -35,6 +37,25 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         // Set avatar image delegates
         addAvatarImageView.delegate = self
         addAvatarImageView.image = UIImage(named: "Add")
+        
+        // Set background views
+        avatarBackgroundView.colors = [Constants.UI.Color.ThemeColor, UIColor.whiteColor()]
+        avatarBorderLayerView.colors = [UIColor.whiteColor(), UIColor.whiteColor()]
+    }
+    
+    // All codes based on display frames should be called here after layouting subviews
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Set circular logo image view
+        avatarBorderLayerView.layer.cornerRadius = avatarBorderLayerView.frame.size.width / 2
+        avatarBorderLayerView.clipsToBounds = true
+        
+        // Redraw DataInput Text Field
+        usernameTextField.drawUnderlineBorder()
+        passwordTextField.drawUnderlineBorder()
+        confirmPasswordTextField.drawUnderlineBorder()
+        emailTextField.drawUnderlineBorder()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -89,12 +110,12 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         
         // Validate input of each text field
         switch textField {
-        case userNameTextField:
+        case usernameTextField:
             user.username = textField.text
             if user.username?.characters.count > 0 {
                 user.validateUserName(&error)
             }
-        case userPasswordTextField:
+        case passwordTextField:
             user.password = textField.text
             if let confirmPassword = user.confirmPassword {
                 if confirmPassword.characters.count > 0 {
@@ -106,12 +127,12 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
             if user.password!.characters.count > 0 {
                 user.validateUserPassword(&error)
             }
-        case userConfirmPasswordTextField:
+        case confirmPasswordTextField:
             user.confirmPassword = textField.text
             if user.confirmPassword!.characters.count > 0 {
                 user.validateConfirmPassword(&error)
             }
-        case userEmailTextField:
+        case emailTextField:
             user.email = textField.text
         default:
             break

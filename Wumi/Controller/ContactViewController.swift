@@ -49,9 +49,9 @@ class ContactViewController: UIViewController {
             }
             
             favoriteButton.imageColorOff = UIColor.brownColor()
-            favoriteButton.imageColorOn = Constants.UI.ThemeColor
-            favoriteButton.circleColor = Constants.UI.ThemeColor
-            favoriteButton.lineColor = Constants.UI.ThemeColor
+            favoriteButton.imageColorOn = Constants.UI.Color.ThemeColor
+            favoriteButton.circleColor = Constants.UI.Color.ThemeColor
+            favoriteButton.lineColor = Constants.UI.Color.ThemeColor
             favoriteButton.duration = 1.0 // default: 1.0
             loginUser.isFavoriteUser(user) { (count, error) -> Void in
                 if error != nil {

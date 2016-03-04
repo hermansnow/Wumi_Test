@@ -12,12 +12,19 @@ struct Constants {
     
     struct UI {
         
-        static let BackgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
+        struct Color {
+            static let BackgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
+            static let ThemeColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
+            static let ErrorColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
+        }
         
-        static let AnonymousAvatarImage = UIImage(named: "Anonymous")
+        struct Font {
+            static let ErrorFont = UIFont(name: "SFUIText-Light", size: 14)
+        }
         
-        static let ThemeColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
-        
+        struct Image {
+            static let AnonymousAvatarImage = UIImage(named: "Anonymous")
+        }
     }
     
 } 

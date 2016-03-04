@@ -13,7 +13,29 @@ class DataInputTextField: UIView {
     private var dataInputDelegate: DataInputTextFieldDelegate?
     
     var inputTextField = UITextField()
-    var informationHolder = UIView()
+    private var informationLabel = UILabel()
+    private var actionView = UIView()
+    private var underline = CALayer()
+    
+    // Computed properties
+    var informationHolder: UILabel {
+        get {
+            return informationLabel
+        }
+        set (newLabel) {
+            informationLabel = newLabel
+            setNeedsDisplay()
+        }
+    }
+    var actionHolder : UIView {
+        get {
+            return actionView
+        }
+        set (newView) {
+            actionView = newView
+            setNeedsDisplay()
+        }
+    }
     
     @IBInspectable var text: String? {
         get {
@@ -32,6 +54,16 @@ class DataInputTextField: UIView {
             inputTextField.placeholder = newValue
         }
     }
+    
+    @IBInspectable var errorText: String? {
+        get {
+            return informationLabel.text
+        }
+        set (newText) {
+            informationLabel.text = newText
+            drawUnderlineBorder()
+        }
+    }
         
     /*override var delegate: UITextFieldDelegate? {
         didSet {
@@ -40,23 +72,42 @@ class DataInputTextField: UIView {
     }*/
     
     override func drawRect(rect: CGRect) {
+        
         // Set up textfield
         inputTextField.font = UIFont(name: ".SFUIText-Light", size: 16)
+        inputTextField.textColor = UIColor(red: 51/255, green: 52/255, blue: 53/255, alpha: 1.0)
         inputTextField.clearsOnBeginEditing = false
         inputTextField.clearButtonMode = .WhileEditing
         
-        // Add underline
-        drawUnderlineBorder()
+        // Set up components
+        informationLabel.textColor = Constants.UI.Color.ErrorColor
+        informationLabel.font = Constants.UI.Font.ErrorFont
+        informationLabel.numberOfLines = 0
+        informationLabel.adjustsFontSizeToFitWidth = true
         
-        //Stack View
+        informationLabel.sizeToFit()
+        actionView.sizeToFit()
+        
+        // set information view
+        let informationStackView = UIStackView()
+        informationStackView.axis = .Horizontal;
+        informationStackView.distribution = .Fill;
+        informationStackView.alignment = .LastBaseline;
+        
+        informationStackView.addArrangedSubview(informationLabel)
+        informationStackView.addArrangedSubview(actionView)
+        informationStackView.translatesAutoresizingMaskIntoConstraints = false;
+
+        
+        // Set stack View
         let stackView = UIStackView()
         stackView.axis = .Vertical;
-        stackView.distribution = .Fill;
+        stackView.distribution = .FillEqually;
         stackView.alignment = .Fill;
-        stackView.spacing = 10;
+        stackView.spacing = 4;
         
         stackView.addArrangedSubview(inputTextField)
-        stackView.addArrangedSubview(informationHolder)
+        stackView.addArrangedSubview(informationStackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false;
         
         addSubview(stackView)
@@ -71,11 +122,22 @@ class DataInputTextField: UIView {
     }
     
     func drawUnderlineBorder() {
-        let underline = CALayer()
+        if underline.frame.height == 0 {
+            inputTextField.borderStyle = .None
+            underline.backgroundColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0).CGColor
+            inputTextField.layer.addSublayer(underline)
+        }
+        
+        // Set frame
         underline.frame = CGRectMake(0, inputTextField.frame.height - 1, inputTextField.frame.width, 1.0)
-        underline.backgroundColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0).CGColor
-        inputTextField.borderStyle = .None
-        inputTextField.layer.addSublayer(underline)
+        
+        // Set underline color
+        if let error = errorText where error.characters.count > 0 {
+            underline.backgroundColor = Constants.UI.Color.ErrorColor.CGColor
+        }
+        else {
+            underline.backgroundColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0).CGColor
+        }
     }
     
     // MARK:View components functions

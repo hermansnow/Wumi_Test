@@ -16,6 +16,7 @@ class SigninViewController: UIViewController {
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var usernameTextField: DataInputTextField!
     @IBOutlet weak var passwordTextField: DataInputTextField!
+    var forgotPasswordButton: TextLinkButton!
     
     // MARK: Life cycle functions
     
@@ -34,19 +35,24 @@ class SigninViewController: UIViewController {
         }
         
         // Set layout and colors
-        logoView.backgroundColor = Constants.UI.ThemeColor
+        logoView.backgroundColor = Constants.UI.Color.ThemeColor
         logoBorderLayerView.backgroundColor = UIColor.whiteColor()
         logoBorderLayerView.layer.borderColor = UIColor.whiteColor().CGColor
         
         // Set logo shadow
         let logoLayer = logoImageView.layer
-        logoLayer.shadowColor = Constants.UI.ThemeColor.CGColor
+        logoLayer.shadowColor = Constants.UI.Color.ThemeColor.CGColor
         logoLayer.shadowOffset = CGSize(width: 0, height: 2)
         logoLayer.shadowOpacity = 1
         logoLayer.shadowRadius = 3
         
         // Set text fields
         passwordTextField.inputTextField.secureTextEntry = true
+        
+        // Initialize forgotPassword Button
+        forgotPasswordButton = TextLinkButton()
+        forgotPasswordButton.setTitle("Forgot password?", forState: .Normal)
+        forgotPasswordButton.addTarget(self, action: Selector("forgotPassword:"), forControlEvents: .TouchUpInside)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,8 +69,8 @@ class SigninViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         // Set circular logo image view
-        self.logoBorderLayerView.layer.cornerRadius = self.logoBorderLayerView.frame.size.width / 2
-        self.logoBorderLayerView.clipsToBounds = true
+        logoBorderLayerView.layer.cornerRadius = logoBorderLayerView.frame.size.width / 2
+        logoBorderLayerView.clipsToBounds = true
         
         // Redraw DataInput Text Field
         usernameTextField.drawUnderlineBorder()
@@ -80,7 +86,10 @@ class SigninViewController: UIViewController {
         
         User.logInWithUsernameInBackground(userName!, password: userPassword!) { (pfUser, error) -> Void in
             if pfUser == nil {
-                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                self.passwordTextField.errorText = "Incorrect password"
+                self.passwordTextField.actionHolder = self.forgotPasswordButton
+                
+                //Helper.PopupErrorAlert(self, errorMessage: "\(error)")
             }
             else {
                 self.performSegueWithIdentifier("Launch Main View", sender: self)

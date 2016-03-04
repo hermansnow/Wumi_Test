@@ -39,6 +39,7 @@
 		DFA74C231C02BAFB00609E83 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C221C02BAFB00609E83 /* EditProfileTableViewController.swift */; };
 		DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */; };
 		DFA93AB61C882FE700ECA503 /* TextLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */; };
+		DFA93ABA1C88FCDB00ECA503 /* ColorGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */; };
 		DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */; };
 		DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */; };
 		DFB4152D1C1E75B000835EFE /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB4152C1C1E75B000835EFE /* ProfileCell.swift */; };
@@ -98,6 +99,7 @@
 		DFA74C221C02BAFB00609E83 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileTableViewController.swift; path = Controller/EditProfileTableViewController.swift; sourceTree = "<group>"; };
 		DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HyperLinkTextView.swift; path = View/HyperLinkTextView.swift; sourceTree = "<group>"; };
 		DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextLinkButton.swift; path = View/TextLinkButton.swift; sourceTree = "<group>"; };
+		DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorGradientView.swift; path = View/ColorGradientView.swift; sourceTree = "<group>"; };
 		DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectPhotoActionSheet.swift; path = Controller/SelectPhotoActionSheet.swift; sourceTree = "<group>"; };
 		DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactViewController.swift; path = Controller/ContactViewController.swift; sourceTree = "<group>"; };
 		DFB4152C1C1E75B000835EFE /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCell.swift; path = View/ProfileCell.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				DFB4152C1C1E75B000835EFE /* ProfileCell.swift */,
 				DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */,
 				DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */,
+				DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */,
 				DFA74C211BF8215900609E83 /* MainTabBarController.swift in Sources */,
 				DF9F06121C7D93CC008CA6DC /* DOFavoriteButton.swift in Sources */,
+				DFA93ABA1C88FCDB00ECA503 /* ColorGradientView.swift in Sources */,
 				DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */,
 				B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */,
 				DF173EF21C86A58600018B4A /* Extensions.swift in Sources */,

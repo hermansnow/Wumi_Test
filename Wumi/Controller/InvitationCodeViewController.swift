@@ -21,6 +21,14 @@ class InvitationCodeViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    // All codes based on display frames should be called here after layouting subviews
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Redraw DataInput Text Field
+        invitationCodeTextField.drawUnderlineBorder()
+    }
+    
     // MARK: Actions
     
     @IBAction func verifyCode(sender: AnyObject) {

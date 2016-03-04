@@ -10,11 +10,10 @@ import UIKit
 
 class TextLinkButton: UIButton {
     
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-
-        setTitleColor(Constants.UI.ThemeColor, forState: .Normal)
+    override func drawRect(rect: CGRect) {
+        setTitleColor(Constants.UI.Color.ThemeColor, forState: .Normal)
         titleLabel?.font = UIFont(name: ".SFUIText-Medium", size: 14)
         
+        super.drawRect(rect)
     }
 }

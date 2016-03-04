@@ -81,13 +81,13 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         resultSearchController.hidesNavigationBarDuringPresentation = true;
         resultSearchController.searchBar.sizeToFit()
         resultSearchController.searchBar.autocapitalizationType = .None;
-        resultSearchController.searchBar.barTintColor = Constants.UI.BackgroundColor
+        resultSearchController.searchBar.barTintColor = Constants.UI.Color.BackgroundColor
         
         // Initialize tableview
         tableView.tableHeaderView = resultSearchController.searchBar
         tableView.tableFooterView = UIView(frame: CGRectZero)
         tableView.separatorStyle = .None
-        tableView.backgroundColor = Constants.UI.BackgroundColor
+        tableView.backgroundColor = Constants.UI.Color.BackgroundColor
         tableView.setContentOffset(CGPoint(x: 0.0, y: tableView.tableHeaderView!.frame.size.height), animated: true)
         
         // Set delegates
@@ -166,7 +166,7 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
             cell.nameLabel.text = user.name
             
             // Reset avatar image
-            cell.avatarImageView.image = Constants.UI.AnonymousAvatarImage
+            cell.avatarImageView.image = Constants.UI.Image.AnonymousAvatarImage
             // Load avatar image
             user.loadAvatar(cell.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
                 if imageError == nil && avatarImage != nil {
