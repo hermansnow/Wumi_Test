@@ -16,7 +16,7 @@ class User: AVUser {
     @NSManaged var avatarImageFile: AVFile?
     @NSManaged var graduationYear: Int
     @NSManaged var name: String?
-    @NSManaged var nameSearchIndex: String?
+    @NSManaged var pinyin: String?
     @NSManaged weak var contact: Contact?
     @NSManaged var favoriteUsers: AVRelation?
     
@@ -161,7 +161,7 @@ class User: AVUser {
     // MARK: Queries
     class func loadUsers(skip: Int, limit: Int, WithName name: String = "", block: AVArrayResultBlock!) {
         let query = User.query()
-        query.cachePolicy = .CacheElseNetwork
+        query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 24 * 3600
         
         query.skip = skip
@@ -178,12 +178,12 @@ class User: AVUser {
                 // In terms of English input, search name and pinyin
                 query.whereKey("nameSearchIndex", containsString: name)
                 // Sort results by name search index, then by original name
-                query.orderByAscending("nameSearchIndex")
+                query.orderByAscending("pinyin")
                 query.addAscendingOrder("name")
             }
         }
         else {
-            query.orderByAscending("nameSearchIndex")
+            query.orderByAscending("pinyin")
         }
         
         query.findObjectsInBackgroundWithBlock(block)

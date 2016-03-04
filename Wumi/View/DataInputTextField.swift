@@ -10,8 +10,6 @@ import UIKit
 
 class DataInputTextField: UIView {
     
-    private var dataInputDelegate: DataInputTextFieldDelegate?
-    
     var inputTextField = UITextField()
     private var informationLabel = UILabel()
     private var actionView = UIView()
@@ -67,9 +65,8 @@ class DataInputTextField: UIView {
     }
     
     // Delegate
-    var delegate: UITextFieldDelegate? {
+    var delegate: DataInputTextFieldDelegate? {
         didSet {
-            dataInputDelegate = delegate as? DataInputTextFieldDelegate
             inputTextField.delegate = delegate
         }
     }
@@ -95,7 +92,7 @@ class DataInputTextField: UIView {
         // set information view
         let informationStackView = UIStackView()
         informationStackView.axis = .Horizontal;
-        informationStackView.distribution = .FillProportionally;
+        informationStackView.distribution = .Fill;
         informationStackView.alignment = .LastBaseline;
         
         informationStackView.addArrangedSubview(informationLabel)
@@ -158,7 +155,7 @@ class DataInputTextField: UIView {
     }
     
     func doneToolButtonClicked(sender: UIBarButtonItem) {
-        self.dataInputDelegate?.doneToolButtonClicked(sender)
+        self.delegate?.doneToolButtonClicked(sender)
     }
 }
 

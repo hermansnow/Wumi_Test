@@ -9,7 +9,7 @@
 import UIKit
 import MobileCoreServices
 
-class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AvatarImageDelegate {
+class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AvatarImageDelegate, DataInputTextFieldDelegate {
     // MARK: Properties
     
     @IBOutlet weak var avatarBackgroundView: ColorGradientView!
@@ -166,5 +166,11 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         addImageSheet.launchViewController = self
         
         presentViewController(addImageSheet, animated: true, completion: nil)
+    }
+    
+    
+    // MARK: DataInputTextField delegates
+    func doneToolButtonClicked(sender: UIBarButtonItem) {
+        dismissInputView()
     }
 }

@@ -35,6 +35,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             self.grayView.removeFromSuperview()
         }
         graduationYearPickerView.cancelSelection = {
+            self.showGraduationLable()
             self.grayView.removeFromSuperview()
         }
         graduationYearPickerView.translatesAutoresizingMaskIntoConstraints = false
@@ -64,9 +65,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func showUserData() {
         // Show current user's account profile
-        self.accountNameLabel.text = self.user.username
-        self.emailLabel.text = self.user.email
-        self.user.loadAvatar(self.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
+        accountNameLabel.text = user.username
+        emailLabel.text = user.email
+        user.loadAvatar(avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
             if imageError == nil && avatarImage != nil {
                 self.avatarImageView.image = avatarImage
             }
@@ -81,11 +82,11 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func showGraduationLable() {
-        if self.user.graduationYear == 0 {
-            self.graduationYearLabel.text = nil
+        if user.graduationYear == 0 {
+            graduationYearLabel.text = "Please select your graduation year"
         }
         else {
-            self.graduationYearLabel.text = "\(self.user.graduationYear)"
+            graduationYearLabel.text = "\(user.graduationYear)"
         }
     }
     
@@ -122,6 +123,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
         }
+        
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
     }
     
     // MARK: UIImagePicker delegates and functions
@@ -182,7 +185,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 self.user.name = inputValues[0]
                 self.nameLabel.text = self.user.name
                 if let name = self.user.name {
-                    self.user.nameSearchIndex = name.toChinesePinyin()
+                    self.user.pinyin = name.toChinesePinyin()
                 }
         }
     }
@@ -190,23 +193,18 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func changeGraduationYear() {
         graduationYearPickerView.year = user.graduationYear
         
-        tabBarController!.view.addSubview(grayView)
-        tabBarController!.view.addSubview(graduationYearPickerView)
-        
+        let windowView = view
+            
+        windowView.addSubview(grayView)
+            
         graduationYearPickerView.alpha = 0.0
-        graduationYearPickerView.bottomAnchor.constraintEqualToAnchor(tabBarController!.view.bottomAnchor).active = true
-        graduationYearPickerView.leftAnchor.constraintEqualToAnchor(tabBarController!.view.leftAnchor).active = true
-        self.graduationYearPickerView.rightAnchor.constraintEqualToAnchor(self.tabBarController!.view.rightAnchor).active = true
-        let heightConstraint = self.graduationYearPickerView.heightAnchor.constraintEqualToConstant(tabBarController!.tabBar.frame.size.height)
-        heightConstraint.active = true
-        self.tabBarController!.view.layoutIfNeeded()
+        graduationYearPickerView.frame = CGRect(x: 0, y: windowView.frame.height, width: windowView.frame.width, height: 0)
         
-        heightConstraint.constant = tabBarController!.view.frame.height / 3
-        
+        windowView.addSubview(graduationYearPickerView)
         
         UIView.animateWithDuration(0.5) { () -> Void in
             self.graduationYearPickerView.alpha = 1.0
-            self.tabBarController!.view.layoutIfNeeded()
+            self.graduationYearPickerView.frame = CGRect(x: 0, y: windowView.frame.height * 2 / 3, width: windowView.frame.width, height: windowView.frame.height / 3)
         }
     }
 }

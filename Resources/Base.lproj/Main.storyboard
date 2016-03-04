@@ -436,14 +436,14 @@
                                                                         <rect key="frame" x="0.0" y="0.0" width="301" height="48.5"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Name"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdm-m4-eOX" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="60.5" width="301" height="48.5"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Graduation year"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                 </subviews>

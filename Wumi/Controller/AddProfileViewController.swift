@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddProfileViewController: ScrollTextFieldViewController {
+class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFieldDelegate {
     // MARK: Properties
     
     @IBOutlet weak var avatarBackgroundView: ColorGradientView!
@@ -48,6 +48,12 @@ class AddProfileViewController: ScrollTextFieldViewController {
         // Set background views
         avatarBackgroundView.colors = [Constants.UI.Color.ThemeColor, UIColor.whiteColor()]
         avatarBorderLayerView.colors = [UIColor.whiteColor(), UIColor.whiteColor()]
+        
+        // Set textfields
+        nameTextField.inputTextField.autocapitalizationType = .Words
+        
+        nameTextField.delegate = self
+        graduationYearTextField.delegate = self
     }
     
     // All codes based on display frames should be called here after layouting subviews
@@ -82,16 +88,17 @@ class AddProfileViewController: ScrollTextFieldViewController {
         Helper.RedirectToSignIn(self)
     }
     
-    // MARK: UItextField delegate functions
+    // MARK: UItextField delegatess
+    
     func textFieldDidEndEditing(textField: UITextField) {
         // Validate input of each text field
         switch textField {
-        case nameTextField:
+        case nameTextField.inputTextField:
             user.name = nameTextField.text
             if let name = user.name {
-                user.nameSearchIndex = name.toChinesePinyin()
+                user.pinyin = name.toChinesePinyin()
             }
-        case graduationYearTextField:
+        case graduationYearTextField.inputTextField:
             if let graduationYear = graduationYearTextField.text {
                 if graduationYear.characters.count > 0 {
                     user.graduationYear = Int(graduationYear)!
@@ -100,5 +107,10 @@ class AddProfileViewController: ScrollTextFieldViewController {
         default:
             break
         }
+    }
+    
+    // MARK: DataInputTextField delegates
+    func doneToolButtonClicked(sender: UIBarButtonItem) {
+        dismissInputView()
     }
 }

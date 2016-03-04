@@ -55,16 +55,10 @@ class GraduationYearPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSo
         let stackView = UIStackView(arrangedSubviews: [toolBar, graduationYearPicker])
         stackView.alignment = .Fill
         stackView.axis = .Vertical
-        stackView.distribution = .Fill
+        stackView.distribution = .EqualSpacing
+        stackView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         
         addSubview(stackView)
-        
-        // Set up stackview's autolayout constraints
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        stackView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
-        stackView.leftAnchor.constraintEqualToAnchor(leftAnchor).active = true
-        stackView.rightAnchor.constraintEqualToAnchor(rightAnchor).active = true
         
         super.drawRect(rect)
     }
