@@ -27,6 +27,7 @@ class DataInputTextField: UIView {
             setNeedsDisplay()
         }
     }
+    
     var actionHolder : UIView {
         get {
             return actionView
@@ -64,12 +65,14 @@ class DataInputTextField: UIView {
             drawUnderlineBorder()
         }
     }
-        
-    /*override var delegate: UITextFieldDelegate? {
+    
+    // Delegate
+    var delegate: UITextFieldDelegate? {
         didSet {
             dataInputDelegate = delegate as? DataInputTextFieldDelegate
+            inputTextField.delegate = delegate
         }
-    }*/
+    }
     
     override func drawRect(rect: CGRect) {
         
@@ -78,6 +81,7 @@ class DataInputTextField: UIView {
         inputTextField.textColor = UIColor(red: 51/255, green: 52/255, blue: 53/255, alpha: 1.0)
         inputTextField.clearsOnBeginEditing = false
         inputTextField.clearButtonMode = .WhileEditing
+        inputTextField.autocapitalizationType = .None
         
         // Set up components
         informationLabel.textColor = Constants.UI.Color.ErrorColor
@@ -91,7 +95,7 @@ class DataInputTextField: UIView {
         // set information view
         let informationStackView = UIStackView()
         informationStackView.axis = .Horizontal;
-        informationStackView.distribution = .Fill;
+        informationStackView.distribution = .FillProportionally;
         informationStackView.alignment = .LastBaseline;
         
         informationStackView.addArrangedSubview(informationLabel)

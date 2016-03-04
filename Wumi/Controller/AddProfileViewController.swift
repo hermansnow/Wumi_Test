@@ -11,8 +11,10 @@ import UIKit
 class AddProfileViewController: ScrollTextFieldViewController {
     // MARK: Properties
     
+    @IBOutlet weak var avatarBackgroundView: ColorGradientView!
+    @IBOutlet weak var avatarBorderLayerView: ColorGradientView!
     @IBOutlet weak var avatarImageView: AvatarImageView!
-    @IBOutlet weak var userName: DataInputTextField!
+    @IBOutlet weak var nameTextField: DataInputTextField!
     @IBOutlet weak var graduationYearTextField: DataInputTextField!
     @IBOutlet weak var skipButton: SystemButton!
     
@@ -42,6 +44,23 @@ class AddProfileViewController: ScrollTextFieldViewController {
         
         // Set skip button
         skipButton.recommanded = false
+        
+        // Set background views
+        avatarBackgroundView.colors = [Constants.UI.Color.ThemeColor, UIColor.whiteColor()]
+        avatarBorderLayerView.colors = [UIColor.whiteColor(), UIColor.whiteColor()]
+    }
+    
+    // All codes based on display frames should be called here after layouting subviews
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Set circular logo image view
+        avatarBorderLayerView.layer.cornerRadius = avatarBorderLayerView.frame.size.width / 2
+        avatarBorderLayerView.clipsToBounds = true
+        
+        // Redraw DataInput Text Field
+        nameTextField.drawUnderlineBorder()
+        graduationYearTextField.drawUnderlineBorder()
     }
     
     // MARK: Actions
@@ -67,8 +86,8 @@ class AddProfileViewController: ScrollTextFieldViewController {
     func textFieldDidEndEditing(textField: UITextField) {
         // Validate input of each text field
         switch textField {
-        case userName:
-            user.name = userName.text
+        case nameTextField:
+            user.name = nameTextField.text
             if let name = user.name {
                 user.nameSearchIndex = name.toChinesePinyin()
             }

@@ -12,8 +12,8 @@ import MobileCoreServices
 class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, AvatarImageDelegate {
     // MARK: Properties
     
-    @IBOutlet weak var avatarBorderLayerView: ColorGradientView!
     @IBOutlet weak var avatarBackgroundView: ColorGradientView!
+    @IBOutlet weak var avatarBorderLayerView: ColorGradientView!
     @IBOutlet weak var addAvatarImageView: AvatarImageView!
     @IBOutlet weak var usernameTextField: DataInputTextField!
     @IBOutlet weak var passwordTextField: DataInputTextField!
@@ -41,6 +41,15 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         // Set background views
         avatarBackgroundView.colors = [Constants.UI.Color.ThemeColor, UIColor.whiteColor()]
         avatarBorderLayerView.colors = [UIColor.whiteColor(), UIColor.whiteColor()]
+        
+        // Set textfields
+        passwordTextField.inputTextField.secureTextEntry = true
+        confirmPasswordTextField.inputTextField.secureTextEntry = true
+        
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
+        confirmPasswordTextField.delegate = self
+        emailTextField.delegate = self
     }
     
     // All codes based on display frames should be called here after layouting subviews
@@ -110,29 +119,31 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         
         // Validate input of each text field
         switch textField {
-        case usernameTextField:
+        case usernameTextField.inputTextField:
             user.username = textField.text
             if user.username?.characters.count > 0 {
                 user.validateUserName(&error)
+                usernameTextField.errorText = error
             }
-        case passwordTextField:
+        case passwordTextField.inputTextField:
             user.password = textField.text
             if let confirmPassword = user.confirmPassword {
                 if confirmPassword.characters.count > 0 {
                     user.validateConfirmPassword(&error)
-                    //userConfirmPasswordTextField.setRightErrorViewForTextFieldWithErrorMessage(error)
+                    passwordTextField.errorText = error
                 }
             }
             error = ""
             if user.password!.characters.count > 0 {
                 user.validateUserPassword(&error)
             }
-        case confirmPasswordTextField:
+        case confirmPasswordTextField.inputTextField:
             user.confirmPassword = textField.text
             if user.confirmPassword!.characters.count > 0 {
                 user.validateConfirmPassword(&error)
+                confirmPasswordTextField.errorText = error
             }
-        case emailTextField:
+        case emailTextField.inputTextField:
             user.email = textField.text
         default:
             break

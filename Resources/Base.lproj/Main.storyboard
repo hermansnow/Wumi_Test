@@ -152,10 +152,10 @@
             </objects>
             <point key="canvasLocation" x="1890.5" y="1157.5"/>
         </scene>
-        <!--Create New Account-->
+        <!--Sign Up-->
         <scene sceneID="NlG-wl-9xt">
             <objects>
-                <viewController title="Create New Account" modalTransitionStyle="crossDissolve" id="GQw-5c-dGe" customClass="SignUpAccountViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Sign Up" modalTransitionStyle="crossDissolve" id="GQw-5c-dGe" customClass="SignUpAccountViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DQ5-Nk-5Uq"/>
                         <viewControllerLayoutGuide type="bottom" id="x67-2j-3zd"/>
@@ -198,22 +198,10 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="Y4r-7d-rvJ" firstAttribute="centerY" secondItem="zrT-Wi-qwT" secondAttribute="centerY" id="MEo-pA-KN0"/>
                                             <constraint firstItem="Y4r-7d-rvJ" firstAttribute="height" secondItem="zrT-Wi-qwT" secondAttribute="height" multiplier="144:220" id="OU9-c0-2Vg"/>
                                             <constraint firstItem="Y4r-7d-rvJ" firstAttribute="centerY" secondItem="zrT-Wi-qwT" secondAttribute="centerY" id="fUg-t7-6Z2"/>
                                             <constraint firstItem="Y4r-7d-rvJ" firstAttribute="centerX" secondItem="zrT-Wi-qwT" secondAttribute="centerX" id="fgB-EU-DeG"/>
-                                            <constraint firstAttribute="width" secondItem="zrT-Wi-qwT" secondAttribute="height" multiplier="47:22" id="rOK-ZN-rud"/>
-                                            <constraint firstItem="Y4r-7d-rvJ" firstAttribute="centerX" secondItem="zrT-Wi-qwT" secondAttribute="centerX" id="v9Z-dA-YN6"/>
-                                            <constraint firstItem="Y4r-7d-rvJ" firstAttribute="height" secondItem="zrT-Wi-qwT" secondAttribute="height" multiplier="144:220" id="vz1-NX-ifP"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="rOK-ZN-rud"/>
-                                                <exclude reference="MEo-pA-KN0"/>
-                                                <exclude reference="v9Z-dA-YN6"/>
-                                                <exclude reference="vz1-NX-ifP"/>
-                                            </mask>
-                                        </variation>
                                     </view>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="NYC-XZ-NVR">
                                         <rect key="frame" x="0.0" y="192" width="375" height="253"/>
@@ -221,61 +209,74 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MxD-Vh-Ie7">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="253"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lQy-0g-aEQ">
-                                                        <rect key="frame" x="37" y="0.0" width="301" height="253"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KF7-LB-HNl">
+                                                        <rect key="frame" x="36.5" y="0.0" width="301" height="253"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-Xk-4mm" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="301" height="56"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="lQy-0g-aEQ">
+                                                                <rect key="frame" x="0.0" y="0.0" width="301" height="250"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-Xk-4mm" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="301" height="53.5"/>
+                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUa-dl-wV5" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="65.5" width="301" height="53.5"/>
+                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pa6-fl-EvB" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="131" width="301" height="53.5"/>
+                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Confirm passwrd"/>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qOW-P3-hGn" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="196.5" width="301" height="53.5"/>
+                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Email"/>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="240" id="B4f-xQ-gB3"/>
+                                                                </constraints>
+                                                                <variation key="default">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="B4f-xQ-gB3"/>
+                                                                    </mask>
+                                                                </variation>
+                                                            </stackView>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfm-cW-4hu">
+                                                                <rect key="frame" x="0.0" y="250" width="301" height="3"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUa-dl-wV5" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="66" width="301" height="55.5"/>
-                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pa6-fl-EvB" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="131.5" width="301" height="56"/>
-                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Confirm passwrd"/>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qOW-P3-hGn" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="197.5" width="301" height="55.5"/>
-                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Email"/>
-                                                                </userDefinedRuntimeAttributes>
                                                             </view>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="240" id="B4f-xQ-gB3"/>
+                                                            <constraint firstItem="lQy-0g-aEQ" firstAttribute="width" secondItem="KF7-LB-HNl" secondAttribute="width" id="aVD-lj-aIN"/>
                                                         </constraints>
-                                                        <variation key="default">
-                                                            <mask key="constraints">
-                                                                <exclude reference="B4f-xQ-gB3"/>
-                                                            </mask>
-                                                        </variation>
                                                     </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="centerY" secondItem="MxD-Vh-Ie7" secondAttribute="centerY" id="4db-I3-w3d"/>
-                                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="width" secondItem="MxD-Vh-Ie7" secondAttribute="width" multiplier="290:360" id="57b-nV-idx"/>
-                                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="centerX" secondItem="MxD-Vh-Ie7" secondAttribute="centerX" id="EgH-IT-kux"/>
-                                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="top" secondItem="MxD-Vh-Ie7" secondAttribute="top" constant="20" id="ng5-U5-5Hm"/>
-                                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="centerY" secondItem="MxD-Vh-Ie7" secondAttribute="centerY" id="nvT-H6-0fR"/>
-                                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="top" secondItem="MxD-Vh-Ie7" secondAttribute="top" id="y29-3i-XxJ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="KF7-LB-HNl" secondAttribute="bottom" id="3jC-b0-YsG"/>
+                                                    <constraint firstItem="KF7-LB-HNl" firstAttribute="centerX" secondItem="MxD-Vh-Ie7" secondAttribute="centerX" id="Kjl-dP-75d"/>
+                                                    <constraint firstAttribute="trailing" secondItem="KF7-LB-HNl" secondAttribute="trailing" id="VUf-Xz-Xwn"/>
+                                                    <constraint firstItem="KF7-LB-HNl" firstAttribute="centerY" secondItem="MxD-Vh-Ie7" secondAttribute="centerY" id="X8I-S4-Me3"/>
+                                                    <constraint firstItem="KF7-LB-HNl" firstAttribute="leading" secondItem="MxD-Vh-Ie7" secondAttribute="leading" id="huY-zI-iLh"/>
+                                                    <constraint firstItem="KF7-LB-HNl" firstAttribute="width" secondItem="MxD-Vh-Ie7" secondAttribute="width" multiplier="290:360" id="wUe-kR-cmo"/>
+                                                    <constraint firstItem="KF7-LB-HNl" firstAttribute="top" secondItem="MxD-Vh-Ie7" secondAttribute="top" id="y8o-si-pA8"/>
                                                 </constraints>
                                                 <variation key="default">
                                                     <mask key="constraints">
-                                                        <exclude reference="ng5-U5-5Hm"/>
-                                                        <exclude reference="nvT-H6-0fR"/>
+                                                        <exclude reference="VUf-Xz-Xwn"/>
+                                                        <exclude reference="huY-zI-iLh"/>
                                                     </mask>
                                                 </variation>
                                             </view>
@@ -320,42 +321,23 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="auV-fM-aHi"/>
-                                                    <constraint firstAttribute="width" constant="240" id="rbl-oC-LHk"/>
                                                 </constraints>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="rbl-oC-LHk"/>
-                                                    </mask>
-                                                </variation>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="114" id="GQv-WG-qtN"/>
-                                            <constraint firstItem="bc3-E3-lP1" firstAttribute="top" secondItem="H2B-PG-4fN" secondAttribute="top" constant="42" id="RlM-iq-dtE"/>
                                             <constraint firstItem="bc3-E3-lP1" firstAttribute="width" secondItem="H2B-PG-4fN" secondAttribute="width" multiplier="290:360" id="cRK-Jj-zt0"/>
                                             <constraint firstItem="bc3-E3-lP1" firstAttribute="centerX" secondItem="H2B-PG-4fN" secondAttribute="centerX" id="cjm-4Q-i4o"/>
-                                            <constraint firstItem="bc3-E3-lP1" firstAttribute="centerY" secondItem="H2B-PG-4fN" secondAttribute="centerY" id="ex5-Rm-Jdf"/>
                                             <constraint firstItem="bc3-E3-lP1" firstAttribute="centerX" secondItem="H2B-PG-4fN" secondAttribute="centerX" id="gVJ-Vc-dAG"/>
                                             <constraint firstAttribute="bottom" secondItem="bc3-E3-lP1" secondAttribute="bottom" constant="28" id="wYu-aN-XU4"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="RlM-iq-dtE"/>
-                                                <exclude reference="ex5-Rm-Jdf"/>
-                                            </mask>
-                                        </variation>
                                     </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="zrT-Wi-qwT" firstAttribute="height" secondItem="zCy-rf-ekW" secondAttribute="height" multiplier="220:640" id="NBV-8i-0lT"/>
-                                    <constraint firstItem="H2B-PG-4fN" firstAttribute="height" secondItem="zCy-rf-ekW" secondAttribute="height" multiplier="114" id="Qgw-Mo-0lk"/>
+                                    <constraint firstItem="lQy-0g-aEQ" firstAttribute="height" secondItem="zCy-rf-ekW" secondAttribute="height" multiplier="286:640" id="Ne0-qZ-pJv"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Qgw-Mo-0lk"/>
-                                    </mask>
-                                </variation>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -402,132 +384,163 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xbh-Bd-S4C">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XHC-Gm-8R3">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VH3-0h-4eO" customClass="ColorGradientView" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="192"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HNp-a7-om7" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="127" y="20" width="120" height="120"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HWT-Iw-2XG" customClass="ColorGradientView" customModule="Wumi" customModuleProvider="target">
+                                                <rect key="frame" x="124" y="33" width="126" height="126"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZO0-TH-omt" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="18" y="18" width="89" height="89"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="ZO0-TH-omt" secondAttribute="height" multiplier="1:1" id="jjR-xS-8xw"/>
+                                                            <constraint firstAttribute="height" constant="120" id="mHm-k7-HHX"/>
+                                                        </constraints>
+                                                        <variation key="default">
+                                                            <mask key="constraints">
+                                                                <exclude reference="mHm-k7-HHX"/>
+                                                            </mask>
+                                                        </variation>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="120" id="i6L-4c-2ZS"/>
-                                                    <constraint firstAttribute="width" secondItem="HNp-a7-om7" secondAttribute="height" multiplier="1:1" id="skb-L5-o46"/>
+                                                    <constraint firstItem="ZO0-TH-omt" firstAttribute="centerY" secondItem="HWT-Iw-2XG" secondAttribute="centerY" id="0yx-eS-CW4"/>
+                                                    <constraint firstItem="ZO0-TH-omt" firstAttribute="centerX" secondItem="HWT-Iw-2XG" secondAttribute="centerX" id="Bb1-l8-B7s"/>
+                                                    <constraint firstItem="ZO0-TH-omt" firstAttribute="height" secondItem="HWT-Iw-2XG" secondAttribute="height" multiplier="102:144" id="b6X-o5-C7x"/>
+                                                    <constraint firstAttribute="width" secondItem="HWT-Iw-2XG" secondAttribute="height" multiplier="1:1" id="eMq-wt-hVy"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="HNp-a7-om7" firstAttribute="centerY" secondItem="XHC-Gm-8R3" secondAttribute="centerY" id="2SC-vR-uds"/>
-                                            <constraint firstItem="HNp-a7-om7" firstAttribute="centerX" secondItem="XHC-Gm-8R3" secondAttribute="centerX" id="RDg-ja-s42"/>
-                                            <constraint firstItem="HNp-a7-om7" firstAttribute="top" secondItem="XHC-Gm-8R3" secondAttribute="top" constant="20" id="dw9-dX-856"/>
-                                            <constraint firstAttribute="bottom" secondItem="HNp-a7-om7" secondAttribute="bottom" constant="20" id="ucI-gn-M9i"/>
+                                            <constraint firstItem="HWT-Iw-2XG" firstAttribute="centerX" secondItem="VH3-0h-4eO" secondAttribute="centerX" id="0Td-re-ry5"/>
+                                            <constraint firstItem="HWT-Iw-2XG" firstAttribute="centerY" secondItem="VH3-0h-4eO" secondAttribute="centerY" id="L3p-KH-KaG"/>
+                                            <constraint firstItem="HWT-Iw-2XG" firstAttribute="height" secondItem="VH3-0h-4eO" secondAttribute="height" multiplier="144:220" id="qUR-6K-BKD"/>
                                         </constraints>
                                     </view>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="YG6-3J-LhB">
-                                        <rect key="frame" x="0.0" y="160" width="375" height="329"/>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="AVW-Q1-ALi">
+                                        <rect key="frame" x="0.0" y="192" width="375" height="253"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxD-YJ-aWI">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="329"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePz-BB-8fy">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="253"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zjZ-8N-hm5">
-                                                        <rect key="frame" x="67" y="20" width="240" height="70"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JwU-VW-d3i">
+                                                        <rect key="frame" x="37" y="0.0" width="301" height="253"/>
                                                         <subviews>
-                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8Js-v8-3tS" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-pI-2eI">
+                                                                <rect key="frame" x="0.0" y="0.0" width="301" height="109"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="34B-pT-GVg" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="301" height="48.5"/>
+                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdm-m4-eOX" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="60.5" width="301" height="48.5"/>
+                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                </subviews>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="30" id="esp-iX-wCr"/>
+                                                                    <constraint firstAttribute="width" constant="240" id="bLX-q8-z47"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                                 <variation key="default">
                                                                     <mask key="constraints">
-                                                                        <exclude reference="esp-iX-wCr"/>
+                                                                        <exclude reference="bLX-q8-z47"/>
                                                                     </mask>
                                                                 </variation>
-                                                                <connections>
-                                                                    <outlet property="delegate" destination="xWV-4c-tDk" id="uOk-6a-Lgs"/>
-                                                                </connections>
-                                                            </textField>
-                                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Graduation Year" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Fcx-6h-Cn0" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="40" width="240" height="30"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="30" id="Re3-gc-dwa"/>
-                                                                </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
-                                                                <variation key="default">
-                                                                    <mask key="constraints">
-                                                                        <exclude reference="Re3-gc-dwa"/>
-                                                                    </mask>
-                                                                </variation>
-                                                                <connections>
-                                                                    <outlet property="delegate" destination="xWV-4c-tDk" id="5vL-ev-BeL"/>
-                                                                </connections>
-                                                            </textField>
+                                                            </stackView>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgr-FB-MFK">
+                                                                <rect key="frame" x="0.0" y="109" width="301" height="144"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </view>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="240" id="rXx-Cv-YNl"/>
+                                                            <constraint firstItem="eaA-pI-2eI" firstAttribute="width" secondItem="JwU-VW-d3i" secondAttribute="width" id="mzK-tV-uQZ"/>
                                                         </constraints>
                                                     </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstItem="zjZ-8N-hm5" firstAttribute="centerX" secondItem="jxD-YJ-aWI" secondAttribute="centerX" id="KV3-ZD-eeA"/>
-                                                    <constraint firstItem="zjZ-8N-hm5" firstAttribute="top" secondItem="jxD-YJ-aWI" secondAttribute="top" constant="20" id="gM6-1i-e5C"/>
+                                                    <constraint firstAttribute="bottom" secondItem="JwU-VW-d3i" secondAttribute="bottom" id="55p-Yz-Q2w"/>
+                                                    <constraint firstAttribute="trailing" secondItem="JwU-VW-d3i" secondAttribute="trailing" id="GVh-Ve-cUY"/>
+                                                    <constraint firstItem="JwU-VW-d3i" firstAttribute="centerY" secondItem="ePz-BB-8fy" secondAttribute="centerY" id="PSW-lk-JK9"/>
+                                                    <constraint firstItem="JwU-VW-d3i" firstAttribute="top" secondItem="ePz-BB-8fy" secondAttribute="top" id="b0d-Nt-dVU"/>
+                                                    <constraint firstItem="JwU-VW-d3i" firstAttribute="leading" secondItem="ePz-BB-8fy" secondAttribute="leading" id="cNC-5I-7tY"/>
+                                                    <constraint firstItem="JwU-VW-d3i" firstAttribute="width" secondItem="ePz-BB-8fy" secondAttribute="width" multiplier="290:360" id="hwm-QI-QSZ"/>
+                                                    <constraint firstItem="JwU-VW-d3i" firstAttribute="centerX" secondItem="ePz-BB-8fy" secondAttribute="centerX" id="wef-1N-nmx"/>
                                                 </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="GVh-Ve-cUY"/>
+                                                        <exclude reference="cNC-5I-7tY"/>
+                                                    </mask>
+                                                </variation>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="jxD-YJ-aWI" secondAttribute="bottom" id="209-cY-XLJ"/>
-                                            <constraint firstItem="jxD-YJ-aWI" firstAttribute="centerX" secondItem="YG6-3J-LhB" secondAttribute="centerX" id="3sm-Y9-OdD"/>
-                                            <constraint firstItem="jxD-YJ-aWI" firstAttribute="top" secondItem="YG6-3J-LhB" secondAttribute="top" id="Eue-xG-61F"/>
-                                            <constraint firstItem="jxD-YJ-aWI" firstAttribute="leading" secondItem="YG6-3J-LhB" secondAttribute="leading" id="TF5-gy-I9a"/>
-                                            <constraint firstAttribute="trailing" secondItem="jxD-YJ-aWI" secondAttribute="trailing" id="n5t-W7-t8M"/>
-                                            <constraint firstItem="jxD-YJ-aWI" firstAttribute="centerY" secondItem="YG6-3J-LhB" secondAttribute="centerY" id="n7M-cD-ccF"/>
+                                            <constraint firstItem="ePz-BB-8fy" firstAttribute="top" secondItem="AVW-Q1-ALi" secondAttribute="top" id="2Bs-hq-jOs"/>
+                                            <constraint firstAttribute="trailing" secondItem="ePz-BB-8fy" secondAttribute="trailing" id="8xV-Xf-pnj"/>
+                                            <constraint firstItem="ePz-BB-8fy" firstAttribute="leading" secondItem="AVW-Q1-ALi" secondAttribute="leading" id="ZoR-8W-Bb6"/>
+                                            <constraint firstItem="ePz-BB-8fy" firstAttribute="centerY" secondItem="AVW-Q1-ALi" secondAttribute="centerY" id="afJ-Ue-jZc"/>
+                                            <constraint firstAttribute="bottom" secondItem="ePz-BB-8fy" secondAttribute="bottom" id="jgV-XH-5PZ"/>
+                                            <constraint firstItem="ePz-BB-8fy" firstAttribute="centerX" secondItem="AVW-Q1-ALi" secondAttribute="centerX" id="sEd-Jm-dxh"/>
                                         </constraints>
                                     </scrollView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0PQ-13-GzP">
-                                        <rect key="frame" x="0.0" y="489" width="375" height="70"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4X6-Em-sTO">
+                                        <rect key="frame" x="0.0" y="445" width="375" height="114"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="wit-ZO-Ndh">
-                                                <rect key="frame" x="67" y="20" width="240" height="30"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="0Za-GV-JEF">
+                                                <rect key="frame" x="37" y="42" width="302" height="44"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oA2-ez-5NQ" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XIs-at-zI8" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="131" height="44"/>
                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         <state key="normal" title="Skip">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="skip:" destination="xWV-4c-tDk" eventType="touchUpInside" id="QpR-sH-Aoa"/>
+                                                            <action selector="skip:" destination="xWV-4c-tDk" eventType="touchUpInside" id="F3f-LM-k71"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Lj-Zo-yjN" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
-                                                        <rect key="frame" x="140" y="0.0" width="100" height="30"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6M1-RG-jYB" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="171" y="0.0" width="131" height="44"/>
                                                         <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <state key="normal" title="Add Profile">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="addProfile:" destination="xWV-4c-tDk" eventType="touchUpInside" id="wzf-Sp-KsD"/>
+                                                            <action selector="addProfile:" destination="xWV-4c-tDk" eventType="touchUpInside" id="qKv-et-PJP"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="Rkn-gQ-HM9"/>
-                                                    <constraint firstAttribute="width" constant="240" id="U6n-6k-HLu"/>
+                                                    <constraint firstAttribute="height" constant="44" id="c7f-ZQ-6gq"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="wit-ZO-Ndh" secondAttribute="bottom" constant="20" id="JBi-m5-Eid"/>
-                                            <constraint firstItem="wit-ZO-Ndh" firstAttribute="centerX" secondItem="0PQ-13-GzP" secondAttribute="centerX" id="gAb-5V-WZd"/>
-                                            <constraint firstItem="wit-ZO-Ndh" firstAttribute="centerY" secondItem="0PQ-13-GzP" secondAttribute="centerY" id="htl-X7-T7h"/>
+                                            <constraint firstItem="0Za-GV-JEF" firstAttribute="centerX" secondItem="4X6-Em-sTO" secondAttribute="centerX" id="2V4-WV-se2"/>
+                                            <constraint firstItem="0Za-GV-JEF" firstAttribute="width" secondItem="4X6-Em-sTO" secondAttribute="width" multiplier="290:360" id="4QG-dU-FV2"/>
+                                            <constraint firstItem="0Za-GV-JEF" firstAttribute="centerX" secondItem="4X6-Em-sTO" secondAttribute="centerX" id="WVH-jE-n37"/>
+                                            <constraint firstAttribute="bottom" secondItem="0Za-GV-JEF" secondAttribute="bottom" constant="28" id="vFs-QN-xKM"/>
+                                            <constraint firstAttribute="height" constant="114" id="yJq-Gs-YxS"/>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="VH3-0h-4eO" firstAttribute="height" secondItem="xbh-Bd-S4C" secondAttribute="height" multiplier="220:640" id="XXX-4V-r4N"/>
+                                    <constraint firstItem="eaA-pI-2eI" firstAttribute="height" secondItem="xbh-Bd-S4C" secondAttribute="height" multiplier="124:640" id="ptt-YB-FDH"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -540,14 +553,16 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Add Profile" id="e1m-dy-v89"/>
+                    <navigationItem key="navigationItem" id="e1m-dy-v89"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="avatarImageView" destination="HNp-a7-om7" id="M96-IK-Ati"/>
-                        <outlet property="formScrollView" destination="YG6-3J-LhB" id="WlL-TA-4AA"/>
-                        <outlet property="graduationYearTextField" destination="Fcx-6h-Cn0" id="eua-K0-8KA"/>
-                        <outlet property="skipButton" destination="oA2-ez-5NQ" id="rGU-Kz-0gZ"/>
-                        <outlet property="userName" destination="8Js-v8-3tS" id="JD5-th-NC5"/>
+                        <outlet property="avatarBackgroundView" destination="VH3-0h-4eO" id="KiN-Q6-3k2"/>
+                        <outlet property="avatarBorderLayerView" destination="HWT-Iw-2XG" id="Hht-GZ-XpX"/>
+                        <outlet property="avatarImageView" destination="ZO0-TH-omt" id="Sqx-D7-WBT"/>
+                        <outlet property="formScrollView" destination="AVW-Q1-ALi" id="70V-fc-ymc"/>
+                        <outlet property="graduationYearTextField" destination="Cdm-m4-eOX" id="cY9-Jd-z4x"/>
+                        <outlet property="nameTextField" destination="34B-pT-GVg" id="ZxL-MF-tt6"/>
+                        <outlet property="skipButton" destination="XIs-at-zI8" id="uZn-xS-UrC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exc-P4-uwY" userLabel="First Responder" sceneMemberID="firstResponder"/>
