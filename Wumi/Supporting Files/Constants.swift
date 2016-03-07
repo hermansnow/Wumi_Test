@@ -19,7 +19,7 @@ struct Constants {
         }
         
         struct Font {
-            static let ErrorFont = UIFont(name: "SFUIText-Light", size: 14)
+            static let ErrorFont = UIFont(name: ".SFUIText-Light", size: 12)
         }
         
         struct Image {

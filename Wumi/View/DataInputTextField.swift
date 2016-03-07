@@ -12,7 +12,7 @@ class DataInputTextField: UIView {
     
     var inputTextField = UITextField()
     private var informationLabel = UILabel()
-    private var actionView = UIView()
+    private var actionView: UIView?
     private var underline = CALayer()
     
     // Computed properties
@@ -26,7 +26,7 @@ class DataInputTextField: UIView {
         }
     }
     
-    var actionHolder : UIView {
+    var actionHolder : UIView? {
         get {
             return actionView
         }
@@ -86,29 +86,33 @@ class DataInputTextField: UIView {
         informationLabel.numberOfLines = 0
         informationLabel.adjustsFontSizeToFitWidth = true
         
-        informationLabel.sizeToFit()
-        actionView.sizeToFit()
-        
-        // set information view
+        // set information view and its stack view
         let informationStackView = UIStackView()
-        informationStackView.axis = .Horizontal;
-        informationStackView.distribution = .Fill;
-        informationStackView.alignment = .LastBaseline;
-        
-        informationStackView.addArrangedSubview(informationLabel)
-        informationStackView.addArrangedSubview(actionView)
+        informationStackView.axis = .Horizontal
+        informationStackView.distribution = .Fill
+        informationStackView.alignment = UIStackViewAlignment.Top
         informationStackView.translatesAutoresizingMaskIntoConstraints = false;
-
         
-        // Set stack View
+        informationLabel.sizeToFit()
+        informationStackView.addArrangedSubview(informationLabel)
+        if let view = actionView {
+            view.sizeToFit()
+            informationStackView.addArrangedSubview(view)
+        }
+        if let text = informationLabel.text {
+            informationStackView.heightAnchor.constraintEqualToConstant(text.heightWithConstrainedWidth(informationLabel.frame.width, font: Constants.UI.Font.ErrorFont!)).active = true
+        }
+        
+        // Set textfield's stack view
         let stackView = UIStackView()
-        stackView.axis = .Vertical;
-        stackView.distribution = .FillEqually;
-        stackView.alignment = .Fill;
-        stackView.spacing = 4;
+        stackView.axis = .Vertical
+        stackView.distribution = .Fill
+        stackView.alignment = .Fill
+        stackView.spacing = 4
         
         stackView.addArrangedSubview(inputTextField)
         stackView.addArrangedSubview(informationStackView)
+        stackView.addArrangedSubview(UIView())
         stackView.translatesAutoresizingMaskIntoConstraints = false;
         
         addSubview(stackView)

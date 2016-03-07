@@ -130,12 +130,13 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
             if let confirmPassword = user.confirmPassword {
                 if confirmPassword.characters.count > 0 {
                     user.validateConfirmPassword(&error)
-                    passwordTextField.errorText = error
+                    confirmPasswordTextField.errorText = error
                 }
             }
             error = ""
             if user.password!.characters.count > 0 {
                 user.validateUserPassword(&error)
+                passwordTextField.errorText = error
             }
         case confirmPasswordTextField.inputTextField:
             user.confirmPassword = textField.text

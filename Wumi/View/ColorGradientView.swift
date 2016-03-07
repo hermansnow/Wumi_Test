@@ -18,8 +18,6 @@ class ColorGradientView: UIView {
         }
         set (newColors) {
             gradientColors = newColors
-            print("aaa" + "\(gradientColors)")
-            //setNeedsDisplay()
         }
     }
     

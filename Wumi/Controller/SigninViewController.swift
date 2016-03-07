@@ -51,6 +51,7 @@ class SigninViewController: UIViewController {
         
         // Initialize forgotPassword Button
         forgotPasswordButton = TextLinkButton()
+        forgotPasswordButton.textLinkFont = Constants.UI.Font.ErrorFont
         forgotPasswordButton.setTitle("Forgot password?", forState: .Normal)
         forgotPasswordButton.addTarget(self, action: Selector("forgotPassword:"), forControlEvents: .TouchUpInside)
     }
