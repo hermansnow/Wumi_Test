@@ -79,13 +79,13 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
                 Helper.PopupErrorAlert(self, errorMessage: "\(error)")
             }
             else {
-                Helper.RedirectToSignIn(self)
+                Helper.RedirectToSignIn()
             }
         }
     }
     
     @IBAction func skip(sender: AnyObject) {
-        Helper.RedirectToSignIn(self)
+        Helper.RedirectToSignIn()
     }
     
     // MARK: UItextField delegatess

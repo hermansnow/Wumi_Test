@@ -44,6 +44,6 @@ class InvitationCodeViewController: UIViewController {
     }
     
     @IBAction func ReturnSignIn(sender: AnyObject) {
-        Helper.RedirectToSignIn(self)
+        Helper.RedirectToSignIn()
     }
 }

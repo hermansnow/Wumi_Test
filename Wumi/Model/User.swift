@@ -143,7 +143,7 @@ class User: AVUser {
     
     // Compress image in JPEG format. The max size of image save in Parse server is 10.0MB
     func scaleImage(image: UIImage, ToSize size: Int) -> NSData? {
-        var compress:CGFloat = 1.0;
+        var compress:CGFloat = 1.0
         var imageData:NSData?
         
         if let jpegData = UIImageJPEGRepresentation(image, compress) {

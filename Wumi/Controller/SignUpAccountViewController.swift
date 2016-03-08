@@ -110,7 +110,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     
     // Cancel the registration process, back to the root of the view controller stack
     @IBAction func cancel(sender: AnyObject) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        Helper.RedirectToSignIn()
     }
     
     // MARK: TextField delegates and functions

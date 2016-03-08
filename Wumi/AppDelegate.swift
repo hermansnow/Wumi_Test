@@ -33,12 +33,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = Constants.UI.Color.ThemeColor
         
         // Set up AVOSCloud
+        setupAVOSCloudSetting()
+        
+        // Set initial view controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let user = User.currentUser() {
+            user.fetchInBackgroundWithBlock(nil)
+            window?.rootViewController = storyboard.instantiateInitialViewController()
+        }
+        else {
+            let loginNavigation = storyboard.instantiateViewControllerWithIdentifier("Sign In Navigation Controller")
+            window?.rootViewController = loginNavigation
+        }
+        
+        return true
+    }
+    
+    // Set up AVOSCloud
+    func setupAVOSCloudSetting() {
         AVOSCloud.setAllLogsEnabled(true)
         AVOSCloud.setServiceRegion(.US)
         AVOSCloud.setApplicationId("WtWKobgICmjMgPlmNBiVaeme-MdYXbMMI", clientKey: "OEKOIcQ7Wjnk4wuurFNlvmO1")
         // China Setting
-        //AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
-        
-        return true
+        //AVOSCloud.setApplicationId("想ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
+
     }
 }

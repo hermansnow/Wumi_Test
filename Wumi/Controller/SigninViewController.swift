@@ -26,14 +26,6 @@ class SigninViewController: UIViewController {
         // Hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
-        // Get current user
-        if let user = User.currentUser() {
-            if user.objectId != nil {
-                user.fetchInBackgroundWithBlock(nil)
-                performSegueWithIdentifier("Launch Main View", sender: self)
-            }
-        }
-        
         // Set layout and colors
         logoView.backgroundColor = Constants.UI.Color.ThemeColor
         logoBorderLayerView.backgroundColor = UIColor.whiteColor()

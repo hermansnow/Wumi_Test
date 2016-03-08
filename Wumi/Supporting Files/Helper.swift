@@ -11,10 +11,19 @@ import UIKit
 class Helper {
     
     // Redirect to Sign in UIViewController
-    static func RedirectToSignIn (controller: UIViewController) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginViewController = storyboard.instantiateViewControllerWithIdentifier("Log In View Controller")
-        controller.presentViewController(loginViewController, animated: true, completion: nil)
+    static func RedirectToSignIn () {
+        let appDelegate = UIApplication.sharedApplication().delegate
+        
+        UIView.transitionWithView(((appDelegate?.window)!)!, duration: NSTimeInterval(0.5), options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+                let previoudAnimationState = UIView.areAnimationsEnabled()
+                appDelegate?.window!!.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Sign In Navigation Controller")
+                UIView.setAnimationsEnabled(previoudAnimationState)
+            }, completion: nil)
+    }
+    
+    static func LogOut () {
+        User.logOut()
+        RedirectToSignIn()
     }
     
     // Popup an UIAlertController for error message
