@@ -12,13 +12,13 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
     // MARK: Properties
     
     @IBOutlet weak var avatarBackgroundView: ColorGradientView!
-    @IBOutlet weak var avatarBorderLayerView: ColorGradientView!
     @IBOutlet weak var avatarImageView: AvatarImageView!
     @IBOutlet weak var nameTextField: DataInputTextField!
     @IBOutlet weak var graduationYearTextField: DataInputTextField!
     @IBOutlet weak var skipButton: SystemButton!
     
     var avatarImage: UIImage?
+    var maskLayer = CAShapeLayer()
     var user: User = User.currentUser()!
     
     // MARK: Life cycle functions
@@ -47,7 +47,7 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
         
         // Set background views
         avatarBackgroundView.colors = [Constants.UI.Color.ThemeColor, UIColor.whiteColor()]
-        avatarBorderLayerView.colors = [UIColor.whiteColor(), UIColor.whiteColor()]
+        maskLayer.fillColor = Constants.UI.Color.MaskColor.CGColor
         
         // Set textfields
         nameTextField.inputTextField.autocapitalizationType = .Words
@@ -60,9 +60,13 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        // Set circular logo image view
-        avatarBorderLayerView.layer.cornerRadius = avatarBorderLayerView.frame.size.width / 2
-        avatarBorderLayerView.clipsToBounds = true
+        // Redraw mask layer
+        maskLayer.removeFromSuperlayer()
+        let maskHeight = avatarBackgroundView.bounds.height * Constants.UI.Proportion.MaskHeightWithParentView
+        let maskWidth = maskHeight * Constants.UI.Proportion.MaskWidthWithHeight
+        maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight), cornerRadius: maskWidth / 2).CGPath
+        maskLayer.position = CGPoint(x: (avatarBackgroundView.bounds.width - maskWidth) / 2, y: (avatarBackgroundView.bounds.height - maskHeight) / 2)
+        avatarBackgroundView.layer.insertSublayer(maskLayer, below: avatarImageView.layer)
         
         // Redraw DataInput Text Field
         nameTextField.drawUnderlineBorder()

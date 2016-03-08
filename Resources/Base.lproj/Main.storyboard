@@ -151,37 +151,25 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zrT-Wi-qwT" customClass="ColorGradientView" customModule="Wumi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="192"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4r-7d-rvJ" customClass="ColorGradientView" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="124" y="33" width="126" height="126"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7uW-3M-JAF" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
-                                                        <rect key="frame" x="18" y="18" width="88.5" height="89"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="120" id="htt-Nf-tIj"/>
-                                                            <constraint firstAttribute="width" secondItem="7uW-3M-JAF" secondAttribute="height" multiplier="1:1" id="mtG-0a-MRc"/>
-                                                        </constraints>
-                                                        <variation key="default">
-                                                            <mask key="constraints">
-                                                                <exclude reference="htt-Nf-tIj"/>
-                                                            </mask>
-                                                        </variation>
-                                                    </view>
-                                                </subviews>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7uW-3M-JAF" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
+                                                <rect key="frame" x="143" y="52" width="88.5" height="89"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="Y4r-7d-rvJ" secondAttribute="height" multiplier="1:1" id="346-hA-cIK"/>
-                                                    <constraint firstItem="7uW-3M-JAF" firstAttribute="centerY" secondItem="Y4r-7d-rvJ" secondAttribute="centerY" id="6l5-6O-4a6"/>
-                                                    <constraint firstItem="7uW-3M-JAF" firstAttribute="height" secondItem="Y4r-7d-rvJ" secondAttribute="height" multiplier="102:144" id="Gss-57-WF9"/>
-                                                    <constraint firstItem="7uW-3M-JAF" firstAttribute="centerX" secondItem="Y4r-7d-rvJ" secondAttribute="centerX" id="Vq6-tz-eR1"/>
+                                                    <constraint firstAttribute="height" constant="120" id="htt-Nf-tIj"/>
+                                                    <constraint firstAttribute="width" secondItem="7uW-3M-JAF" secondAttribute="height" multiplier="1:1" id="mtG-0a-MRc"/>
                                                 </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="htt-Nf-tIj"/>
+                                                    </mask>
+                                                </variation>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="Y4r-7d-rvJ" firstAttribute="height" secondItem="zrT-Wi-qwT" secondAttribute="height" multiplier="144:220" id="OU9-c0-2Vg"/>
-                                            <constraint firstItem="Y4r-7d-rvJ" firstAttribute="centerY" secondItem="zrT-Wi-qwT" secondAttribute="centerY" id="fUg-t7-6Z2"/>
-                                            <constraint firstItem="Y4r-7d-rvJ" firstAttribute="centerX" secondItem="zrT-Wi-qwT" secondAttribute="centerX" id="fgB-EU-DeG"/>
+                                            <constraint firstItem="7uW-3M-JAF" firstAttribute="height" secondItem="zrT-Wi-qwT" secondAttribute="height" multiplier="102:220" id="Dx3-Tl-Y13"/>
+                                            <constraint firstItem="7uW-3M-JAF" firstAttribute="centerX" secondItem="zrT-Wi-qwT" secondAttribute="centerX" id="a9f-Ko-dgc"/>
+                                            <constraint firstItem="7uW-3M-JAF" firstAttribute="centerY" secondItem="zrT-Wi-qwT" secondAttribute="centerY" id="tGS-xZ-XrV"/>
                                         </constraints>
                                     </view>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="NYC-XZ-NVR">
@@ -336,7 +324,6 @@
                     <connections>
                         <outlet property="addAvatarImageView" destination="7uW-3M-JAF" id="Mjo-Jb-kwL"/>
                         <outlet property="avatarBackgroundView" destination="zrT-Wi-qwT" id="ny2-Sz-4RB"/>
-                        <outlet property="avatarBorderLayerView" destination="Y4r-7d-rvJ" id="1L8-fY-brx"/>
                         <outlet property="cancelButton" destination="c2F-Qu-fJJ" id="yrD-nI-oDq"/>
                         <outlet property="confirmPasswordTextField" destination="Pa6-fl-EvB" id="BGj-Ks-ugT"/>
                         <outlet property="emailTextField" destination="qOW-P3-hGn" id="g5x-dF-8K9"/>
@@ -368,37 +355,25 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VH3-0h-4eO" customClass="ColorGradientView" customModule="Wumi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="192"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HWT-Iw-2XG" customClass="ColorGradientView" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="124" y="33" width="126" height="126"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZO0-TH-omt" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
-                                                        <rect key="frame" x="18" y="18" width="89" height="89"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" secondItem="ZO0-TH-omt" secondAttribute="height" multiplier="1:1" id="jjR-xS-8xw"/>
-                                                            <constraint firstAttribute="height" constant="120" id="mHm-k7-HHX"/>
-                                                        </constraints>
-                                                        <variation key="default">
-                                                            <mask key="constraints">
-                                                                <exclude reference="mHm-k7-HHX"/>
-                                                            </mask>
-                                                        </variation>
-                                                    </view>
-                                                </subviews>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZO0-TH-omt" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
+                                                <rect key="frame" x="143" y="52" width="89" height="89"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstItem="ZO0-TH-omt" firstAttribute="centerY" secondItem="HWT-Iw-2XG" secondAttribute="centerY" id="0yx-eS-CW4"/>
-                                                    <constraint firstItem="ZO0-TH-omt" firstAttribute="centerX" secondItem="HWT-Iw-2XG" secondAttribute="centerX" id="Bb1-l8-B7s"/>
-                                                    <constraint firstItem="ZO0-TH-omt" firstAttribute="height" secondItem="HWT-Iw-2XG" secondAttribute="height" multiplier="102:144" id="b6X-o5-C7x"/>
-                                                    <constraint firstAttribute="width" secondItem="HWT-Iw-2XG" secondAttribute="height" multiplier="1:1" id="eMq-wt-hVy"/>
+                                                    <constraint firstAttribute="width" secondItem="ZO0-TH-omt" secondAttribute="height" multiplier="1:1" id="jjR-xS-8xw"/>
+                                                    <constraint firstAttribute="height" constant="120" id="mHm-k7-HHX"/>
                                                 </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="mHm-k7-HHX"/>
+                                                    </mask>
+                                                </variation>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="HWT-Iw-2XG" firstAttribute="centerX" secondItem="VH3-0h-4eO" secondAttribute="centerX" id="0Td-re-ry5"/>
-                                            <constraint firstItem="HWT-Iw-2XG" firstAttribute="centerY" secondItem="VH3-0h-4eO" secondAttribute="centerY" id="L3p-KH-KaG"/>
-                                            <constraint firstItem="HWT-Iw-2XG" firstAttribute="height" secondItem="VH3-0h-4eO" secondAttribute="height" multiplier="144:220" id="qUR-6K-BKD"/>
+                                            <constraint firstItem="ZO0-TH-omt" firstAttribute="centerY" secondItem="VH3-0h-4eO" secondAttribute="centerY" id="5d8-3g-uw4"/>
+                                            <constraint firstItem="ZO0-TH-omt" firstAttribute="centerX" secondItem="VH3-0h-4eO" secondAttribute="centerX" id="AFY-dD-0jO"/>
+                                            <constraint firstItem="ZO0-TH-omt" firstAttribute="height" secondItem="VH3-0h-4eO" secondAttribute="height" multiplier="102:220" id="Ch3-tv-X6x"/>
                                         </constraints>
                                     </view>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="AVW-Q1-ALi">
@@ -538,7 +513,6 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="avatarBackgroundView" destination="VH3-0h-4eO" id="KiN-Q6-3k2"/>
-                        <outlet property="avatarBorderLayerView" destination="HWT-Iw-2XG" id="Hht-GZ-XpX"/>
                         <outlet property="avatarImageView" destination="ZO0-TH-omt" id="Sqx-D7-WBT"/>
                         <outlet property="formScrollView" destination="AVW-Q1-ALi" id="70V-fc-ymc"/>
                         <outlet property="graduationYearTextField" destination="Cdm-m4-eOX" id="cY9-Jd-z4x"/>
@@ -876,30 +850,18 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPn-RR-0Ek">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="191"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fIT-5n-Zii">
-                                                <rect key="frame" x="124.5" y="33" width="124.5" height="125"/>
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
-                                                        <rect key="frame" x="11.5" y="11.5" width="102" height="102"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" secondItem="OE2-Ai-BLg" secondAttribute="height" multiplier="1:1" id="36G-u2-Qso"/>
-                                                        </constraints>
-                                                    </imageView>
-                                                </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
+                                                <rect key="frame" x="136" y="45" width="102" height="102"/>
                                                 <constraints>
-                                                    <constraint firstItem="OE2-Ai-BLg" firstAttribute="centerX" secondItem="fIT-5n-Zii" secondAttribute="centerX" id="LKd-bx-qDH"/>
-                                                    <constraint firstItem="OE2-Ai-BLg" firstAttribute="centerY" secondItem="fIT-5n-Zii" secondAttribute="centerY" id="f9p-o9-NSa"/>
-                                                    <constraint firstAttribute="width" secondItem="fIT-5n-Zii" secondAttribute="height" multiplier="1:1" id="oKc-jf-chn"/>
+                                                    <constraint firstAttribute="width" secondItem="OE2-Ai-BLg" secondAttribute="height" multiplier="1:1" id="36G-u2-Qso"/>
                                                 </constraints>
-                                            </view>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="OE2-Ai-BLg" firstAttribute="centerX" secondItem="GPn-RR-0Ek" secondAttribute="centerX" id="2QE-C7-Chl"/>
                                             <constraint firstAttribute="width" secondItem="GPn-RR-0Ek" secondAttribute="height" multiplier="47:22" id="U7A-Ij-VTs"/>
-                                            <constraint firstItem="fIT-5n-Zii" firstAttribute="height" secondItem="GPn-RR-0Ek" secondAttribute="height" multiplier="144:220" id="YMU-vC-D3c"/>
-                                            <constraint firstItem="fIT-5n-Zii" firstAttribute="centerY" secondItem="GPn-RR-0Ek" secondAttribute="centerY" id="c6A-ZN-vHq"/>
-                                            <constraint firstItem="fIT-5n-Zii" firstAttribute="centerX" secondItem="GPn-RR-0Ek" secondAttribute="centerX" id="xwe-zp-L5X"/>
+                                            <constraint firstItem="OE2-Ai-BLg" firstAttribute="centerY" secondItem="GPn-RR-0Ek" secondAttribute="centerY" id="iFs-WA-sGw"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -915,14 +877,14 @@
                                         <rect key="frame" x="0.0" y="235" width="375" height="142"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kV-ts-7dC" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36.5" y="0.0" width="302" height="64.5"/>
+                                                <rect key="frame" x="37" y="0.0" width="302" height="65"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gj1-Ez-EN1" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36.5" y="77.5" width="302" height="64.5"/>
+                                                <rect key="frame" x="37" y="78" width="302" height="65"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
@@ -1019,7 +981,6 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="logoBorderLayerView" destination="fIT-5n-Zii" id="mwt-S1-UDr"/>
                         <outlet property="logoImageView" destination="OE2-Ai-BLg" id="sBK-1v-AlL"/>
                         <outlet property="logoView" destination="GPn-RR-0Ek" id="gc6-He-MuA"/>
                         <outlet property="passwordTextField" destination="Gj1-Ez-EN1" id="cCc-p4-ADh"/>

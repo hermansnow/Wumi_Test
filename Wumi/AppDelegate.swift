@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set Navigation bar color
         UINavigationBar.appearance().barTintColor = Constants.UI.Color.ThemeColor
+        UINavigationBar.appearance().translucent = false
         
         // Set up AVOSCloud
         setupAVOSCloudSetting()
@@ -56,6 +57,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AVOSCloud.setApplicationId("WtWKobgICmjMgPlmNBiVaeme-MdYXbMMI", clientKey: "OEKOIcQ7Wjnk4wuurFNlvmO1")
         // China Setting
         //AVOSCloud.setApplicationId("想ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
-
     }
 }

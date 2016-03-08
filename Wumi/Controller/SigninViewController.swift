@@ -12,11 +12,12 @@ class SigninViewController: UIViewController {
     // MARK: Properties
     
     @IBOutlet weak var logoView: UIView!
-    @IBOutlet weak var logoBorderLayerView: UIView!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var usernameTextField: DataInputTextField!
     @IBOutlet weak var passwordTextField: DataInputTextField!
+    
     var forgotPasswordButton: TextLinkButton!
+    var maskLayer = CAShapeLayer()
     
     // MARK: Life cycle functions
     
@@ -28,8 +29,7 @@ class SigninViewController: UIViewController {
         
         // Set layout and colors
         logoView.backgroundColor = Constants.UI.Color.ThemeColor
-        logoBorderLayerView.backgroundColor = UIColor.whiteColor()
-        logoBorderLayerView.layer.borderColor = UIColor.whiteColor().CGColor
+        maskLayer.fillColor = Constants.UI.Color.MaskColor.CGColor
         
         // Set logo shadow
         let logoLayer = logoImageView.layer
@@ -61,9 +61,13 @@ class SigninViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        // Set circular logo image view
-        logoBorderLayerView.layer.cornerRadius = logoBorderLayerView.frame.size.width / 2
-        logoBorderLayerView.clipsToBounds = true
+        // Redraw mask layer
+        maskLayer.removeFromSuperlayer()
+        let maskHeight = logoView.bounds.height * Constants.UI.Proportion.MaskHeightWithParentView
+        let maskWidth = maskHeight * Constants.UI.Proportion.MaskWidthWithHeight
+        maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight), cornerRadius: maskWidth / 2).CGPath
+        maskLayer.position = CGPoint(x: (logoView.bounds.width - maskWidth) / 2, y: (logoView.bounds.height - maskHeight) / 2)
+        logoView.layer.insertSublayer(maskLayer, below: logoImageView.layer)
         
         // Redraw DataInput Text Field
         usernameTextField.drawUnderlineBorder()
