@@ -23,6 +23,7 @@ struct Constants {
         }
         
         struct Image {
+            static let AddAvatarImage = UIImage(named: "Add")
             static let AnonymousAvatarImage = UIImage(named: "Anonymous")
         }
     }

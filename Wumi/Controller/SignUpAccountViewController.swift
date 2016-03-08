@@ -21,6 +21,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     @IBOutlet weak var emailTextField: DataInputTextField!
     @IBOutlet weak var cancelButton: SystemButton!
     
+    var newAvatarImage: UIImage?
     var user = User()
     
     // MARK: Life cycle functions
@@ -36,7 +37,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         
         // Set avatar image delegates
         addAvatarImageView.delegate = self
-        addAvatarImageView.image = UIImage(named: "Add")
+        addAvatarImageView.image = Constants.UI.Image.AddAvatarImage
         
         // Set background views
         avatarBackgroundView.colors = [Constants.UI.Color.ThemeColor, UIColor.whiteColor()]
@@ -71,7 +72,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         if segue.identifier == "Show Profile Form" {
             if let addProfileViewController = segue.destinationViewController as? AddProfileViewController {
                 addProfileViewController.user = self.user
-                addProfileViewController.avatarImage = addAvatarImageView.image
+                addProfileViewController.avatarImage = newAvatarImage
             }
         }
     }
@@ -89,7 +90,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
             }
             
             // Save avatar image file
-            self.user.saveAvatarFile(self.addAvatarImageView.image) { (saveImageSuccess, imageError) -> Void in
+            self.user.saveAvatarFile(self.newAvatarImage) { (saveImageSuccess, imageError) -> Void in
                 if !saveImageSuccess {
                     Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
                     return
@@ -156,6 +157,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         picker.dismissViewControllerAnimated(true) { () -> Void in
             if let avatarImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 self.addAvatarImageView.image = avatarImage
+                self.newAvatarImage = avatarImage   
             }
         }
     }
