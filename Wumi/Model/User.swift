@@ -176,7 +176,7 @@ class User: AVUser {
             }
             else {
                 // In terms of English input, search name and pinyin
-                query.whereKey("nameSearchIndex", containsString: name)
+                query.whereKey("pinyin", containsString: name)
                 // Sort results by name search index, then by original name
                 query.orderByAscending("pinyin")
                 query.addAscendingOrder("name")
