@@ -40,6 +40,7 @@
 		DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */; };
 		DFA93AB61C882FE700ECA503 /* TextLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */; };
 		DFA93ABA1C88FCDB00ECA503 /* ColorGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */; };
+		DFA93ABC1C8F8ECB00ECA503 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFA93ABB1C8F8ECB00ECA503 /* LaunchScreen.storyboard */; };
 		DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */; };
 		DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */; };
 		DFB4152D1C1E75B000835EFE /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB4152C1C1E75B000835EFE /* ProfileCell.swift */; };
@@ -100,6 +101,7 @@
 		DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HyperLinkTextView.swift; path = View/HyperLinkTextView.swift; sourceTree = "<group>"; };
 		DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextLinkButton.swift; path = View/TextLinkButton.swift; sourceTree = "<group>"; };
 		DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorGradientView.swift; path = View/ColorGradientView.swift; sourceTree = "<group>"; };
+		DFA93ABB1C8F8ECB00ECA503 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectPhotoActionSheet.swift; path = Controller/SelectPhotoActionSheet.swift; sourceTree = "<group>"; };
 		DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactViewController.swift; path = Controller/ContactViewController.swift; sourceTree = "<group>"; };
 		DFB4152C1C1E75B000835EFE /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCell.swift; path = View/ProfileCell.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				814C3AC61B69877600E307BB /* Main.storyboard */,
+				DFA93ABB1C8F8ECB00ECA503 /* LaunchScreen.storyboard */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				DF5E3D381BE9457900F44FFF /* Model */,
 				DFB7CC081BEA894300BEACB7 /* View */,
@@ -386,6 +389,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFA93ABC1C8F8ECB00ECA503 /* LaunchScreen.storyboard in Resources */,
 				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
 				DF159E191C80231C00DB65FF /* Images.xcassets in Resources */,
 			);
