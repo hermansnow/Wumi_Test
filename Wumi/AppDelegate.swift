@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set Navigation bar color
         UINavigationBar.appearance().barTintColor = Constants.UI.Color.ThemeColor
+        UINavigationBar.appearance().translucent = false
         
         // Set up AVOSCloud
         setupAVOSCloudSetting()
