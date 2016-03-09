@@ -27,17 +27,17 @@ class SystemButton: UIButton {
         layer.cornerRadius = 3
         
         setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        titleLabel?.font = UIFont(name: ".SFUIText-Medium", size: 16)
+        titleLabel?.font = Constants.General.Font.ButtonFont
         
         setBackgroundColor()
     }
     
     func setBackgroundColor() {
         if recommanded {
-            layer.backgroundColor = Constants.UI.Color.ThemeColor.CGColor
+            layer.backgroundColor = Constants.General.Color.ThemeColor.CGColor
         }
         else {
-            layer.backgroundColor = Constants.UI.Color.BackgroundColor.CGColor
+            layer.backgroundColor = Constants.General.Color.BackgroundColor.CGColor
         }
     }
 }

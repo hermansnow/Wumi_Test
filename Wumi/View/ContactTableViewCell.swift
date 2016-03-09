@@ -19,18 +19,18 @@ class ContactTableViewCell: UITableViewCell {
     
     override func drawRect(rect: CGRect) {
         favoriteButton.imageColorOff = UIColor.brownColor()
-        favoriteButton.imageColorOn = Constants.UI.Color.ThemeColor
-        favoriteButton.circleColor = Constants.UI.Color.ThemeColor
-        favoriteButton.lineColor = Constants.UI.Color.ThemeColor
+        favoriteButton.imageColorOn = Constants.General.Color.ThemeColor
+        favoriteButton.circleColor = Constants.General.Color.ThemeColor
+        favoriteButton.lineColor = Constants.General.Color.ThemeColor
         favoriteButton.duration = 1.0 // default: 1.0
         
         favoriteButton.addTarget(self, action: Selector("tapped:"), forControlEvents: .TouchUpInside)
         
-        contentView.layer.borderColor = Constants.UI.Color.BackgroundColor.CGColor
+        contentView.layer.borderColor = Constants.General.Color.BackgroundColor.CGColor
         contentView.layer.borderWidth = 5.0
         
         // Set default avatar
-        avatarImageView.image = Constants.UI.Image.AnonymousAvatarImage
+        avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
     }
     
     func tapped(sender: DOFavoriteButton) {

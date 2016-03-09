@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Contact.registerSubclass()
         
         // Set Navigation bar color
-        UINavigationBar.appearance().barTintColor = Constants.UI.Color.ThemeColor
+        UINavigationBar.appearance().barTintColor = Constants.General.Color.ThemeColor
         UINavigationBar.appearance().translucent = false
         
         // Set up AVOSCloud

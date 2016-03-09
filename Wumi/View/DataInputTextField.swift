@@ -74,15 +74,15 @@ class DataInputTextField: UIView {
     override func drawRect(rect: CGRect) {
         
         // Set up textfield
-        inputTextField.font = UIFont(name: ".SFUIText-Light", size: 16)
-        inputTextField.textColor = UIColor(red: 51/255, green: 52/255, blue: 53/255, alpha: 1.0)
+        inputTextField.font = Constants.General.Font.InputFont
+        inputTextField.textColor = Constants.General.Color.InputTextColor
         inputTextField.clearsOnBeginEditing = false
         inputTextField.clearButtonMode = .WhileEditing
         inputTextField.autocapitalizationType = .None
         
         // Set up components
-        informationLabel.textColor = Constants.UI.Color.ErrorColor
-        informationLabel.font = Constants.UI.Font.ErrorFont
+        informationLabel.textColor = Constants.General.Color.ErrorColor
+        informationLabel.font = Constants.General.Font.ErrorFont
         informationLabel.numberOfLines = 0
         informationLabel.adjustsFontSizeToFitWidth = true
         
@@ -100,7 +100,7 @@ class DataInputTextField: UIView {
             informationStackView.addArrangedSubview(view)
         }
         if let text = informationLabel.text {
-            informationStackView.heightAnchor.constraintEqualToConstant(text.heightWithConstrainedWidth(informationLabel.frame.width, font: Constants.UI.Font.ErrorFont!)).active = true
+            informationStackView.heightAnchor.constraintEqualToConstant(text.heightWithConstrainedWidth(informationLabel.frame.width, font: Constants.General.Font.ErrorFont!)).active = true
         }
         
         // Set textfield's stack view
@@ -122,14 +122,11 @@ class DataInputTextField: UIView {
         stackView.rightAnchor.constraintEqualToAnchor(rightAnchor).active = true
         stackView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
         stackView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
-        
-        super.drawRect(rect)
     }
     
     func drawUnderlineBorder() {
         if underline.frame.height == 0 {
             inputTextField.borderStyle = .None
-            underline.backgroundColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0).CGColor
             inputTextField.layer.addSublayer(underline)
         }
         
@@ -138,10 +135,10 @@ class DataInputTextField: UIView {
         
         // Set underline color
         if let error = errorText where error.characters.count > 0 {
-            underline.backgroundColor = Constants.UI.Color.ErrorColor.CGColor
+            underline.backgroundColor = Constants.General.Color.ErrorColor.CGColor
         }
         else {
-            underline.backgroundColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0).CGColor
+            underline.backgroundColor = Constants.General.Color.BorderColor.CGColor
         }
     }
     

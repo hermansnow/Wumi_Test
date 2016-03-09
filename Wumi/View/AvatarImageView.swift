@@ -11,7 +11,8 @@ import UIKit
 class AvatarImageView: UIView {
     
     var delegate: AvatarImageDelegate?
-    var containerImageView: UIImageView = UIImageView()
+    private var containerImageView: UIImageView = UIImageView()
+    
     var image: UIImage? {
         get {
             return containerImageView.image

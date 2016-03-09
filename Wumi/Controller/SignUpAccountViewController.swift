@@ -21,8 +21,8 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     @IBOutlet weak var cancelButton: SystemButton!
     
     var newAvatarImage: UIImage?
-    var maskLayer = CAShapeLayer()
-    var user = User()
+    lazy var user = User()
+    private lazy var maskLayer = CAShapeLayer()
     
     // MARK: Life cycle functions
     
@@ -37,16 +37,17 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         
         // Set avatar image delegates
         addAvatarImageView.delegate = self
-        addAvatarImageView.image = Constants.UI.Image.AddAvatarImage
+        addAvatarImageView.image = Constants.SignIn.Image.AddAvatarImage
         
         // Set background views
-        avatarBackgroundView.colors = [Constants.UI.Color.ThemeColor, UIColor.whiteColor()]
-        maskLayer.fillColor = Constants.UI.Color.MaskColor.CGColor
+        avatarBackgroundView.colors = [Constants.General.Color.ThemeColor, UIColor.whiteColor()]
+        maskLayer.fillColor = Constants.SignIn.Color.MaskColor.CGColor
         
         // Set textfields
         passwordTextField.inputTextField.secureTextEntry = true
         confirmPasswordTextField.inputTextField.secureTextEntry = true
         
+        // Set delegates
         usernameTextField.delegate = self
         passwordTextField.delegate = self
         confirmPasswordTextField.delegate = self
@@ -59,8 +60,8 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
         
         // Redraw mask layer
         maskLayer.removeFromSuperlayer()
-        let maskHeight = avatarBackgroundView.bounds.height * Constants.UI.Proportion.MaskHeightWithParentView
-        let maskWidth = maskHeight * Constants.UI.Proportion.MaskWidthWithHeight
+        let maskHeight = avatarBackgroundView.bounds.height * Constants.SignIn.Proportion.MaskHeightWithParentView
+        let maskWidth = maskHeight * Constants.SignIn.Proportion.MaskWidthWithHeight
         maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight), cornerRadius: maskWidth / 2).CGPath
         maskLayer.position = CGPoint(x: (avatarBackgroundView.bounds.width - maskWidth) / 2, y: (avatarBackgroundView.bounds.height - maskHeight) / 2)
         avatarBackgroundView.layer.insertSublayer(maskLayer, below: addAvatarImageView.layer)
@@ -119,6 +120,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     }
     
     // MARK: TextField delegates and functions
+    
     func textFieldDidEndEditing(textField: UITextField) {
         var error: String = ""
         
@@ -157,6 +159,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     }
     
     // MARK: UIImagePicker delegates and functions
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true) { () -> Void in
             if let avatarImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -167,16 +170,19 @@ class SignUpAccountViewController: ScrollTextFieldViewController, UINavigationCo
     }
     
     // MARK: AvatarImageView delegates and functions
+    
     func singleTap(imageView: AvatarImageView) {
-        let addImageSheet = SelectPhotoActionSheet(title: "Add Avatar Image", message: "Choose a photo as your avatar image.", preferredStyle: .ActionSheet)
+        let addImageSheet = SelectPhotoActionSheet(title: Constants.SignIn.String.Alert.AddImageSheet.Title,
+                                                 message: Constants.SignIn.String.Alert.AddImageSheet.Message,
+                                          preferredStyle: .ActionSheet)
         addImageSheet.delegate = self
         addImageSheet.launchViewController = self
         
         presentViewController(addImageSheet, animated: true, completion: nil)
     }
     
-    
     // MARK: DataInputTextField delegates
+    
     func doneToolButtonClicked(sender: UIBarButtonItem) {
         dismissInputView()
     }

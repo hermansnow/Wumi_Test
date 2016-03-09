@@ -17,7 +17,7 @@ class SigninViewController: UIViewController {
     @IBOutlet weak var passwordTextField: DataInputTextField!
     
     var forgotPasswordButton: TextLinkButton!
-    var maskLayer = CAShapeLayer()
+    private lazy var maskLayer = CAShapeLayer()
     
     // MARK: Life cycle functions
     
@@ -28,24 +28,24 @@ class SigninViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         // Set layout and colors
-        logoView.backgroundColor = Constants.UI.Color.ThemeColor
-        maskLayer.fillColor = Constants.UI.Color.MaskColor.CGColor
+        logoView.backgroundColor = Constants.General.Color.ThemeColor
+        maskLayer.fillColor = Constants.SignIn.Color.MaskColor.CGColor
         
         // Set logo shadow
         let logoLayer = logoImageView.layer
-        logoLayer.shadowColor = Constants.UI.Color.ThemeColor.CGColor
-        logoLayer.shadowOffset = CGSize(width: 0, height: 2)
-        logoLayer.shadowOpacity = 1
-        logoLayer.shadowRadius = 3
+        logoLayer.shadowColor = Constants.General.Color.ThemeColor.CGColor
+        logoLayer.shadowOffset = Constants.SignIn.Size.ShadowOffset
+        logoLayer.shadowOpacity = Constants.SignIn.Value.shadowOpacity
+        logoLayer.shadowRadius = Constants.SignIn.Value.shadowRadius
         
         // Set text fields
         passwordTextField.inputTextField.secureTextEntry = true
         
         // Initialize forgotPassword Button
         forgotPasswordButton = TextLinkButton()
-        forgotPasswordButton.textLinkFont = Constants.UI.Font.ErrorFont
-        forgotPasswordButton.setTitle("Forgot password?", forState: .Normal)
-        forgotPasswordButton.addTarget(self, action: Selector("forgotPassword:"), forControlEvents: .TouchUpInside)
+        forgotPasswordButton.textLinkFont = Constants.General.Font.ErrorFont
+        forgotPasswordButton.setTitle(Constants.SignIn.String.forgotPasswordLink, forState: .Normal)
+        forgotPasswordButton.addTarget(self, action: Selector("forgotPassword"), forControlEvents: .TouchUpInside)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,8 +63,8 @@ class SigninViewController: UIViewController {
         
         // Redraw mask layer
         maskLayer.removeFromSuperlayer()
-        let maskHeight = logoView.bounds.height * Constants.UI.Proportion.MaskHeightWithParentView
-        let maskWidth = maskHeight * Constants.UI.Proportion.MaskWidthWithHeight
+        let maskHeight = logoView.bounds.height * Constants.SignIn.Proportion.MaskHeightWithParentView
+        let maskWidth = maskHeight * Constants.SignIn.Proportion.MaskWidthWithHeight
         maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight), cornerRadius: maskWidth / 2).CGPath
         maskLayer.position = CGPoint(x: (logoView.bounds.width - maskWidth) / 2, y: (logoView.bounds.height - maskHeight) / 2)
         logoView.layer.insertSublayer(maskLayer, below: logoImageView.layer)
@@ -83,7 +83,7 @@ class SigninViewController: UIViewController {
         
         User.logInWithUsernameInBackground(userName!, password: userPassword!) { (pfUser, error) -> Void in
             if pfUser == nil {
-                self.passwordTextField.errorText = "Incorrect password"
+                self.passwordTextField.errorText = Constants.SignIn.String.ErrorMessages.incorrectPassword
                 self.passwordTextField.actionHolder = self.forgotPasswordButton
                 
                 //Helper.PopupErrorAlert(self, errorMessage: "\(error)")
@@ -95,20 +95,22 @@ class SigninViewController: UIViewController {
     }
     
     // Show a popup window to allow user request an email to reset password
-    @IBAction func forgotPassword(sender: AnyObject) {
-        Helper.PopupInputBox(self, boxTitle: "Reset Password", message: "Please enter the email address for your account",
-            numberOfFileds: 1, textValues: [["placeHolder": "Email"]]) { (inputValues) -> Void in
-                if let email = inputValues.first! {
-                    User.requestPasswordResetForEmailInBackground(email, block: { (success, error) -> Void in
-                        if !success {
-                            Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-                        }
-                        else {
-                            Helper.PopupInformationBox(self, boxTitle: "Request Sent", message: "Please check your registered email account for resetting password")
-                        }
-                    })
-                }
-
-        }
+    func forgotPassword() {
+        Helper.PopupInputBox(self, boxTitle: Constants.SignIn.String.Alert.ResetPassword.Title,
+                                    message: Constants.SignIn.String.Alert.ResetPassword.Message,
+                             numberOfFileds: 1,
+                                 textValues: [["placeHolder": "Email"]]) { (inputValues) -> Void in
+                                    if let email = inputValues.first! {
+                                        User.requestPasswordResetForEmailInBackground(email) { (success, error) -> Void in
+                                            if !success {
+                                                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                                            }
+                                            else {
+                                                Helper.PopupInformationBox(self, boxTitle: Constants.SignIn.String.Alert.ResetPasswordConfirm.Title,
+                                                                                  message: Constants.SignIn.String.Alert.ResetPasswordConfirm.Message)
+                                            }
+                                        }
+                                    }
+                                }
     }
 }

@@ -33,8 +33,6 @@ class ColorGradientView: UIView {
         }
         
         backgroundColor?.setFill()
-        
-        
     }
 
 }

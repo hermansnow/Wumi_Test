@@ -17,13 +17,14 @@ class GraduationYearPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSo
     var toolBar: UIToolbar = UIToolbar()
     
     // Properties to save the year information
-    var currentYear = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
-    var years = [Int]()
+    private lazy var currentYear = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
+    private lazy var years = [Int]()
     var year: Int = 0 {
         didSet {
             graduationYearPicker.selectRow(self.years.indexOf(self.year)!, inComponent: 0, animated: true)
         }
     }
+    
     // Closures passed in from caller. These closures are used by callers to define view behaviors
     var onYearSelected: ((year: Int) -> Void)?
     var comfirmSelection: (() -> Void)?

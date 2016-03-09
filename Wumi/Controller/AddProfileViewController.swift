@@ -18,8 +18,8 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
     @IBOutlet weak var skipButton: SystemButton!
     
     var avatarImage: UIImage?
-    var maskLayer = CAShapeLayer()
-    var user: User = User.currentUser()!
+    var user: User!
+    private lazy var maskLayer = CAShapeLayer()
     
     // MARK: Life cycle functions
     
@@ -46,8 +46,8 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
         skipButton.recommanded = false
         
         // Set background views
-        avatarBackgroundView.colors = [Constants.UI.Color.ThemeColor, UIColor.whiteColor()]
-        maskLayer.fillColor = Constants.UI.Color.MaskColor.CGColor
+        avatarBackgroundView.colors = [Constants.General.Color.ThemeColor, UIColor.whiteColor()]
+        maskLayer.fillColor = Constants.SignIn.Color.MaskColor.CGColor
         
         // Set textfields
         nameTextField.inputTextField.autocapitalizationType = .Words
@@ -62,8 +62,8 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
         
         // Redraw mask layer
         maskLayer.removeFromSuperlayer()
-        let maskHeight = avatarBackgroundView.bounds.height * Constants.UI.Proportion.MaskHeightWithParentView
-        let maskWidth = maskHeight * Constants.UI.Proportion.MaskWidthWithHeight
+        let maskHeight = avatarBackgroundView.bounds.height * Constants.SignIn.Proportion.MaskHeightWithParentView
+        let maskWidth = maskHeight * Constants.SignIn.Proportion.MaskWidthWithHeight
         maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight), cornerRadius: maskWidth / 2).CGPath
         maskLayer.position = CGPoint(x: (avatarBackgroundView.bounds.width - maskWidth) / 2, y: (avatarBackgroundView.bounds.height - maskHeight) / 2)
         avatarBackgroundView.layer.insertSublayer(maskLayer, below: avatarImageView.layer)
@@ -114,6 +114,7 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
     }
     
     // MARK: DataInputTextField delegates
+    
     func doneToolButtonClicked(sender: UIBarButtonItem) {
         dismissInputView()
     }
