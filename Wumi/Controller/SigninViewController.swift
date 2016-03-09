@@ -54,6 +54,7 @@ class SigninViewController: UIViewController {
         // Fill in the username field if current user exists
         if let user = User.currentUser() {
             usernameTextField.text = user.username
+            passwordTextField.becomeFirstResponder()
         }
     }
     

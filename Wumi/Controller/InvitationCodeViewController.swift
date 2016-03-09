@@ -21,6 +21,11 @@ class InvitationCodeViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        // Set iniatial first responder
+        invitationCodeTextField.inputTextField.becomeFirstResponder()
+    }
+    
     // All codes based on display frames should be called here after layouting subviews
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

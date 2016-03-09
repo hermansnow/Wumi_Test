@@ -52,8 +52,14 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
         // Set textfields
         nameTextField.inputTextField.autocapitalizationType = .Words
         
+        // Set delegates
         nameTextField.delegate = self
         graduationYearTextField.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Set iniatial first responder
+        nameTextField.inputTextField.becomeFirstResponder()
     }
     
     // All codes based on display frames should be called here after layouting subviews
