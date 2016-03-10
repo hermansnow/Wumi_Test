@@ -57,7 +57,7 @@ class User: AVUser {
         saveInBackground()
     }
     
-    func isFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
+    func findFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
         let query = favoriteUsers!.query()
         
         query.whereKey("objectId", equalTo: user.objectId)

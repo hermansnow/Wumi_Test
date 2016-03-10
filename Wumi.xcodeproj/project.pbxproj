@@ -48,6 +48,9 @@
 		DFA93AD31C91299500ECA503 /* ProfileInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93AD21C91299500ECA503 /* ProfileInputCell.xib */; };
 		DFA93AD51C912A4D00ECA503 /* ProfileInputSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93AD41C912A4D00ECA503 /* ProfileInputSwitchCell.xib */; };
 		DFA93AD71C912AFB00ECA503 /* ProfileInputSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93AD61C912AFB00ECA503 /* ProfileInputSwitchCell.swift */; };
+		DFA93AD91C91DFFA00ECA503 /* ContactLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93AD81C91DFFA00ECA503 /* ContactLabelCell.xib */; };
+		DFA93ADB1C91E0B900ECA503 /* ContactLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93ADA1C91E0B900ECA503 /* ContactLabelCell.swift */; };
+		DFA93ADD1C91EE0600ECA503 /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */; };
 		DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */; };
 		DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */; };
 		DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */; };
@@ -115,6 +118,9 @@
 		DFA93AD21C91299500ECA503 /* ProfileInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileInputCell.xib; path = View/ProfileInputCell.xib; sourceTree = "<group>"; };
 		DFA93AD41C912A4D00ECA503 /* ProfileInputSwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileInputSwitchCell.xib; path = View/ProfileInputSwitchCell.xib; sourceTree = "<group>"; };
 		DFA93AD61C912AFB00ECA503 /* ProfileInputSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileInputSwitchCell.swift; path = View/ProfileInputSwitchCell.swift; sourceTree = "<group>"; };
+		DFA93AD81C91DFFA00ECA503 /* ContactLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactLabelCell.xib; path = View/ContactLabelCell.xib; sourceTree = "<group>"; };
+		DFA93ADA1C91E0B900ECA503 /* ContactLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactLabelCell.swift; path = View/ContactLabelCell.swift; sourceTree = "<group>"; };
+		DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FavoriteButton.swift; path = View/FavoriteButton.swift; sourceTree = "<group>"; };
 		DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectPhotoActionSheet.swift; path = Controller/SelectPhotoActionSheet.swift; sourceTree = "<group>"; };
 		DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactViewController.swift; path = Controller/ContactViewController.swift; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraduationYearPickerView.swift; path = View/GraduationYearPickerView.swift; sourceTree = "<group>"; };
@@ -290,19 +296,21 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		DFA93AC11C90DDC000ECA503 /* ProfileCell */ = {
+		DFA93AC11C90DDC000ECA503 /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
 				DFA93AD21C91299500ECA503 /* ProfileInputCell.xib */,
 				DFA93ACC1C910C4C00ECA503 /* ProfileListCell.xib */,
 				DFA93AD41C912A4D00ECA503 /* ProfileInputSwitchCell.xib */,
+				DFA93AD81C91DFFA00ECA503 /* ContactLabelCell.xib */,
 				DFA93ACE1C910DD700ECA503 /* ProfileCell.swift */,
 				DFA93AC21C90DE3600ECA503 /* ProfileInputCell.swift */,
 				DFA93ACA1C91016A00ECA503 /* ProfileListCell.swift */,
 				DFA93AD01C91127800ECA503 /* ProfileListLabel.swift */,
 				DFA93AD61C912AFB00ECA503 /* ProfileInputSwitchCell.swift */,
+				DFA93ADA1C91E0B900ECA503 /* ContactLabelCell.swift */,
 			);
-			name = ProfileCell;
+			name = CustomCell;
 			sourceTree = "<group>";
 		};
 		DFACE2511C5A2E3B00C6D737 /* Contact */ = {
@@ -339,8 +347,9 @@
 		DFB7CC081BEA894300BEACB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DFA93AC11C90DDC000ECA503 /* ProfileCell */,
+				DFA93AC11C90DDC000ECA503 /* CustomCell */,
 				DF9F06111C7D93CC008CA6DC /* DOFavoriteButton.swift */,
+				DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */,
 				DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */,
 				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
 				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
@@ -420,6 +429,7 @@
 				DFA93AD31C91299500ECA503 /* ProfileInputCell.xib in Resources */,
 				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
 				DFA93AD51C912A4D00ECA503 /* ProfileInputSwitchCell.xib in Resources */,
+				DFA93AD91C91DFFA00ECA503 /* ContactLabelCell.xib in Resources */,
 				DF159E191C80231C00DB65FF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,6 +504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF9F06101C7BC72D008CA6DC /* ContactTableViewCell.swift in Sources */,
+				DFA93ADD1C91EE0600ECA503 /* FavoriteButton.swift in Sources */,
 				DFA93ACB1C91016A00ECA503 /* ProfileListCell.swift in Sources */,
 				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,
 				DFB861481BEDBDF60075014A /* SystemButton.swift in Sources */,
@@ -514,6 +525,7 @@
 				DF9F06121C7D93CC008CA6DC /* DOFavoriteButton.swift in Sources */,
 				DFA93ABA1C88FCDB00ECA503 /* ColorGradientView.swift in Sources */,
 				DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */,
+				DFA93ADB1C91E0B900ECA503 /* ContactLabelCell.swift in Sources */,
 				DFA93AD71C912AFB00ECA503 /* ProfileInputSwitchCell.swift in Sources */,
 				B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */,
 				DF173EF21C86A58600018B4A /* Extensions.swift in Sources */,

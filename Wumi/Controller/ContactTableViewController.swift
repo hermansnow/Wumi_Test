@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactTableViewController: UITableViewController, ContactTableViewCellDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+class ContactTableViewController: UITableViewController, UISearchControllerDelegate, UISearchResultsUpdating, FavoriteButtonDelegate {
     
     @IBOutlet weak var hamburgerMenuButton: UIBarButtonItem!
     var resultSearchController: UISearchController!
@@ -74,6 +74,8 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        navigationController!.extendedLayoutIncludesOpaqueBars = true
+        
         // Initialize resultSearchController
         resultSearchController = UISearchController(searchResultsController: nil)
         resultSearchController.searchResultsUpdater = self
@@ -108,7 +110,7 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         }
         
         // Load data
-        self.reloadUsers()
+        //self.reloadUsers()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -117,7 +119,6 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
                 contactViewController.user = selectedUser
         }
     }
-    
     
     // Reload users
     func reloadUsers() {
@@ -190,9 +191,10 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
             else {
                 cell.favoriteButton.selected = false
             }
+            cell.favoriteButton.tag = indexPath.row
             
             // Set delegate
-            cell.delegate = self
+            cell.favoriteButton.delegate = self
         }
         
         return cell
@@ -214,26 +216,18 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
         }
     }
     
-    // MARK: - Contact table view cell delegates
-    func addFavorite(cell: ContactTableViewCell) {
-        // get related user
-        if let indexPath = tableView.indexPathForCell(cell) {
-            if indexPath.section != 0 { return }
-            
-            user.addFavoriteUser(currentUsers[safe: indexPath.row])
-        }
+    // MARK: - Favorite button delegates
+    
+    func addFavorite(favoriteButton: FavoriteButton) {
+        user.addFavoriteUser(currentUsers[safe: favoriteButton.tag])
     }
     
-    func removeFavorite(cell: ContactTableViewCell) {
-        // get related user
-        if let indexPath = tableView.indexPathForCell(cell) {
-            if indexPath.section != 0 { return }
-            
-            user.removeFavoriteUser(currentUsers[safe: indexPath.row])
-        }
+    func removeFavorite(favoriteButton: FavoriteButton) {
+        user.removeFavoriteUser(currentUsers[safe: favoriteButton.tag])
     }
     
     // MARK: Search delegates
+    
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if let searchInput = searchController.searchBar.text {
             searchString = searchInput
@@ -249,7 +243,6 @@ class ContactTableViewController: UITableViewController, ContactTableViewCellDel
             inputTimer = NSTimer.scheduledTimerWithTimeInterval(searchTimeInterval, target: self, selector: "reloadUsers", userInfo: nil, repeats: false)
         }
         else {
-            
             self.filteredUsers.removeAll(keepCapacity: false)
             tableView.reloadData()
         }

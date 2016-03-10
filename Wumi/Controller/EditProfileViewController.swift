@@ -59,6 +59,9 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
             self.graduationYearLabel.text = self.showGraduationLable(self.user.graduationYear)
             self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 0)], withRowAnimation: .None)
         }
+        
+        // Initialize the mask view
+        maskView.backgroundColor = Constants.General.Color.MaskColor
 
         // Fetch user data
         user.fetchInBackgroundWithBlock { (result, error) -> Void in
@@ -330,8 +333,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
             self.profileImageView.image = image
         }
         
-        maskView.backgroundColor = Constants.SignIn.Color.MaskColor
-        
         nameLabel.text = user.name
         
         if user.graduationYear > 0 {
@@ -363,7 +364,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
             return "Please select your graduation year"
         }
         else {
-            return "\(graduationYear)"
+            return "(\(graduationYear))"
         }
     }
     
