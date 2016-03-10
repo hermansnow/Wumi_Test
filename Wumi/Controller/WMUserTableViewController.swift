@@ -18,7 +18,6 @@ class WMUserTableViewController: UITableViewController {
     
     var sections: [[Setting]] =
         [[Setting(identifier: "User Profile", type: .DisplayOnly, value: nil)],
-        [Setting(identifier: "Contact", type: .Disclosure, value: nil)],
         [Setting(identifier:"Log Out", type: .Button, value: nil)]]
     var userDefault = NSUserDefaults.standardUserDefaults()
     
@@ -74,11 +73,6 @@ class WMUserTableViewController: UITableViewController {
             self.revealViewController().setFrontViewPosition(FrontViewPosition.Right, animated: true)
             self.hasEnterMenu = true;
             self.performSegueWithIdentifier("Edit Profile", sender: self)
-        case "Contact":
-            self.revealViewController().rearViewRevealWidth = UIScreen.mainScreen().bounds.width
-            self.revealViewController().setFrontViewPosition(FrontViewPosition.Right, animated: true)
-            self.hasEnterMenu = true;
-            self.performSegueWithIdentifier("Contact Settings", sender: self)
         case "Log Out":
             self.logoutUser()
         default:

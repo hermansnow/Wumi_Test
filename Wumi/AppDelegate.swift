@@ -31,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set Navigation bar color
         UINavigationBar.appearance().barTintColor = Constants.General.Color.ThemeColor
+        UINavigationBar.appearance().tintColor = Constants.General.Color.TintColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Constants.General.Color.TitleColor]
         UINavigationBar.appearance().translucent = false
         
         // Set up AVOSCloud

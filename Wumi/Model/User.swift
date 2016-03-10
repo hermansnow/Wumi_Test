@@ -13,6 +13,9 @@ class User: AVUser {
     // MARK: Properties
     
     // Extended properties
+    @NSManaged var emailPublic: Bool
+    @NSManaged var phoneNumber: String?
+    @NSManaged var phonePublic: Bool
     @NSManaged var avatarImageFile: AVFile?
     @NSManaged var graduationYear: Int
     @NSManaged var name: String?

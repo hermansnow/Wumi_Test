@@ -13,6 +13,8 @@ struct Constants {
     struct General {
         
         struct Color {
+            static let TintColor = UIColor.whiteColor()
+            static let TitleColor = UIColor.whiteColor()
             static let BackgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
             static let ThemeColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
             static let InputTextColor = UIColor(red: 51/255, green: 52/255, blue: 53/255, alpha: 1.0)
@@ -28,6 +30,7 @@ struct Constants {
         }
         
         struct Image {
+            static let Add = UIImage(named: "Add")
             static let AnonymousAvatarImage = UIImage(named: "Anonymous")
         }
     }

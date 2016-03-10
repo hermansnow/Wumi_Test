@@ -35,4 +35,8 @@ class Contact: AVObject, AVSubclassing {
     class func parseClassName() -> String? {
         return "Contact"
     }
+    
+    func location() -> String {
+        return "\(Location(Country: country, City: city))"
+    }
 }

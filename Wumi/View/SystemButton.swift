@@ -26,7 +26,7 @@ class SystemButton: UIButton {
         
         layer.cornerRadius = 3
         
-        setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        setTitleColor(Constants.General.Color.TitleColor, forState: .Normal)
         titleLabel?.font = Constants.General.Font.ButtonFont
         
         setBackgroundColor()
