@@ -192,11 +192,19 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
     // MARK: UItextField delegates
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        textField.backgroundColor = Constants.General.Color.BackgroundColor
+        textField.borderStyle = .RoundedRect
+        
         UIView.animateWithDuration(0.5) { () -> Void in
             self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.tableView.frame.size.height - 140, right: 0)
         }
         
-        tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: textField.tag, inSection: 0), atScrollPosition: .Top, animated: true)
+        return true
+    }
+    
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        textField.backgroundColor = UIColor.clearColor()
+        textField.borderStyle = .None
         
         return true
     }
