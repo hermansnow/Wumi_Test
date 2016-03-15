@@ -29,5 +29,12 @@ class ProfileInputCell: ProfileCell {
 
         // Configure the view for the selected state
     }
+    
+    func reset() {
+        titleLabel.text = nil
+        inputTextField.text = nil
+        inputTextField.keyboardType = .Default
+        inputTextField.tag = 0
+    }
 
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate,
-                                 UINavigationControllerDelegate, UIImagePickerControllerDelegate, LocationListDelegate {
+        UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, LocationListDelegate, ProfessionListDelegate {
 
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var maskView: UIView!
@@ -21,7 +21,18 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
     
     lazy var graduationYearPickerView: GraduationYearPickerView = GraduationYearPickerView()
     lazy var user = User.currentUser()
-    var cellTitles = ["Display Name", "Year you graduated", "Your location", "Your email", "Phone"]
+    var cellTitles = ["Display Name", "Year you graduated", "Your location", "Professions", "Your email", "Phone"]
+    
+    lazy var selectedProfessions = Set<Profession>()
+    
+    private enum EditProfileCellRow: Int {
+        case Name = 0
+        case GraduationYear = 1
+        case Location = 2
+        case Profession = 3
+        case Email = 4
+        case Phone = 5
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +42,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
         navigationItem.backBarButtonItem?.enabled = true
         
         // Initialize the tableview
-        tableView.estimatedRowHeight = 60
+        tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorStyle = .None
         tableView.backgroundColor = Constants.General.Color.BackgroundColor
@@ -48,45 +59,26 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
         
         // Initialize the graduation year picker view
         graduationYearPickerView = GraduationYearPickerView(frame: CGRect(origin: CGPoint(x: 0, y: view.frame.height / 3 * 2),
-            size: CGSize(width: view.frame.width, height: view.frame.height / 3)))
+                                                             size: CGSize(width: view.frame.width, height: view.frame.height / 3)))
         graduationYearPickerView.year = user.graduationYear
         graduationYearPickerView.comfirmSelection = {
             self.user.graduationYear = self.graduationYearPickerView.year
             self.graduationYearLabel.text = self.showGraduationLable(self.user.graduationYear)
-            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 0)], withRowAnimation: .None)
+            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: EditProfileCellRow.GraduationYear.rawValue, inSection: 0)], withRowAnimation: .None)
         }
         graduationYearPickerView.cancelSelection = {
             self.graduationYearLabel.text = self.showGraduationLable(self.user.graduationYear)
-            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 0)], withRowAnimation: .None)
+            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: EditProfileCellRow.GraduationYear.rawValue, inSection: 0)], withRowAnimation: .None)
         }
         
         // Initialize the mask view
         maskView.backgroundColor = Constants.General.Color.MaskColor
 
         // Fetch user data
-        user.fetchInBackgroundWithBlock { (result, error) -> Void in
-            self.displayUserData()
-            
-            // Create contact if it is nil
-            if self.user.contact ==  nil {
-                self.user.contact = Contact()
-                self.user.saveInBackground()
-            }
-            // Otherwise, fetch data from server
-            else {
-                self.user.contact!.fetchInBackgroundWithBlock { (result, error) -> Void in
-                    if error != nil {
-                        print("Error when fetch contact for user " + "\(self.user)" + ": " + "\(error)")
-                        return
-                    }
-                    
-                    self.displayContactInformation()
-                }
-            }
-        }
+        displayUserData()
     }
     
-    // MARK: Table view data source
+    // MARK: UITableView delegates
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -101,71 +93,68 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch (indexPath.row) {
         // Name Cell
-        case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputCell", forIndexPath: indexPath) as! ProfileInputCell
+        case EditProfileCellRow.Name.rawValue:
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputCell") as! ProfileInputCell
+            cell.reset()
             cell.titleLabel.text = cellTitles[safe: indexPath.row]
             cell.inputTextField.text = user.name
             cell.inputTextField.keyboardType = .NamePhonePad
-            cell.inputTextField.tag = indexPath.row
+            cell.inputTextField.tag = EditProfileCellRow.Name.rawValue
             cell.inputTextField.delegate = self
             return cell
+        
         // Graduation Year Cell
-        case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputCell", forIndexPath: indexPath) as! ProfileInputCell
+        case EditProfileCellRow.GraduationYear.rawValue:
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputCell") as! ProfileInputCell
+            cell.reset()
             cell.titleLabel.text = cellTitles[safe: indexPath.row]
             cell.inputTextField.text = showGraduationLable(graduationYearPickerView.year)
             cell.inputTextField.inputView = graduationYearPickerView
-            cell.inputTextField.tag = indexPath.row
+            cell.inputTextField.tag = EditProfileCellRow.GraduationYear.rawValue
             cell.inputTextField.delegate = self
             return cell
+        
         // Location Cell
-        case 2:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListCell", forIndexPath: indexPath) as! ProfileListCell
+        case EditProfileCellRow.Location.rawValue:
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListCell") as! ProfileListCell
+            cell.reset()
+            cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
             cell.titleLabel.text = cellTitles[safe: indexPath.row]
-            if let contact = user.contact {
-                cell.removeAllListElements()
-                let label = ProfileListLabel()
-                label.text = contact.location()
-                if label.text?.characters.count > 0 {
-                    cell.addListElement(label)
-                }
-            }
-            cell.addButton.addTarget(self, action: "addLocation:", forControlEvents: .TouchUpInside)
-            cell.setNeedsDisplay()
+            cell.addButton.addTarget(self, action: "selectLocation:", forControlEvents: .TouchUpInside)
             return cell
+            
+        // Profession Cell
+        case EditProfileCellRow.Profession.rawValue:
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListCell") as! ProfileListCell
+            cell.reset()
+            cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
+            cell.titleLabel.text = cellTitles[safe: indexPath.row]
+            cell.addButton.addTarget(self, action: "selectProfession:", forControlEvents: .TouchUpInside)
+            return cell
+        
         // Email Cell
-        case 3:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchCell", forIndexPath: indexPath) as! ProfileInputSwitchCell
+        case EditProfileCellRow.Email.rawValue:
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchCell") as! ProfileInputSwitchCell
+            cell.reset()
             cell.titleLabel.text = cellTitles[safe: indexPath.row]
             cell.inputTextField.text = user.email
             cell.inputTextField.keyboardType = .EmailAddress
             cell.inputTextField.delegate = self
-            cell.inputTextField.tag = indexPath.row
-            if user.emailPublic {
-                cell.statusLabel.text = "Public"
-                cell.statusSwitch.on = true
-            }
-            else {
-                cell.statusLabel.text = "Private"
-                cell.statusSwitch.on = false
-            }
+            cell.inputTextField.tag = EditProfileCellRow.Email.rawValue
+            cell.showPublic = user.emailPublic
             cell.statusSwitch.addTarget(self, action: "changeEmailStatus:", forControlEvents: .ValueChanged)
             return cell
-        case 4:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchCell", forIndexPath: indexPath) as! ProfileInputSwitchCell
+        
+        // Phone Cell
+        case EditProfileCellRow.Phone.rawValue:
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchCell") as! ProfileInputSwitchCell
+            cell.reset()
             cell.titleLabel.text = cellTitles[safe: indexPath.row]
             cell.inputTextField.text = user.phoneNumber
             cell.inputTextField.keyboardType = .PhonePad
             cell.inputTextField.delegate = self
-            cell.inputTextField.tag = indexPath.row
-            if user.phonePublic {
-                cell.statusLabel.text = "Public"
-                cell.statusSwitch.on = true
-            }
-            else {
-                cell.statusLabel.text = "Private"
-                cell.statusSwitch.on = false
-            }
+            cell.inputTextField.tag = EditProfileCellRow.Phone.rawValue
+            cell.showPublic = user.phonePublic
             cell.statusSwitch.addTarget(self, action: "changePhoneStatus:", forControlEvents: .ValueChanged)
             return cell
         default:
@@ -173,6 +162,55 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
         }
         
         return UITableViewCell()
+    }
+    
+    // MARK: UICollectionView delegates
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch (collectionView.tag) {
+        case EditProfileCellRow.Location.rawValue:
+            return 1
+        case EditProfileCellRow.Profession.rawValue:
+            return selectedProfessions.count
+        default:
+            return 0
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath) as? ProfileCollectionCell else {
+            return ProfileCollectionCell()
+        }
+        
+        switch (collectionView.tag) {
+        case EditProfileCellRow.Location.rawValue:
+            guard let contact = user.contact where contact.location().characters.count > 0 else {
+                break
+            }
+            cell.cellLabel.text = contact.location()
+            
+        case EditProfileCellRow.Profession.rawValue:
+            guard let profession = selectedProfessions[index: indexPath.row] else {
+                break
+            }
+            cell.cellLabel.text = profession.name
+            
+        default:
+            break
+        }
+        
+        // Use "selected" style for all profile list values
+        cell.style = .Selected
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 5
     }
     
     // MARK: UIImagePicker delegates and functions
@@ -195,19 +233,9 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
     // MARK: UItextField delegates
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        textField.backgroundColor = Constants.General.Color.BackgroundColor
-        textField.borderStyle = .RoundedRect
-        
         UIView.animateWithDuration(0.5) { () -> Void in
             self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.tableView.frame.size.height - 140, right: 0)
         }
-        
-        return true
-    }
-    
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-        textField.backgroundColor = UIColor.clearColor()
-        textField.borderStyle = .None
         
         return true
     }
@@ -224,21 +252,21 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
     func textFieldDidEndEditing(textField: UITextField) {
         // Validate input of each text field
         switch (textField.tag) {
-        case 0:
+        case EditProfileCellRow.Name.rawValue:
             user.name = textField.text
             if let name = user.name {
                 user.pinyin = name.toChinesePinyin()
             }
-        case 1:
+        case EditProfileCellRow.GraduationYear.rawValue:
             if let graduationYear = textField.text where graduationYear.characters.count > 0 {
                 user.graduationYear = Int(graduationYear)!
             }
             else {
                 user.graduationYear = 0
             }
-        case 3:
+        case EditProfileCellRow.Email.rawValue:
             user.email = textField.text
-        case 4:
+        case EditProfileCellRow.Phone.rawValue:
             user.phoneNumber = textField.text
         default:
             break
@@ -252,8 +280,16 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
             user.contact!.country = selectedLocation.country
             user.contact!.city = selectedLocation.city
             
-            tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 2, inSection: 0)], withRowAnimation: .None)
+            tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: EditProfileCellRow.Location.rawValue, inSection: 0)], withRowAnimation: .None)
         }
+    }
+    
+    // MARK: ProfessionList delegates
+    
+    func finishProfessionSelection(selectedProfessions: Set<Profession>) {
+        self.selectedProfessions = selectedProfessions
+        
+        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: EditProfileCellRow.Profession.rawValue, inSection: 0)], withRowAnimation: .None)
     }
     
     // MARK: Actions
@@ -261,6 +297,9 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
     @IBAction func save(sender: AnyObject) {
         // Dismiss current first responder
         view.endEditing(true)
+        
+        // Update user data
+        updateUserData()
         
         // Save user changes
         let option = AVSaveOption()
@@ -293,23 +332,32 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
         presentViewController(addImageSheet, animated: true, completion: nil)
     }
     
+    func updateUserData() {
+        user.updateProfessions(Array(selectedProfessions))
+    }
+    
     // Action when click the add button on location cell
-    func addLocation(sender: UIButton) {
+    func selectLocation(sender: UIButton) {
         performSegueWithIdentifier("Select Location", sender: self)
+    }
+    
+    // Action when click the add button on profession cell
+    func selectProfession(sender: UIButton) {
+        performSegueWithIdentifier("Select Profession", sender: self)
     }
     
     // Action when click the switch button on email cell
     func changeEmailStatus(sender: UISwitch) {
         user.emailPublic = sender.on
         
-        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 3, inSection: 0)], withRowAnimation: .None)
+        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: EditProfileCellRow.Email.rawValue, inSection: 0)], withRowAnimation: .None)
     }
     
     // Action when click the switch button on phone cell
     func changePhoneStatus(sender: UISwitch) {
         user.phonePublic = sender.on
         
-        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 4, inSection: 0)], withRowAnimation: .None)
+        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: EditProfileCellRow.Phone.rawValue, inSection: 0)], withRowAnimation: .None)
     }
     
     // MARK: Navigation
@@ -320,43 +368,85 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
             countryListViewController.locationDelegate = self
             countryListViewController.selectedLocation = Location(Country: user.contact!.country, City: user.contact!.city)
         }
+        
+        if let professionListViewController = segue.destinationViewController as? ProfessionListViewController where segue.identifier == "Select Profession" {
+            professionListViewController.professionDelegate = self
+            professionListViewController.avatarImage = profileImageView.image
+            professionListViewController.selectedProfessions = selectedProfessions
+        }
     }
     
     // MARK: Help functions
     
     private func displayUserData() {
-        user.loadAvatar(CGSize(width: profileImageView.frame.width, height: profileImageView.frame.height)) { (image, error) -> Void in
-            if error != nil {
-                print("\(error)")
+        // Fetch user data
+        user.fetchInBackgroundWithBlock() { (result, error) -> Void in
+            guard let user = result as? User else {
+                return
             }
             
-            self.profileImageView.image = image
+            self.user = user
+            
+            self.displayContactInformation()
+            
+            self.user.loadAvatar(CGSize(width: self.profileImageView.frame.width, height: self.profileImageView.frame.height)) { (image, error) -> Void in
+                if error != nil {
+                    print("\(error)")
+                }
+                
+                self.profileImageView.image = image
+            }
+            
+            self.nameLabel.text = self.user.name
+            
+            if self.user.graduationYear > 0 {
+                self.graduationYearLabel.text = "(\(self.user.graduationYear))"
+            }
+            else {
+                self.graduationYearLabel.text = ""
+            }
+            
+            // Load favorite users for current user
+            Profession.fetchAllInBackground(self.user.professions) { (results, error) -> Void in
+                guard let selectedProfessions = results as? [Profession] else {
+                    return
+                }
+                
+                for selectedProfession in selectedProfessions {
+                    self.selectedProfessions.insert(selectedProfession)
+                }
+                
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: EditProfileCellRow.Profession.rawValue, inSection: 0)], withRowAnimation: .None)
+            }
+            
+            // Reload specific rows
+            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: EditProfileCellRow.Name.rawValue, inSection: 0),
+                                                   NSIndexPath(forRow: EditProfileCellRow.GraduationYear.rawValue, inSection: 0),
+                                                   NSIndexPath(forRow: EditProfileCellRow.Email.rawValue, inSection: 0),
+                                                   NSIndexPath(forRow: EditProfileCellRow.Phone.rawValue, inSection: 0)], withRowAnimation: .None)
+            
         }
-        
-        nameLabel.text = user.name
-        
-        if user.graduationYear > 0 {
-            graduationYearLabel.text = "(\(user.graduationYear))"
-        }
-        else {
-            graduationYearLabel.text = ""
-        }
-        
-        // Reload specific rows
-        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0),
-                                          NSIndexPath(forRow: 1, inSection: 0),
-                                          NSIndexPath(forRow: 3, inSection: 0),
-                                          NSIndexPath(forRow: 4, inSection: 0)], withRowAnimation: .None)
     }
     
     private func displayContactInformation() {
-        locationLabel.text = ""
-        
-        if let contact = user.contact {
-            locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
+        // Create contact if it is nil
+        if self.user.contact ==  nil {
+            self.user.contact = Contact()
+            self.user.saveInBackground()
         }
-        
-        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 2, inSection: 0)], withRowAnimation: .None)
+            // Otherwise, fetch data from server
+        else {
+            self.user.contact!.fetchInBackgroundWithBlock { (result, error) -> Void in
+                if error != nil {
+                    print("Error when fetch contact for user " + "\(self.user)" + ": " + "\(error)")
+                    return
+                }
+                
+                self.locationLabel.text = "\(Location(Country: self.user.contact!.country, City: self.user.contact!.city))"
+                
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: EditProfileCellRow.Location.rawValue, inSection: 0)], withRowAnimation: .None)
+            }
+        }
     }
     
     private func showGraduationLable(graduationYear: Int) -> String {
@@ -364,7 +454,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITableV
             return "Please select your graduation year"
         }
         else {
-            return "(\(graduationYear))"
+            return "\(graduationYear)"
         }
     }
     

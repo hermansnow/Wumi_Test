@@ -1,16 +1,14 @@
 //
-//  TextLinkButton.swift
+//  SettingSwitch.swift
 //  Wumi
 //
-//  Created by Zhe Cheng on 3/3/16.
+//  Created by Zhe Cheng on 3/11/16.
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
 import UIKit
 
-class TextLinkButton: UIButton {
-    
-    lazy var textLinkFont = Constants.General.Font.LinkButtonFont
+class SettingSwitch: UISwitch {
     
     convenience init() {
         self.init(frame: CGRectZero)
@@ -29,13 +27,7 @@ class TextLinkButton: UIButton {
     }
     
     private func setProperty() {
-        setTitleColor(Constants.General.Color.ThemeColor, forState: .Normal)
-        titleLabel?.font = textLinkFont
-    }
-    
-    override func drawRect(rect: CGRect) {
-        titleLabel?.font = textLinkFont
-        
-        super.drawRect(rect)
+        tintColor = Constants.General.Color.BackgroundColor
+        onTintColor = Constants.General.Color.ThemeColor
     }
 }

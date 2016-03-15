@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Register classes
         Contact.registerSubclass()
+        Profession.registerSubclass()
         
         // Set Navigation bar color
         UINavigationBar.appearance().barTintColor = Constants.General.Color.ThemeColor
@@ -58,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AVOSCloud.setServiceRegion(.US)
         AVOSCloud.setApplicationId("WtWKobgICmjMgPlmNBiVaeme-MdYXbMMI", clientKey: "OEKOIcQ7Wjnk4wuurFNlvmO1")
         // China Setting
-        //AVOSCloud.setApplicationId("想ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
+        //AVOSCloud.setServiceRegion(.CN)
+        //AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
     }
 }

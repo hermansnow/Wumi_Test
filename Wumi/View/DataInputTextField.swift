@@ -71,13 +71,28 @@ class DataInputTextField: UIView {
         }
     }
     
-    override func drawRect(rect: CGRect) {
+    convenience init() {
+        self.init(frame: CGRectZero)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
+        setProperty()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        setProperty()
+    }
+    
+    func setProperty() {
         // Set up textfield
         inputTextField.font = Constants.General.Font.InputFont
         inputTextField.textColor = Constants.General.Color.InputTextColor
         inputTextField.clearsOnBeginEditing = false
-        inputTextField.clearButtonMode = .WhileEditing
+        inputTextField.clearButtonMode = .Never
         inputTextField.autocapitalizationType = .None
         
         // Set up components
@@ -85,7 +100,9 @@ class DataInputTextField: UIView {
         informationLabel.font = Constants.General.Font.ErrorFont
         informationLabel.numberOfLines = 0
         informationLabel.adjustsFontSizeToFitWidth = true
-        
+    }
+    
+    override func drawRect(rect: CGRect) {
         // set information view and its stack view
         let informationStackView = UIStackView()
         informationStackView.axis = .Horizontal

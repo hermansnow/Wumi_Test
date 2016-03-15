@@ -22,6 +22,7 @@ class User: AVUser {
     @NSManaged var pinyin: String?
     @NSManaged weak var contact: Contact?
     @NSManaged var favoriteUsers: AVRelation?
+    @NSManaged var professions: [Profession]
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
@@ -35,34 +36,6 @@ class User: AVUser {
         dispatch_once(&Static.onceToken) {
              self.registerSubclass() // Register the subclass
         }
-    }
-    
-    // MARK: Property functions
-    
-    func addFavoriteUser(favoriteUser: User!) {
-        // Do not allow favorite yourself
-        if self == favoriteUser { return }
-        
-        favoriteUsers!.addObject(favoriteUser)
-        
-        saveInBackground()
-    }
-    
-    func removeFavoriteUser(user: User!) {
-        // Do not allow favorite yourself
-        if self == user { return }
-        
-        favoriteUsers!.removeObject(user    )
-        
-        saveInBackground()
-    }
-    
-    func findFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
-        let query = favoriteUsers!.query()
-        
-        query.whereKey("objectId", equalTo: user.objectId)
-        
-        query.countObjectsInBackgroundWithBlock(block)
     }
     
     // MARK: Validation functions
@@ -162,6 +135,13 @@ class User: AVUser {
     }
     
     // MARK: Queries
+    
+    func fetchUser(block: AVObjectResultBlock!) {
+        let query = User.query()
+        query.includeKey("professions")
+        query.getObjectInBackgroundWithId(self.objectId, block: block)
+    }
+    
     class func loadUsers(skip: Int, limit: Int, WithName name: String = "", block: AVArrayResultBlock!) {
         let query = User.query()
         query.cachePolicy = .NetworkElseCache
@@ -192,4 +172,40 @@ class User: AVUser {
         query.findObjectsInBackgroundWithBlock(block)
     }
     
+    // MARK: Favorite user queries
+    
+    func addFavoriteUser(favoriteUser: User!) {
+        // Do not allow favorite yourself
+        if self == favoriteUser { return }
+        
+        favoriteUsers!.addObject(favoriteUser)
+        
+        saveInBackground()
+    }
+    
+    func removeFavoriteUser(user: User!) {
+        // Do not allow favorite yourself
+        if self == user { return }
+        
+        favoriteUsers!.removeObject(user    )
+        
+        saveInBackground()
+    }
+    
+    func findFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
+        let query = favoriteUsers!.query()
+        
+        query.whereKey("objectId", equalTo: user.objectId)
+        
+        query.countObjectsInBackgroundWithBlock(block)
+    }
+    
+    // MARK: Profession queries
+    
+    func updateProfessions(newProfessions: [Profession]) {
+        professions.removeAll()
+        professions.appendContentsOf(newProfessions)
+        
+        saveInBackground()
+    }
 }

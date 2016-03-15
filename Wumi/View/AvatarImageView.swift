@@ -25,6 +25,7 @@ class AvatarImageView: UIView {
     override func drawRect(rect: CGRect) {
         // Set up container image view
         containerImageView.frame = rect
+        containerImageView.contentMode = .ScaleAspectFill
         addSubview(containerImageView)
         
         // Set circular avatar image

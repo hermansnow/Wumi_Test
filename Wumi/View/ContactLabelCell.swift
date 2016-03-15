@@ -14,6 +14,21 @@ class ContactLabelCell: UITableViewCell {
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet var actionButtons: [UIButton]!
     
+    var detail: String? {
+        didSet {
+            detailLabel.text = detail
+            for button in actionButtons {
+                if detail != nil && detail!.characters.count > 0 {
+                    button.enabled = true
+                }
+                else {
+                    button.enabled = false
+                }
+
+            }
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -25,11 +40,13 @@ class ContactLabelCell: UITableViewCell {
         
         selectionStyle = .None
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func reset() {
+        titleLabel.text = nil
+        detailLabel.text = nil
+        for button in actionButtons {
+            button.removeTarget(nil, action: nil, forControlEvents: .AllTouchEvents)
+        }
     }
 
 }

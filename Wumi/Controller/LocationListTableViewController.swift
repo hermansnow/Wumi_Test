@@ -244,7 +244,7 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
     }
 }
 
-protocol LocationListDelegate: NSObjectProtocol {
+protocol LocationListDelegate {
     func finishLocationSelection(location: Location?)
 }
 

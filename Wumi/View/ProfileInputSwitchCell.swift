@@ -13,7 +13,14 @@ class ProfileInputSwitchCell: ProfileCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var statusSwitch: UISwitch!
+    @IBOutlet weak var statusSwitch: SettingSwitch!
+    
+    var showPublic = true {
+        didSet {
+            statusSwitch.on = showPublic
+            statusLabel.text = showPublic ? "Public" : "Private"
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,8 +34,15 @@ class ProfileInputSwitchCell: ProfileCell {
         inputTextField.borderStyle = .None
         inputTextField.font = Constants.General.Font.InputFont
         inputTextField.textColor = Constants.General.Color.InputTextColor
-        
-        statusSwitch.onTintColor = Constants.General.Color.ThemeColor
+    }
+    
+    func reset() {
+        titleLabel.text = nil
+        inputTextField.text = nil
+        inputTextField.keyboardType = .Default
+        inputTextField.tag = 0
+        showPublic = true
+        statusSwitch.removeTarget(nil, action: nil, forControlEvents: .ValueChanged)
     }
 
 }

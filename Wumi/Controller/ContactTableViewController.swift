@@ -110,7 +110,7 @@ class ContactTableViewController: UITableViewController, UISearchControllerDeleg
         }
         
         // Load data
-        //self.reloadUsers()
+        self.reloadUsers()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

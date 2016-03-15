@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class ContactViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate, FavoriteButtonDelegate {
+class ContactViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, MFMailComposeViewControllerDelegate, FavoriteButtonDelegate {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var maskView: UIView!
@@ -21,7 +21,7 @@ class ContactViewController: UIViewController, UITableViewDataSource, UITableVie
     
     var user: User?
     var loginUser = User.currentUser()
-    var cellTitles = ["email", "Phone"]
+    var cellTitles = ["Professions", "Email", "Phone"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +31,15 @@ class ContactViewController: UIViewController, UITableViewDataSource, UITableVie
         navigationItem.backBarButtonItem?.enabled = true
         
         // Initialize the tableview
-        tableView.estimatedRowHeight = 60
+        tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorStyle = .None
+        tableView.backgroundColor = Constants.General.Color.BackgroundColor
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
         // Register nib
         tableView.registerNib(UINib(nibName: "ContactLabelCell", bundle: nil), forCellReuseIdentifier: "ContactLabelCell")
+        tableView.registerNib(UINib(nibName: "ProfileListCell", bundle: nil), forCellReuseIdentifier: "ProfileListCell")
         
         // Add delegates
         tableView.dataSource = self
@@ -65,53 +67,45 @@ class ContactViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch (indexPath.row) {
-        // Email Cell
+        // Profession Cell
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ContactLabelCell", forIndexPath: indexPath) as! ContactLabelCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListCell") as! ProfileListCell
+            //cell.reset()
+            cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
+            cell.titleLabel.text = cellTitles[safe: indexPath.row]
+            cell.addButton.hidden = true
+            return cell
+        // Email Cell
+        case 1:
+            let cell = tableView.dequeueReusableCellWithIdentifier("ContactLabelCell") as! ContactLabelCell
+            cell.reset()
             cell.titleLabel.text = cellTitles[safe: indexPath.row]
             if user != nil && user!.emailPublic {
-                cell.detailLabel.text = user!.email
+                cell.detail = user!.email
                 
                 // Add email button
                 let emailButton = cell.actionButtons[1]
                 emailButton.setTitle("Sent", forState: .Normal)
                 emailButton.addTarget(self, action: "sendEmail:", forControlEvents: .TouchUpInside)
-                if cell.detailLabel.text?.characters.count > 0 {
-                    emailButton.enabled = true
-                }
-                else {
-                    emailButton.enabled = false
-                }
             }
             return cell
         // Phone  Cell
-        case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ContactLabelCell", forIndexPath: indexPath) as! ContactLabelCell
+        case 2:
+            let cell = tableView.dequeueReusableCellWithIdentifier("ContactLabelCell") as! ContactLabelCell
+            cell.reset()
             cell.titleLabel.text = cellTitles[safe: indexPath.row]
             if user != nil && user!.phonePublic {
-                cell.detailLabel.text = user?.phoneNumber
+                cell.detail = user?.phoneNumber
                 
                 // Add SMS button
                 let smsButton = cell.actionButtons[0]
                 smsButton.setTitle("Message", forState: .Normal)
                 smsButton.addTarget(self, action: "sendSMS:", forControlEvents: .TouchUpInside)
-                if cell.detailLabel.text?.characters.count > 0 {
-                    smsButton.enabled = true
-                }
-                else {
-                    smsButton.enabled = false
-                }
                 
                 // Add phone button
                 let phoneButton = cell.actionButtons[1]
                 phoneButton.setTitle("Call", forState: .Normal)
                 phoneButton.addTarget(self, action: "callPhone:", forControlEvents: .TouchUpInside)
-                if cell.detailLabel.text?.characters.count > 0 {
-                    phoneButton.enabled = true
-                }
-                else {
-                    phoneButton.enabled = false
-                }
             }
             return cell
         default:
@@ -119,6 +113,47 @@ class ContactViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         return UITableViewCell()
+    }
+    
+    // MARK: UICollectionView delegates
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch (collectionView.tag) {
+        case 0:
+            return user!.professions.count
+        default:
+            return 0
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath) as? ProfileCollectionCell else {
+            return ProfileCollectionCell()
+        }
+        
+        switch (collectionView.tag) {
+        case 0:
+            guard let profession = user?.professions[safe: indexPath.row] else {
+                break
+            }
+            cell.cellLabel.text = profession.name
+            
+        default:
+            break
+        }
+        
+        // Use "selected" style for all profile list values
+        cell.style = .Selected
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 5
     }
     
     // MARK: MFMailComposeViewController delegates
@@ -201,7 +236,13 @@ class ContactViewController: UIViewController, UITableViewDataSource, UITableVie
     private func displayUserData() {
         if let contactUser = user {
             // Fetch user data
-            contactUser.fetchInBackgroundWithBlock { (result, error) -> Void in
+            contactUser.fetchUser { (result, error) -> Void in
+                guard let user = result as? User else {
+                    return
+                }
+                
+                self.user = user
+                
                 contactUser.loadAvatar(CGSize(width: self.backgroundImageView.frame.width, height: self.backgroundImageView.frame.height)) { (image, error) -> Void in
                     if error != nil {
                         print("\(error)")
@@ -216,7 +257,8 @@ class ContactViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 // Reload specific rows
                 self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0),
-                    NSIndexPath(forRow: 1, inSection: 0)], withRowAnimation: .None)
+                                                       NSIndexPath(forRow: 1, inSection: 0),
+                                                       NSIndexPath(forRow: 2, inSection: 0)], withRowAnimation: .None)
                 
                 self.loginUser.findFavoriteUser(contactUser, block: { (count, error) -> Void in
                     self.favoriteButton.selected = count > 0

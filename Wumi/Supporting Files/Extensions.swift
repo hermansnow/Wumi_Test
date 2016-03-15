@@ -9,8 +9,41 @@
 import Foundation
 
 extension Array {
-    subscript (safe index: Int) -> Element? {
+    subscript(safe index: Int) -> Element? {
         return indices.contains(index) ? self[index] : nil
+    }
+    
+    func groupBy <Key: Hashable>(group: (Element) -> Key) -> [Key: [Element]] {
+        var result = [Key: [Element]]()
+        
+        for element in self {
+            let groupKey = group(element)
+            
+            if result[groupKey] == nil {
+                result[groupKey] = [Element]()
+            }
+            result[groupKey]?.append(element)
+        }
+        
+        return result
+    }
+}
+
+extension Set {
+    subscript(index index: Int) -> Element? {
+        return self[startIndex.advancedBy(index)]
+    }
+    
+    func toArray <T: Hashable>(map: (Element) -> T?) -> Set<T> {
+        var result = Set<T>()
+        
+        for element in self {
+            if let value = map(element) {
+                result.insert(value)
+            }
+        }
+        
+        return result
     }
 }
 
