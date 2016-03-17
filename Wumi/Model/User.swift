@@ -65,6 +65,7 @@ class User: AVUser {
     
     // Validate username
     func validateUserName(inout error: String) -> Bool {
+        error = ""
         if ((self.username?.utf16.count) <= 3) {
             error = "Length of user name should larger than 3 characters"
             return false
@@ -74,6 +75,7 @@ class User: AVUser {
     
     // Validate password
     func validateUserPassword(inout error: String) -> Bool {
+        error = ""
         if ((self.password?.utf16.count) <= 3) {
             error = "Length of user password should larger than 3 characters"
             return false
@@ -83,6 +85,7 @@ class User: AVUser {
     
     // Validate comfirm password
     func validateConfirmPassword(inout error: String) -> Bool {
+        error = ""
         if (self.password != self.confirmPassword) {
             error = "Passwords entered not match"
             return false
@@ -94,10 +97,8 @@ class User: AVUser {
     
     // Load avatar. This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background
     func loadAvatar(size: CGSize, block: AVImageResultBlock!) {
-        if avatarImageFile == nil {
-            if block != nil {
-                block!(nil, NSError(domain: "wumi.com", code: 1, userInfo: nil))
-            }
+        guard avatarImageFile != nil else {
+            block!(nil, NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
         }
         
@@ -106,43 +107,31 @@ class User: AVUser {
     
     // Save avatar to cloud server
     func saveAvatarFile(avatarImage: UIImage?, block: (success: Bool, error: NSError?) -> Void) {
-        if avatarImage == nil {
-            block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: nil))
+        guard let image = avatarImage else {
+            block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Image is nil"]))
             return
         }
         
-        if let imageData = scaleImage(avatarImage!, ToSize: 500) {
-            avatarImageFile = AVFile(name: "avatar.jpeg", data: imageData)
-            avatarImageFile!.saveInBackgroundWithBlock(block)
+        // Scale image
+        guard let imageData = image.scaleToSize(500) else {
+            block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Cannot scale image"]))
+            return
         }
-    }
-    
-    // Compress image in JPEG format. The max size of image save in Parse server is 10.0MB
-    func scaleImage(image: UIImage, ToSize size: Int) -> NSData? {
-        var compress:CGFloat = 1.0
-        var imageData:NSData?
         
-        if let jpegData = UIImageJPEGRepresentation(image, compress) {
-            compress = CGFloat(size) / CGFloat(jpegData.length)
-            if compress < 1.0 {
-                imageData = UIImageJPEGRepresentation(image, compress);
-            }
-            else {
-                imageData = jpegData
-            }
-        }
-        return imageData;
+        self.avatarImageFile = AVFile(name: "avatar.jpeg", data: imageData)
+        self.avatarImageFile!.saveInBackgroundWithBlock(block)
     }
     
-    // MARK: Queries
+    // MARK: User queries
     
-    func fetchUser(block: AVObjectResultBlock!) {
+    // Fetch a user based on objectID
+    func fetchUser(objectId id: String, block: AVObjectResultBlock!) {
         let query = User.query()
         query.includeKey("professions")
-        query.getObjectInBackgroundWithId(self.objectId, block: block)
+        query.getObjectInBackgroundWithId(id, block: block)
     }
     
-    class func loadUsers(skip: Int, limit: Int, WithName name: String = "", block: AVArrayResultBlock!) {
+    class func loadUsers(skip skip: Int, limit: Int, WithName name: String = "", block: AVArrayResultBlock!) {
         let query = User.query()
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 24 * 3600
@@ -174,22 +163,45 @@ class User: AVUser {
     
     // MARK: Favorite user queries
     
-    func addFavoriteUser(favoriteUser: User!) {
-        // Do not allow favorite yourself
-        if self == favoriteUser { return }
+    func addFavoriteUser(user: User!, block: AVBooleanResultBlock?) {
+        // Can not favorite yourself
+        guard let favoriteUsers = self.favoriteUsers where user != self else {
+            if block != nil {
+                return block!(false, NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            }
+            else {
+                return
+            }
+        }
         
-        favoriteUsers!.addObject(favoriteUser)
+        favoriteUsers.addObject(user)
         
-        saveInBackground()
+        if block != nil {
+            self.saveInBackgroundWithBlock(block!)
+        }
+        else {
+            self.saveInBackground()
+        }
     }
     
-    func removeFavoriteUser(user: User!) {
-        // Do not allow favorite yourself
-        if self == user { return }
+    func removeFavoriteUser(user: User!, block: AVBooleanResultBlock?) {
+        guard let favoriteUsers = self.favoriteUsers else {
+            if block != nil {
+                return block!(false, NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            }
+            else {
+                return
+            }
+        }
         
-        favoriteUsers!.removeObject(user    )
+        favoriteUsers.removeObject(user)
         
-        saveInBackground()
+        if block != nil {
+            self.saveInBackgroundWithBlock(block!)
+        }
+        else {
+            self.saveInBackground()
+        }
     }
     
     func findFavoriteUser(user: User!, block: AVIntegerResultBlock!) {

@@ -17,17 +17,17 @@ class SettingSwitch: UISwitch {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setProperty()
+        self.setProperty()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        setProperty()
+        self.setProperty()
     }
     
     private func setProperty() {
-        tintColor = Constants.General.Color.BackgroundColor
-        onTintColor = Constants.General.Color.ThemeColor
+        self.tintColor = Constants.General.Color.BackgroundColor
+        self.onTintColor = Constants.General.Color.ThemeColor
     }
 }

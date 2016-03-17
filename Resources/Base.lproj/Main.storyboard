@@ -329,7 +329,7 @@
                         <outlet property="formScrollView" destination="NYC-XZ-NVR" id="2Fr-Ep-WdP"/>
                         <outlet property="passwordTextField" destination="MUa-dl-wV5" id="wad-cI-sEb"/>
                         <outlet property="usernameTextField" destination="DzR-Xk-4mm" id="RyZ-Yl-ObB"/>
-                        <segue destination="xWV-4c-tDk" kind="show" identifier="Show Profile Form" id="H71-kn-BNo"/>
+                        <segue destination="xWV-4c-tDk" kind="show" identifier="Add Profile" id="H71-kn-BNo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BH3-7E-xOC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -906,9 +906,6 @@
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="image" keyPath="image" value="Favorite"/>
                                                                 </userDefinedRuntimeAttributes>
-                                                                <connections>
-                                                                    <action selector="changeFavorite:" destination="Mkx-Nv-AFl" eventType="touchUpInside" id="rfH-wG-8gG"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>

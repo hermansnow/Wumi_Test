@@ -60,6 +60,7 @@
 		DFA93ADD1C91EE0600ECA503 /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */; };
 		DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */; };
 		DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */; };
+		DFB0DC731C99CB87006BCD07 /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */; };
 		DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */; };
 		DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */; };
 		DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */; };
@@ -137,6 +138,7 @@
 		DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FavoriteButton.swift; path = View/FavoriteButton.swift; sourceTree = "<group>"; };
 		DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectPhotoActionSheet.swift; path = Controller/SelectPhotoActionSheet.swift; sourceTree = "<group>"; };
 		DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactViewController.swift; path = Controller/ContactViewController.swift; sourceTree = "<group>"; };
+		DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileRow.swift; path = Model/ProfileRow.swift; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraduationYearPickerView.swift; path = View/GraduationYearPickerView.swift; sourceTree = "<group>"; };
 		DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataInputTextField.swift; path = View/DataInputTextField.swift; sourceTree = "<group>"; };
 		DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollTextFieldViewController.swift; path = Controller/ScrollTextFieldViewController.swift; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				DF72ACEF1C64D20B00F81491 /* Contact.swift */,
 				DF7E3B4A1C92324D000E8741 /* Profession.swift */,
 				DF9F060D1C7B7280008CA6DC /* Location.swift */,
+				DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */,
 				DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */,
 				DFBD2D441BEEF8F800D6FEBC /* Setting.swift */,
 			);
@@ -302,7 +305,6 @@
 			isa = PBXGroup;
 			children = (
 				DFA74C201BF8215900609E83 /* MainTabBarController.swift */,
-				DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */,
 				DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */,
 				DFB4152B1C1E706F00835EFE /* SignIn/SignUp */,
 				DFB4152A1C1E705C00835EFE /* Settings */,
@@ -328,6 +330,7 @@
 				DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */,
 				DFA93AD01C91127800ECA503 /* ProfileCollectionLabel.swift */,
 				DF8D51901C9716F5004D808E /* ProfessionSectionHeader.swift */,
+				DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 		DFB4152B1C1E706F00835EFE /* SignIn/SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */,
 				DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */,
 				DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */,
 				DFBD2D3D1BEC626800D6FEBC /* SignUpAccountViewController.swift */,
@@ -375,7 +379,6 @@
 				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
 				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
 				DFB861471BEDBDF60075014A /* SystemButton.swift */,
-				DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */,
 				DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */,
 				DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */,
 				DFA077441C92A79A00E3382E /* SettingSwitch.swift */,
@@ -554,6 +557,7 @@
 				DF173EF21C86A58600018B4A /* Extensions.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */,
+				DFB0DC731C99CB87006BCD07 /* ProfileRow.swift in Sources */,
 				DFA077451C92A79A00E3382E /* SettingSwitch.swift in Sources */,
 				DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */,
 				DF21176A1C927FDD009109EE /* ProfileCollectionCell.swift in Sources */,

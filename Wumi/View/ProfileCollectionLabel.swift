@@ -17,22 +17,22 @@ class ProfileCollectionLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setProperty()
+        self.setProperty()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        setProperty()
+        self.setProperty()
     }
     
     func setProperty() {
         // Set border
-        layer.borderColor = Constants.General.Color.ThemeColor.CGColor
-        layer.borderWidth = 1.0
+        self.layer.borderColor = Constants.General.Color.ThemeColor.CGColor
+        self.layer.borderWidth = 1.0
         
         // Set properties
-        font = Constants.General.Font.ButtonFont
+        self.font = Constants.General.Font.ButtonFont
     }
     
     override func drawTextInRect(rect: CGRect) {

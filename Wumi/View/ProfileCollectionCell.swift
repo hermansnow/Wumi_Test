@@ -20,16 +20,16 @@ class ProfileCollectionCell: UICollectionViewCell {
     var style = ProfessionCollectionCellStyle.Original {
         didSet {
             // Redisplay if value is changed
-            if style != oldValue {
-                switch (style) {
+            if self.style != oldValue {
+                switch (self.style) {
                 case .Original:
-                    cellLabel.backgroundColor = UIColor.whiteColor()
-                    cellLabel.textColor = UIColor.blackColor()
+                    self.cellLabel.backgroundColor = UIColor.whiteColor()
+                    self.cellLabel.textColor = UIColor.blackColor()
                 case .Selected:
-                    cellLabel.backgroundColor = Constants.General.Color.ThemeColor
-                    cellLabel.textColor = Constants.General.Color.TitleColor
+                    self.cellLabel.backgroundColor = Constants.General.Color.ThemeColor
+                    self.cellLabel.textColor = Constants.General.Color.TitleColor
                 }
-                cellLabel.setNeedsDisplay()
+                self.cellLabel.setNeedsDisplay()
             }
         }
     }
@@ -38,7 +38,7 @@ class ProfileCollectionCell: UICollectionViewCell {
         super.awakeFromNib()
         
         // Set properties
-        cellLabel.backgroundColor = UIColor.whiteColor()
-        cellLabel.textColor = UIColor.blackColor()
+        self.cellLabel.backgroundColor = UIColor.whiteColor()
+        self.cellLabel.textColor = UIColor.blackColor()
     }
 }

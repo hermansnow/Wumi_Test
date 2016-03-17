@@ -8,8 +8,7 @@
 
 import UIKit
 
-class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFieldDelegate {
-    // MARK: Properties
+class AddProfileViewController: ScrollTextFieldViewController {
     
     @IBOutlet weak var avatarBackgroundView: ColorGradientView!
     @IBOutlet weak var avatarImageView: AvatarImageView!
@@ -21,7 +20,7 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
     var user: User!
     private lazy var maskLayer = CAShapeLayer()
     
-    // MARK: Life cycle functions
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,37 +28,43 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
         // Set Date Picker for graduationYearTextField
         let graduationYearPickerView = GraduationYearPickerView(frame: CGRect(origin: CGPoint(x: 0, y: view.frame.height / 3 * 2),
                                                                                 size: CGSize(width: view.frame.width, height: view.frame.height / 3)))
-        graduationYearPickerView.onYearSelected = { (year: Int) in
-            if year == 0 {
+        graduationYearPickerView.comfirmSelection = {
+            if graduationYearPickerView.year == 0 {
                 self.graduationYearTextField.text = nil
             }
             else {
-                self.graduationYearTextField.text = String(year)
+                self.graduationYearTextField.text = String(graduationYearPickerView.year)
             }
         }
-        graduationYearTextField.inputTextField.inputView = graduationYearPickerView
+        graduationYearPickerView.cancelSelection = nil
+        self.graduationYearTextField.inputTextField.inputView = graduationYearPickerView
         
         // Set avatar image
-        avatarImageView.image = avatarImage
-        
-        // Set skip button
-        skipButton.recommanded = false
+        self.avatarImageView.image = avatarImage
         
         // Set background views
-        avatarBackgroundView.colors = [Constants.General.Color.ThemeColor, UIColor.whiteColor()]
-        maskLayer.fillColor = Constants.SignIn.Color.MaskColor.CGColor
+        self.avatarBackgroundView.colors = [Constants.General.Color.ThemeColor, UIColor.whiteColor()]
+        
+        // Add avatar view mask
+        self.maskLayer.fillColor = Constants.SignIn.Color.MaskColor.CGColor
+        self.avatarBackgroundView.layer.insertSublayer(self.maskLayer, below: self.avatarImageView.layer)
         
         // Set textfields
-        nameTextField.inputTextField.autocapitalizationType = .Words
+        self.nameTextField.inputTextField.autocapitalizationType = .Words
+        self.nameTextField.inputTextField.tag = 1
+        self.graduationYearTextField.inputTextField.tag = 2
+        
+        // Set skip button
+        self.skipButton.recommanded = false
         
         // Set delegates
-        nameTextField.delegate = self
-        graduationYearTextField.delegate = self
+        self.nameTextField.delegate = self
+        self.graduationYearTextField.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
         // Set iniatial first responder
-        nameTextField.inputTextField.becomeFirstResponder()
+        self.nameTextField.inputTextField.becomeFirstResponder()
     }
     
     // All codes based on display frames should be called here after layouting subviews
@@ -67,24 +72,22 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
         super.viewDidLayoutSubviews()
         
         // Redraw mask layer
-        maskLayer.removeFromSuperlayer()
-        let maskHeight = avatarBackgroundView.bounds.height * Constants.SignIn.Proportion.MaskHeightWithParentView
+        let maskHeight = self.avatarBackgroundView.bounds.height * Constants.SignIn.Proportion.MaskHeightWithParentView
         let maskWidth = maskHeight * Constants.SignIn.Proportion.MaskWidthWithHeight
-        maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight), cornerRadius: maskWidth / 2).CGPath
-        maskLayer.position = CGPoint(x: (avatarBackgroundView.bounds.width - maskWidth) / 2, y: (avatarBackgroundView.bounds.height - maskHeight) / 2)
-        avatarBackgroundView.layer.insertSublayer(maskLayer, below: avatarImageView.layer)
+        self.maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight),
+                                          cornerRadius: maskWidth / 2).CGPath
+        self.maskLayer.position = CGPoint(x: (avatarBackgroundView.bounds.width - maskWidth) / 2,
+                                          y: (avatarBackgroundView.bounds.height - maskHeight) / 2)
         
         // Redraw DataInput Text Field
-        nameTextField.drawUnderlineBorder()
-        graduationYearTextField.drawUnderlineBorder()
+        self.nameTextField.drawUnderlineBorder()
+        self.graduationYearTextField.drawUnderlineBorder()
     }
     
     // MARK: Actions
     
     @IBAction func addProfile(sender: AnyObject) {
-        dismissInputView()
-        
-        user.saveInBackgroundWithBlock { (success, error) -> Void in
+        self.user.saveInBackgroundWithBlock { (success, error) -> Void in
             if !success {
                 Helper.PopupErrorAlert(self, errorMessage: "\(error)")
             }
@@ -97,31 +100,45 @@ class AddProfileViewController: ScrollTextFieldViewController, DataInputTextFiel
     @IBAction func skip(sender: AnyObject) {
         Helper.RedirectToSignIn()
     }
-    
-    // MARK: UItextField delegatess
-    
+}
+
+// MARK: UITextField delegate
+
+extension AddProfileViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         // Validate input of each text field
         switch textField {
-        case nameTextField.inputTextField:
-            user.name = nameTextField.text
+        case self.nameTextField.inputTextField:
+            self.user.name = nameTextField.text
             if let name = user.name {
                 user.pinyin = name.toChinesePinyin()
             }
+            
         case graduationYearTextField.inputTextField:
-            if let graduationYear = graduationYearTextField.text {
-                if graduationYear.characters.count > 0 {
-                    user.graduationYear = Int(graduationYear)!
-                }
-            }
+            guard let graduationYear = graduationYearTextField.text where graduationYear.characters.count > 0,
+                let graduationYearValue = Int(graduationYear) else { break }
+            user.graduationYear = graduationYearValue
+            
         default:
             break
         }
     }
     
-    // MARK: DataInputTextField delegates
-    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        guard let nextResponder = textField.nextResponderTextField() else {
+            textField.resignFirstResponder()
+            return true
+        }
+        
+        nextResponder.becomeFirstResponder()
+        return false // Do not dismiss keyboard
+    }
+}
+
+// MARK: DataInputTextField delegates
+
+extension AddProfileViewController: DataInputTextFieldDelegate {
     func doneToolButtonClicked(sender: UIBarButtonItem) {
-        dismissInputView()
+        self.view.endEditing(true)
     }
 }

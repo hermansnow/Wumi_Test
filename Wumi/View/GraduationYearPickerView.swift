@@ -8,9 +8,7 @@
 
 import UIKit
 
-class GraduationYearPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    // MARK: Properties
+class GraduationYearPickerView: UIView {
     
     // Subviews: A toolbar with two buttons and an UIPickerView
     var graduationYearPicker: UIPickerView = UIPickerView()
@@ -21,7 +19,7 @@ class GraduationYearPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSo
     private lazy var years = [Int]()
     var year: Int = 0 {
         didSet {
-            graduationYearPicker.selectRow(self.years.indexOf(self.year)!, inComponent: 0, animated: true)
+            self.graduationYearPicker.selectRow(self.years.indexOf(self.year)!, inComponent: 0, animated: true)
         }
     }
     
@@ -34,23 +32,35 @@ class GraduationYearPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSo
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupYearList()
+        
+        self.setupYearList()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupYearList()
+        
+        self.setupYearList()
     }
+    
+    // MARK: Draw view
     
     override func drawRect(rect: CGRect) {
         // Set up top toolbar
-        let cancelButton: UIBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel:")
-        let confirmButton: UIBarButtonItem = UIBarButtonItem(title: "Confirm", style: .Plain, target: self, action: "confirm:")
-        let flexibleSpaceBarItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        toolBar.items = [cancelButton, flexibleSpaceBarItem, confirmButton]
+        let cancelButton: UIBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                                            style: .Plain,
+                                                           target: self,
+                                                           action: "cancel:")
+        let confirmButton: UIBarButtonItem = UIBarButtonItem(title: "Confirm",
+                                                             style: .Plain,
+                                                            target: self,
+                                                            action: "confirm:")
+        let flexibleSpaceBarItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
+                                                                                 target: nil,
+                                                                                 action: nil)
+        self.toolBar.items = [cancelButton, flexibleSpaceBarItem, confirmButton]
         
         // Set up UIPickerView
-        graduationYearPicker.backgroundColor = UIColor.whiteColor()
+        self.graduationYearPicker.backgroundColor = UIColor.whiteColor()
         
         // Add toolbar and UIPickerView into a stackView
         let stackView = UIStackView(arrangedSubviews: [toolBar, graduationYearPicker])
@@ -60,8 +70,6 @@ class GraduationYearPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSo
         stackView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         
         addSubview(stackView)
-        
-        super.drawRect(rect)
     }
     
     // MARK: Actions
@@ -82,22 +90,33 @@ class GraduationYearPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSo
         self.removeFromSuperview()
     }
     
-    // MARK: UIPickerView functions
+    // MARK: Help functions
     
     // Set up picker year list
     private func setupYearList() {
-        years.append(0) // Use 0 for empty input
+        self.years.append(0) // Use 0 for empty input
         
-        for var year = currentYear; year >= 1964; year-- {
-            years.append(year)
+        for var year = self.currentYear; year >= 1964; year-- {
+            self.years.append(year)
         }
         
-        graduationYearPicker.delegate = self
-        graduationYearPicker.dataSource = self
+        self.graduationYearPicker.delegate = self
+        self.graduationYearPicker.dataSource = self
     }
     
-    // Mark: UIPickerView Delegate / Data Source functions
-    
+    class func showGraduationString(year: Int) -> String {
+        if year == 0 {
+            return ""
+        }
+        else {
+            return "\(year)"
+        }
+    }
+}
+
+// Mark: UIPickerView delegate & data source
+
+extension GraduationYearPickerView: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -105,11 +124,12 @@ class GraduationYearPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component {
         case 0:
-            if (years[row] == 0) {
+            guard let year = self.years[safe: row] else { return nil }
+            if (year == 0) {
                 return "---" // Show blank option as "---"
             }
             else {
-                return "\(years[row])"
+                return "\(year)"
             }
         default:
             return nil
@@ -119,15 +139,16 @@ class GraduationYearPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
         case 0:
-            return years.count
+            return self.years.count
         default:
             return 0
         }
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let year = years[graduationYearPicker.selectedRowInComponent(component)]
-        if let block = onYearSelected {
+        guard let year = self.years[safe: self.graduationYearPicker.selectedRowInComponent(component)] else { return }
+        
+        if let block = self.onYearSelected {
             block(year: year)
         }
         self.year = year

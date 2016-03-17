@@ -10,38 +10,37 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class LocationListTableViewController: UITableViewController, CLLocationManagerDelegate {
+class LocationListTableViewController: UITableViewController {
     
     var locationDelegate: LocationListDelegate?
     
-    var countryList = [String]()
+    lazy var countryList = [String]()
     var selectedLocation: Location?
-    var locationManager = CLLocationManager()
+    lazy var locationManager = CLLocationManager()
     var isLocating = false
     var currentLocation: CLPlacemark?
-
+    
+    // MARK: Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        // Add delegates
+        self.locationManager.delegate = self
+        
+        // Load country list
         loadCountries()
     }
     
     override func viewWillAppear(animated: Bool) {
-        getCurrentLocation()
-        
         super.viewWillAppear(animated)
+        
+        self.getCurrentLocation()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 2
     }
     
@@ -57,7 +56,6 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         switch section {
         case 0:
             return 1
@@ -71,8 +69,9 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch section {
         case 0:
-            if !CLLocationManager.locationServicesEnabled()
-                || CLLocationManager.authorizationStatus() == .Denied || CLLocationManager.authorizationStatus() == .Restricted {
+            if !CLLocationManager.locationServicesEnabled() ||
+                CLLocationManager.authorizationStatus() == .Denied ||
+                CLLocationManager.authorizationStatus() == .Restricted {
                     let footerView = UITableViewHeaderFooterView()
                     
                     let warningLable = UILabel(frame: CGRect(x: 40, y: 10, width: tableView.frame.width - 80, height: tableView.sectionFooterHeight))
@@ -85,9 +84,8 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
                     footerView.addSubview(warningLable)
                     return footerView
             }
-            else {
-                return nil
-            }
+            return nil
+        
         default:
             return nil
         }
@@ -96,26 +94,24 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch section {
         case 0:
-            if !CLLocationManager.locationServicesEnabled()
-                || CLLocationManager.authorizationStatus() == .Denied || CLLocationManager.authorizationStatus() == .Restricted {
+            if !CLLocationManager.locationServicesEnabled() ||
+                CLLocationManager.authorizationStatus() == .Denied ||
+                CLLocationManager.authorizationStatus() == .Restricted {
                     return 60
             }
-            else {
-                return 0
-            }
+            return 0
+        
         default:
             return 0
         }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCellWithIdentifier("Country Cell", forIndexPath: indexPath)
         
         switch indexPath.section {
         case 0:
-            cell = tableView.dequeueReusableCellWithIdentifier("Country Cell", forIndexPath: indexPath)
-            
-            if currentLocation == nil {
+            if self.currentLocation == nil {
                 if isLocating {
                     cell.textLabel!.text = "Location..."
                 }
@@ -123,19 +119,17 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
                     cell.textLabel!.text = "Unable to access your location"
                 }
             }
-            else {
-                // TODO: unwrap check
-                cell.textLabel!.text = (currentLocation?.country)! + ", " + (currentLocation?.locality)!
+            else if let location = self.currentLocation {
+                cell.textLabel!.text = "\(Location(Country: location.country, City: location.locality))"
             }
         case 1:
             var countryName: String?
-            cell = tableView.dequeueReusableCellWithIdentifier("Country Cell", forIndexPath: indexPath)
             
-            countryName = countryList[safe: indexPath.row]
+            countryName = self.countryList[safe: indexPath.row]
             cell.textLabel!.text = countryName
             
             // Add checkmark for selected country
-            if countryName == selectedLocation?.country {
+            if let location = self.selectedLocation where location.country == countryName {
                 cell.accessoryType = .Checkmark
             }
             else {
@@ -151,53 +145,25 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.section {
         case 0:
-            selectedLocation = Location(Country: currentLocation?.country, City: currentLocation?.locality)
+            guard let location = self.currentLocation else { break }
+            self.selectedLocation = Location(Country: location.country, City: location.locality)
         case 1:
-            selectedLocation = Location(Country: countryList[safe: indexPath.row], City: nil)
+            self.selectedLocation = Location(Country: countryList[safe: indexPath.row], City: nil)
         default:
             break
         }
         
-        if selectedLocation != nil {
-            if locationDelegate != nil {
-                locationDelegate?.finishLocationSelection(selectedLocation)
-            }
-            self.navigationController?.popViewControllerAnimated(true)
+        if let location = selectedLocation, delegate = locationDelegate {
+            delegate.finishLocationSelection(location)
         }
-    }
-    
-    // MARK: CLLocationManager delegates
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        let geoCoder = CLGeocoder()
         
-        geoCoder.reverseGeocodeLocation(newLocation) { (result, error) -> Void in
-            if let locations = result {
-                if locations.count > 0 {
-                    self.currentLocation = locations.first
-                    self.stopUpdatingLocation()
-                }
-            }
-        }
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("\(error)")
-        stopUpdatingLocation()
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        switch status {
-        case .AuthorizedWhenInUse:
-            startUpdatingLocation()
-        default:
-            break
-        }
-    }
+    // MARK: Help functions
     
     // Enable CLLocation Manager to get current device location
-    private func getCurrentLocation() -> Void {
-        locationManager.delegate = self
-        
+    private func getCurrentLocation() {
         if Double(UIDevice.currentDevice().systemVersion) > 8.0 {
             locationManager.requestWhenInUseAuthorization()
         }
@@ -207,8 +173,8 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
     }
     
     func startUpdatingLocation() {
-        locationManager.startUpdatingLocation()
-        isLocating = true
+        self.locationManager.startUpdatingLocation()
+        self.isLocating = true
         tableView.reloadData()
         
         // Set timer for timeout
@@ -218,31 +184,54 @@ class LocationListTableViewController: UITableViewController, CLLocationManagerD
     }
 
     func stopUpdatingLocation() {
-        locationManager.stopUpdatingLocation()
-        isLocating = false
+        self.locationManager.stopUpdatingLocation()
+        self.isLocating = false
         tableView.reloadData()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
-    // MARK: Country List functions
     private func loadCountries() -> Void {
         for countryCode in NSLocale.ISOCountryCodes() {
             if let countryName = NSLocale.currentLocale().displayNameForKey(NSLocaleCountryCode, value: countryCode) {
-                countryList.append(countryName)
+                self.countryList.append(countryName)
             }
         }
-        countryList.sortInPlace()
+        self.countryList.sortInPlace()
     }
 }
+
+// MARK: CLLocationManager delegate
+
+extension LocationListTableViewController: CLLocationManagerDelegate {
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        let geoCoder = CLGeocoder()
+        
+        geoCoder.reverseGeocodeLocation(newLocation) { (result, error) -> Void in
+            guard let locations = result where locations.count > 0 else {
+                print("\(error)")
+                return
+            }
+            
+            self.currentLocation = locations.first
+            self.stopUpdatingLocation()
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("\(error)")
+        self.stopUpdatingLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        switch status {
+        case .AuthorizedWhenInUse:
+            self.startUpdatingLocation()
+        default:
+            break
+        }
+    }
+}
+
+// MARK: Custome delegate
 
 protocol LocationListDelegate {
     func finishLocationSelection(location: Location?)

@@ -14,25 +14,29 @@ class ColorGradientView: UIView {
     
     var colors: [UIColor] {
         get {
-            return gradientColors
+            return self.gradientColors
         }
         set (newColors) {
-            gradientColors = newColors
+            self.gradientColors = newColors
         }
     }
     
+    // MARK: Draw view
+    
     override func drawRect(rect: CGRect) {
-        let colorPercent = 1.0 / Double(gradientColors.count)
+        let colorPercent = 1.0 / Double(self.gradientColors.count)
+        
         // Set gradient
-        for i in 0..<gradientColors.count {
-            gradientColors[i].setFill()
+        for i in 0..<self.gradientColors.count {
+            self.gradientColors[i].setFill()
             let yOffset = CGFloat(Double(i) * colorPercent)
-            let height = rect.size.height * CGFloat(colorPercent)
-            let rect = CGRect(x: rect.origin.x, y: rect.origin.y + (yOffset * rect.size.height), width: rect.size.width, height: height)
+            let rect = CGRect(x: rect.origin.x,
+                              y: rect.origin.y + (yOffset * rect.size.height),
+                          width: rect.size.width,
+                         height: rect.size.height * CGFloat(colorPercent))
             CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
         }
         
-        backgroundColor?.setFill()
+        self.backgroundColor?.setFill()
     }
-
 }

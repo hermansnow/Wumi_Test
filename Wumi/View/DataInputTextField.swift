@@ -13,63 +13,65 @@ class DataInputTextField: UIView {
     var inputTextField = UITextField()
     private var informationLabel = UILabel()
     private var actionView: UIView?
-    private var underline = CALayer()
+    private var underlineLayer = CALayer()
     
     // Computed properties
     var informationHolder: UILabel {
         get {
-            return informationLabel
+            return self.informationLabel
         }
         set (newLabel) {
-            informationLabel = newLabel
-            setNeedsDisplay()
+            self.informationLabel = newLabel
+            self.setNeedsDisplay()
         }
     }
     
     var actionHolder : UIView? {
         get {
-            return actionView
+            return self.actionView
         }
         set (newView) {
-            actionView = newView
-            setNeedsDisplay()
+            self.actionView = newView
+            self.setNeedsDisplay()
         }
     }
     
     @IBInspectable var text: String? {
         get {
-            return inputTextField.text
+            return self.inputTextField.text
         }
         set (newValue) {
-            inputTextField.text = newValue
+            self.inputTextField.text = newValue
         }
     }
     
     @IBInspectable var placeholder: String? {
         get {
-            return inputTextField.placeholder
+            return self.inputTextField.placeholder
         }
         set (newValue) {
-            inputTextField.placeholder = newValue
+            self.inputTextField.placeholder = newValue
         }
     }
     
     @IBInspectable var errorText: String? {
         get {
-            return informationLabel.text
+            return self.informationLabel.text
         }
         set (newText) {
-            informationLabel.text = newText
-            drawUnderlineBorder()
+            self.informationLabel.text = newText
+            self.drawUnderlineBorder()
         }
     }
     
     // Delegate
     var delegate: DataInputTextFieldDelegate? {
         didSet {
-            inputTextField.delegate = delegate
+            self.inputTextField.delegate = delegate
         }
     }
+    
+    // MARK: Initializers
     
     convenience init() {
         self.init(frame: CGRectZero)
@@ -78,105 +80,107 @@ class DataInputTextField: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setProperty()
+        self.setProperty()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        setProperty()
+        self.setProperty()
     }
     
     func setProperty() {
         // Set up textfield
-        inputTextField.font = Constants.General.Font.InputFont
-        inputTextField.textColor = Constants.General.Color.InputTextColor
-        inputTextField.clearsOnBeginEditing = false
-        inputTextField.clearButtonMode = .Never
-        inputTextField.autocapitalizationType = .None
+        self.inputTextField.font = Constants.General.Font.InputFont
+        self.inputTextField.textColor = Constants.General.Color.InputTextColor
+        self.inputTextField.clearsOnBeginEditing = false
+        self.inputTextField.clearButtonMode = .Never
+        self.inputTextField.autocapitalizationType = .None
+        self.inputTextField.borderStyle = .None
         
-        // Set up components
-        informationLabel.textColor = Constants.General.Color.ErrorColor
-        informationLabel.font = Constants.General.Font.ErrorFont
-        informationLabel.numberOfLines = 0
-        informationLabel.adjustsFontSizeToFitWidth = true
+        // Set up information view
+        self.informationLabel.textColor = Constants.General.Color.ErrorColor
+        self.informationLabel.font = Constants.General.Font.ErrorFont
+        self.informationLabel.numberOfLines = 0
+        self.informationLabel.adjustsFontSizeToFitWidth = true
+        
+        // Add underline layer
+        self.layer.addSublayer(underlineLayer)
     }
     
+    // MARK: Draw view
+    
     override func drawRect(rect: CGRect) {
-        // set information view and its stack view
+        // Auto-layout between information label and action view
         let informationStackView = UIStackView()
         informationStackView.axis = .Horizontal
         informationStackView.distribution = .Fill
         informationStackView.alignment = UIStackViewAlignment.Top
         informationStackView.translatesAutoresizingMaskIntoConstraints = false;
         
-        informationLabel.sizeToFit()
+        self.informationLabel.sizeToFit()
         informationStackView.addArrangedSubview(informationLabel)
-        if let view = actionView {
-            view.sizeToFit()
-            informationStackView.addArrangedSubview(view)
-        }
-        if let text = informationLabel.text {
-            informationStackView.heightAnchor.constraintEqualToConstant(text.heightWithConstrainedWidth(informationLabel.frame.width, font: Constants.General.Font.ErrorFont!)).active = true
+        if self.actionView != nil {
+            self.actionView!.sizeToFit()
+            informationStackView.addArrangedSubview(self.actionView!)
         }
         
-        // Set textfield's stack view
-        let stackView = UIStackView()
+        // Auto-layout for all subviews
+        let stackView = UIStackView(arrangedSubviews: [self.inputTextField, informationStackView, UIView()])
         stackView.axis = .Vertical
         stackView.distribution = .Fill
         stackView.alignment = .Fill
         stackView.spacing = 4
-        
-        stackView.addArrangedSubview(inputTextField)
-        stackView.addArrangedSubview(informationStackView)
-        stackView.addArrangedSubview(UIView())
         stackView.translatesAutoresizingMaskIntoConstraints = false;
         
         addSubview(stackView)
         
-        //Constraints
-        stackView.leftAnchor.constraintEqualToAnchor(leftAnchor).active = true
-        stackView.rightAnchor.constraintEqualToAnchor(rightAnchor).active = true
-        stackView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        stackView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+        // Add constraints
+        stackView.leftAnchor.constraintEqualToAnchor(self.leftAnchor).active = true
+        stackView.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
+        stackView.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
+        stackView.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
+        
+        if let text = informationLabel.text {
+            informationStackView.heightAnchor.constraintEqualToConstant(text.heightWithConstrainedWidth(informationLabel.frame.width,
+                                                                  font: Constants.General.Font.ErrorFont!)).active = true // Calculate information label height based on width and font
+        }
     }
     
+    // Draw underline border layer for input textfield
     func drawUnderlineBorder() {
-        if underline.frame.height == 0 {
-            inputTextField.borderStyle = .None
-            inputTextField.layer.addSublayer(underline)
-        }
-        
         // Set frame
-        underline.frame = CGRectMake(0, inputTextField.frame.height - 1, inputTextField.frame.width, 1.0)
+        self.underlineLayer.frame = CGRectMake(0, self.inputTextField.frame.height - 1, self.inputTextField.frame.width, 1.0)
         
         // Set underline color
-        if let error = errorText where error.characters.count > 0 {
-            underline.backgroundColor = Constants.General.Color.ErrorColor.CGColor
+        if let error = self.errorText where error.characters.count > 0 {
+            self.underlineLayer.backgroundColor = Constants.General.Color.ErrorColor.CGColor
         }
         else {
-            underline.backgroundColor = Constants.General.Color.BorderColor.CGColor
+            self.underlineLayer.backgroundColor = Constants.General.Color.BorderColor.CGColor
         }
     }
     
-    // MARK:View components functions
-    func addInputToolBar() {
-        
+    // MARK: Help functions
+    
+    func addDoneButtonToInputTextField() {
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 44))
-        toolbar.barStyle = .Default;
-        
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
         let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("doneToolButtonClicked:"))
+        
+        toolbar.barStyle = .Default
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
         
-        inputTextField.inputAccessoryView = toolbar
+        self.inputTextField.inputAccessoryView = toolbar
     }
     
     func doneToolButtonClicked(sender: UIBarButtonItem) {
-        self.delegate?.doneToolButtonClicked(sender)
+        guard let delegate = self.delegate, clickAction = delegate.clickDoneButton else { return }
+        
+        clickAction(sender)
     }
 }
 
 @objc protocol DataInputTextFieldDelegate: UITextFieldDelegate {
-    func doneToolButtonClicked(sender: UIBarButtonItem);
+    optional func clickDoneButton(sender: UIBarButtonItem)
 }

@@ -13,16 +13,9 @@ class ProfileCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        contentView.layer.borderWidth = 5.0
-        contentView.layer.borderColor = Constants.General.Color.BackgroundColor.CGColor
+        self.contentView.layer.borderWidth = 5.0
+        self.contentView.layer.borderColor = Constants.General.Color.BackgroundColor.CGColor
         
-        selectionStyle = .None
+        self.selectionStyle = .None
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

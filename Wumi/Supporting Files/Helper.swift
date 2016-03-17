@@ -21,6 +21,7 @@ class Helper {
             }, completion: nil)
     }
     
+    // Logout current user
     static func LogOut () {
         User.logOut()
         RedirectToSignIn()

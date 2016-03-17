@@ -13,7 +13,7 @@ struct Location: CustomStringConvertible {
     var city: String?
     
     var description: String {
-        return [country, city].flatMap{$0}.joinWithSeparator(", ")
+        return [country, city].flatMap{ $0 }.joinWithSeparator(", ")
     }
     
     init(Country country: String?, City city: String?) {

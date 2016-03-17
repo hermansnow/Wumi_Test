@@ -9,7 +9,7 @@
 import UIKit
 import NHAlignmentFlowLayout
 
-class ProfessionListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ProfessionListViewController: UIViewController {
 
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerStack: UIStackView!
@@ -24,6 +24,8 @@ class ProfessionListViewController: UIViewController, UICollectionViewDataSource
     var selectedProfessions = Set<Profession>()
     lazy var professions = [String: [Profession]]()
     lazy var professionCategories = [String]()
+    
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,53 +43,76 @@ class ProfessionListViewController: UIViewController, UICollectionViewDataSource
         description.addAttribute(NSParagraphStyleAttributeName,
                           value: style,
                           range: NSRange(location: 0, length: description.length))
-        listDescription.attributedText = description
-        listDescription.numberOfLines = 0
-        avatarImageView.image = avatarImage
-        headerView.backgroundColor = Constants.General.Color.BackgroundColor
-        headerStack.layoutMargins = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        headerStack.layoutMarginsRelativeArrangement = true
+        self.listDescription.attributedText = description
+        self.listDescription.numberOfLines = 0
+        self.avatarImageView.image = self.avatarImage
+        self.headerView.backgroundColor = Constants.General.Color.BackgroundColor
+        self.headerStack.layoutMargins = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        self.headerStack.layoutMarginsRelativeArrangement = true
         
         // Initializde collection view
-        professionCollectionView.backgroundColor = Constants.General.Color.BackgroundColor
         let flowLayout = NHAlignmentFlowLayout ()
         flowLayout.scrollDirection = .Vertical
         flowLayout.alignment = .TopLeftAligned
         flowLayout.estimatedItemSize = CGSize(width: 40, height: 30)
         flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        professionCollectionView.collectionViewLayout = flowLayout
-        professionCollectionView.backgroundColor = UIColor.whiteColor()
+        self.professionCollectionView.collectionViewLayout = flowLayout
+        self.professionCollectionView.backgroundColor = UIColor.whiteColor()
+        self.professionCollectionView.backgroundColor = Constants.General.Color.BackgroundColor
         
         // Set delegates
-        professionCollectionView.delegate = self
-        professionCollectionView.dataSource = self
+        self.professionCollectionView.delegate = self
+        self.professionCollectionView.dataSource = self
         
         // Register collection cell
-        professionCollectionView.registerNib(UINib(nibName: "ProfileCollectionCell", bundle: nil),
-                                forCellWithReuseIdentifier: "ProfileCollectionCell")
-        professionCollectionView.registerNib(UINib(nibName: "ProfessionSectionHeader", bundle: nil),
-                                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                       withReuseIdentifier: "ProfessionSectionHeader")
+        self.professionCollectionView.registerNib(UINib(nibName: "ProfileCollectionCell", bundle: nil),
+                                     forCellWithReuseIdentifier: "ProfileCollectionCell")
+        self.professionCollectionView.registerNib(UINib(nibName: "ProfessionSectionHeader", bundle: nil),
+                                     forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                            withReuseIdentifier: "ProfessionSectionHeader")
         
         // Fetch profession data
-        loadProfessions()
+        self.loadProfessions()
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
         super.willMoveToParentViewController(parent)
-        if parent == nil {
-            professionDelegate?.finishProfessionSelection(selectedProfessions)
+        if let delegate = professionDelegate where parent == nil {
+            delegate.finishProfessionSelection(selectedProfessions)
         }
     }
-
-    // MARK: Collection view data source
     
+    // MARK: Help functions
+    
+    private func loadProfessions() {
+        Profession.loadAllProfessions { (results, error) -> Void in
+            if results == nil || results.count == 0 {
+                print("\(error)")
+                return
+            }
+            
+            if let allProfessions = results as? [Profession] {
+                self.professions = allProfessions.groupBy { (profession) -> String in
+                    return profession.category!
+                }
+                
+                self.professionCategories = Array(self.professions.keys.sort())
+                
+                self.professionCollectionView.reloadData()
+            }
+        }
+    }
+}
+
+// MARK: Collection view delegate & data source
+
+extension ProfessionListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return professionCategories.count
+        return self.professionCategories.count
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let key = professionCategories[safe: section], category = professions[key] else {
+        guard let key = self.professionCategories[safe: section], category = self.professions[key] else {
             return 0
         }
         return category.count
@@ -97,14 +122,17 @@ class ProfessionListViewController: UIViewController, UICollectionViewDataSource
         let dequeueCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath)
         
         
-        guard let cell = dequeueCell as? ProfileCollectionCell, key = professionCategories[safe: indexPath.section], profession = professions[key]?[indexPath.row] else {
-            return dequeueCell
+        guard let cell = dequeueCell as? ProfileCollectionCell,
+            key = self.professionCategories[safe: indexPath.section],
+            profession = self.professions[key]?[indexPath.row] else {
+                return dequeueCell
         }
 
         cell.cellLabel.text = profession.name
         
+        // Set styles for selected/unselected cells
         var isSelected = false
-        for selectedProfession in selectedProfessions {
+        for selectedProfession in self.selectedProfessions {
             if selectedProfession.compareTo(profession) {
                 isSelected = true
                 break
@@ -125,7 +153,7 @@ class ProfessionListViewController: UIViewController, UICollectionViewDataSource
                                                       withReuseIdentifier: "ProfessionSectionHeader",
                                                              forIndexPath: indexPath)
         
-        guard let sectionHeader = header as? ProfessionSectionHeader, key = professionCategories[safe: indexPath.section] else {
+        guard let sectionHeader = header as? ProfessionSectionHeader, key = self.professionCategories[safe: indexPath.section] else {
             return header
         }
         sectionHeader.titleLabel.text = key.uppercaseString
@@ -142,49 +170,30 @@ class ProfessionListViewController: UIViewController, UICollectionViewDataSource
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        guard let key = professionCategories[safe: indexPath.section], categoryList = professions[key], profession = categoryList[safe: indexPath.row], cell = collectionView.cellForItemAtIndexPath(indexPath) as? ProfileCollectionCell else {
-            return
-        }
+        guard let key = self.professionCategories[safe: indexPath.section],
+            categoryList = self.professions[key],
+            profession = categoryList[safe: indexPath.row],
+            cell = collectionView.cellForItemAtIndexPath(indexPath) as? ProfileCollectionCell else { return }
         
         switch (cell.style) {
         case .Original:
-            if selectedProfessions.count < 3 {
-                selectedProfessions.insert(profession)
+            if self.selectedProfessions.count < 3 {
+                self.selectedProfessions.insert(profession)
                 cell.style = .Selected
             }
         case .Selected:
-            for selectedProfession in selectedProfessions {
+            for selectedProfession in self.selectedProfessions {
                 if selectedProfession.compareTo(profession) {
-                    selectedProfessions.remove(selectedProfession)
+                    self.selectedProfessions.remove(selectedProfession)
                     break
                 }
             }
             cell.style = .Original
         }
-        
-        print(selectedProfessions.count)
-    }
-    
-    // MARK: Help functions
-    private func loadProfessions() {
-        Profession.loadAllProfessions { (results, error) -> Void in
-            if results == nil || results.count == 0 {
-                print("\(error)")
-                return
-            }
-            
-            if let allProfessions = results as? [Profession] {
-                self.professions = allProfessions.groupBy { (profession) -> String in
-                    return profession.category!
-                }
-                
-                self.professionCategories = Array(self.professions.keys.sort())
-                
-                self.professionCollectionView.reloadData()
-            }
-        }
     }
 }
+
+// MARK: Custome delegate
 
 protocol ProfessionListDelegate {
     func finishProfessionSelection(selectedProfessions: Set<Profession>)

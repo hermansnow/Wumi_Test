@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class ContactViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, MFMailComposeViewControllerDelegate, FavoriteButtonDelegate {
+class ContactViewController: UIViewController {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var maskView: UIView!
@@ -19,127 +19,251 @@ class ContactViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var favoriteButton: FavoriteButton!
     @IBOutlet weak var tableView: UITableView!
     
-    var user: User?
-    var loginUser = User.currentUser()
-    var cellTitles = ["Professions", "Email", "Phone"]
+    var selectedUser: User?
+    var currentUser = User.currentUser()
+    private var cells: [ContactCellRowType] = [.Professions, .Email, .Phone]
+    
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Register nib
+        self.tableView.registerNib(UINib(nibName: "ContactLabelCell", bundle: nil), forCellReuseIdentifier: "ContactLabelCell")
+        self.tableView.registerNib(UINib(nibName: "ProfileListCell", bundle: nil), forCellReuseIdentifier: "ProfileListCell")
+        
         // Enable navigation bar
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationItem.backBarButtonItem?.enabled = true
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationItem.backBarButtonItem?.enabled = true
         
         // Initialize the tableview
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.separatorStyle = .None
-        tableView.backgroundColor = Constants.General.Color.BackgroundColor
-        tableView.tableFooterView = UIView(frame: CGRectZero)
-        
-        // Register nib
-        tableView.registerNib(UINib(nibName: "ContactLabelCell", bundle: nil), forCellReuseIdentifier: "ContactLabelCell")
-        tableView.registerNib(UINib(nibName: "ProfileListCell", bundle: nil), forCellReuseIdentifier: "ProfileListCell")
+        self.tableView.estimatedRowHeight = 100
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.separatorStyle = .None
+        self.tableView.backgroundColor = Constants.General.Color.BackgroundColor
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
         // Add delegates
-        tableView.dataSource = self
-        tableView.delegate = self
-        favoriteButton.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.favoriteButton.delegate = self
         
         // Initialize the mask view
-        maskView.backgroundColor = Constants.General.Color.MaskColor
+        self.maskView.backgroundColor = Constants.General.Color.MaskColor
         
         // Show data
-        displayUserData()
+        self.displayUserData()
     }
     
-    // MARK: Table view data source
+    // MARK: Actions
     
+    // Action when clicking email button
+    func sendEmail(sender: AnyObject) {
+        guard let user = self.selectedUser else { return }
+        
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposeViewController = MFMailComposeViewController()
+            mailComposeViewController.mailComposeDelegate = self
+            mailComposeViewController.setToRecipients([user.email])
+            presentViewController(mailComposeViewController, animated: true, completion: nil)
+        }
+        else {
+            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
+        }
+        
+    }
+    
+    // Action when clicking message button
+    func sendSMS(sender: AnyObject) {
+        guard let user = self.selectedUser, phoneNumber = user.phoneNumber else { return }
+        
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposeViewController = MFMailComposeViewController()
+            mailComposeViewController.mailComposeDelegate = self
+            mailComposeViewController.setToRecipients([phoneNumber])
+            presentViewController(mailComposeViewController, animated: true, completion: nil)
+        }
+        else {
+            Helper.PopupErrorAlert(self, errorMessage: "Message services are not available")
+        }
+    }
+    
+    // Action when clicking phone call button
+    func phoneCall(sender: AnyObject) {
+        guard let user = self.selectedUser, phoneNumber = user.phoneNumber else { return }
+        
+        if let url = NSURL(string: "tel://\(phoneNumber)") {
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
+    
+    // MARK: Help functions
+    
+    private func displayUserData() {
+        guard let user = selectedUser else { return }
+        
+        // Fetch user data
+        user.fetchUser(objectId: user.objectId) { (result, error) -> Void in
+            guard let _ = result as? User where error == nil else {
+                print("\(error)")
+                return
+            }
+                
+            user.loadAvatar(CGSize(width: self.backgroundImageView.frame.width, height: self.backgroundImageView.frame.height)) { (image, error) -> Void in
+                guard error == nil else {
+                    print("\(error)")
+                    return
+                }
+                self.backgroundImageView.image = image
+            }
+                
+            self.nameLabel.text = user.name
+                
+            self.graduationYearLabel.text = GraduationYearPickerView.showGraduationString(user.graduationYear)
+                
+            // Reload specific rows
+            self.reloadRowForTypes([.Email, .Phone])
+            
+            // Fetch favorite relatonship with current user
+            self.currentUser.findFavoriteUser(user, block: { (count, error) -> Void in
+                guard error == nil else { return }
+                
+                self.favoriteButton.selected = count > 0
+            })
+            
+            // Fetch professions
+            Profession.fetchAllInBackground(user.professions) { (results, error) -> Void in
+                guard let _ = results as? [Profession] where error == nil else { return }
+                
+                self.reloadRowForTypes([.Professions])
+            }
+            
+            self.displayContactInformation()
+        }
+    }
+    
+    private func displayContactInformation() {
+        guard let user = self.selectedUser, contact = user.contact else { return }
+        
+        contact.fetchInBackgroundWithBlock { (result, error) -> Void in
+            guard error == nil, let _ = result as? Contact else {
+                print("Error when fetch contact for user " + "\(user)" + ": " + "\(error)")
+                return
+            }
+                
+            self.locationLabel.text = contact.location()
+        }
+    }
+    
+    private func reloadRowForTypes(types: [ContactCellRowType]) {
+        var indexPaths = [NSIndexPath]()
+        for index in 0..<self.cells.count {
+            guard let cell = self.cells[safe: index] else { continue }
+            
+            for type in types {
+                if cell == type {
+                    indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
+                }
+            }
+        }
+        if indexPaths.count > 0 {
+            self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+        }
+    }
+}
+    
+// MARK: Table view data source
+
+extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return cellTitles.count
+        return self.cells.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        switch (indexPath.row) {
+        guard let rowType = cells[safe: indexPath.row] else { return UITableViewCell() }
+        
+        switch (rowType) {
         // Profession Cell
-        case 0:
+        case .Professions:
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListCell") as! ProfileListCell
-            //cell.reset()
+            cell.reset()
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
-            cell.titleLabel.text = cellTitles[safe: indexPath.row]
+            cell.titleLabel.text = ContactCellRowType.Professions.rawValue.title
             cell.addButton.hidden = true
             return cell
+        
         // Email Cell
-        case 1:
+        case .Email:
             let cell = tableView.dequeueReusableCellWithIdentifier("ContactLabelCell") as! ContactLabelCell
             cell.reset()
-            cell.titleLabel.text = cellTitles[safe: indexPath.row]
-            if user != nil && user!.emailPublic {
-                cell.detail = user!.email
+            cell.titleLabel.text = ContactCellRowType.Email.rawValue.title
+            guard let user = self.selectedUser where user.emailPublic else{ break }
+            cell.detail = user.email
                 
-                // Add email button
-                let emailButton = cell.actionButtons[1]
-                emailButton.setTitle("Sent", forState: .Normal)
-                emailButton.addTarget(self, action: "sendEmail:", forControlEvents: .TouchUpInside)
-            }
+            // Add email button
+            let emailButton = cell.actionButtons[1]
+            emailButton.setTitle("Sent", forState: .Normal)
+            emailButton.addTarget(self, action: "sendEmail:", forControlEvents: .TouchUpInside)
+            
             return cell
+        
         // Phone  Cell
-        case 2:
+        case .Phone:
             let cell = tableView.dequeueReusableCellWithIdentifier("ContactLabelCell") as! ContactLabelCell
             cell.reset()
-            cell.titleLabel.text = cellTitles[safe: indexPath.row]
-            if user != nil && user!.phonePublic {
-                cell.detail = user?.phoneNumber
+            cell.titleLabel.text = ContactCellRowType.Phone.rawValue.title
+            guard let user = self.selectedUser where user.emailPublic else { break }
+            cell.detail = user.phoneNumber
                 
-                // Add SMS button
-                let smsButton = cell.actionButtons[0]
-                smsButton.setTitle("Message", forState: .Normal)
-                smsButton.addTarget(self, action: "sendSMS:", forControlEvents: .TouchUpInside)
+            // Add SMS button
+            let smsButton = cell.actionButtons[0]
+            smsButton.setTitle("Message", forState: .Normal)
+            smsButton.addTarget(self, action: "sendSMS:", forControlEvents: .TouchUpInside)
                 
-                // Add phone button
-                let phoneButton = cell.actionButtons[1]
-                phoneButton.setTitle("Call", forState: .Normal)
-                phoneButton.addTarget(self, action: "callPhone:", forControlEvents: .TouchUpInside)
-            }
+            // Add phone button
+            let phoneButton = cell.actionButtons[1]
+            phoneButton.setTitle("Call", forState: .Normal)
+            phoneButton.addTarget(self, action: "callPhone:", forControlEvents: .TouchUpInside)
+            
             return cell
-        default:
-            break
         }
         
         return UITableViewCell()
     }
-    
-    // MARK: UICollectionView delegates
-    
+}
+
+// MARK: UICollectionView delegates
+
+extension ContactViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch (collectionView.tag) {
-        case 0:
-            return user!.professions.count
+        guard let rowType = self.cells[safe: collectionView.tag] else { return 0 }
+        
+        switch (rowType) {
+        case .Professions:
+            guard let user = self.selectedUser else { return 0 }
+            return user.professions.count
         default:
             return 0
         }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath) as? ProfileCollectionCell else {
-            return ProfileCollectionCell()
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath) as? ProfileCollectionCell,
+            rowType = self.cells[safe: collectionView.tag] else {
+                return ProfileCollectionCell()
         }
         
-        switch (collectionView.tag) {
-        case 0:
-            guard let profession = user?.professions[safe: indexPath.row] else {
-                break
-            }
+        switch (rowType) {
+        case .Professions:
+            guard let user = self.selectedUser, profession = user.professions[safe: indexPath.row] else { break }
             cell.cellLabel.text = profession.name
             
         default:
@@ -155,9 +279,11 @@ class ContactViewController: UIViewController, UITableViewDataSource, UITableVie
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 5
     }
-    
-    // MARK: MFMailComposeViewController delegates
-    
+}
+
+// MARK: MFMailComposeViewController delegates
+
+extension ContactViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         switch (result) {
         case MFMailComposeResultSent:
@@ -180,114 +306,69 @@ class ContactViewController: UIViewController, UITableViewDataSource, UITableVie
         // Dimiss the main compose view controller
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    // MARK: Favorite button delegates
-    
+}
+
+// MARK: Favorite button delegates
+
+extension ContactViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
-        if user != nil {
-            loginUser.addFavoriteUser(user)
+        guard let user = self.selectedUser else { return }
+        self.currentUser.addFavoriteUser(user) { (result, error) -> Void in
+            guard error != nil else { return }
+            favoriteButton.selected = result
         }
     }
     
     func removeFavorite(favoriteButton: FavoriteButton) {
-        if user != nil {
-            loginUser.removeFavoriteUser(user)
+        guard let user = self.selectedUser else { return }
+        self.currentUser.removeFavoriteUser(user) { (result, error) -> Void in
+            guard error != nil else { return }
+            favoriteButton.selected = result
+        }
+    }
+}
+
+// MARK: Custome delegate
+
+protocol ContactDelegate {
+    func finishLocationSelection(location: Location?)
+}
+
+// MARK: Custom row type
+
+private enum ContactCellRowType: ProfileRow, RawRepresentable {
+    case Professions = "Professions"
+    case Email = "Email"
+    case Phone = "Phone"
+    
+    static let allCases = [Professions, Email, Phone]
+    
+    typealias RawValue = ProfileRow
+    
+    var rawValue: RawValue {
+        switch self {
+        case .Professions:
+            return "Professions"
+        case .Email:
+            return "Email"
+        case .Phone:
+            return "Phone"
         }
     }
     
-    // MARK: Actions
-    
-    func sendEmail(sender: AnyObject) {
-        if MFMailComposeViewController.canSendMail() {
-            let mailComposeViewController = MFMailComposeViewController()
-            mailComposeViewController.mailComposeDelegate = self
-            mailComposeViewController.setToRecipients([user!.email])
-            presentViewController(mailComposeViewController, animated: true, completion: nil)
-        }
-        else {
-            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
-        }
+    init?(rawValue: ContactCellRowType.RawValue) {
+        var foundType: ContactCellRowType? = nil
         
-    }
-    
-    func sendSMS(sender: AnyObject) {
-        if MFMailComposeViewController.canSendMail() {
-            let mailComposeViewController = MFMailComposeViewController()
-            mailComposeViewController.mailComposeDelegate = self
-            mailComposeViewController.setToRecipients([user!.phoneNumber!])
-            presentViewController(mailComposeViewController, animated: true, completion: nil)
-        }
-        else {
-            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
-        }
-    }
-    
-    func phoneCall(sender: AnyObject) {
-        if let url = NSURL(string: "tel://\(user!.phoneNumber!)") {
-            UIApplication.sharedApplication().openURL(url)
-        }
-    }
-    
-    @IBAction func changeFavorite(sender: AnyObject) {
-        
-    }
-    // MARK: Help functions
-    
-    private func displayUserData() {
-        if let contactUser = user {
-            // Fetch user data
-            contactUser.fetchUser { (result, error) -> Void in
-                guard let user = result as? User else {
-                    return
-                }
-                
-                self.user = user
-                
-                contactUser.loadAvatar(CGSize(width: self.backgroundImageView.frame.width, height: self.backgroundImageView.frame.height)) { (image, error) -> Void in
-                    if error != nil {
-                        print("\(error)")
-                    }
-                    
-                    self.backgroundImageView.image = image
-                }
-                
-                self.nameLabel.text = contactUser.name
-                
-                self.graduationYearLabel.text = self.showGraduationLable(contactUser.graduationYear)
-                
-                // Reload specific rows
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0),
-                                                       NSIndexPath(forRow: 1, inSection: 0),
-                                                       NSIndexPath(forRow: 2, inSection: 0)], withRowAnimation: .None)
-                
-                self.loginUser.findFavoriteUser(contactUser, block: { (count, error) -> Void in
-                    self.favoriteButton.selected = count > 0
-                })
-                
-                self.displayContactInformation()
+        for type in ContactCellRowType.allCases {
+            if rawValue == type.rawValue {
+                foundType = type
+                break
             }
         }
-    }
-    
-    private func displayContactInformation() {
-        if let contactUser = self.user, contact = contactUser.contact {
-            contact.fetchInBackgroundWithBlock { (result, error) -> Void in
-                if error != nil {
-                    print("Error when fetch contact for user " + "\(self.user)" + ": " + "\(error)")
-                    return
-                }
-                
-                self.locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
-            }
+        
+        guard let type = foundType else {
+            return nil
         }
-    }
-    
-    private func showGraduationLable(graduationYear: Int) -> String {
-        if graduationYear == 0 {
-            return ""
-        }
-        else {
-            return "(\(graduationYear))"
-        }
+        self = type
     }
 }

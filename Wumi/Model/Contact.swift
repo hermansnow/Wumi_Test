@@ -37,6 +37,6 @@ class Contact: AVObject, AVSubclassing {
     }
     
     func location() -> String {
-        return "\(Location(Country: country, City: city))"
+        return "\(Location(Country: self.country, City: self.city))"
     }
 }

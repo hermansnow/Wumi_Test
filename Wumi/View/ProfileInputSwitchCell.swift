@@ -17,32 +17,32 @@ class ProfileInputSwitchCell: ProfileCell {
     
     var showPublic = true {
         didSet {
-            statusSwitch.on = showPublic
-            statusLabel.text = showPublic ? "Public" : "Private"
+            self.statusSwitch.on = self.showPublic
+            self.statusLabel.text = self.showPublic ? "Public" : "Private"
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel.font = Constants.General.Font.InputFont
-        titleLabel.textColor = Constants.General.Color.BorderColor
+        self.titleLabel.font = Constants.General.Font.InputFont
+        self.titleLabel.textColor = Constants.General.Color.BorderColor
         
-        statusLabel.font = Constants.General.Font.InputFont
-        statusLabel.textColor = Constants.General.Color.BorderColor
+        self.statusLabel.font = Constants.General.Font.InputFont
+        self.statusLabel.textColor = Constants.General.Color.BorderColor
         
-        inputTextField.borderStyle = .None
-        inputTextField.font = Constants.General.Font.InputFont
-        inputTextField.textColor = Constants.General.Color.InputTextColor
+        self.inputTextField.borderStyle = .None
+        self.inputTextField.font = Constants.General.Font.InputFont
+        self.inputTextField.textColor = Constants.General.Color.InputTextColor
     }
     
     func reset() {
-        titleLabel.text = nil
-        inputTextField.text = nil
-        inputTextField.keyboardType = .Default
-        inputTextField.tag = 0
-        showPublic = true
-        statusSwitch.removeTarget(nil, action: nil, forControlEvents: .ValueChanged)
+        self.titleLabel.text = nil
+        self.inputTextField.text = nil
+        self.inputTextField.keyboardType = .Default
+        self.inputTextField.tag = 0
+        self.showPublic = true
+        self.statusSwitch.removeTarget(nil, action: nil, forControlEvents: .ValueChanged)
     }
 
 }

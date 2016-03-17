@@ -16,12 +16,12 @@ class ProfileInputCell: ProfileCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel.font = Constants.General.Font.InputFont
-        titleLabel.textColor = Constants.General.Color.BorderColor
+        self.titleLabel.font = Constants.General.Font.InputFont
+        self.titleLabel.textColor = Constants.General.Color.BorderColor
         
-        inputTextField.borderStyle = .None
-        inputTextField.font = Constants.General.Font.InputFont
-        inputTextField.textColor = Constants.General.Color.InputTextColor
+        self.inputTextField.borderStyle = .None
+        self.inputTextField.font = Constants.General.Font.InputFont
+        self.inputTextField.textColor = Constants.General.Color.InputTextColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -31,10 +31,10 @@ class ProfileInputCell: ProfileCell {
     }
     
     func reset() {
-        titleLabel.text = nil
-        inputTextField.text = nil
-        inputTextField.keyboardType = .Default
-        inputTextField.tag = 0
+        self.titleLabel.text = nil
+        self.inputTextField.text = nil
+        self.inputTextField.keyboardType = .Default
+        self.inputTextField.tag = 0
     }
 
 }

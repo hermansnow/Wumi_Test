@@ -17,15 +17,15 @@ class SelectPhotoActionSheet: UIAlertController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addAction(UIAlertAction(title: "Camera", style: .Default, handler: { (action) -> Void in
+        self.addAction(UIAlertAction(title: "Camera", style: .Default, handler: { (action) -> Void in
             self.openCamera()
         }))
         
-        addAction(UIAlertAction(title: "Photo Library", style: .Default, handler: { (action) -> Void in
+        self.addAction(UIAlertAction(title: "Photo Library", style: .Default, handler: { (action) -> Void in
             self.openPhotoLibrary()
         }))
         
-        addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        self.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
     }
     
     // Open Camera to take a photo

@@ -12,10 +12,12 @@ class SystemButton: UIButton {
     
     var recommanded = true {
         didSet {
-            setBackgroundColor()
-            setNeedsDisplay()
+            self.setBackgroundColor()
+            self.setNeedsDisplay()
         }
     }
+    
+    // MARK: Initializers
     
     convenience init() {
         self.init(frame: CGRectZero)
@@ -24,34 +26,30 @@ class SystemButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setProperty()
+        self.setProperty()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        // Set up the values for this button. It is
-        // called here when the button first appears and is also called
-        // from the main ViewController when the app is reset.
-        
-        setProperty()
+        self.setProperty()
     }
     
     func setProperty() {
-        layer.cornerRadius = 3
+        self.layer.cornerRadius = 3
         
-        setTitleColor(Constants.General.Color.TitleColor, forState: .Normal)
-        titleLabel?.font = Constants.General.Font.ButtonFont
+        self.setTitleColor(Constants.General.Color.TitleColor, forState: .Normal)
+        self.titleLabel!.font = Constants.General.Font.ButtonFont
         
-        setBackgroundColor()
+        self.setBackgroundColor()
     }
     
     func setBackgroundColor() {
-        if recommanded {
-            layer.backgroundColor = Constants.General.Color.ThemeColor.CGColor
+        if self.recommanded {
+            self.layer.backgroundColor = Constants.General.Color.ThemeColor.CGColor
         }
         else {
-            layer.backgroundColor = Constants.General.Color.BackgroundColor.CGColor
+            self.layer.backgroundColor = Constants.General.Color.BackgroundColor.CGColor
         }
     }
 }

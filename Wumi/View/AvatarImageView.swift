@@ -11,37 +11,39 @@ import UIKit
 class AvatarImageView: UIView {
     
     var delegate: AvatarImageDelegate?
-    private var containerImageView: UIImageView = UIImageView()
+    private var containerImageView = UIImageView()
     
     var image: UIImage? {
         get {
-            return containerImageView.image
+            return self.containerImageView.image
         }
         set {
-            containerImageView.image = newValue
+            self.containerImageView.image = newValue
         }
     }
-
+    
+    // MARK: Initializers
+    
     override func drawRect(rect: CGRect) {
-        // Set up container image view
-        containerImageView.frame = rect
-        containerImageView.contentMode = .ScaleAspectFill
+        // Set container image view
+        self.containerImageView.frame = rect
+        self.containerImageView.contentMode = .ScaleAspectFill
         addSubview(containerImageView)
         
         // Set circular avatar image
-        layer.cornerRadius = frame.size.height / 2
-        clipsToBounds = true
+        self.layer.cornerRadius = self.frame.size.height / 2
+        self.clipsToBounds = true
         
-        if delegate != nil {
+        if let delegate = self.delegate {
             // Add gestures
-            let singleTap = UITapGestureRecognizer(target: delegate, action: Selector("singleTap:"))
+            let singleTapGesture = UITapGestureRecognizer(target: delegate, action: Selector("singleTap:"))
             
-            userInteractionEnabled = true
-            addGestureRecognizer(singleTap)
+            self.userInteractionEnabled = true
+            self.addGestureRecognizer(singleTapGesture)
         }
     }
 }
 
-@objc protocol AvatarImageDelegate: NSObjectProtocol {
-    func singleTap(imageView: AvatarImageView);
+@objc protocol AvatarImageDelegate {
+    optional func singleTap(imageView: AvatarImageView)
 }

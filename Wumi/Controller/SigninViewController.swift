@@ -9,17 +9,16 @@
 import UIKit
 
 class SigninViewController: UIViewController {
-    // MARK: Properties
     
     @IBOutlet weak var logoView: UIView!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var usernameTextField: DataInputTextField!
     @IBOutlet weak var passwordTextField: DataInputTextField!
     
-    var forgotPasswordButton: TextLinkButton!
-    private lazy var maskLayer = CAShapeLayer()
+    var forgotPasswordButton: TextLinkButton! // Forgot password button to be displayed if fails in login
+    private lazy var maskLayer = CAShapeLayer() // Mask layer for logo
     
-    // MARK: Life cycle functions
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,24 +27,30 @@ class SigninViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         // Set layout and colors
-        logoView.backgroundColor = Constants.General.Color.ThemeColor
-        maskLayer.fillColor = Constants.SignIn.Color.MaskColor.CGColor
+        self.logoView.layer.insertSublayer(self.maskLayer, below: self.logoImageView.layer)
+        self.logoView.backgroundColor = Constants.General.Color.ThemeColor
+        self.maskLayer.fillColor = Constants.SignIn.Color.MaskColor.CGColor
         
-        // Set logo shadow
-        let logoLayer = logoImageView.layer
-        logoLayer.shadowColor = Constants.General.Color.ThemeColor.CGColor
-        logoLayer.shadowOffset = Constants.SignIn.Size.ShadowOffset
-        logoLayer.shadowOpacity = Constants.SignIn.Value.shadowOpacity
-        logoLayer.shadowRadius = Constants.SignIn.Value.shadowRadius
+        // Add logo shadow
+        self.logoImageView.layer.shadowColor = Constants.General.Color.ThemeColor.CGColor
+        self.logoImageView.layer.shadowOffset = Constants.SignIn.Size.ShadowOffset
+        self.logoImageView.layer.shadowOpacity = Constants.SignIn.Value.shadowOpacity
+        self.logoImageView.layer.shadowRadius = Constants.SignIn.Value.shadowRadius
         
         // Set text fields
-        passwordTextField.inputTextField.secureTextEntry = true
+        self.passwordTextField.inputTextField.secureTextEntry = true  // Securetext mode for password field
+        self.usernameTextField.inputTextField.tag = 1
+        self.passwordTextField.inputTextField.tag = 2
         
         // Initialize forgotPassword Button
-        forgotPasswordButton = TextLinkButton()
-        forgotPasswordButton.textLinkFont = Constants.General.Font.ErrorFont
-        forgotPasswordButton.setTitle(Constants.SignIn.String.forgotPasswordLink, forState: .Normal)
-        forgotPasswordButton.addTarget(self, action: Selector("forgotPassword"), forControlEvents: .TouchUpInside)
+        self.forgotPasswordButton = TextLinkButton()
+        self.forgotPasswordButton.textLinkFont = Constants.General.Font.ErrorFont
+        self.forgotPasswordButton.setTitle(Constants.SignIn.String.forgotPasswordLink, forState: .Normal)
+        self.forgotPasswordButton.addTarget(self, action: Selector("forgotPassword"), forControlEvents: .TouchUpInside)
+        
+        // Add delegates
+        self.usernameTextField.delegate = self
+        self.passwordTextField.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -53,45 +58,42 @@ class SigninViewController: UIViewController {
         
         // Fill in the username field if current user exists
         if let user = User.currentUser() {
-            usernameTextField.text = user.username
-            passwordTextField.becomeFirstResponder()
+            self.usernameTextField.text = user.username
+            self.passwordTextField.becomeFirstResponder()
         }
     }
     
-    // All codes based on display frames should be called here after layouting subviews
+    // All codes based on display frames should be called here after auto-layouting subviews
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         // Redraw mask layer
-        maskLayer.removeFromSuperlayer()
-        let maskHeight = logoView.bounds.height * Constants.SignIn.Proportion.MaskHeightWithParentView
+        let maskHeight = self.logoView.bounds.height * Constants.SignIn.Proportion.MaskHeightWithParentView
         let maskWidth = maskHeight * Constants.SignIn.Proportion.MaskWidthWithHeight
-        maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight), cornerRadius: maskWidth / 2).CGPath
-        maskLayer.position = CGPoint(x: (logoView.bounds.width - maskWidth) / 2, y: (logoView.bounds.height - maskHeight) / 2)
-        logoView.layer.insertSublayer(maskLayer, below: logoImageView.layer)
+        self.maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight),
+                                          cornerRadius: maskWidth / 2).CGPath
+        self.maskLayer.position = CGPoint(x: (self.logoView.bounds.width - maskWidth) / 2,
+                                          y: (self.logoView.bounds.height - maskHeight) / 2)
         
         // Redraw DataInput Text Field
-        usernameTextField.drawUnderlineBorder()
-        passwordTextField.drawUnderlineBorder()
+        self.usernameTextField.drawUnderlineBorder()
+        self.passwordTextField.drawUnderlineBorder()
     }
     
     // MARK: Actions
     
     // Sign in with username/ password filled in
     @IBAction func SignIn(sender: AnyObject) {
-        let userName = usernameTextField.text
-        let userPassword = passwordTextField.text
+        guard let userName = usernameTextField.text, userPassword = passwordTextField.text else { return }
         
-        User.logInWithUsernameInBackground(userName!, password: userPassword!) { (pfUser, error) -> Void in
-            if pfUser == nil {
+        User.logInWithUsernameInBackground(userName, password: userPassword) { (result, error) -> Void in
+            guard let _ = result as? User else {
                 self.passwordTextField.errorText = Constants.SignIn.String.ErrorMessages.incorrectPassword
                 self.passwordTextField.actionHolder = self.forgotPasswordButton
-                
-                //Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                return
             }
-            else {
-                self.performSegueWithIdentifier("Launch Main View", sender: self)
-            }
+            
+            self.performSegueWithIdentifier("Launch Main View", sender: self)
         }
     }
     
@@ -101,17 +103,37 @@ class SigninViewController: UIViewController {
                                     message: Constants.SignIn.String.Alert.ResetPassword.Message,
                              numberOfFileds: 1,
                                  textValues: [["placeHolder": "Email"]]) { (inputValues) -> Void in
-                                    if let email = inputValues.first! {
-                                        User.requestPasswordResetForEmailInBackground(email) { (success, error) -> Void in
-                                            if !success {
-                                                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-                                            }
-                                            else {
-                                                Helper.PopupInformationBox(self, boxTitle: Constants.SignIn.String.Alert.ResetPasswordConfirm.Title,
-                                                                                  message: Constants.SignIn.String.Alert.ResetPasswordConfirm.Message)
-                                            }
+                                    guard let email = inputValues.first! where email.characters.count == 0 else {
+                                        return
+                                    }
+                                    
+                                    User.requestPasswordResetForEmailInBackground(email) { (success, error) -> Void in
+                                        if !success {
+                                            Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                                        }
+                                        else {
+                                            Helper.PopupInformationBox(self, boxTitle: Constants.SignIn.String.Alert.ResetPasswordConfirm.Title,
+                                                                                message: Constants.SignIn.String.Alert.ResetPasswordConfirm.Message)
                                         }
                                     }
                                 }
     }
 }
+
+// MARK: UITextField delegate
+
+extension SigninViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        guard let nextResponder = textField.nextResponderTextField() else {
+            textField.resignFirstResponder()
+            return true
+        }
+        
+        nextResponder.becomeFirstResponder()
+        return false // Do not dismiss keyboard
+    }
+}
+
+// MARK: DataInputTextField delegate
+
+extension SigninViewController: DataInputTextFieldDelegate { }

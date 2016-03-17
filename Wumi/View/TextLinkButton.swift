@@ -10,7 +10,14 @@ import UIKit
 
 class TextLinkButton: UIButton {
     
-    lazy var textLinkFont = Constants.General.Font.LinkButtonFont
+    var textLinkFont = Constants.General.Font.LinkButtonFont {
+        didSet {
+            self.titleLabel!.font = self.textLinkFont
+            self.setNeedsDisplay()
+        }
+    }
+    
+    // MARK: Initializers
     
     convenience init() {
         self.init(frame: CGRectZero)
@@ -19,23 +26,17 @@ class TextLinkButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setProperty()
+        self.setProperty()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        setProperty()
+        self.setProperty()
     }
     
     private func setProperty() {
-        setTitleColor(Constants.General.Color.ThemeColor, forState: .Normal)
-        titleLabel?.font = textLinkFont
-    }
-    
-    override func drawRect(rect: CGRect) {
-        titleLabel?.font = textLinkFont
-        
-        super.drawRect(rect)
+        self.setTitleColor(Constants.General.Color.ThemeColor, forState: .Normal)
+        self.titleLabel!.font = self.textLinkFont
     }
 }

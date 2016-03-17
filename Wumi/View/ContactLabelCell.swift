@@ -16,15 +16,14 @@ class ContactLabelCell: UITableViewCell {
     
     var detail: String? {
         didSet {
-            detailLabel.text = detail
-            for button in actionButtons {
-                if detail != nil && detail!.characters.count > 0 {
-                    button.enabled = true
-                }
-                else {
+            self.detailLabel.text = self.detail
+            for button in self.actionButtons {
+                guard let detail = self.detail where detail.characters.count > 0 else {
                     button.enabled = false
+                    continue
                 }
-
+                
+                button.enabled = true
             }
         }
     }
@@ -32,19 +31,19 @@ class ContactLabelCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel.textColor = Constants.General.Color.BorderColor
-        titleLabel.font = Constants.General.Font.InputFont
+        self.titleLabel.textColor = Constants.General.Color.BorderColor
+        self.titleLabel.font = Constants.General.Font.InputFont
         
-        detailLabel.textColor = Constants.General.Color.InputTextColor
-        detailLabel.font = Constants.General.Font.InputFont
+        self.detailLabel.textColor = Constants.General.Color.InputTextColor
+        self.detailLabel.font = Constants.General.Font.InputFont
         
         selectionStyle = .None
     }
     
     func reset() {
-        titleLabel.text = nil
-        detailLabel.text = nil
-        for button in actionButtons {
+        self.titleLabel.text = nil
+        self.detailLabel.text = nil
+        for button in self.actionButtons {
             button.removeTarget(nil, action: nil, forControlEvents: .AllTouchEvents)
         }
     }

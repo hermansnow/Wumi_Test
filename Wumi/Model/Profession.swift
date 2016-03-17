@@ -41,7 +41,6 @@ class Profession: AVObject, AVSubclassing {
         return name == target.name && category == target.category
     }
     
-    
     // MARK: Query
     class func loadAllProfessions(block: AVArrayResultBlock!) {
         let query = Profession.query()
@@ -56,3 +55,4 @@ class Profession: AVObject, AVSubclassing {
     }
 
 }
+
