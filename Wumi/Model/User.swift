@@ -125,8 +125,9 @@ class User: AVUser {
     // MARK: User queries
     
     // Fetch a user based on objectID
-    func fetchUser(objectId id: String, block: AVObjectResultBlock!) {
+    class func fetchUser(objectId id: String, block: AVObjectResultBlock!) {
         let query = User.query()
+        query.cachePolicy = .NetworkElseCache
         query.includeKey("professions")
         query.getObjectInBackgroundWithId(id, block: block)
     }

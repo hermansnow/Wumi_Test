@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactLabelCell: UITableViewCell {
+class ContactLabelCell: ProfileCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!

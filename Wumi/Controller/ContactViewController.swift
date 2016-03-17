@@ -103,11 +103,12 @@ class ContactViewController: UIViewController {
         guard let user = selectedUser else { return }
         
         // Fetch user data
-        user.fetchUser(objectId: user.objectId) { (result, error) -> Void in
-            guard let _ = result as? User where error == nil else {
+        User.fetchUser(objectId: user.objectId) { (result, error) -> Void in
+            guard let user = result as? User where error == nil else {
                 print("\(error)")
                 return
             }
+            self.selectedUser = user
                 
             user.loadAvatar(CGSize(width: self.backgroundImageView.frame.width, height: self.backgroundImageView.frame.height)) { (image, error) -> Void in
                 guard error == nil else {
@@ -119,7 +120,7 @@ class ContactViewController: UIViewController {
                 
             self.nameLabel.text = user.name
                 
-            self.graduationYearLabel.text = GraduationYearPickerView.showGraduationString(user.graduationYear)
+            self.graduationYearLabel.text = "(" + GraduationYearPickerView.showGraduationString(user.graduationYear) + ")"
                 
             // Reload specific rows
             self.reloadRowForTypes([.Email, .Phone])
@@ -201,7 +202,7 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCellWithIdentifier("ContactLabelCell") as! ContactLabelCell
             cell.reset()
             cell.titleLabel.text = ContactCellRowType.Email.rawValue.title
-            guard let user = self.selectedUser where user.emailPublic else{ break }
+            guard let user = self.selectedUser where user.emailPublic else { return cell }
             cell.detail = user.email
                 
             // Add email button
@@ -216,7 +217,7 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCellWithIdentifier("ContactLabelCell") as! ContactLabelCell
             cell.reset()
             cell.titleLabel.text = ContactCellRowType.Phone.rawValue.title
-            guard let user = self.selectedUser where user.emailPublic else { break }
+            guard let user = self.selectedUser where user.phonePublic else { return cell }
             cell.detail = user.phoneNumber
                 
             // Add SMS button
@@ -231,8 +232,6 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
             
             return cell
         }
-        
-        return UITableViewCell()
     }
 }
 

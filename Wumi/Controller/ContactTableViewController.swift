@@ -79,6 +79,7 @@ class ContactTableViewController: UITableViewController {
         self.resultSearchController.searchBar.sizeToFit()
         self.resultSearchController.searchBar.autocapitalizationType = .None;
         self.resultSearchController.searchBar.barTintColor = Constants.General.Color.BackgroundColor
+        self.definesPresentationContext = true
         
         // Initialize tableview
         self.tableView.tableHeaderView = self.resultSearchController.searchBar // Add search bar as the tableview's header
