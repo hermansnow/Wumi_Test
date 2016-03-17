@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoriteButton: DOFavoriteButton {
+class FavoriteButton: UIButton {
     
     var delegate: FavoriteButtonDelegate?
     
@@ -20,12 +20,8 @@ class FavoriteButton: DOFavoriteButton {
     }
     
     private func setProperty() {
-        self.image = Constants.General.Image.Favorite
-        self.imageColorOff = UIColor.brownColor()
-        self.imageColorOn = Constants.General.Color.ThemeColor
-        self.circleColor = Constants.General.Color.ThemeColor
-        self.lineColor = Constants.General.Color.ThemeColor
-        self.duration = 1.0 // default: 1.0
+        self.setBackgroundImage(UIImage(named: "Unfavorite"), forState: .Normal)
+        self.setBackgroundImage(UIImage(named: "Favorite"), forState: .Selected)
     }
     
     private func addTarget() {
@@ -34,15 +30,11 @@ class FavoriteButton: DOFavoriteButton {
     
     func tapped(sender: FavoriteButton) {
         if sender.selected {
-            // deselect
-            sender.deselect()
             if let delegate = self.delegate {
                 delegate.removeFavorite(self)
             }
         }
         else {
-            // select with animation
-            sender.select()
             if let delegate = self.delegate {
                 delegate.addFavorite(self)
             }

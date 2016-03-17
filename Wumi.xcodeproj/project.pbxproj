@@ -21,6 +21,7 @@
 		DF173EF21C86A58600018B4A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEF1C86A58600018B4A /* Extensions.swift */; };
 		DF173EF31C86A58600018B4A /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EF01C86A58600018B4A /* Helper.swift */; };
 		DF21176A1C927FDD009109EE /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */; };
+		DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF3629561C9B305100D87574 /* ContactTableViewCell.xib */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACEF1C64D20B00F81491 /* Contact.swift */; };
@@ -38,7 +39,6 @@
 		DF9F06061C5B6346008CA6DC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9F06051C5B6346008CA6DC /* libz.tbd */; };
 		DF9F060E1C7B7280008CA6DC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F060D1C7B7280008CA6DC /* Location.swift */; };
 		DF9F06101C7BC72D008CA6DC /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */; };
-		DF9F06121C7D93CC008CA6DC /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F06111C7D93CC008CA6DC /* DOFavoriteButton.swift */; };
 		DFA077451C92A79A00E3382E /* SettingSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA077441C92A79A00E3382E /* SettingSwitch.swift */; };
 		DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */; };
 		DFA74C211BF8215900609E83 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C201BF8215900609E83 /* MainTabBarController.swift */; };
@@ -99,6 +99,7 @@
 		DF173EF01C86A58600018B4A /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Helper.swift; path = "Supporting Files/Helper.swift"; sourceTree = "<group>"; };
 		DF173EF51C86A73D00018B4A /* Wumi-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Wumi-Bridging-Header.h"; sourceTree = "<group>"; };
 		DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCollectionCell.swift; path = View/ProfileCollectionCell.swift; sourceTree = "<group>"; };
+		DF3629561C9B305100D87574 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactTableViewCell.xib; path = View/ContactTableViewCell.xib; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF72ACEF1C64D20B00F81491 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Model/Contact.swift; sourceTree = "<group>"; };
@@ -116,7 +117,6 @@
 		DF9F06051C5B6346008CA6DC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		DF9F060D1C7B7280008CA6DC /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Model/Location.swift; sourceTree = "<group>"; };
 		DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewCell.swift; path = View/ContactTableViewCell.swift; sourceTree = "<group>"; };
-		DF9F06111C7D93CC008CA6DC /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DOFavoriteButton.swift; path = View/DOFavoriteButton.swift; sourceTree = "<group>"; };
 		DFA077441C92A79A00E3382E /* SettingSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingSwitch.swift; path = View/SettingSwitch.swift; sourceTree = "<group>"; };
 		DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMUserTableViewController.swift; path = Controller/WMUserTableViewController.swift; sourceTree = "<group>"; };
 		DFA74C201BF8215900609E83 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = Controller/MainTabBarController.swift; sourceTree = "<group>"; };
@@ -322,6 +322,7 @@
 				DFA93AD81C91DFFA00ECA503 /* ContactLabelCell.xib */,
 				DF9840101C96874F00620F3B /* ProfileCollectionCell.xib */,
 				DF8D518E1C971419004D808E /* ProfessionSectionHeader.xib */,
+				DF3629561C9B305100D87574 /* ContactTableViewCell.xib */,
 				DFA93ACE1C910DD700ECA503 /* ProfileCell.swift */,
 				DFA93AC21C90DE3600ECA503 /* ProfileInputCell.swift */,
 				DFA93ACA1C91016A00ECA503 /* ProfileListCell.swift */,
@@ -372,7 +373,6 @@
 			isa = PBXGroup;
 			children = (
 				DFA93AC11C90DDC000ECA503 /* CustomCell */,
-				DF9F06111C7D93CC008CA6DC /* DOFavoriteButton.swift */,
 				DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */,
 				DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */,
 				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
@@ -456,6 +456,7 @@
 				DFA93AD51C912A4D00ECA503 /* ProfileInputSwitchCell.xib in Resources */,
 				DFA93AD91C91DFFA00ECA503 /* ContactLabelCell.xib in Resources */,
 				DF159E191C80231C00DB65FF /* Images.xcassets in Resources */,
+				DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */,
 				DF9840111C96874F00620F3B /* ProfileCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -548,7 +549,6 @@
 				DFA93AC31C90DE3600ECA503 /* ProfileInputCell.swift in Sources */,
 				DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */,
 				DFA74C211BF8215900609E83 /* MainTabBarController.swift in Sources */,
-				DF9F06121C7D93CC008CA6DC /* DOFavoriteButton.swift in Sources */,
 				DFA93ABA1C88FCDB00ECA503 /* ColorGradientView.swift in Sources */,
 				DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */,
 				DFA93ADB1C91E0B900ECA503 /* ContactLabelCell.swift in Sources */,

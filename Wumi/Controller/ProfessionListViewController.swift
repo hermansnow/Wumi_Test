@@ -58,7 +58,6 @@ class ProfessionListViewController: UIViewController {
         flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         self.professionCollectionView.collectionViewLayout = flowLayout
         self.professionCollectionView.backgroundColor = UIColor.whiteColor()
-        self.professionCollectionView.backgroundColor = Constants.General.Color.BackgroundColor
         
         // Set delegates
         self.professionCollectionView.delegate = self

@@ -19,6 +19,7 @@ class ContactTableViewController: UITableViewController {
     lazy var filteredUsers = [User]() // array of filter results
     lazy var favoriteUsers = [User]() // array of favorite users
     
+    var selectedUserIndexPath: NSIndexPath?
     var inputTimer: NSTimer?
     var searchString: String = ""
     
@@ -72,6 +73,9 @@ class ContactTableViewController: UITableViewController {
         
         self.navigationController!.extendedLayoutIncludesOpaqueBars = true
         
+        // Register nib
+        self.tableView.registerNib(UINib(nibName: "ContactTableViewCell", bundle: nil), forCellReuseIdentifier: "ContactTableViewCell")
+        
         // Initialize resultSearchController
         self.resultSearchController.searchResultsUpdater = self
         self.resultSearchController.dimsBackgroundDuringPresentation = false
@@ -110,11 +114,12 @@ class ContactTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let cell = sender as? ContactTableViewCell,
-            indexPath = tableView.indexPathForCell(cell),
-            contactViewController = segue.destinationViewController as? ContactViewController,
-            selectedUser = displayUsers[safe: indexPath.row] {
-                contactViewController.selectedUser = selectedUser
+        if let contactViewController = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
+            guard let cell = sender as? ContactTableViewCell, indexPath = tableView.indexPathForCell(cell), selectedUser = displayUsers[safe: indexPath.row] else { return }
+            self.selectedUserIndexPath = self.tableView.indexPathForSelectedRow
+            contactViewController.delegate = self
+            contactViewController.selectedUser = selectedUser
+            contactViewController.isFavorite = cell.favoriteButton.selected
         }
     }
     
@@ -129,7 +134,7 @@ class ContactTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Contact Cell", forIndexPath: indexPath) as! ContactTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("ContactTableViewCell", forIndexPath: indexPath) as! ContactTableViewCell
         
         // Set cell display style
         cell.layer.borderColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1).CGColor
@@ -167,6 +172,10 @@ class ContactTableViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("Show Contact", sender: tableView.cellForRowAtIndexPath(indexPath))
     }
     
     // MARK: ScrollView delegete
@@ -216,24 +225,7 @@ class ContactTableViewController: UITableViewController {
         }
     }
 }
-
-// MARK: Favorite button delegate
-
-extension ContactTableViewController: FavoriteButtonDelegate {
-    func addFavorite(favoriteButton: FavoriteButton) {
-        self.currentUser.addFavoriteUser(self.displayUsers[safe: favoriteButton.tag]) { (result, error) -> Void in
-            guard error != nil else { return }
-            favoriteButton.selected = result
-        }
-    }
     
-    func removeFavorite(favoriteButton: FavoriteButton) {
-        self.currentUser.removeFavoriteUser(self.displayUsers[safe: favoriteButton.tag]) { (result, error) -> Void in
-            guard error != nil else { return }
-            favoriteButton.selected = result
-        }
-    }
-}
     
 // MARK: Search delegates
 
@@ -242,19 +234,47 @@ extension ContactTableViewController: UISearchControllerDelegate, UISearchResult
         if let searchInput = searchController.searchBar.text {
             searchString = searchInput
         }
-        
+            
         // Stop input timer if one is running
         if inputTimer != nil {
             inputTimer!.invalidate()
         }
-        
+            
         if !searchString.isEmpty {
             // Restart a new timer
-            inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval, target: self, selector: "reloadUsers", userInfo: nil, repeats: false)
+            inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval, target: self, selector:"reloadUsers", userInfo: nil, repeats: false)
         }
         else {
             self.filteredUsers.removeAll(keepCapacity: false)
             tableView.reloadData()
         }
+    }
+}
+
+// MARK: Favorite button delegate
+
+extension ContactTableViewController: FavoriteButtonDelegate {
+    func addFavorite(favoriteButton: FavoriteButton) {
+        self.currentUser.addFavoriteUser(self.displayUsers[safe: favoriteButton.tag]) { (result, error) -> Void in
+            guard result && error == nil else { return }
+            favoriteButton.selected = true
+        }
+    }
+    
+    func removeFavorite(favoriteButton: FavoriteButton) {
+        self.currentUser.removeFavoriteUser(self.displayUsers[safe: favoriteButton.tag]) { (result, error) -> Void in
+            guard result && error == nil else { return }
+            favoriteButton.selected = false
+        }
+    }
+}
+    
+// MARK: ContactViewController delegate
+
+extension ContactTableViewController: ContactViewControllerDelegate {
+    func changeFavorite(contactViewController: ContactViewController) {
+        guard let indexPath = self.selectedUserIndexPath, cell = self.tableView.cellForRowAtIndexPath(indexPath) as? ContactTableViewCell else { return }
+        
+        cell.favoriteButton.selected = contactViewController.isFavorite
     }
 }
