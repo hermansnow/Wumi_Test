@@ -27,19 +27,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Register classes
+        self.registerClass()
+        
+        // Set up appearance
+        self.setupAppearance()
+        
+        // Set up AVOSCloud
+        self.setupAVOSCloudSetting()
+        
+        // Set initial view controller
+        self.setupLaunchViewController()
+        
+        return true
+    }
+    
+    // Register classes
+    func registerClass() {
         Contact.registerSubclass()
         Profession.registerSubclass()
-        
+    }
+    
+    // Set up application level appearance
+    func setupAppearance() {
         // Set Navigation bar color
         UINavigationBar.appearance().barTintColor = Constants.General.Color.ThemeColor
         UINavigationBar.appearance().tintColor = Constants.General.Color.TintColor
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Constants.General.Color.TitleColor]
         UINavigationBar.appearance().translucent = false
         
-        // Set up AVOSCloud
-        setupAVOSCloudSetting()
+        // Set Tab bar color
+        UITabBar.appearance().barTintColor = Constants.General.Color.ThemeColor
+        UITabBar.appearance().tintColor = Constants.General.Color.TintColor
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: Constants.General.Color.TitleColor], forState: .Normal)
+        UITabBar.appearance().translucent = false
         
-        // Set initial view controller
+        // Set status bar
+        setStatusBarBackgroundColor(Constants.General.Color.ThemeColor)
+    }
+    
+    // Customize the status bar
+    func setStatusBarBackgroundColor(color: UIColor) {
+        guard let statusBar = UIApplication.sharedApplication().valueForKey("statusBarWindow")?.valueForKey("statusBar") as? UIView else { return }
+        statusBar.backgroundColor = color
+    }
+    
+    // Set up the initial launch view controller
+    func setupLaunchViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let user = User.currentUser() {
             user.fetchInBackgroundWithBlock(nil)
@@ -49,8 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let loginNavigation = storyboard.instantiateViewControllerWithIdentifier("Sign In Navigation Controller")
             window?.rootViewController = loginNavigation
         }
-        
-        return true
     }
     
     // Set up AVOSCloud
