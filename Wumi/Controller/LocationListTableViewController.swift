@@ -20,16 +20,26 @@ class LocationListTableViewController: UITableViewController {
     var isLocating = false
     var currentLocation: CLPlacemark?
     
+    // Add index collation
+    lazy var collation = UILocalizedIndexedCollation.currentCollation()
+    lazy var sections = [[String]]()
+    lazy var sectionTitles = [String]()
+    lazy var sectionIndexTitles = [String]()
+    
     // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        self.tableView.sectionIndexBackgroundColor = UIColor(white: 1.0, alpha: 0.1)
+        
         // Add delegates
         self.locationManager.delegate = self
         
         // Load country list
-        loadCountries()
+        self.loadCountries()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -38,32 +48,32 @@ class LocationListTableViewController: UITableViewController {
         self.getCurrentLocation()
     }
 
-    // MARK: - Table view data source
-
+    // MARK: Table view data source
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return self.sections.count
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Current Location"
-        case 1:
-            return "All"
-        default:
-            return nil
-        }
-    }
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
-        case 1:
-            return countryList.count
         default:
-            return 0
+            guard let sectionArray = self.sections[safe: section] else { return 0 }
+            return sectionArray.count
         }
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.sectionTitles[section]
+    }
+    
+    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String] {
+        return self.sectionIndexTitles
+    }
+    
+    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+        return index + 1
     }
     
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -122,21 +132,18 @@ class LocationListTableViewController: UITableViewController {
             else if let location = self.currentLocation {
                 cell.textLabel!.text = "\(Location(Country: location.country, City: location.locality))"
             }
-        case 1:
-            var countryName: String?
+        default:
+            guard let sectionArray = self.sections[safe: indexPath.section], country = sectionArray[safe: indexPath.row] else { break }
             
-            countryName = self.countryList[safe: indexPath.row]
-            cell.textLabel!.text = countryName
+            cell.textLabel!.text = country
             
             // Add checkmark for selected country
-            if let location = self.selectedLocation where location.country == countryName {
+            if let location = self.selectedLocation where location.country == country {
                 cell.accessoryType = .Checkmark
             }
             else {
                 cell.accessoryType = .None
             }
-        default:
-            break
         }
         
         return cell
@@ -147,10 +154,9 @@ class LocationListTableViewController: UITableViewController {
         case 0:
             guard let location = self.currentLocation else { break }
             self.selectedLocation = Location(Country: location.country, City: location.locality)
-        case 1:
-            self.selectedLocation = Location(Country: countryList[safe: indexPath.row], City: nil)
         default:
-            break
+            guard let sectionArray = self.sections[safe: indexPath.section], country = sectionArray[safe: indexPath.row] else { break }
+            self.selectedLocation = Location(Country: country, City: nil)
         }
         
         if let location = selectedLocation, delegate = locationDelegate {
@@ -190,12 +196,40 @@ class LocationListTableViewController: UITableViewController {
     }
     
     private func loadCountries() -> Void {
+        var countryList = [String]()
+        
         for countryCode in NSLocale.ISOCountryCodes() {
             if let countryName = NSLocale.currentLocale().displayNameForKey(NSLocaleCountryCode, value: countryCode) {
-                self.countryList.append(countryName)
+                countryList.append(countryName)
             }
         }
-        self.countryList.sortInPlace()
+        countryList.sortInPlace()
+        
+        self.buildSectionIndex(countryList)
+    }
+    
+    private func buildSectionIndex(data: [String]) {
+        // Reser collasion
+        self.collation = UILocalizedIndexedCollation.currentCollation()
+        
+        var sectionArrays: [[String]] = Array(count: self.collation.sectionTitles.count, repeatedValue: [String]())
+        
+        for country in data {
+            let sectionIndex = collation.sectionForObject(country, collationStringSelector: Selector("self"))
+            sectionArrays[sectionIndex].append(country)
+        }
+        
+        // Add current location section
+        self.sections.append([String]())
+        self.sectionTitles.append("Current Location")
+        
+        for sectionIndex in 0..<sectionArrays.count {
+            guard let section = sectionArrays[safe: sectionIndex] where section.count > 0 else { continue }
+            
+            self.sections.append(section)
+            self.sectionTitles.append(self.collation.sectionTitles[sectionIndex])
+            self.sectionIndexTitles.append(self.collation.sectionIndexTitles[sectionIndex])
+        }
     }
 }
 

@@ -29,6 +29,13 @@ extension Array {
         
         return result
     }
+    
+    // Remove list of items
+    mutating func removeAtIndexes(indexes:[Int]) -> () {
+        for index in indexes.sort(>) {
+            self.removeAtIndex(index)
+        }
+    }
 }
 
 extension Set {

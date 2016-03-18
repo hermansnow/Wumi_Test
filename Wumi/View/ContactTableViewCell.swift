@@ -23,8 +23,8 @@ class ContactTableViewCell: UITableViewCell {
     }
     
     func setProperty() {
-        self.contentView.layer.borderColor = Constants.General.Color.BackgroundColor.CGColor
-        self.contentView.layer.borderWidth = 5.0
+        self.layer.borderColor = Constants.General.Color.BackgroundColor.CGColor
+        self.layer.borderWidth = 5.0
     }
     
     override func awakeFromNib() {
