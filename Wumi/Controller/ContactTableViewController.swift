@@ -50,17 +50,15 @@ class ContactTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController!.extendedLayoutIncludesOpaqueBars = true // Correct the layout for opaque navigation bar
+        self.extendedLayoutIncludesOpaqueBars = true // Correct the layout for opaque bars
         
         // Register nib
         self.tableView.registerNib(UINib(nibName: "ContactTableViewCell", bundle: nil), forCellReuseIdentifier: "ContactTableViewCell")
         
         // Initialize tableview
-        self.tableView.tableHeaderView = self.resultSearchController.searchBar // Add search bar as the tableview's header
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.tableView.separatorStyle = .None
         self.tableView.backgroundColor = Constants.General.Color.BackgroundColor
-        self.tableView.setContentOffset(CGPoint(x: 0, y: tableView.tableHeaderView!.frame.size.height), animated: true)
         
         // Set delegates
         self.tableView.dataSource = self
@@ -113,6 +111,9 @@ class ContactTableViewController: UITableViewController {
         self.resultSearchController.searchBar.autocapitalizationType = .None;
         self.resultSearchController.searchBar.barTintColor = Constants.General.Color.BackgroundColor
         self.definesPresentationContext = true
+        
+        self.tableView.tableHeaderView = self.resultSearchController.searchBar // Add search bar as the tableview's header
+        self.tableView.setContentOffset(CGPoint(x: 0, y: tableView.tableHeaderView!.frame.size.height), animated: true) // Initially, hide search bar under the navigation bar
     }
     
     private func addRefreshControl() {
@@ -310,6 +311,11 @@ extension ContactTableViewController: FavoriteButtonDelegate {
                 }
             }
             favoriteButton.selected = false
+            
+            // Remove cell if we are on the Favorite Search Type whcih should only show favorite users
+            if self.searchType == .Favorites {
+                self.initSearch()
+            }
         }
     }
 }
