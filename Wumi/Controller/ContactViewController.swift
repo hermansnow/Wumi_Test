@@ -73,7 +73,7 @@ class ContactViewController: UIViewController {
     override func willMoveToParentViewController(parent: UIViewController?) {
         super.willMoveToParentViewController(parent)
         if let delegate = self.delegate where parent == nil {
-            delegate.changeFavorite(self)
+            delegate.finishViewContact(self)
         }
     }
     
@@ -122,28 +122,33 @@ class ContactViewController: UIViewController {
     // MARK: Help functions
     
     private func displayUserData() {
-        guard let user = selectedUser else { return }
+        guard let user = self.selectedUser else { return }
         
         // Fetch user data
-        User.fetchUser(objectId: user.objectId) { (result, error) -> Void in
+        user.fetchInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else {
                 print("\(error)")
                 return
             }
-            self.selectedUser = user
-                
-            user.loadAvatar(CGSize(width: self.backgroundImageView.frame.width, height: self.backgroundImageView.frame.height)) { (image, error) -> Void in
+            
+            user.loadAvatar() { (image, error) -> Void in
                 guard error == nil else {
                     print("\(error)")
                     return
                 }
                 self.backgroundImageView.image = image
             }
-                
+            
             self.nameLabel.text = user.name
-                
-            self.graduationYearLabel.text = "(" + GraduationYearPickerView.showGraduationString(user.graduationYear) + ")"
-                
+            
+            let graduationText = GraduationYearPickerView.showGraduationString(user.graduationYear)
+            if graduationText.characters.count > 0 {
+                self.graduationYearLabel.text = "(" + graduationText + ")"
+            }
+            else {
+                self.graduationYearLabel.text = graduationText
+            }
+            
             // Reload specific rows
             self.reloadRowForTypes([.Email, .Phone])
             
@@ -333,27 +338,18 @@ extension ContactViewController: MFMailComposeViewControllerDelegate {
 
 extension ContactViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
-        guard let user = self.selectedUser else { return }
-        self.currentUser.addFavoriteUser(user) { (result, error) -> Void in
-            guard result && error == nil else { return }
-            self.isFavorite = true
-        }
-
+        self.isFavorite = true
     }
     
     func removeFavorite(favoriteButton: FavoriteButton) {
-        guard let user = self.selectedUser else { return }
-        self.currentUser.removeFavoriteUser(user) { (result, error) -> Void in
-            guard result && error == nil else { return }
-            self.isFavorite = false
-        }
+        self.isFavorite = false
     }
 }
 
 // MARK: Custome delegate
 
 protocol ContactViewControllerDelegate {
-    func changeFavorite(contactViewController: ContactViewController)
+    func finishViewContact(contactViewController: ContactViewController)
 }
 
 // MARK: Custom row type

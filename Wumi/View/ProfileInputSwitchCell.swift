@@ -34,6 +34,8 @@ class ProfileInputSwitchCell: ProfileCell {
         self.inputTextField.borderStyle = .None
         self.inputTextField.font = Constants.General.Font.InputFont
         self.inputTextField.textColor = Constants.General.Color.InputTextColor
+        
+        self.reset()
     }
     
     func reset() {

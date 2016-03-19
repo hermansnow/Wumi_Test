@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BTNavigationDropdownMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>NHAlignmentFlowLayout.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,12 +32,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>96F17D194EF328B3B8753978E53FF719</key>
+		<key>D4B423EEAEF58FBF0D2D8122C7DF5A04</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>DB19FD22F1EB1C49D4EBB76E669463C3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FD23F1DA220A44C7E84F356B64871271</key>
 		<dict>
 			<key>primary</key>
 			<true/>

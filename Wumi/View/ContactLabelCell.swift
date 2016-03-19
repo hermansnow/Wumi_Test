@@ -37,7 +37,9 @@ class ContactLabelCell: ProfileCell {
         self.detailLabel.textColor = Constants.General.Color.InputTextColor
         self.detailLabel.font = Constants.General.Font.InputFont
         
-        selectionStyle = .None
+        self.selectionStyle = .None
+        
+        self.reset()
     }
     
     func reset() {

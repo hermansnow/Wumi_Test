@@ -15,7 +15,7 @@ extension Array {
     }
     
     // Group array elements based on a sepcific key
-    func groupBy <Key: Hashable>(group: (Element) -> Key) -> [Key: [Element]] {
+    func groupBy<Key: Hashable>(group: (Element) -> Key) -> [Key: [Element]] {
         var result = [Key: [Element]]()
         
         for element in self {
@@ -34,6 +34,14 @@ extension Array {
     mutating func removeAtIndexes(indexes:[Int]) -> () {
         for index in indexes.sort(>) {
             self.removeAtIndex(index)
+        }
+    }
+    
+    mutating func removeObject<T: Equatable>(object: T) {
+        for index in indices.sort(>) {
+            guard let element = self[index] as? T where element == object else { continue }
+            self.removeAtIndex(index)
+            print(index)
         }
     }
 }
@@ -94,7 +102,7 @@ extension String {
 
 extension UIImage {
     // Compress image in JPEG format. The max size of image save in Parse server is 10.0MB
-    func scaleToSize(size: Int) -> NSData? {
+    func compressToSize(size: Int) -> NSData? {
         var compress:CGFloat = 1.0
         var imageData:NSData?
         
@@ -109,6 +117,15 @@ extension UIImage {
         }
         return imageData;
     }
+    
+    func scaleToSize(size: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        self.drawInRect(CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+
 }
 
 extension UIResponder {

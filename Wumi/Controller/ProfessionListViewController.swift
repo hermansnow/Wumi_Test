@@ -85,20 +85,18 @@ class ProfessionListViewController: UIViewController {
     
     private func loadProfessions() {
         Profession.loadAllProfessions { (results, error) -> Void in
-            if results == nil || results.count == 0 {
+            guard let allProfessions = results as? [Profession] where results.count >= 0 && error == nil else {
                 print("\(error)")
                 return
             }
             
-            if let allProfessions = results as? [Profession] {
-                self.professions = allProfessions.groupBy { (profession) -> String in
-                    return profession.category!
-                }
-                
-                self.professionCategories = Array(self.professions.keys.sort())
-                
-                self.professionCollectionView.reloadData()
+            self.professions = allProfessions.groupBy { (profession) -> String in
+                return profession.category!
             }
+                
+            self.professionCategories = Array(self.professions.keys.sort())
+                
+            self.professionCollectionView.reloadData()
         }
     }
 }

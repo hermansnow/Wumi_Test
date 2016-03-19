@@ -150,7 +150,7 @@ class EditProfileViewController: UIViewController {
             
             self.displayContactInformation()
             
-            self.currentUser.loadAvatar(CGSize(width: self.profileImageView.frame.width, height: self.profileImageView.frame.height)) { (image, error) -> Void in
+            self.currentUser.loadAvatar(ScaleToSize: CGSize(width: self.profileImageView.frame.width, height: self.profileImageView.frame.height)) { (image, error) -> Void in
                 guard error == nil else {
                     print("\(error)")
                     return
@@ -160,7 +160,13 @@ class EditProfileViewController: UIViewController {
             
             self.nameLabel.text = self.currentUser.name
             
-            self.graduationYearLabel.text = "(" + GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear) + ")"
+            let graduationText = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
+            if graduationText.characters.count > 0 {
+                self.graduationYearLabel.text = "(" + graduationText + ")"
+            }
+            else {
+                self.graduationYearLabel.text = graduationText
+            }
             
             // Load professions
             Profession.fetchAllInBackground(self.currentUser.professions) { (results, error) -> Void in

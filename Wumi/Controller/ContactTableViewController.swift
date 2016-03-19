@@ -1,4 +1,4 @@
-    //
+//
 //  ContactTableViewController.swift
 //  Wumi
 //
@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BTNavigationDropdownMenu
 
 class ContactTableViewController: UITableViewController {
     
@@ -17,11 +18,12 @@ class ContactTableViewController: UITableViewController {
     var currentUser = User.currentUser()
     lazy var users = [User]() // array of users records
     lazy var filteredUsers = [User]() // array of filter results
-    lazy var favoriteUsers = [User]() // array of favorite users
+    lazy var favoriteUsers = [User]() // set of favorite users
     
     var selectedUserIndexPath: NSIndexPath?
     var inputTimer: NSTimer?
     var searchString: String = ""
+    var searchType: User.UserSearchType = .All
     
     // Computed properties
     var displayUsers: [User] {
@@ -42,48 +44,16 @@ class ContactTableViewController: UITableViewController {
             }
         }
     }
-    
-    // Closure for fetch display data
-    var fetchDisplayData = { (inout users: [User], AllowAppend append: Bool, LoadData results: [AnyObject!], WithError error: NSError!) -> Void in
-        if error != nil {
-            print("\(error)")
-            return
-        }
-        
-        if append {
-            users.appendContentsOf(results as! [User])
-        }
-        else {
-            users = results as! [User]
-        }
-    
-        var contacts = [Contact]()
-        for user in users {
-            if let contact = user.contact {
-                contacts.append(contact)
-            }
-            Contact.fetchAllIfNeeded(contacts)
-        }
-    }
 
     // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController!.extendedLayoutIncludesOpaqueBars = true
+        self.navigationController!.extendedLayoutIncludesOpaqueBars = true // Correct the layout for opaque navigation bar
         
         // Register nib
         self.tableView.registerNib(UINib(nibName: "ContactTableViewCell", bundle: nil), forCellReuseIdentifier: "ContactTableViewCell")
-        
-        // Initialize resultSearchController
-        self.resultSearchController.searchResultsUpdater = self
-        self.resultSearchController.dimsBackgroundDuringPresentation = false
-        self.resultSearchController.hidesNavigationBarDuringPresentation = false
-        self.resultSearchController.searchBar.sizeToFit()
-        self.resultSearchController.searchBar.autocapitalizationType = .None;
-        self.resultSearchController.searchBar.barTintColor = Constants.General.Color.BackgroundColor
-        self.definesPresentationContext = true
         
         // Initialize tableview
         self.tableView.tableHeaderView = self.resultSearchController.searchBar // Add search bar as the tableview's header
@@ -96,10 +66,14 @@ class ContactTableViewController: UITableViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        // Add UIRefreshControl
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: Selector("reloadUsers"), forControlEvents: .ValueChanged)
-        self.tableView.addSubview(refreshControl!)
+        // Add resultSearchController
+        self.addSearchController()
+        
+        // Add refreshControl
+        self.addRefreshControl()
+        
+        // Add dropdown list
+        self.addDropdownList()
         
         // Add action for hamburgerMenuButton
         if let revealViewController = self.revealViewController() {
@@ -110,20 +84,67 @@ class ContactTableViewController: UITableViewController {
         }
         
         // Load data
-        self.reloadUsers()
+        self.currentUser.loadFavoriteUsers { (results, error) -> Void in
+            guard let favoriteUsers = results as? [User] else { return }
+            
+            self.favoriteUsers = favoriteUsers
+            // Reload table data
+            self.tableView.reloadData()
+        }
+        self.initSearch()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let contactViewController = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
             guard let cell = sender as? ContactTableViewCell, indexPath = tableView.indexPathForCell(cell), selectedUser = displayUsers[safe: indexPath.row] else { return }
-            self.selectedUserIndexPath = self.tableView.indexPathForSelectedRow
+            self.selectedUserIndexPath = indexPath
             contactViewController.delegate = self
             contactViewController.selectedUser = selectedUser
             contactViewController.isFavorite = cell.favoriteButton.selected
         }
     }
     
-    // MARK: - TableView delegate & data source
+    // MARK: Helper functions
+    private func addSearchController() {
+        self.resultSearchController.searchResultsUpdater = self
+        self.resultSearchController.dimsBackgroundDuringPresentation = false
+        self.resultSearchController.hidesNavigationBarDuringPresentation = false
+        self.resultSearchController.searchBar.sizeToFit()
+        self.resultSearchController.searchBar.autocapitalizationType = .None;
+        self.resultSearchController.searchBar.barTintColor = Constants.General.Color.BackgroundColor
+        self.definesPresentationContext = true
+    }
+    
+    private func addRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: Selector("initSearch"), forControlEvents: .ValueChanged)
+        self.tableView.addSubview(refreshControl!)
+    }
+    
+    
+    // Credential and reference: https://github.com/PhamBaTho/BTNavigationDropdownMenu
+    private func addDropdownList() {
+        // Initial a dropdown list with options
+        let optionTitles = ["All", "Favorites", "Graduation Year"]
+        let optionSearchTypes: [User.UserSearchType] = [.All, .Favorites, .Graduation]
+        
+        // Initial title
+        guard let index = optionSearchTypes.indexOf(self.searchType), title = optionTitles[safe: index] else { return }
+        let menuView = BTNavigationDropdownMenu(navigationController: self.navigationController, title: title, items: optionTitles)
+        
+        // Add the dropdown list to the navigation bar
+        self.navigationItem.titleView = menuView
+        
+        // Set action closure
+        menuView.didSelectItemAtIndexHandler = {(indexPath: Int) -> () in
+            guard let searchType = optionSearchTypes[safe: indexPath] else { return }
+            
+            self.searchType = searchType
+            self.initSearch()
+        }
+    }
+    
+    // MARK: TableView delegate & data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -135,41 +156,37 @@ class ContactTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ContactTableViewCell", forIndexPath: indexPath) as! ContactTableViewCell
-        
-        // Set cell display style
-        cell.layer.borderColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1).CGColor
-        
+        cell.reset()
+    
         // Set cell with user data
-        if let user = displayUsers[safe: indexPath.row] {
-            cell.nameLabel.text = user.name
+        guard let user = displayUsers[safe: indexPath.row] else { return cell }
+        
+        cell.nameLabel.text = user.name
             
-            // Reset avatar image
-            cell.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
-            
-            // Load avatar image
-            user.loadAvatar(cell.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
-                guard imageError == nil && avatarImage != nil else {
-                    print("\(imageError)")
-                    return
-                }
-                cell.avatarImageView.image = avatarImage
+        // Load avatar image
+        cell.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
+        user.loadAvatar(ScaleToSize: cell.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
+            guard imageError == nil && avatarImage != nil else {
+                print("\(imageError)")
+                return
             }
-            
-            // Load contact data
-            if let contact = user.contact {
-                cell.locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
-            }
-            
-            // Load favorite status with login user
-            if (self.favoriteUsers.indexOf(user) != nil) {
-                cell.favoriteButton.selected = true
-            }
-            else {
-                cell.favoriteButton.selected = false
-            }
-            cell.favoriteButton.tag = indexPath.row
-            cell.favoriteButton.delegate = self
+            cell.avatarImageView.image = avatarImage
         }
+            
+        // Load contact data
+        if let contact = user.contact {
+            cell.locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
+        }
+            
+        // Load favorite status with login user
+        for favoriteUser in self.favoriteUsers {
+            if favoriteUser.compareTo(user) {
+                cell.favoriteButton.selected = true
+                break
+            }
+        }
+        cell.favoriteButton.tag = indexPath.row
+        cell.favoriteButton.delegate = self
         
         return cell
     }
@@ -196,36 +213,49 @@ class ContactTableViewController: UITableViewController {
     
     // MARK: Data handlers
     
-    // Reload users
-    func reloadUsers() {
-        // Load user lists
-        User.loadUsers(skip: 0, limit: Constants.Query.LoadUserLimit, WithName: self.searchString) { (results, error) -> Void in
-            self.fetchDisplayData(&self.displayUsers, AllowAppend: false, LoadData: results, WithError: error)
+    func initSearch() {
+        self.displayUsers.removeAll()
+        self.loadMoreUsers()
+    }
+    
+    // Load more users based on filters
+    func loadMoreUsers() {
+        self.currentUser.loadUsers(skip: self.displayUsers.count,
+                                  limit: Constants.Query.LoadUserLimit,
+                                   type: self.searchType,
+                           searchString: self.searchString) { (results, error) -> Void in
+            guard let users = results as? [User] where error == nil else { return }
+
+            // Fetch additional data asynchronously
+            self.fetchDisplayData(users)
             
-            if self.refreshControl!.refreshing {
-                self.refreshControl!.endRefreshing()
-            }
+            self.displayUsers.appendContentsOf(users)
+            self.tableView.reloadData()
             
-            // Load favorite users for current user
-            self.currentUser.favoriteUsers!.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
-                guard let favoriteUsers = results as? [User] else { return }
-                self.favoriteUsers = favoriteUsers
-                
-                // Reload table data
-                self.tableView.reloadData()
-            }
+            // End refreshing
+            self.refreshControl?.endRefreshing()
         }
     }
     
-    func loadMoreUsers() {
-        User.loadUsers(skip: self.displayUsers.count, limit: Constants.Query.LoadUserLimit, WithName: self.searchString) { (results, error) -> Void in
-            self.fetchDisplayData(&self.displayUsers, AllowAppend: true, LoadData: results, WithError: error)
+    // Fetch display data asynchronously
+    func fetchDisplayData(users: [User]) -> Void {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+            // Fetch contacts data
+            var contacts = [Contact]()
+            for user in users {
+                if let contact = user.contact {
+                    contacts.append(contact)
+                }
+            }
+            Contact.fetchAllIfNeeded(contacts)
             
-            self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.tableView.reloadData()
+            })
         }
     }
 }
-    
+
     
 // MARK: Search delegates
 
@@ -242,7 +272,11 @@ extension ContactTableViewController: UISearchControllerDelegate, UISearchResult
             
         if !searchString.isEmpty {
             // Restart a new timer
-            inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval, target: self, selector:"reloadUsers", userInfo: nil, repeats: false)
+            inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval,
+                                                        target: self,
+                                                      selector: "initSearch",
+                                                      userInfo: nil,
+                                                       repeats: false)
         }
         else {
             self.filteredUsers.removeAll(keepCapacity: false)
@@ -255,15 +289,26 @@ extension ContactTableViewController: UISearchControllerDelegate, UISearchResult
 
 extension ContactTableViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
-        self.currentUser.addFavoriteUser(self.displayUsers[safe: favoriteButton.tag]) { (result, error) -> Void in
+        guard let user = self.displayUsers[safe: favoriteButton.tag] else { return }
+        self.currentUser.addFavoriteUser(user) { (result, error) -> Void in
             guard result && error == nil else { return }
+            
+            self.favoriteUsers.append(user)
             favoriteButton.selected = true
         }
     }
     
     func removeFavorite(favoriteButton: FavoriteButton) {
-        self.currentUser.removeFavoriteUser(self.displayUsers[safe: favoriteButton.tag]) { (result, error) -> Void in
+        guard let user = self.displayUsers[safe: favoriteButton.tag] else { return }
+        self.currentUser.removeFavoriteUser(user) { (result, error) -> Void in
             guard result && error == nil else { return }
+            
+            for favoriteUser in self.favoriteUsers {
+                if favoriteUser.compareTo(user) {
+                    self.favoriteUsers.removeObject(user)
+                    break
+                }
+            }
             favoriteButton.selected = false
         }
     }
@@ -272,9 +317,12 @@ extension ContactTableViewController: FavoriteButtonDelegate {
 // MARK: ContactViewController delegate
 
 extension ContactTableViewController: ContactViewControllerDelegate {
-    func changeFavorite(contactViewController: ContactViewController) {
+    func finishViewContact(contactViewController: ContactViewController) {
         guard let indexPath = self.selectedUserIndexPath, cell = self.tableView.cellForRowAtIndexPath(indexPath) as? ContactTableViewCell else { return }
         
-        cell.favoriteButton.selected = contactViewController.isFavorite
+        // save favorite list
+        if cell.favoriteButton.selected != contactViewController.isFavorite {
+            cell.favoriteButton.tapped(cell.favoriteButton)
+        }
     }
 }

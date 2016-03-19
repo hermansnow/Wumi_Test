@@ -38,6 +38,8 @@ class ProfileListCell: ProfileCell {
         self.collectionView.backgroundColor = UIColor.whiteColor()
         
         layer.addSublayer(separator)
+        
+        self.reset()
     }
     
     override func drawRect(rect: CGRect) {

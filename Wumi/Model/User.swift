@@ -27,6 +27,10 @@ class User: AVUser {
     // Properties should not be saved into PFUser
     var confirmPassword: String?
     
+    enum UserSearchType {
+        case All, Favorites, Graduation
+    }
+    
     // MARK: Initializer
     
     override class func initialize() {
@@ -36,6 +40,11 @@ class User: AVUser {
         dispatch_once(&Static.onceToken) {
              self.registerSubclass() // Register the subclass
         }
+    }
+    
+    // Compare function
+    func compareTo(target: User) -> Bool {
+        return objectId == target.objectId
     }
     
     // MARK: Validation functions
@@ -96,13 +105,31 @@ class User: AVUser {
     // MARK: Avatar functions
     
     // Load avatar. This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background
-    func loadAvatar(size: CGSize, block: AVImageResultBlock!) {
-        guard avatarImageFile != nil else {
+    func loadAvatar(ScaleToSize size: CGSize? = nil, WithBlock block: AVImageResultBlock!) {
+        guard let file = avatarImageFile else {
             block!(nil, NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
         }
         
-        avatarImageFile?.getThumbnail(true, width: Int32(size.width), height: Int32(size.height), withBlock: block)
+        file.getDataInBackgroundWithBlock { (data, error) -> Void in
+            // create a queue to parse image
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                var image: UIImage?
+                
+                if let imageData = data where error == nil, let originalImage = UIImage(data: imageData) {
+                    if size != nil {
+                        image = originalImage.scaleToSize(size!)
+                    }
+                    else {
+                        image = originalImage
+                    }
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    block(image, error)
+                })
+            })
+        }
     }
     
     // Save avatar to cloud server
@@ -113,7 +140,7 @@ class User: AVUser {
         }
         
         // Scale image
-        guard let imageData = image.scaleToSize(500) else {
+        guard let imageData = image.compressToSize(500) else {
             block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Cannot scale image"]))
             return
         }
@@ -132,24 +159,34 @@ class User: AVUser {
         query.getObjectInBackgroundWithId(id, block: block)
     }
     
-    class func loadUsers(skip skip: Int, limit: Int, WithName name: String = "", block: AVArrayResultBlock!) {
-        let query = User.query()
+    func loadUsers(skip skip: Int = 0, limit: Int = 200, type: UserSearchType = .All, searchString: String = "", block: AVArrayResultBlock!) {
+        guard let query = self.getQueryFromSearchType(type) else {
+            block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Cannot scale image"]))
+            return
+        }
+        
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 24 * 3600
         
         query.skip = skip
         query.limit = limit
         
-        if !name.isEmpty {
+        // Add filter based on search type
+        if type == .Graduation {
+            query.whereKey("graduationYear", equalTo: self.graduationYear)
+        }
+        
+        // Handler search string
+        if !searchString.isEmpty {
             // In terms of Chinese input, search name only
-            if name.containChinese() {
-                query.whereKey("name", containsString: name)
+            if searchString.containChinese() {
+                query.whereKey("name", containsString: searchString)
                 // Sort results by name
                 query.orderByAscending("name")
             }
             else {
                 // In terms of English input, search name and pinyin
-                query.whereKey("pinyin", containsString: name)
+                query.whereKey("pinyin", containsString: searchString)
                 // Sort results by name search index, then by original name
                 query.orderByAscending("pinyin")
                 query.addAscendingOrder("name")
@@ -160,6 +197,22 @@ class User: AVUser {
         }
         
         query.findObjectsInBackgroundWithBlock(block)
+    }
+    
+    // Get associated AVQuery object based on search type
+    func getQueryFromSearchType(type: UserSearchType) -> AVQuery? {
+        let query: AVQuery?
+        
+        switch (type) {
+        case .All:
+            query = User.query()
+        case .Favorites:
+            query = self.favoriteUsers?.query()
+        case .Graduation:
+            query = User.query()
+        }
+        
+        return query
     }
     
     // MARK: Favorite user queries
@@ -211,6 +264,15 @@ class User: AVUser {
         query.whereKey("objectId", equalTo: user.objectId)
         
         query.countObjectsInBackgroundWithBlock(block)
+    }
+    
+    func loadFavoriteUsers(block: AVArrayResultBlock!) {
+        guard let favoriteUsers = self.favoriteUsers else {
+            block([], NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            return
+        }
+        // Load favorite users for current user
+        favoriteUsers.query().findObjectsInBackgroundWithBlock(block)
     }
     
     // MARK: Profession queries

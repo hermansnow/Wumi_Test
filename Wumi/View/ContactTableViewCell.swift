@@ -31,5 +31,14 @@ class ContactTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         self.additionalButton.setBackgroundImage(UIImage(named: "More"), forState: .Normal)
+        
+        self.reset()
+    }
+    
+    func reset() {
+        self.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
+        self.nameLabel.text = nil
+        self.locationLabel.text = nil
+        self.favoriteButton.selected = false
     }
 }
