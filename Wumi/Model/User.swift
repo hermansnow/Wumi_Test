@@ -286,13 +286,16 @@ class User: AVUser {
     
     // MARK: Post queries
     
-    func loadPosts(block: AVArrayResultBlock!) {
+    func loadPosts(cutoffTime: NSDate?, block: AVArrayResultBlock!) {
         let query = Post.query()
         
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 24 * 3600
         
-        query.orderByDescending("createdAt")
+        if let cutoffTime = cutoffTime {
+            query.whereKey("createdAt", greaterThan: cutoffTime)
+        }
+        query.orderByDescending("updatedAt")
         
         query.findObjectsInBackgroundWithBlock(block)
     }

@@ -37,6 +37,10 @@ class Post: AVObject {
         return "Post"
     }
     
+    enum PostSearchType {
+        case All
+    }
+    
     class func sendNewPost(author author: User, title: String? = "No Title", content: String?, block: AVBooleanResultBlock!) {
         let post = Post()
         post.author = author

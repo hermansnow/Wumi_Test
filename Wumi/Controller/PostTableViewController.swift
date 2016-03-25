@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BTNavigationDropdownMenu
 
 class PostTableViewController: UITableViewController {
 
@@ -14,16 +15,11 @@ class PostTableViewController: UITableViewController {
     
     lazy var posts = [Post]()
     var updatedAtDateFormatter = NSDateFormatter()
-
+    var searchType: Post.PostSearchType = .All
+    var cutoffTime: NSDate? // cutoffTime of the latest pull request, we will only query new posts created larger than this cutoff time
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         // Register nib
         self.tableView.registerNib(UINib(nibName: "MessageTableViewCell", bundle: nil), forCellReuseIdentifier: "MessageTableViewCell")
@@ -33,10 +29,44 @@ class PostTableViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
-        self.updatedAtDateFormatter.dateFormat = "hh:mm"
+        self.updatedAtDateFormatter.dateFormat = "YYYY-MM-dd hh:mm"
+        
+        // Add Refresh Control
+        self.addRefreshControl()
+        
+        // Add Dropdown list
+        self.addDropdownList()
         
         // Load posts
         self.loadPosts()
+    }
+    
+    private func addRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: Selector("loadPosts"), forControlEvents: .ValueChanged)
+        self.tableView.addSubview(refreshControl!)
+    }
+    
+    private func addDropdownList() {
+        // Initial a dropdown list with options
+        let optionTitles = ["All Activity"]
+        let optionSearchTypes: [Post.PostSearchType] = [.All]
+        
+        // Initial title
+        guard let index = optionSearchTypes.indexOf(self.searchType), title = optionTitles[safe: index] else { return }
+        let menuView = BTNavigationDropdownMenu(navigationController: self.navigationController, title: title, items: optionTitles)
+        
+        // Add the dropdown list to the navigation bar
+        self.navigationItem.titleView = menuView
+        
+        // Set action closure
+        menuView.didSelectItemAtIndexHandler = {(indexPath: Int) -> () in
+            guard let searchType = optionSearchTypes[safe: indexPath] else { return }
+            
+            self.searchType = searchType
+            self.cutoffTime = nil
+            self.loadPosts()
+        }
     }
     
     // MARK: Table view data source
@@ -59,7 +89,7 @@ class PostTableViewController: UITableViewController {
 
         cell.titleLabel.text = post.title
         cell.contentLabel.text = post.content
-        cell.timeStampLabel.text = self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
+        cell.timeStampLabel.text = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         
         post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
@@ -74,21 +104,31 @@ class PostTableViewController: UITableViewController {
 
         return cell
     }
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    // MARK: ScrollView delegete
+    
+    // Load more users when dragging to bottom
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard self.refreshControl != nil && !self.refreshControl!.refreshing else { return }
+        
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y;
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= 10.0 {
+            self.loadPosts()
+        }
     }
     
-    // MARK: Actions
-    
     // MARK: Help function
-    private func loadPosts() {
-        self.currentUser.loadPosts { (results, error) -> Void in
-            guard let posts = results as? [Post] else { return }
+    func loadPosts() {
+        let cutoffTime = self.cutoffTime
+        self.cutoffTime = NSDate()
+        self.currentUser.loadPosts(cutoffTime) { (results, error) -> Void in
+            self.refreshControl?.endRefreshing()
+            
+            guard let posts = results as? [Post] where posts.count > 0 else { return }
             
             self.posts.insertContentsOf(posts, at: 0)
             
