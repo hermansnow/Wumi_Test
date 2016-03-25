@@ -86,10 +86,12 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Wumi/AFNetworking.framework"
   install_framework "Pods-Wumi/BTNavigationDropdownMenu.framework"
+  install_framework "Pods-Wumi/KMPlaceholderTextView.framework"
   install_framework "Pods-Wumi/NHAlignmentFlowLayout.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Wumi/AFNetworking.framework"
   install_framework "Pods-Wumi/BTNavigationDropdownMenu.framework"
+  install_framework "Pods-Wumi/KMPlaceholderTextView.framework"
   install_framework "Pods-Wumi/NHAlignmentFlowLayout.framework"
 fi

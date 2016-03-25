@@ -36,4 +36,13 @@ class Post: AVObject {
     class func parseClassName() -> String? {
         return "Post"
     }
+    
+    class func sendNewPost(author author: User, title: String? = "No Title", content: String?, block: AVBooleanResultBlock!) {
+        let post = Post()
+        post.author = author
+        post.title = title
+        post.content = content
+        
+        post.saveInBackgroundWithBlock(block)
+    }
 }

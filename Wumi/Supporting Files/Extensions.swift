@@ -153,4 +153,26 @@ extension UITextField {
             
         return nextResponder
     }
+    
+    // a computed property for setting left space of textfield. Available in Storyboard
+    @IBInspectable var leftSpacing: CGFloat {
+        get {
+            if let leftView = self.leftView {
+                return leftView.frame.size.width
+            }
+            else {
+                return 0
+            }
+        }
+        set {
+            let leftSpacingFrame = CGRect(x: 0, y: 0, width: newValue, height: self.frame.size.height)
+            if let leftView = self.leftView {
+                leftView.frame = leftSpacingFrame
+            }
+            else {
+                self.leftView = UIView(frame: leftSpacingFrame)
+            }
+            self.leftViewMode = .Always
+        }
+    }
 }

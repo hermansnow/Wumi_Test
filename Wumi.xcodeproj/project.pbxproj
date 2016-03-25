@@ -66,6 +66,7 @@
 		DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */; };
 		DFB0DC731C99CB87006BCD07 /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */; };
 		DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612941CA2637600B3271B /* UserBannerView.swift */; };
+		DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */; };
 		DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */; };
 		DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */; };
 		DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */; };
@@ -149,6 +150,7 @@
 		DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactViewController.swift; path = Controller/ContactViewController.swift; sourceTree = "<group>"; };
 		DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileRow.swift; path = Model/ProfileRow.swift; sourceTree = "<group>"; };
 		DFB612941CA2637600B3271B /* UserBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserBannerView.swift; path = View/UserBannerView.swift; sourceTree = "<group>"; };
+		DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = Controller/NewPostViewController.swift; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraduationYearPickerView.swift; path = View/GraduationYearPickerView.swift; sourceTree = "<group>"; };
 		DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataInputTextField.swift; path = View/DataInputTextField.swift; sourceTree = "<group>"; };
 		DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollTextFieldViewController.swift; path = Controller/ScrollTextFieldViewController.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				DF1BE2661C9F978E00F934EE /* PostTableViewController.swift */,
+				DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */,
 			);
 			name = Post;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				DFA93ACB1C91016A00ECA503 /* ProfileListCell.swift in Sources */,
 				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,
 				DFB861481BEDBDF60075014A /* SystemButton.swift in Sources */,
+				DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */,
 				DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,

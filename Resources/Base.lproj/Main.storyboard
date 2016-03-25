@@ -807,7 +807,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="3576.5" y="657.5"/>
+            <point key="canvasLocation" x="3550.5" y="657.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gX6-PT-vZu">
@@ -851,23 +851,23 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="dpL-Tb-o6k">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="compose" id="bgw-0I-I4I"/>
+                            <barButtonItem systemItem="compose" id="bgw-0I-I4I">
+                                <connections>
+                                    <segue destination="dTU-vq-anB" kind="show" id="QK4-F9-msp"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem systemItem="search" id="Ua8-aC-KFb"/>
                         </rightBarButtonItems>
                     </navigationItem>
-                    <connections>
-                        <outlet property="composeMessage" destination="bgw-0I-I4I" id="3aH-bd-Alv"/>
-                        <segue destination="dTU-vq-anB" kind="show" id="chX-P4-G3C"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMh-2A-aoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3503.5" y="-899.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Post-->
         <scene sceneID="I8X-wm-mWx">
             <objects>
-                <viewController id="dTU-vq-anB" sceneMemberID="viewController">
+                <viewController id="dTU-vq-anB" customClass="NewPostViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tpi-zF-g4h"/>
                         <viewControllerLayoutGuide type="bottom" id="TXi-xH-MO0"/>
@@ -876,20 +876,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="ImE-me-DsV">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ImE-me-DsV">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="erL-AS-w1o">
-                                        <rect key="frame" x="0.0" y="0.0" width="25" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Pct-UH-ymk">
-                                        <rect key="frame" x="0.0" y="30" width="0.0" height="524"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add a new subject" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="erL-AS-w1o">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="CR1-6u-3Ow"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftSpacer">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftSpacing">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Pct-UH-ymk" customClass="KMPlaceholderTextView" customModule="KMPlaceholderTextView">
+                                        <rect key="frame" x="0.0" y="40" width="375" height="519"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write a message"/>
+                                        </userDefinedRuntimeAttributes>
                                     </textView>
                                 </subviews>
                             </stackView>
@@ -902,6 +916,19 @@
                             <constraint firstItem="ImE-me-DsV" firstAttribute="leading" secondItem="vDt-mp-R7G" secondAttribute="leading" id="ejA-Sl-Ajd"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Post" id="cPh-6A-PGU">
+                        <barButtonItem key="rightBarButtonItem" title="Send" style="done" id="OV8-HD-QQE">
+                            <connections>
+                                <action selector="sendPost:" destination="dTU-vq-anB" id="dBj-MY-djY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="postContentTextView" destination="Pct-UH-ymk" id="MOZ-oX-IfL"/>
+                        <outlet property="subjectTextField" destination="erL-AS-w1o" id="zhR-Pj-aAX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="epQ-IH-qjg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

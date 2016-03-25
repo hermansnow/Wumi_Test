@@ -8,5 +8,7 @@ target 'Wumi' do
     pod 'NHAlignmentFlowLayout'
     
     pod 'BTNavigationDropdownMenu'
+    
+    pod 'KMPlaceholderTextView', '~> 1.2.0' 
 
 end
