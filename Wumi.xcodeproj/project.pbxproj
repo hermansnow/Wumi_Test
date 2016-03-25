@@ -20,6 +20,10 @@
 		DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEB1C86A55F00018B4A /* Constants.swift */; };
 		DF173EF21C86A58600018B4A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEF1C86A58600018B4A /* Extensions.swift */; };
 		DF173EF31C86A58600018B4A /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EF01C86A58600018B4A /* Helper.swift */; };
+		DF1BE2631C9F2EA300F934EE /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */; };
+		DF1BE2641C9F2EA300F934EE /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */; };
+		DF1BE2671C9F978E00F934EE /* PostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1BE2661C9F978E00F934EE /* PostTableViewController.swift */; };
+		DF1BE2691C9F9C7500F934EE /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1BE2681C9F9C7500F934EE /* Post.swift */; };
 		DF21176A1C927FDD009109EE /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */; };
 		DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF3629561C9B305100D87574 /* ContactTableViewCell.xib */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
@@ -61,6 +65,7 @@
 		DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */; };
 		DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */; };
 		DFB0DC731C99CB87006BCD07 /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */; };
+		DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612941CA2637600B3271B /* UserBannerView.swift */; };
 		DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */; };
 		DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */; };
 		DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */; };
@@ -98,6 +103,10 @@
 		DF173EEF1C86A58600018B4A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Supporting Files/Extensions.swift"; sourceTree = "<group>"; };
 		DF173EF01C86A58600018B4A /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Helper.swift; path = "Supporting Files/Helper.swift"; sourceTree = "<group>"; };
 		DF173EF51C86A73D00018B4A /* Wumi-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Wumi-Bridging-Header.h"; sourceTree = "<group>"; };
+		DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageTableViewCell.swift; path = View/MessageTableViewCell.swift; sourceTree = "<group>"; };
+		DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageTableViewCell.xib; path = View/MessageTableViewCell.xib; sourceTree = "<group>"; };
+		DF1BE2661C9F978E00F934EE /* PostTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostTableViewController.swift; path = Controller/PostTableViewController.swift; sourceTree = "<group>"; };
+		DF1BE2681C9F9C7500F934EE /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Model/Post.swift; sourceTree = "<group>"; };
 		DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCollectionCell.swift; path = View/ProfileCollectionCell.swift; sourceTree = "<group>"; };
 		DF3629561C9B305100D87574 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactTableViewCell.xib; path = View/ContactTableViewCell.xib; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +148,7 @@
 		DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectPhotoActionSheet.swift; path = Controller/SelectPhotoActionSheet.swift; sourceTree = "<group>"; };
 		DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactViewController.swift; path = Controller/ContactViewController.swift; sourceTree = "<group>"; };
 		DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileRow.swift; path = Model/ProfileRow.swift; sourceTree = "<group>"; };
+		DFB612941CA2637600B3271B /* UserBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserBannerView.swift; path = View/UserBannerView.swift; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraduationYearPickerView.swift; path = View/GraduationYearPickerView.swift; sourceTree = "<group>"; };
 		DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataInputTextField.swift; path = View/DataInputTextField.swift; sourceTree = "<group>"; };
 		DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollTextFieldViewController.swift; path = Controller/ScrollTextFieldViewController.swift; sourceTree = "<group>"; };
@@ -287,12 +297,21 @@
 			path = Wumi;
 			sourceTree = "<group>";
 		};
+		DF1BE2651C9F977300F934EE /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				DF1BE2661C9F978E00F934EE /* PostTableViewController.swift */,
+			);
+			name = Post;
+			sourceTree = "<group>";
+		};
 		DF5E3D381BE9457900F44FFF /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				DF5E3D441BE9465000F44FFF /* User.swift */,
 				DF72ACEF1C64D20B00F81491 /* Contact.swift */,
 				DF7E3B4A1C92324D000E8741 /* Profession.swift */,
+				DF1BE2681C9F9C7500F934EE /* Post.swift */,
 				DF9F060D1C7B7280008CA6DC /* Location.swift */,
 				DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */,
 				DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */,
@@ -309,6 +328,7 @@
 				DFB4152B1C1E706F00835EFE /* SignIn/SignUp */,
 				DFB4152A1C1E705C00835EFE /* Settings */,
 				DFACE2511C5A2E3B00C6D737 /* Contact */,
+				DF1BE2651C9F977300F934EE /* Post */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -323,6 +343,7 @@
 				DF9840101C96874F00620F3B /* ProfileCollectionCell.xib */,
 				DF8D518E1C971419004D808E /* ProfessionSectionHeader.xib */,
 				DF3629561C9B305100D87574 /* ContactTableViewCell.xib */,
+				DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */,
 				DFA93ACE1C910DD700ECA503 /* ProfileCell.swift */,
 				DFA93AC21C90DE3600ECA503 /* ProfileInputCell.swift */,
 				DFA93ACA1C91016A00ECA503 /* ProfileListCell.swift */,
@@ -332,6 +353,7 @@
 				DFA93AD01C91127800ECA503 /* ProfileCollectionLabel.swift */,
 				DF8D51901C9716F5004D808E /* ProfessionSectionHeader.swift */,
 				DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */,
+				DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -375,6 +397,7 @@
 				DFA93AC11C90DDC000ECA503 /* CustomCell */,
 				DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */,
 				DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */,
+				DFB612941CA2637600B3271B /* UserBannerView.swift */,
 				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
 				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
 				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
@@ -449,6 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFA93ACD1C910C4C00ECA503 /* ProfileListCell.xib in Resources */,
+				DF1BE2641C9F2EA300F934EE /* MessageTableViewCell.xib in Resources */,
 				DFA93ABC1C8F8ECB00ECA503 /* LaunchScreen.storyboard in Resources */,
 				DFA93AD31C91299500ECA503 /* ProfileInputCell.xib in Resources */,
 				DF8D518F1C971419004D808E /* ProfessionSectionHeader.xib in Resources */,
@@ -539,6 +563,7 @@
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,
 				DF173EF31C86A58600018B4A /* Helper.swift in Sources */,
+				DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */,
 				DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */,
 				B154FD161C82BB7200F4B62E /* SWRevealViewController.m in Sources */,
 				DF72ACF01C64D20B00F81491 /* Contact.swift in Sources */,
@@ -565,10 +590,13 @@
 				DF7E3B4B1C92324D000E8741 /* Profession.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
 				DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */,
+				DF1BE2691C9F9C7500F934EE /* Post.swift in Sources */,
 				DF8D51911C9716F5004D808E /* ProfessionSectionHeader.swift in Sources */,
 				DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */,
+				DF1BE2631C9F2EA300F934EE /* MessageTableViewCell.swift in Sources */,
 				DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */,
 				DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */,
+				DF1BE2671C9F978E00F934EE /* PostTableViewController.swift in Sources */,
 				DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */,
 				DFA93ACF1C910DD700ECA503 /* ProfileCell.swift in Sources */,
 				DFA93AB61C882FE700ECA503 /* TextLinkButton.swift in Sources */,

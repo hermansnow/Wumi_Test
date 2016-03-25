@@ -283,4 +283,17 @@ class User: AVUser {
         
         saveInBackground()
     }
+    
+    // MARK: Post queries
+    
+    func loadPosts(block: AVArrayResultBlock!) {
+        let query = Post.query()
+        
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 24 * 3600
+        
+        query.orderByDescending("createdAt")
+        
+        query.findObjectsInBackgroundWithBlock(block)
+    }
 }

@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func registerClass() {
         Contact.registerSubclass()
         Profession.registerSubclass()
+        Post.registerSubclass()
     }
     
     // Set up application level appearance
