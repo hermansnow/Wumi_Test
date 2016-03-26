@@ -20,6 +20,20 @@ class MessageTableViewCell: UITableViewCell {
     @IBOutlet weak var replyLabel: UILabel!
     @IBOutlet weak var repliesButton: UIButton!
     
+    var showSummary: Bool {
+        get {
+            return self.contentLabel.numberOfLines > 0
+        }
+        set {
+            if newValue {
+                self.contentLabel.numberOfLines = 3
+            }
+            else {
+                self.contentLabel.numberOfLines = 0
+            }
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -42,7 +56,7 @@ class MessageTableViewCell: UITableViewCell {
         self.authorView.detailLabel.textColor = UIColor.lightGrayColor()
         
         // Set up content label
-        self.contentLabel.numberOfLines = 0
+        self.showSummary = true
         self.contentLabel.font = UIFont(name: ".SFUIText-Regular", size: 14)
         
         // Set up timestamp

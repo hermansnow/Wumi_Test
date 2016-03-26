@@ -11,7 +11,7 @@ import UIKit
 class NewPostViewController: UIViewController {
 
     @IBOutlet weak var subjectTextField: UITextField!
-    @IBOutlet weak var postContentTextView: UITextView!
+    @IBOutlet weak var postContentTextView: PostTextView!
     
     lazy var currentUser = User.currentUser()
     
@@ -19,6 +19,8 @@ class NewPostViewController: UIViewController {
         super.viewDidLoad()
         
         self.subjectTextField.backgroundColor = Constants.General.Color.BackgroundColor
+        
+        self.postContentTextView.delegate = self
     }
     
     // MARK: Action
@@ -33,5 +35,13 @@ class NewPostViewController: UIViewController {
                 }
                 self.navigationController?.popViewControllerAnimated(true)
         }
+    }
+}
+
+extension NewPostViewController: UITextViewDelegate {
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        guard let postView = textView as? PostTextView else { return false }
+        
+        return text.characters.count - range.length <= postView.checkRemainingCharacters()
     }
 }
