@@ -17,7 +17,7 @@ class AddProfileViewController: ScrollTextFieldViewController {
     @IBOutlet weak var skipButton: SystemButton!
     
     var avatarImage: UIImage?
-    var user: User!
+    var user: User = User()
     private lazy var maskLayer = CAShapeLayer()
     
     // MARK: Lifecycle methods
@@ -87,6 +87,8 @@ class AddProfileViewController: ScrollTextFieldViewController {
     // MARK: Actions
     
     @IBAction func addProfile(sender: AnyObject) {
+        self.view.endEditing(true)
+        
         self.user.saveInBackgroundWithBlock { (success, error) -> Void in
             if !success {
                 Helper.PopupErrorAlert(self, errorMessage: "\(error)", block: nil)
@@ -105,6 +107,15 @@ class AddProfileViewController: ScrollTextFieldViewController {
 // MARK: UITextField delegate
 
 extension AddProfileViewController: UITextFieldDelegate {
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        switch textField {
+        case self.graduationYearTextField.inputTextField:
+            return false
+        default:
+            return true
+        }
+    }
+    
     func textFieldDidEndEditing(textField: UITextField) {
         // Validate input of each text field
         switch textField {
@@ -114,9 +125,9 @@ extension AddProfileViewController: UITextFieldDelegate {
                 user.pinyin = name.toChinesePinyin()
             }
             
-        case graduationYearTextField.inputTextField:
+        case self.graduationYearTextField.inputTextField:
             guard let graduationYear = graduationYearTextField.text where graduationYear.characters.count > 0,
-                let graduationYearValue = Int(graduationYear) else { break }
+            let graduationYearValue = Int(graduationYear) else { break }
             user.graduationYear = graduationYearValue
             
         default:

@@ -51,18 +51,10 @@ class EditProfileViewController: UIViewController {
         self.graduationYearPickerView.year = self.currentUser.graduationYear
         
         self.graduationYearPickerView.comfirmSelection = {
-            self.currentUser.graduationYear = self.graduationYearPickerView.year
             guard let graduationYearTextfField = self.graduationYearTextfField else { return }
             graduationYearTextfField.text = GraduationYearPickerView.showGraduationString(self.graduationYearPickerView.year)
         }
-        self.graduationYearPickerView.onYearSelected = { (year) -> Void in
-            guard let graduationYearTextfField = self.graduationYearTextfField else { return }
-            graduationYearTextfField.text = GraduationYearPickerView.showGraduationString(year)
-        }
-        self.graduationYearPickerView.cancelSelection = {
-            guard let graduationYearTextfField = self.graduationYearTextfField else { return }
-            graduationYearTextfField.text = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
-        }
+        self.graduationYearPickerView.cancelSelection = nil
         
         // Initialize the mask view
         self.maskView.backgroundColor = Constants.General.Color.MaskColor
@@ -108,6 +100,9 @@ class EditProfileViewController: UIViewController {
     }
     
     @IBAction func changeProfileImage(sender: AnyObject) {
+        // Dismiss current first responder
+        self.view.endEditing(true)
+        
         let addImageSheet = SelectPhotoActionSheet(title: "Change Profile Image", message: "Choose a photo as your profile image.", preferredStyle: .ActionSheet)
         addImageSheet.delegate = self
         addImageSheet.launchViewController = self
@@ -439,6 +434,18 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
 // MARK: UItextField delegate
 
 extension EditProfileViewController: UITextFieldDelegate {
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        guard let rowType = self.cells[safe: textField.tag] else { return false }
+        
+        // Validate input of each text field
+        switch (rowType) {
+        case .GraduationYear:
+            return false
+        default:
+            return true
+        }
+    }
+    
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         UIView.animateWithDuration(0.5) { () -> Void in
             self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.tableView.frame.size.height - 140, right: 0)
