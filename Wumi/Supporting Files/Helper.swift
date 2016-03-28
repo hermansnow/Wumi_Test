@@ -28,11 +28,11 @@ class Helper {
     }
     
     // Popup an UIAlertController for error message
-    static func PopupErrorAlert (controller: UIViewController, errorMessage: String, dismissButtonTitle: String = "Cancel") {
+    static func PopupErrorAlert (controller: UIViewController, errorMessage: String, dismissButtonTitle: String = "Cancel", block: ((UIAlertAction) -> Void)?) {
         let alert = UIAlertController(title: "Failed", message: errorMessage, preferredStyle: .Alert)
         
         // Add a dismiss button to dismiss the popup alert
-        alert.addAction(UIAlertAction(title: dismissButtonTitle, style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: dismissButtonTitle, style: .Cancel, handler: block))
         
         // Present alert controller
         controller.presentViewController(alert, animated: true, completion: nil)

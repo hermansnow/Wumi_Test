@@ -89,7 +89,7 @@ class AddProfileViewController: ScrollTextFieldViewController {
     @IBAction func addProfile(sender: AnyObject) {
         self.user.saveInBackgroundWithBlock { (success, error) -> Void in
             if !success {
-                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                Helper.PopupErrorAlert(self, errorMessage: "\(error)", block: nil)
             }
             else {
                 Helper.RedirectToSignIn()

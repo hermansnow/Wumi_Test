@@ -109,7 +109,7 @@ class SigninViewController: UIViewController {
                                     
                                     User.requestPasswordResetForEmailInBackground(email) { (success, error) -> Void in
                                         if !success {
-                                            Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+                                            Helper.PopupErrorAlert(self, errorMessage: "\(error)", block: nil)
                                         }
                                         else {
                                             Helper.PopupInformationBox(self, boxTitle: Constants.SignIn.String.Alert.ResetPasswordConfirm.Title,

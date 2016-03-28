@@ -26,6 +26,11 @@ class NewPostViewController: UIViewController {
     // MARK: Action
     
     @IBAction func sendPost(sender: AnyObject) {
+        guard self.postContentTextView.text.characters.count > 0 else {
+            Helper.PopupErrorAlert(self, errorMessage: "Cannot send blank post", block: nil)
+            return
+        }
+        
         Post.sendNewPost(author: self.currentUser,
             title: self.subjectTextField.text,
             content: self.postContentTextView.text) { (success, error) -> Void in

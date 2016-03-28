@@ -16,7 +16,6 @@ class PostTableViewController: UITableViewController {
     lazy var posts = [Post]()
     var updatedAtDateFormatter = NSDateFormatter()
     var searchType: Post.PostSearchType = .All
-    var cutoffTime: NSDate? // cutoffTime of the latest pull request, we will only query new posts created larger than this cutoff time
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,20 +63,24 @@ class PostTableViewController: UITableViewController {
             guard let searchType = optionSearchTypes[safe: indexPath] else { return }
             
             self.searchType = searchType
-            self.cutoffTime = nil
             self.loadPosts()
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let postViewController = segue.destinationViewController as? PostViewController where segue.identifier == "Show Post" {
+            guard let cell = sender as? MessageTableViewCell, indexPath = tableView.indexPathForCell(cell), selectedPost = self.posts[safe: indexPath.row] else { return }
+            postViewController.post = selectedPost
         }
     }
     
     // MARK: Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return self.posts.count
     }
 
@@ -90,6 +93,7 @@ class PostTableViewController: UITableViewController {
         cell.titleLabel.text = post.title
         cell.contentLabel.text = post.content
         cell.timeStampLabel.text = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
+        cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
         post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
@@ -105,6 +109,10 @@ class PostTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("Show Post", sender: tableView.cellForRowAtIndexPath(indexPath))
+    }
+    
     // MARK: ScrollView delegete
     
     // Load more users when dragging to bottom
@@ -117,20 +125,30 @@ class PostTableViewController: UITableViewController {
         
         // Change 10.0 to adjust the distance from bottom
         if maximumOffset - currentOffset <= 10.0 {
-            self.loadPosts()
+            self.loadMorePosts()
         }
     }
     
     // MARK: Help function
     func loadPosts() {
-        let cutoffTime = self.cutoffTime
-        self.cutoffTime = NSDate()
-        self.currentUser.loadPosts(cutoffTime) { (results, error) -> Void in
+        Post.loadPosts() { (results, error) -> Void in
             self.refreshControl?.endRefreshing()
             
             guard let posts = results as? [Post] where posts.count > 0 else { return }
             
-            self.posts.insertContentsOf(posts, at: 0)
+            self.posts = posts
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    func loadMorePosts() {
+        Post.loadPosts(skip: self.posts.count) { (results, error) -> Void in
+            self.refreshControl?.endRefreshing()
+            
+            guard let posts = results as? [Post] where posts.count > 0 else { return }
+            
+            self.posts.appendContentsOf(posts)
             
             self.tableView.reloadData()
         }

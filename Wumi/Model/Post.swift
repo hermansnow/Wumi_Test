@@ -6,15 +6,16 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class Post: AVObject {
+class Post: AVObject, AVSubclassing {
     // MARK: Properties
     
     // Extended properties
     @NSManaged var author: User?
     @NSManaged var title: String?
     @NSManaged var content: String?
+    @NSManaged var commentCount: Int
     
     // MARK: Initializer and subclassing functions
     
@@ -39,6 +40,23 @@ class Post: AVObject {
     
     enum PostSearchType {
         case All
+    }
+    
+    // MARK: Queries
+    class func loadPosts(skip skip: Int = 0, limit: Int = 200, cutoffTime: NSDate? = nil,  block: AVArrayResultBlock!) {
+        let query = Post.query()
+        
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 24 * 3600
+        
+        query.limit = limit
+        query.skip = skip
+        if let cutoffTime = cutoffTime {
+            query.whereKey("createdAt", greaterThan: cutoffTime)
+        }
+        query.orderByDescending("updatedAt")
+        
+        query.findObjectsInBackgroundWithBlock(block)
     }
     
     class func sendNewPost(author author: User, title: String? = "No Title", content: String?, block: AVBooleanResultBlock!) {

@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Contact.registerSubclass()
         Profession.registerSubclass()
         Post.registerSubclass()
+        Comment.registerSubclass()
     }
     
     // Set up application level appearance

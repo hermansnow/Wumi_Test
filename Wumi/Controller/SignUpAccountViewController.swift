@@ -92,21 +92,21 @@ class SignUpAccountViewController: ScrollTextFieldViewController {
         // Validate user inputs
         self.user.validateUser { (valid, error) -> Void in
             guard valid else {
-                Helper.PopupErrorAlert(self, errorMessage: "Invalid user information: \(error)")
+                Helper.PopupErrorAlert(self, errorMessage: "Invalid user information: \(error)", block: nil)
                 return
             }
             
             // Save avatar image file
             self.user.saveAvatarFile(self.newAvatarImage) { (saveImageSuccess, imageError) -> Void in
                 guard saveImageSuccess else {
-                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
+                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)", block: nil)
                     return
                 }
                 
                 // Sign up user asynchronously
                 self.user.signUpInBackgroundWithBlock { (signUpSuccess, signUpError) -> Void in
                     guard signUpSuccess else {
-                        Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)")
+                        Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)", block: nil)
                         return
                     }
                     

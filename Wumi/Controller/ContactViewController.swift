@@ -90,7 +90,7 @@ class ContactViewController: UIViewController {
             presentViewController(mailComposeViewController, animated: true, completion: nil)
         }
         else {
-            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
+            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available", block: nil)
         }
         
     }
@@ -106,7 +106,7 @@ class ContactViewController: UIViewController {
             presentViewController(mailComposeViewController, animated: true, completion: nil)
         }
         else {
-            Helper.PopupErrorAlert(self, errorMessage: "Message services are not available")
+            Helper.PopupErrorAlert(self, errorMessage: "Message services are not available", block: nil)
         }
     }
     
@@ -320,10 +320,10 @@ extension ContactViewController: MFMailComposeViewControllerDelegate {
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is cancelled")
         case MFMailComposeResultFailed:
             if error != nil {
-                Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
+                Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!, block: nil)
             }
             else {
-                Helper.PopupErrorAlert(self, errorMessage: "Send failed")
+                Helper.PopupErrorAlert(self, errorMessage: "Send failed", block: nil)
             }
         default:
             break

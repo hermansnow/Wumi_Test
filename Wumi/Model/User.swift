@@ -283,20 +283,4 @@ class User: AVUser {
         
         saveInBackground()
     }
-    
-    // MARK: Post queries
-    
-    func loadPosts(cutoffTime: NSDate?, block: AVArrayResultBlock!) {
-        let query = Post.query()
-        
-        query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 24 * 3600
-        
-        if let cutoffTime = cutoffTime {
-            query.whereKey("createdAt", greaterThan: cutoffTime)
-        }
-        query.orderByDescending("updatedAt")
-        
-        query.findObjectsInBackgroundWithBlock(block)
-    }
 }

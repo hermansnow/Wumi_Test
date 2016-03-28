@@ -32,7 +32,7 @@ class SelectPhotoActionSheet: UIAlertController {
     func openCamera() {
         // Check whether camera device is available
         if !UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            Helper.PopupErrorAlert(self, errorMessage: "Camera device is not available.", dismissButtonTitle: "OK")
+            Helper.PopupErrorAlert(self, errorMessage: "Camera device is not available.", dismissButtonTitle: "OK", block: nil)
             return
         }
         
@@ -50,7 +50,7 @@ class SelectPhotoActionSheet: UIAlertController {
     func openPhotoLibrary() {
         // Check whether photo library is available
         if !UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
-            Helper.PopupErrorAlert(self, errorMessage: "Photo library is not available.", dismissButtonTitle: "OK")
+            Helper.PopupErrorAlert(self, errorMessage: "Photo library is not available.", dismissButtonTitle: "OK", block: nil)
             return
         }
         

@@ -258,7 +258,7 @@ class EditProfileViewController: UIViewController {
                 self.currentUser.confirmPassword = confirmPassword
                 self.currentUser.validateUser { (valid, validateError) -> Void in
                     guard valid else {
-                        Helper.PopupErrorAlert(self, errorMessage: "\(validateError)")
+                        Helper.PopupErrorAlert(self, errorMessage: "\(validateError)", block: nil)
                         // Do not save anything in password properties
                         self.currentUser.password = nil
                         self.currentUser.confirmPassword = nil
@@ -426,7 +426,7 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
             
             self.currentUser.saveAvatarFile(profileImage) { (success, imageError) -> Void in
                 guard success else {
-                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
+                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)", block: nil)
                     return
                 }
                 

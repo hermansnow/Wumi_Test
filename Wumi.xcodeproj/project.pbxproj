@@ -68,6 +68,10 @@
 		DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612941CA2637600B3271B /* UserBannerView.swift */; };
 		DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */; };
 		DFB612A11CA6158F00B3271B /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A01CA6158F00B3271B /* PostTextView.swift */; };
+		DFB612A31CA61B7800B3271B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A21CA61B7800B3271B /* PostViewController.swift */; };
+		DFB612A61CA6284000B3271B /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */; };
+		DFB612A71CA6284000B3271B /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */; };
+		DFB612A91CA62CAD00B3271B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A81CA62CAD00B3271B /* Comment.swift */; };
 		DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */; };
 		DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */; };
 		DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */; };
@@ -153,6 +157,10 @@
 		DFB612941CA2637600B3271B /* UserBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserBannerView.swift; path = View/UserBannerView.swift; sourceTree = "<group>"; };
 		DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = Controller/NewPostViewController.swift; sourceTree = "<group>"; };
 		DFB612A01CA6158F00B3271B /* PostTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostTextView.swift; path = View/PostTextView.swift; sourceTree = "<group>"; };
+		DFB612A21CA61B7800B3271B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Controller/PostViewController.swift; sourceTree = "<group>"; };
+		DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTableViewCell.swift; path = View/CommentTableViewCell.swift; sourceTree = "<group>"; };
+		DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentTableViewCell.xib; path = View/CommentTableViewCell.xib; sourceTree = "<group>"; };
+		DFB612A81CA62CAD00B3271B /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Comment.swift; path = Model/Comment.swift; sourceTree = "<group>"; };
 		DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraduationYearPickerView.swift; path = View/GraduationYearPickerView.swift; sourceTree = "<group>"; };
 		DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataInputTextField.swift; path = View/DataInputTextField.swift; sourceTree = "<group>"; };
 		DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollTextFieldViewController.swift; path = Controller/ScrollTextFieldViewController.swift; sourceTree = "<group>"; };
@@ -306,6 +314,7 @@
 			children = (
 				DF1BE2661C9F978E00F934EE /* PostTableViewController.swift */,
 				DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */,
+				DFB612A21CA61B7800B3271B /* PostViewController.swift */,
 			);
 			name = Post;
 			sourceTree = "<group>";
@@ -317,6 +326,7 @@
 				DF72ACEF1C64D20B00F81491 /* Contact.swift */,
 				DF7E3B4A1C92324D000E8741 /* Profession.swift */,
 				DF1BE2681C9F9C7500F934EE /* Post.swift */,
+				DFB612A81CA62CAD00B3271B /* Comment.swift */,
 				DF9F060D1C7B7280008CA6DC /* Location.swift */,
 				DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */,
 				DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */,
@@ -349,6 +359,7 @@
 				DF8D518E1C971419004D808E /* ProfessionSectionHeader.xib */,
 				DF3629561C9B305100D87574 /* ContactTableViewCell.xib */,
 				DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */,
+				DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */,
 				DFA93ACE1C910DD700ECA503 /* ProfileCell.swift */,
 				DFA93AC21C90DE3600ECA503 /* ProfileInputCell.swift */,
 				DFA93ACA1C91016A00ECA503 /* ProfileListCell.swift */,
@@ -359,6 +370,7 @@
 				DF8D51901C9716F5004D808E /* ProfessionSectionHeader.swift */,
 				DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */,
 				DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */,
+				DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -487,6 +499,7 @@
 				DFA93AD91C91DFFA00ECA503 /* ContactLabelCell.xib in Resources */,
 				DF159E191C80231C00DB65FF /* Images.xcassets in Resources */,
 				DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */,
+				DFB612A71CA6284000B3271B /* CommentTableViewCell.xib in Resources */,
 				DF9840111C96874F00620F3B /* ProfileCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -564,6 +577,8 @@
 				DFA93ADD1C91EE0600ECA503 /* FavoriteButton.swift in Sources */,
 				DFB612A11CA6158F00B3271B /* PostTextView.swift in Sources */,
 				DFA93ACB1C91016A00ECA503 /* ProfileListCell.swift in Sources */,
+				DFB612A31CA61B7800B3271B /* PostViewController.swift in Sources */,
+				DFB612A61CA6284000B3271B /* CommentTableViewCell.swift in Sources */,
 				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,
 				DFB861481BEDBDF60075014A /* SystemButton.swift in Sources */,
 				DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */,
@@ -605,6 +620,7 @@
 				DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */,
 				DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */,
 				DF1BE2671C9F978E00F934EE /* PostTableViewController.swift in Sources */,
+				DFB612A91CA62CAD00B3271B /* Comment.swift in Sources */,
 				DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */,
 				DFA93ACF1C910DD700ECA503 /* ProfileCell.swift in Sources */,
 				DFA93AB61C882FE700ECA503 /* TextLinkButton.swift in Sources */,
