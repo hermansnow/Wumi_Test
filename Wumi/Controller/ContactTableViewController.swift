@@ -94,7 +94,12 @@ class ContactTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let contactViewController = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
-            guard let cell = sender as? ContactTableViewCell, indexPath = tableView.indexPathForCell(cell), selectedUser = displayUsers[safe: indexPath.row] else { return }
+            guard let cell = sender as? ContactTableViewCell,
+                indexPath = tableView.indexPathForCell(cell),
+                selectedUser = displayUsers[safe: indexPath.row] else { return }
+            // Stop input timer if one is running
+            self.stopTimer()
+            
             self.selectedUserIndexPath = indexPath
             contactViewController.delegate = self
             contactViewController.selectedUser = selectedUser
@@ -257,31 +262,47 @@ class ContactTableViewController: UITableViewController {
     }
 }
 
-    
+
 // MARK: Search delegates
 
 extension ContactTableViewController: UISearchControllerDelegate, UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if let searchInput = searchController.searchBar.text {
+            // Quit if there is no change in the search string
+            if searchString == searchInput { return }
             searchString = searchInput
         }
-            
-        // Stop input timer if one is running
-        if inputTimer != nil {
-            inputTimer!.invalidate()
-        }
+        
+        self.stopTimer()
             
         if !searchString.isEmpty {
             // Restart a new timer
-            inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval,
-                                                        target: self,
-                                                      selector: "initSearch",
-                                                      userInfo: nil,
-                                                       repeats: false)
+            self.startTimer()
         }
         else {
             self.filteredUsers.removeAll(keepCapacity: false)
             tableView.reloadData()
+        }
+    }
+    
+    //Helper functions
+    func stopTimer() {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            // Stop input timer if one is running
+            guard let timer = self.inputTimer else { return }
+            
+            timer.invalidate()
+        }
+    }
+    
+    func startTimer() {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            // start a new timer
+            self.inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval,
+                                                             target: self,
+                                                           selector: "initSearch",
+                                                           userInfo: nil,
+                                                            repeats: false)
         }
     }
 }
