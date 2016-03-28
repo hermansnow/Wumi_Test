@@ -9,9 +9,19 @@
 import UIKit
 
 class AvatarImageView: UIView {
+    private lazy var containerImageView = UIImageView()
     
-    var delegate: AvatarImageDelegate?
-    private var containerImageView = UIImageView()
+    var delegate: AvatarImageDelegate? {
+        didSet {
+            if let delegate = self.delegate {
+                // Add gestures
+                let singleTapGesture = UITapGestureRecognizer(target: delegate, action: Selector("singleTap:"))
+                
+                self.userInteractionEnabled = true
+                self.addGestureRecognizer(singleTapGesture)
+            }
+        }
+    }
     
     var image: UIImage? {
         get {
@@ -24,23 +34,30 @@ class AvatarImageView: UIView {
     
     // MARK: Initializers
     
-    override func drawRect(rect: CGRect) {
-        // Set container image view
-        self.containerImageView.frame = rect
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.setProperty()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        self.setProperty()
+    }
+    
+    private func setProperty() {
+        // Add container image view
         self.containerImageView.contentMode = .ScaleAspectFill
         addSubview(containerImageView)
         
         // Set circular avatar image
-        self.layer.cornerRadius = self.frame.size.height / 2
         self.clipsToBounds = true
-        
-        if let delegate = self.delegate {
-            // Add gestures
-            let singleTapGesture = UITapGestureRecognizer(target: delegate, action: Selector("singleTap:"))
-            
-            self.userInteractionEnabled = true
-            self.addGestureRecognizer(singleTapGesture)
-        }
+    }
+    
+    override func layoutSubviews() {
+        self.containerImageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: self.frame.size)
+        self.layer.cornerRadius = self.frame.size.height / 2
     }
 }
 

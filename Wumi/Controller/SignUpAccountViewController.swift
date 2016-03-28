@@ -32,6 +32,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         // Set avatar view
+        self.addAvatarImageView.backgroundColor = Constants.General.Color.ThemeColor
         self.addAvatarImageView.image = Constants.SignIn.Image.AddAvatarImage
         
         // Set background views

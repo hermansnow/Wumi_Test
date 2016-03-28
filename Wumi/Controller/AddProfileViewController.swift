@@ -40,7 +40,12 @@ class AddProfileViewController: ScrollTextFieldViewController {
         self.graduationYearTextField.inputTextField.inputView = graduationYearPickerView
         
         // Set avatar image
-        self.avatarImageView.image = avatarImage
+        if avatarImage != nil {
+            self.avatarImageView.image = avatarImage
+        }
+        else {
+            self.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
+        }
         
         // Set background views
         self.avatarBackgroundView.colors = [Constants.General.Color.ThemeColor, UIColor.whiteColor()]
