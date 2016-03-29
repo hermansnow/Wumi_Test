@@ -244,7 +244,7 @@ class ContactTableViewController: UITableViewController {
 
 extension ContactTableViewController: UISearchControllerDelegate, UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        if let searchInput = searchController.searchBar.text {
+        if let searchInput = searchController.searchBar.text where !searchInput.isEmpty {
             // Quit if there is no change in the search string
             if searchString == searchInput { return }
             searchString = searchInput
