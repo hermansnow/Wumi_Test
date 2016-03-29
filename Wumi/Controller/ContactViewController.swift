@@ -141,6 +141,8 @@ class ContactViewController: UIViewController {
             
             self.nameLabel.text = user.name
             
+            self.locationLabel.text = "\(user.location)"
+            
             let graduationText = GraduationYearPickerView.showGraduationString(user.graduationYear)
             if graduationText.characters.count > 0 {
                 self.graduationYearLabel.text = "(" + graduationText + ")"
@@ -165,21 +167,6 @@ class ContactViewController: UIViewController {
                 
                 self.reloadRowForTypes([.Professions])
             }
-            
-            self.displayContactInformation()
-        }
-    }
-    
-    private func displayContactInformation() {
-        guard let user = self.selectedUser, contact = user.contact else { return }
-        
-        contact.fetchInBackgroundWithBlock { (result, error) -> Void in
-            guard error == nil, let _ = result as? Contact else {
-                print("Error when fetch contact for user " + "\(user)" + ": " + "\(error)")
-                return
-            }
-                
-            self.locationLabel.text = contact.location()
         }
     }
     

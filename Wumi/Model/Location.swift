@@ -13,11 +13,15 @@ struct Location: CustomStringConvertible {
     var city: String?
     
     var description: String {
-        return [country, city].flatMap{ $0 }.joinWithSeparator(", ")
+        return Location.show(Country: self.country, City: self.city)
     }
     
     init(Country country: String?, City city: String?) {
         self.country = country
         self.city = city
+    }
+    
+    static func show(Country country: String?, City city: String?) -> String {
+        return [country, city].flatMap{ $0 }.joinWithSeparator(", ")
     }
 }

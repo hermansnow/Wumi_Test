@@ -20,12 +20,23 @@ class User: AVUser {
     @NSManaged var graduationYear: Int
     @NSManaged var name: String?
     @NSManaged var pinyin: String?
-    @NSManaged weak var contact: Contact?
+    @NSManaged var city: String?
+    @NSManaged var country: String?
     @NSManaged var favoriteUsers: AVRelation?
     @NSManaged var professions: [Profession]
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
+    var location: Location {
+        get {
+            return Location(Country: self.country, City: self.city)
+        }
+        set {
+            self.country = newValue.country
+            self.city = newValue.city
+        }
+        
+    }
     
     enum UserSearchType {
         case All, Favorites, Graduation

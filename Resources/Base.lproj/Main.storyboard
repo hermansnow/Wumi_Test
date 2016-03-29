@@ -623,7 +623,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="191"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
-                                                <rect key="frame" x="136" y="45" width="102" height="102"/>
+                                                <rect key="frame" x="135" y="44" width="104" height="104"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="OE2-Ai-BLg" secondAttribute="height" multiplier="1:1" id="36G-u2-Qso"/>
                                                 </constraints>
@@ -649,14 +649,14 @@
                                         <rect key="frame" x="0.0" y="235" width="375" height="142"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kV-ts-7dC" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36.5" y="0.0" width="302" height="64.5"/>
+                                                <rect key="frame" x="36" y="0.0" width="302" height="64.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gj1-Ez-EN1" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36.5" y="77.5" width="302" height="64.5"/>
+                                                <rect key="frame" x="36" y="77" width="302" height="64.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
@@ -1495,7 +1495,7 @@
     </scenes>
     <resources>
         <image name="Anonymous" width="462" height="462"/>
-        <image name="Logo" width="102" height="102"/>
+        <image name="Logo" width="104" height="104"/>
         <image name="Menu" width="25" height="25"/>
     </resources>
 </document>

@@ -178,11 +178,9 @@ class ContactTableViewController: UITableViewController {
             }
             cell.avatarImageView.image = avatarImage
         }
-            
-        // Load contact data
-        if let contact = user.contact {
-            cell.locationLabel.text = "\(Location(Country: contact.country, City: contact.city))"
-        }
+        
+        // Load location
+        cell.locationLabel.text = "\(user.location)"
             
         // Load favorite status with login user
         for favoriteUser in self.favoriteUsers {
@@ -230,34 +228,13 @@ class ContactTableViewController: UITableViewController {
                                   limit: Constants.Query.LoadUserLimit,
                                    type: self.searchType,
                            searchString: self.searchString) { (results, error) -> Void in
-            guard let users = results as? [User] where error == nil else { return }
-
-            // Fetch additional data asynchronously
-            self.fetchDisplayData(users)
+                            guard let users = results as? [User] where error == nil else { return }
             
             self.displayUsers.appendContentsOf(users)
             self.tableView.reloadData()
             
             // End refreshing
             self.refreshControl?.endRefreshing()
-        }
-    }
-    
-    // Fetch display data asynchronously
-    func fetchDisplayData(users: [User]) -> Void {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            // Fetch contacts data
-            var contacts = [Contact]()
-            for user in users {
-                if let contact = user.contact {
-                    contacts.append(contact)
-                }
-            }
-            Contact.fetchAllIfNeeded(contacts)
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.tableView.reloadData()
-            })
         }
     }
 }

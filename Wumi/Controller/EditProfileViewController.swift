@@ -72,9 +72,7 @@ class EditProfileViewController: UIViewController {
         if let countryListViewController = segue.destinationViewController as? LocationListTableViewController where segue.identifier == "Select Location" {
             countryListViewController.locationDelegate = self
             // Set current selected location
-            if let contact = self.currentUser.contact {
-                countryListViewController.selectedLocation = Location(Country: contact.country, City: contact.city)
-            }
+            countryListViewController.selectedLocation = self.currentUser.location
         }
         
         if let professionListViewController = segue.destinationViewController as? ProfessionListViewController where segue.identifier == "Select Profession" {
@@ -92,9 +90,6 @@ class EditProfileViewController: UIViewController {
         
         // Save user changes
         self.saveUserData()
-        
-        // Save contact changes
-        self.saveContactData()
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -143,7 +138,7 @@ class EditProfileViewController: UIViewController {
                 return
             }
             
-            self.displayContactInformation()
+            self.locationLabel.text = "\(self.currentUser.location)"
             
             self.currentUser.loadAvatar(ScaleToSize: CGSize(width: self.profileImageView.frame.width, height: self.profileImageView.frame.height)) { (image, error) -> Void in
                 guard error == nil else {
@@ -179,27 +174,6 @@ class EditProfileViewController: UIViewController {
         }
     }
     
-    private func displayContactInformation() {
-        guard let contact = self.currentUser.contact else {
-            // Create contact if it is nil
-            self.currentUser.contact = Contact()
-            self.currentUser.saveInBackground()
-            return
-        }
-        
-        // Fetch contact data
-        contact.fetchInBackgroundWithBlock { (result, error) -> Void in
-            guard error == nil, let contact = result as? Contact else {
-                print("Error when fetch contact for user " + "\(self.currentUser)" + ": " + "\(error)")
-                return
-            }
-                
-            self.locationLabel.text = contact.location()
-            
-            self.reloadRowForTypes([.Location])
-        }
-    }
-    
     private func saveUserData() {
         self.currentUser.updateProfessions(Array(selectedProfessions))
         
@@ -214,18 +188,6 @@ class EditProfileViewController: UIViewController {
                 return
             }
         }
-    }
-    
-    private func saveContactData() {
-        guard let contact = self.currentUser.contact else { return }
-        
-        contact.saveInBackgroundWithBlock({ (success, error) -> Void in
-            guard success else {
-                print("\(error)")
-                self.currentUser.contact?.fetchInBackgroundWithBlock(nil)
-                return
-            }
-        })
     }
     
     private func reloadRowForTypes(types: [EditProfileCellRowType]) {
@@ -365,7 +327,7 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
         
         switch (rowType) {
         case .Location:
-            if let contact = self.currentUser.contact where contact.location().characters.count > 0 {
+            if self.currentUser.location.description.characters.count > 0 {
                 return 1
             }
             else {
@@ -386,10 +348,7 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
         
         switch (rowType) {
         case .Location:
-            guard let contact = self.currentUser.contact where contact.location().characters.count > 0 else {
-                break
-            }
-            cell.cellLabel.text = contact.location()
+            cell.cellLabel.text = "\(self.currentUser.location)"
             
         case .Profession:
             guard let profession = self.selectedProfessions[index: indexPath.row] else {
@@ -494,10 +453,9 @@ extension EditProfileViewController: UITextFieldDelegate {
 
 extension EditProfileViewController: LocationListDelegate {
     func finishLocationSelection(location: Location?) {
-        guard let selectedLocation = location, contact = self.currentUser.contact else { return }
+        guard let selectedLocation = location else { return }
         
-        contact.country = selectedLocation.country
-        contact.city = selectedLocation.city
+        self.currentUser.location = selectedLocation
         
         self.reloadRowForTypes([.Location])
     }

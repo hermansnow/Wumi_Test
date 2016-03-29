@@ -43,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Register classes
     func registerClass() {
-        Contact.registerSubclass()
         Profession.registerSubclass()
         Post.registerSubclass()
         Comment.registerSubclass()
