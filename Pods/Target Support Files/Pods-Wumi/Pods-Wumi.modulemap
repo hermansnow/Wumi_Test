@@ -1,6 +1,0 @@
-framework module Pods_Wumi {
-  umbrella header "Pods-Wumi-umbrella.h"
-
-  export *
-  module * { export * }
-}
