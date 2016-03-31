@@ -38,6 +38,13 @@ class User: AVUser {
         
     }
     
+    // Use objectId as hashValue
+    override var hashValue: Int {
+        get {
+            return self.objectId.hashValue
+        }
+    }
+    
     enum UserSearchType {
         case All, Favorites, Graduation
     }
@@ -165,44 +172,54 @@ class User: AVUser {
         query.getObjectInBackgroundWithId(id, block: block)
     }
     
-    func loadUsers(skip skip: Int = 0, limit: Int = 200, type: UserSearchType = .All, searchString: String = "", block: AVArrayResultBlock!) {
+    func loadUsers(limit limit: Int = 200, type: UserSearchType = .All, searchString: String = "", sinceUser: User? = nil, block: AVArrayResultBlock!) {
         guard let query = self.getQueryFromSearchType(type) else {
-            block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Cannot scale image"]))
+            block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
             return
         }
         
-        query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 24 * 3600
+        // Parse index
+        let index: String
+        if searchString.containChinese() {
+            index = "name" // In terms of Chinese input, directly search name
+        }
+        else {
+            index = "pinyin" // In terms of English input, search pinyin
+        }
         
-        query.skip = skip
-        query.limit = limit
+        // Handle load more
+        let finalQuery: AVQuery
+        if let user = sinceUser, equalQuery = self.getQueryFromSearchType(type) {
+            query.whereKey(index, greaterThan: user[index])
+            equalQuery.whereKey(index, equalTo: user[index])
+            equalQuery.whereKey("objectId", greaterThan: user.objectId)
+            finalQuery = AVQuery.orQueryWithSubqueries([query, equalQuery])
+        }
+        else {
+            finalQuery = query
+        }
         
         // Add filter based on search type
         if type == .Graduation {
-            query.whereKey("graduationYear", equalTo: self.graduationYear)
+            finalQuery.whereKey("graduationYear", equalTo: self.graduationYear)
         }
         
         // Handler search string
         if !searchString.isEmpty {
-            // In terms of Chinese input, search name only
-            if searchString.containChinese() {
-                query.whereKey("name", containsString: searchString)
-                // Sort results by name
-                query.orderByAscending("name")
-            }
-            else {
-                // In terms of English input, search name and pinyin
-                query.whereKey("pinyin", containsString: searchString)
-                // Sort results by name search index, then by original name
-                query.orderByAscending("pinyin")
-                query.addAscendingOrder("name")
-            }
-        }
-        else {
-            query.orderByAscending("pinyin")
+            finalQuery.whereKey(index, containsString: searchString)
         }
         
-        query.findObjectsInBackgroundWithBlock(block)
+        // Sort results by
+        finalQuery.orderByAscending(index)
+        finalQuery.addAscendingOrder("objectId")
+        
+        finalQuery.limit = limit
+        
+        // Cache policy
+        finalQuery.cachePolicy = .NetworkElseCache
+        finalQuery.maxCacheAge = 24 * 3600
+        
+        finalQuery.findObjectsInBackgroundWithBlock(block)
     }
     
     // Get associated AVQuery object based on search type

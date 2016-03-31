@@ -24,6 +24,7 @@ class ContactTableViewController: UITableViewController {
     var inputTimer: NSTimer?
     var searchString: String = ""
     var searchType: User.UserSearchType = .All
+    var hasMoreResults: Bool = false
     
     // Computed properties
     var displayUsers: [User] {
@@ -67,9 +68,6 @@ class ContactTableViewController: UITableViewController {
         // Add resultSearchController
         self.addSearchController()
         
-        // Add refreshControl
-        self.addRefreshControl()
-        
         // Add dropdown list
         self.addDropdownList()
         
@@ -108,6 +106,7 @@ class ContactTableViewController: UITableViewController {
     }
     
     // MARK: Helper functions
+    
     private func addSearchController() {
         self.resultSearchController.searchResultsUpdater = self
         self.resultSearchController.dimsBackgroundDuringPresentation = false
@@ -119,12 +118,6 @@ class ContactTableViewController: UITableViewController {
         
         self.tableView.tableHeaderView = self.resultSearchController.searchBar // Add search bar as the tableview's header
         self.tableView.setContentOffset(CGPoint(x: 0, y: tableView.tableHeaderView!.frame.size.height), animated: true) // Initially, hide search bar under the navigation bar
-    }
-    
-    private func addRefreshControl() {
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: Selector("initSearch"), forControlEvents: .ValueChanged)
-        self.tableView.addSubview(refreshControl!)
     }
     
     
@@ -183,12 +176,7 @@ class ContactTableViewController: UITableViewController {
         cell.locationLabel.text = "\(user.location)"
             
         // Load favorite status with login user
-        for favoriteUser in self.favoriteUsers {
-            if favoriteUser == user {
-                cell.favoriteButton.selected = true
-                break
-            }
-        }
+        cell.favoriteButton.selected = self.favoriteUsers.contains(user)
         cell.favoriteButton.tag = indexPath.row
         cell.favoriteButton.delegate = self
         
@@ -203,7 +191,8 @@ class ContactTableViewController: UITableViewController {
     
     // Load more users when dragging to bottom
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard self.refreshControl != nil && !self.refreshControl!.refreshing else { return }
+        // Do not trigger load more if we are still fetching results or there is no more results based on last search
+        guard self.hasMoreResults else { return }
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y;
@@ -218,29 +207,31 @@ class ContactTableViewController: UITableViewController {
     // MARK: Data handlers
     func loadUsers() {
         self.currentUser.loadUsers(limit: Constants.Query.LoadUserLimit,
-            type: self.searchType,
-            searchString: self.searchString) { (results, error) -> Void in
-                guard let users = results as? [User] where error == nil else { return }
+                                    type: self.searchType,
+                            searchString: self.searchString) { (results, error) -> Void in
+                                guard let users = results as? [User] where error == nil else { return }
                 
-                self.displayUsers = users
-                self.tableView.reloadData()
-                
-                // End refreshing
-                self.refreshControl?.endRefreshing()
-        }
+                                self.displayUsers = users
+                                self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
+                                self.tableView.reloadData()
+                            
+                                // End refreshing
+                                self.refreshControl?.endRefreshing()
+                            }
     }
     
     // Load more users based on filters
     func loadMoreUsers() {
-        self.currentUser.loadUsers(skip: self.displayUsers.count,
-            limit: Constants.Query.LoadUserLimit,
-            type: self.searchType,
-            searchString: self.searchString) { (results, error) -> Void in
-                guard let users = results as? [User] where error == nil else { return }
-            
-                self.displayUsers.appendContentsOf(users)
-                self.tableView.reloadData()
-        }
+        self.currentUser.loadUsers(limit: Constants.Query.LoadUserLimit,
+                                    type: self.searchType,
+                            searchString: self.searchString,
+                               sinceUser: self.displayUsers.last) { (results, error) -> Void in
+                                guard let users = results as? [User] where error == nil else { return }
+                                
+                                self.displayUsers.appendContentsOf(users)
+                                self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
+                                self.tableView.reloadData()
+                            }
     }
 }
 
@@ -307,12 +298,7 @@ extension ContactTableViewController: FavoriteButtonDelegate {
         self.currentUser.removeFavoriteUser(user) { (result, error) -> Void in
             guard result && error == nil else { return }
             
-            for favoriteUser in self.favoriteUsers {
-                if favoriteUser == user {
-                    self.favoriteUsers.removeObject(user)
-                    break
-                }
-            }
+            self.favoriteUsers.removeObject(user)
             favoriteButton.selected = false
             
             // Remove cell if we are on the Favorite Search Type whcih should only show favorite users
