@@ -21,20 +21,15 @@ class ContactViewController: UIViewController {
     
     var delegate: ContactViewControllerDelegate?
     
+    var selectedUserId: String?
     var selectedUser: User?
     var currentUser = User.currentUser()
     private var cells: [ContactCellRowType] = [.Professions, .Email, .Phone]
     
-    var isFavorite: Bool {
-        get {
-            guard let favoriteButton = self.favoriteButton else {
-                return false
-            }
-            return favoriteButton.selected
-        }
-        set {
+    var isFavorite: Bool = false {
+        didSet {
             guard let favoriteButton = self.favoriteButton else { return }
-            favoriteButton.selected = newValue
+            favoriteButton.selected = self.isFavorite
         }
     }
     
@@ -65,6 +60,9 @@ class ContactViewController: UIViewController {
         
         // Initialize the mask view
         self.maskView.backgroundColor = Constants.General.Color.MaskColor
+        
+        // Set initial status for the favorite button
+        self.favoriteButton.selected = self.isFavorite
         
         // Show data
         self.displayUserData()
@@ -122,14 +120,16 @@ class ContactViewController: UIViewController {
     // MARK: Help functions
     
     private func displayUserData() {
-        guard let user = self.selectedUser else { return }
+        guard let selectedUserId = self.selectedUserId else { return }
         
         // Fetch user data
-        user.fetchInBackgroundWithBlock { (result, error) -> Void in
+        User.fetchUser(objectId: selectedUserId) { (result, error) -> Void in
             guard let user = result as? User where error == nil else {
                 print("\(error)")
                 return
             }
+            
+            self.selectedUser = user
             
             user.loadAvatar() { (image, error) -> Void in
                 guard error == nil else {
@@ -154,19 +154,15 @@ class ContactViewController: UIViewController {
             // Reload specific rows
             self.reloadRowForTypes([.Email, .Phone])
             
-            // Fetch favorite relatonship with current user
+            // Fetch favorite relatonship with current user again as a double check
             self.currentUser.findFavoriteUser(user, block: { (count, error) -> Void in
                 guard error == nil else { return }
                 
                 self.isFavorite = count > 0
             })
             
-            // Fetch professions
-            Profession.fetchAllInBackground(user.professions) { (results, error) -> Void in
-                guard let _ = results as? [Profession] where error == nil else { return }
-                
-                self.reloadRowForTypes([.Professions])
-            }
+            // Reload profession row
+            self.reloadRowForTypes([.Professions])
         }
     }
     

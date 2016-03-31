@@ -100,7 +100,7 @@ class ContactTableViewController: UITableViewController {
             
             self.selectedUserIndexPath = indexPath
             contactViewController.delegate = self
-            contactViewController.selectedUser = selectedUser
+            contactViewController.selectedUserId = selectedUser.objectId
             contactViewController.isFavorite = cell.favoriteButton.selected
         }
     }
@@ -213,6 +213,7 @@ class ContactTableViewController: UITableViewController {
                 
                                 self.displayUsers = users
                                 self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
+                                
                                 self.tableView.reloadData()
                             
                                 // End refreshing
