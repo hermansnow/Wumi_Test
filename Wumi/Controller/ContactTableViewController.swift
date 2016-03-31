@@ -76,6 +76,7 @@ class ContactTableViewController: UITableViewController {
         // Add action for hamburgerMenuButton
         if let revealViewController = self.revealViewController() {
             revealViewController.rearViewRevealOverdraw = 0
+            revealViewController.rearViewRevealWidth = UIScreen.mainScreen().bounds.width
             self.hamburgerMenuButton.target = revealViewController
             self.hamburgerMenuButton.action = "revealToggle:"
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())

@@ -35,13 +35,6 @@ class WMUserTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let rearViewController = self.revealViewController() {
-            if hasEnterMenu {
-                rearViewController.rearViewRevealWidth = DEFAULT_REVEAL_WIDTH
-                rearViewController.revealToggleAnimated(true)
-            }
-        }
-        
         // Show current user's profile
         userDisplayName.text = user.name
         userEmail.text = user.email
@@ -70,9 +63,7 @@ class WMUserTableViewController: UITableViewController {
     func eventHandlerForSetting(setting: Setting, withCell: UITableViewCell) {
         switch setting.identifier {
         case "User Profile":
-            self.revealViewController().rearViewRevealWidth = UIScreen.mainScreen().bounds.width
             self.revealViewController().setFrontViewPosition(FrontViewPosition.Right, animated: true)
-            self.hasEnterMenu = true;
             self.performSegueWithIdentifier("Edit Profile", sender: self)
         case "Log Out":
             self.logoutUser()
@@ -88,6 +79,10 @@ class WMUserTableViewController: UITableViewController {
             })
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func closeSettingView(sender: AnyObject) {
+        self.revealViewController().revealToggleAnimated(true)
     }
     
     // MARK: Setting functions
