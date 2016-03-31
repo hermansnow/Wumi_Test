@@ -16,6 +16,7 @@ class PostTableViewController: UITableViewController {
     lazy var posts = [Post]()
     var updatedAtDateFormatter = NSDateFormatter()
     var searchType: Post.PostSearchType = .All
+    var hasMoreResults: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,7 +118,7 @@ class PostTableViewController: UITableViewController {
     
     // Load more users when dragging to bottom
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard self.refreshControl != nil && !self.refreshControl!.refreshing else { return }
+        guard self.refreshControl != nil && !self.refreshControl!.refreshing && self.hasMoreResults else { return }
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y;
@@ -133,12 +134,13 @@ class PostTableViewController: UITableViewController {
     func loadPosts() {
         switch self.searchType {
         case .All:
-            Post.loadPosts() { (results, error) -> Void in
+            Post.loadPosts(limit: Constants.Query.LoadPostLimit) { (results, error) -> Void in
                 self.refreshControl?.endRefreshing()
                 
                 guard let posts = results as? [Post] where posts.count > 0 else { return }
                 
                 self.posts = posts
+                self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
                 
                 self.tableView.reloadData()
             }
@@ -148,12 +150,16 @@ class PostTableViewController: UITableViewController {
     }
     
     func loadMorePosts() {
-        Post.loadPosts(skip: self.posts.count) { (results, error) -> Void in
+        guard let lastPost = self.posts.last else { return }
+        
+        Post.loadPosts(limit: Constants.Query.LoadPostLimit,
+                  cutoffTime: lastPost.updatedAt) { (results, error) -> Void in
             self.refreshControl?.endRefreshing()
             
             guard let posts = results as? [Post] where posts.count > 0 else { return }
             
             self.posts.appendContentsOf(posts)
+            self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
             
             self.tableView.reloadData()
         }

@@ -45,26 +45,27 @@ class Post: AVObject, AVSubclassing {
     }
     
     // MARK: Queries
-    class func loadPosts(skip skip: Int = 0, limit: Int = 200, cutoffTime: NSDate? = nil,  block: AVArrayResultBlock!) {
+    class func loadPosts(limit limit: Int = 200, cutoffTime: NSDate? = nil,  block: AVArrayResultBlock!) {
         let query = Post.query()
+        let index = "updatedAt" // Sort based on last update time
+        
+        if let cutoffTime = cutoffTime {
+            query.whereKey(index, lessThan: cutoffTime)
+        }
+        query.orderByDescending(index)
         
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 24 * 3600
         
         query.limit = limit
-        query.skip = skip
-        if let cutoffTime = cutoffTime {
-            query.whereKey("createdAt", greaterThan: cutoffTime)
-        }
-        query.orderByDescending("updatedAt")
         
         query.findObjectsInBackgroundWithBlock(block)
     }
     
-    class func sendNewPost(author author: User, title: String? = "No Title", content: String?, categories: [PostCategory] = [PostCategory](), block: AVBooleanResultBlock!) {
+    class func sendNewPost(author author: User, title: String?, content: String?, categories: [PostCategory] = [PostCategory](), block: AVBooleanResultBlock!) {
         let post = Post()
         post.author = author
-        post.title = title
+        post.title = title ?? "No Title"
         post.content = content
         post.categories = categories
         post.commentCount = 0

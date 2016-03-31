@@ -92,8 +92,8 @@ struct Constants {
     
     
     struct Query {
-        
         static let LoadUserLimit = 200 // number of user records load in each query
+        static let LoadPostLimit = 100 // number of post records load in each query
         static let searchTimeInterval = 0.3 // seconds to start search. UISearchController will only search results if end-users stop inputting with this time interval
     }
 } 
