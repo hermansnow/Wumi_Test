@@ -11,4 +11,5 @@ target 'Wumi' do
     
     pod 'KMPlaceholderTextView', '~> 1.2.0' 
 
+    pod 'SWRevealViewController'
 end

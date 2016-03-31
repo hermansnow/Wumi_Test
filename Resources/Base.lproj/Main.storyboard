@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0zA-Rn-0Qq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0zA-Rn-0Qq">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -75,16 +75,16 @@
                                                             <action selector="verifyCode:" destination="JHq-b6-pjD" eventType="touchUpInside" id="gV2-Vn-sbr"/>
                                                         </connections>
                                                     </button>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKO-le-fla">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BKO-le-fla">
                                                         <rect key="frame" x="103" y="35" width="171" height="26"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5S-hD-5T7">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" misplaced="YES" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5S-hD-5T7">
                                                                 <rect key="frame" x="0.0" y="0.0" width="135" height="26"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBX-bx-J5D">
+                                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBX-bx-J5D">
                                                                 <rect key="frame" x="135" y="0.0" width="36" height="26"/>
                                                                 <accessibility key="accessibilityConfiguration">
                                                                     <accessibilityTraits key="traits" link="YES"/>
@@ -591,7 +591,13 @@
                             <outlet property="delegate" destination="kLk-JA-FpU" id="KHh-Ua-7ye"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Setting" id="q47-3L-Yeq"/>
+                    <navigationItem key="navigationItem" title="Setting" id="q47-3L-Yeq">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="xcQ-oL-u4z">
+                            <connections>
+                                <action selector="closeSettingView:" destination="kLk-JA-FpU" id="GNb-9O-SAi"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="userDisplayName" destination="os6-Z6-Qi3" id="GxB-Gz-teX"/>
@@ -787,12 +793,8 @@
                             <outlet property="delegate" destination="Cb4-n4-RtF" id="Tuv-ju-A1m"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ifg-8j-rcu">
-                        <barButtonItem key="leftBarButtonItem" image="Menu" id="DaV-lP-fz2"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="ifg-8j-rcu"/>
                     <connections>
-                        <outlet property="HamburgerMenuButton" destination="DaV-lP-fz2" id="h2Q-km-pEN"/>
-                        <outlet property="hamburgerMenuButton" destination="DaV-lP-fz2" id="zt5-i7-D9C"/>
                         <outlet property="searchDisplayController" destination="HgM-Wz-7PP" id="P3u-jB-Nfw"/>
                         <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="zkE-Zw-0o6"/>
                     </connections>
@@ -853,6 +855,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="dpL-Tb-o6k">
+                        <barButtonItem key="leftBarButtonItem" image="Menu" id="IjD-2C-28Q"/>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="compose" id="bgw-0I-I4I">
                                 <connections>
@@ -864,6 +867,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="17z-oZ-H8W"/>
+                        <outlet property="hamburgerMenuButton" destination="IjD-2C-28Q" id="eoP-9q-jPB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMh-2A-aoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1242,6 +1246,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="m5M-y8-nRm" kind="show" identifier="Select City" id="RwH-fO-PMJ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1500,6 +1507,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ChO-TW-KPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4750.5" y="2207.5"/>
+        </scene>
+        <!--Location-->
+        <scene sceneID="82k-sg-8j1">
+            <objects>
+                <tableViewController id="m5M-y8-nRm" customClass="CityListTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6Kd-g7-lRL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="City Cell" id="EIW-nw-FTr">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EIW-nw-FTr" id="7ug-2o-BLE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="m5M-y8-nRm" id="geZ-u7-Q5n"/>
+                            <outlet property="delegate" destination="m5M-y8-nRm" id="geG-2v-DtW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Location" id="uvI-Ya-f9K"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kVF-U2-j5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5228.5" y="1345.5"/>
         </scene>
     </scenes>
     <resources>
