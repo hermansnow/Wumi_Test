@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func registerClass() {
         Profession.registerSubclass()
         Post.registerSubclass()
+        PostCategory.registerSubclass()
         Comment.registerSubclass()
     }
     

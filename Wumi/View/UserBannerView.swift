@@ -12,7 +12,7 @@ class UserBannerView: UIView {
 
     lazy var avatarImageView: AvatarImageView = AvatarImageView()
     lazy var detailLabel = UILabel()
-    lazy var stackView = UIStackView()
+    private lazy var stackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

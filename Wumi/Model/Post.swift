@@ -16,6 +16,7 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var title: String?
     @NSManaged var content: String?
     @NSManaged var commentCount: Int
+    @NSManaged var categories: [PostCategory]
     
     // MARK: Initializer and subclassing functions
     
@@ -40,6 +41,7 @@ class Post: AVObject, AVSubclassing {
     
     enum PostSearchType {
         case All
+        case Category
     }
     
     // MARK: Queries
@@ -59,11 +61,13 @@ class Post: AVObject, AVSubclassing {
         query.findObjectsInBackgroundWithBlock(block)
     }
     
-    class func sendNewPost(author author: User, title: String? = "No Title", content: String?, block: AVBooleanResultBlock!) {
+    class func sendNewPost(author author: User, title: String? = "No Title", content: String?, categories: [PostCategory] = [PostCategory](), block: AVBooleanResultBlock!) {
         let post = Post()
         post.author = author
         post.title = title
         post.content = content
+        post.categories = categories
+        post.commentCount = 0
         
         post.saveInBackgroundWithBlock(block)
     }

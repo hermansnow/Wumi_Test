@@ -130,7 +130,7 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
         // Set styles for selected/unselected cells
         var isSelected = false
         for selectedProfession in self.selectedProfessions {
-            if selectedProfession.compareTo(profession) {
+            if selectedProfession == profession {
                 isSelected = true
                 break
             }
@@ -180,7 +180,7 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
             }
         case .Selected:
             for selectedProfession in self.selectedProfessions {
-                if selectedProfession.compareTo(profession) {
+                if selectedProfession == profession {
                     self.selectedProfessions.remove(selectedProfession)
                     break
                 }

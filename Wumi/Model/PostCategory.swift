@@ -1,19 +1,18 @@
 //
-//  Profession.swift
+//  PostCategory.swift
 //  Wumi
 //
-//  Created by Zhe Cheng on 3/10/16.
+//  Created by Zhe Cheng on 3/30/16.
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
 import UIKit
 
-class Profession: AVObject, AVSubclassing {
+class PostCategory: AVObject, AVSubclassing {
     // MARK: Properties
     
     // Extended properties
     @NSManaged var name: String?
-    @NSManaged var category: String?
     
     // MARK: Initializer and subclassing functions
     
@@ -33,26 +32,24 @@ class Profession: AVObject, AVSubclassing {
     
     // Must have this class function for subclassing AVObject
     class func parseClassName() -> String? {
-        return "Profession"
+        return "PostCategory"
     }
     
     // MARK: Query
-    class func loadAllProfessions(block: AVArrayResultBlock!) {
-        let query = Profession.query()
+    class func loadCategories(block: AVArrayResultBlock!) {
+        let query = PostCategory.query()
         
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 24 * 3600
         
-        query.orderByAscending("category")
-        query.addAscendingOrder("name")
+        query.orderByAscending("name")
         
         query.findObjectsInBackgroundWithBlock(block)
     }
-
+    
 }
 
 // MARK: Equatable
-func ==(lhs: Profession, rhs: Profession) -> Bool {
-    return lhs.name == rhs.name && lhs.category == rhs.category
+func ==(lhs: PostCategory, rhs: PostCategory) -> Bool {
+    return lhs.name == rhs.name
 }
-

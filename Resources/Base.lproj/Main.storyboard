@@ -649,14 +649,14 @@
                                         <rect key="frame" x="0.0" y="235" width="375" height="142"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kV-ts-7dC" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="0.0" width="302" height="64.5"/>
+                                                <rect key="frame" x="36.5" y="0.0" width="302" height="64.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gj1-Ez-EN1" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36" y="77" width="302" height="64.5"/>
+                                                <rect key="frame" x="36.5" y="77.5" width="302" height="64.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
@@ -812,7 +812,7 @@
         <!--Navigation Controller-->
         <scene sceneID="gX6-PT-vZu">
             <objects>
-                <navigationController id="rLT-mV-RoB" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Post Table Navigation Controller" id="rLT-mV-RoB" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="mostViewed" id="c4A-pQ-SvJ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="om8-RP-gad">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -959,7 +959,7 @@
             </objects>
             <point key="canvasLocation" x="4047" y="-329"/>
         </scene>
-        <!--New Post-->
+        <!--Post-->
         <scene sceneID="I8X-wm-mWx">
             <objects>
                 <viewController id="dTU-vq-anB" customClass="NewPostViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
@@ -971,63 +971,68 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ImE-me-DsV">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bm8-Ci-Swm" customClass="ComposePostView" customModule="Wumi" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="375" height="559"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add a new subject" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="erL-AS-w1o">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="CR1-6u-3Ow"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="leftSpacer">
-                                                <real key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="leftSpacing">
-                                                <real key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Pct-UH-ymk" customClass="PostTextView" customModule="Wumi" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="40" width="375" height="519"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write a message"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </textView>
-                                </subviews>
-                            </stackView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="TXi-xH-MO0" firstAttribute="top" secondItem="ImE-me-DsV" secondAttribute="bottom" id="MMO-xw-st7"/>
-                            <constraint firstAttribute="trailing" secondItem="ImE-me-DsV" secondAttribute="trailing" id="Oja-4M-zfn"/>
-                            <constraint firstItem="ImE-me-DsV" firstAttribute="top" secondItem="tpi-zF-g4h" secondAttribute="bottom" id="S9u-V0-QNk"/>
-                            <constraint firstItem="ImE-me-DsV" firstAttribute="leading" secondItem="vDt-mp-R7G" secondAttribute="leading" id="ejA-Sl-Ajd"/>
+                            <constraint firstItem="bm8-Ci-Swm" firstAttribute="leading" secondItem="vDt-mp-R7G" secondAttribute="leading" id="0jW-bt-1rn"/>
+                            <constraint firstItem="bm8-Ci-Swm" firstAttribute="top" secondItem="tpi-zF-g4h" secondAttribute="bottom" id="irZ-be-OPI"/>
+                            <constraint firstAttribute="trailing" secondItem="bm8-Ci-Swm" secondAttribute="trailing" id="po2-16-0bR"/>
+                            <constraint firstItem="TXi-xH-MO0" firstAttribute="top" secondItem="bm8-Ci-Swm" secondAttribute="bottom" id="xic-Yo-8wc"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="New Post" id="cPh-6A-PGU">
-                        <barButtonItem key="rightBarButtonItem" title="Send" style="done" id="OV8-HD-QQE">
-                            <connections>
-                                <action selector="sendPost:" destination="dTU-vq-anB" id="dBj-MY-djY"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Post" id="cPh-6A-PGU"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="postContentTextView" destination="Pct-UH-ymk" id="MOZ-oX-IfL"/>
-                        <outlet property="subjectTextField" destination="erL-AS-w1o" id="zhR-Pj-aAX"/>
+                        <outlet property="composePostView" destination="bm8-Ci-Swm" id="De8-Xh-udd"/>
+                        <segue destination="T7C-hg-5dB" kind="show" identifier="chooseCategory" id="jEt-nY-N36"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="epQ-IH-qjg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4010.5" y="-1699.5"/>
+        </scene>
+        <!--Post-->
+        <scene sceneID="o7L-au-XvP">
+            <objects>
+                <tableViewController id="T7C-hg-5dB" customClass="PostCategoryTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="dDW-o8-1Qg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCategoryCell" textLabel="XYB-E6-dCt" style="IBUITableViewCellStyleDefault" id="3Ct-gd-3XQ">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Ct-gd-3XQ" id="IzW-Rn-oFu">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XYB-E6-dCt">
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="T7C-hg-5dB" id="jf0-At-dDA"/>
+                            <outlet property="delegate" destination="T7C-hg-5dB" id="lOx-Fl-lLc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Post" id="Hie-WI-ApB"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vhp-NP-bXW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4486.5" y="-1699.5"/>
         </scene>
         <!--Contact View Controller-->
         <scene sceneID="fPh-BF-8Ra">

@@ -53,11 +53,6 @@ class User: AVUser {
         }
     }
     
-    // Compare function
-    func compareTo(target: User) -> Bool {
-        return objectId == target.objectId
-    }
-    
     // MARK: Validation functions
     
     // Validate user information
@@ -294,4 +289,9 @@ class User: AVUser {
         
         saveInBackground()
     }
+}
+
+// MARK: Equatable
+func ==(lhs: User, rhs: User) -> Bool {
+    return lhs.objectId == rhs.objectId
 }

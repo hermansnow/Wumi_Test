@@ -10,36 +10,43 @@ import UIKit
 
 class NewPostViewController: UIViewController {
 
-    @IBOutlet weak var subjectTextField: UITextField!
-    @IBOutlet weak var postContentTextView: PostTextView!
+    @IBOutlet weak var composePostView: ComposePostView!
     
-    lazy var currentUser = User.currentUser()
+    lazy var nextButton = UIBarButtonItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.subjectTextField.backgroundColor = Constants.General.Color.BackgroundColor
+        // Initialize subject text field
+        self.composePostView.subjectTextField.backgroundColor = Constants.General.Color.BackgroundColor
         
-        self.postContentTextView.delegate = self
+        // Add delegate
+        self.composePostView.delegate = self
+        
+        // Initialize navigation bar
+        self.nextButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: "next:")
+        self.navigationItem.rightBarButtonItem = self.nextButton
+    }
+    
+    // MARK: Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let postCategoryTableViewController = segue.destinationViewController as? PostCategoryTableViewController where segue.identifier == "chooseCategory" {
+            let post = Post()
+            post.title = self.composePostView.title
+            post.content = self.composePostView.content
+            postCategoryTableViewController.post = post
+        }
     }
     
     // MARK: Action
     
-    @IBAction func sendPost(sender: AnyObject) {
-        guard self.postContentTextView.text.characters.count > 0 else {
+    func next(sender: AnyObject) {
+        guard self.composePostView.content.characters.count > 0 else {
             Helper.PopupErrorAlert(self, errorMessage: "Cannot send blank post", block: nil)
             return
         }
         
-        Post.sendNewPost(author: self.currentUser,
-            title: self.subjectTextField.text,
-            content: self.postContentTextView.text) { (success, error) -> Void in
-                guard success && error == nil else {
-                    print("\(error)")
-                    return
-                }
-                self.navigationController?.popViewControllerAnimated(true)
-        }
+        self.performSegueWithIdentifier("chooseCategory", sender: self)
     }
 }
 
@@ -50,3 +57,5 @@ extension NewPostViewController: UITextViewDelegate {
         return text.characters.count - range.length <= postView.checkRemainingCharacters()
     }
 }
+
+extension NewPostViewController: UITextFieldDelegate { }

@@ -89,7 +89,7 @@ class ContactTableViewController: UITableViewController {
             // Reload table data
             self.tableView.reloadData()
         }
-        self.initSearch()
+        self.loadUsers()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -146,7 +146,7 @@ class ContactTableViewController: UITableViewController {
             guard let searchType = optionSearchTypes[safe: indexPath] else { return }
             
             self.searchType = searchType
-            self.initSearch()
+            self.loadUsers()
         }
     }
     
@@ -184,7 +184,7 @@ class ContactTableViewController: UITableViewController {
             
         // Load favorite status with login user
         for favoriteUser in self.favoriteUsers {
-            if favoriteUser.compareTo(user) {
+            if favoriteUser == user {
                 cell.favoriteButton.selected = true
                 break
             }
@@ -216,25 +216,30 @@ class ContactTableViewController: UITableViewController {
     }
     
     // MARK: Data handlers
-    
-    func initSearch() {
-        self.displayUsers.removeAll()
-        self.loadMoreUsers()
+    func loadUsers() {
+        self.currentUser.loadUsers(limit: Constants.Query.LoadUserLimit,
+            type: self.searchType,
+            searchString: self.searchString) { (results, error) -> Void in
+                guard let users = results as? [User] where error == nil else { return }
+                
+                self.displayUsers = users
+                self.tableView.reloadData()
+                
+                // End refreshing
+                self.refreshControl?.endRefreshing()
+        }
     }
     
     // Load more users based on filters
     func loadMoreUsers() {
         self.currentUser.loadUsers(skip: self.displayUsers.count,
-                                  limit: Constants.Query.LoadUserLimit,
-                                   type: self.searchType,
-                           searchString: self.searchString) { (results, error) -> Void in
-                            guard let users = results as? [User] where error == nil else { return }
+            limit: Constants.Query.LoadUserLimit,
+            type: self.searchType,
+            searchString: self.searchString) { (results, error) -> Void in
+                guard let users = results as? [User] where error == nil else { return }
             
-            self.displayUsers.appendContentsOf(users)
-            self.tableView.reloadData()
-            
-            // End refreshing
-            self.refreshControl?.endRefreshing()
+                self.displayUsers.appendContentsOf(users)
+                self.tableView.reloadData()
         }
     }
 }
@@ -244,15 +249,15 @@ class ContactTableViewController: UITableViewController {
 
 extension ContactTableViewController: UISearchControllerDelegate, UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        if let searchInput = searchController.searchBar.text where !searchInput.isEmpty {
+        if let searchInput = searchController.searchBar.text {
             // Quit if there is no change in the search string
-            if searchString == searchInput { return }
+            if searchString == searchInput && !searchInput.isEmpty { return }
             searchString = searchInput
         }
         
         self.stopTimer()
             
-        if !searchString.isEmpty {
+        if !self.searchString.isEmpty {
             // Restart a new timer
             self.startTimer()
         }
@@ -277,7 +282,7 @@ extension ContactTableViewController: UISearchControllerDelegate, UISearchResult
             // start a new timer
             self.inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval,
                                                              target: self,
-                                                           selector: "initSearch",
+                                                           selector: "loadUsers",
                                                            userInfo: nil,
                                                             repeats: false)
         }
@@ -303,7 +308,7 @@ extension ContactTableViewController: FavoriteButtonDelegate {
             guard result && error == nil else { return }
             
             for favoriteUser in self.favoriteUsers {
-                if favoriteUser.compareTo(user) {
+                if favoriteUser == user {
                     self.favoriteUsers.removeObject(user)
                     break
                 }
@@ -312,7 +317,7 @@ extension ContactTableViewController: FavoriteButtonDelegate {
             
             // Remove cell if we are on the Favorite Search Type whcih should only show favorite users
             if self.searchType == .Favorites {
-                self.initSearch()
+                self.loadUsers()
             }
         }
     }

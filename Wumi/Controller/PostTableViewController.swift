@@ -48,8 +48,8 @@ class PostTableViewController: UITableViewController {
     
     private func addDropdownList() {
         // Initial a dropdown list with options
-        let optionTitles = ["All Activity"]
-        let optionSearchTypes: [Post.PostSearchType] = [.All]
+        let optionTitles = ["All Activity", "News"]
+        let optionSearchTypes: [Post.PostSearchType] = [.All, .Category]
         
         // Initial title
         guard let index = optionSearchTypes.indexOf(self.searchType), title = optionTitles[safe: index] else { return }
@@ -131,14 +131,19 @@ class PostTableViewController: UITableViewController {
     
     // MARK: Help function
     func loadPosts() {
-        Post.loadPosts() { (results, error) -> Void in
-            self.refreshControl?.endRefreshing()
-            
-            guard let posts = results as? [Post] where posts.count > 0 else { return }
-            
-            self.posts = posts
-            
-            self.tableView.reloadData()
+        switch self.searchType {
+        case .All:
+            Post.loadPosts() { (results, error) -> Void in
+                self.refreshControl?.endRefreshing()
+                
+                guard let posts = results as? [Post] where posts.count > 0 else { return }
+                
+                self.posts = posts
+                
+                self.tableView.reloadData()
+            }
+        default:
+            break
         }
     }
     

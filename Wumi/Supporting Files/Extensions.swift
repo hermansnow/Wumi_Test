@@ -41,7 +41,6 @@ extension Array {
         for index in indices.sort(>) {
             guard let element = self[index] as? T where element == object else { continue }
             self.removeAtIndex(index)
-            print(index)
         }
     }
 }
@@ -154,8 +153,8 @@ extension UITextField {
         return nextResponder
     }
     
-    // a computed property for setting left space of textfield. Available in Storyboard
-    @IBInspectable var leftSpacing: CGFloat {
+    // a computed property for setting left space of textfield
+    var leftSpacing: CGFloat {
         get {
             if let leftView = self.leftView {
                 return leftView.frame.size.width
