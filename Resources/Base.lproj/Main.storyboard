@@ -793,12 +793,8 @@
                             <outlet property="delegate" destination="Cb4-n4-RtF" id="Tuv-ju-A1m"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ifg-8j-rcu">
-                        <barButtonItem key="leftBarButtonItem" image="Menu" id="DaV-lP-fz2"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="ifg-8j-rcu"/>
                     <connections>
-                        <outlet property="HamburgerMenuButton" destination="DaV-lP-fz2" id="h2Q-km-pEN"/>
-                        <outlet property="hamburgerMenuButton" destination="DaV-lP-fz2" id="zt5-i7-D9C"/>
                         <outlet property="searchDisplayController" destination="HgM-Wz-7PP" id="P3u-jB-Nfw"/>
                         <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="zkE-Zw-0o6"/>
                     </connections>
@@ -859,6 +855,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="dpL-Tb-o6k">
+                        <barButtonItem key="leftBarButtonItem" image="Menu" id="IjD-2C-28Q"/>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="compose" id="bgw-0I-I4I">
                                 <connections>
@@ -868,6 +865,9 @@
                             <barButtonItem systemItem="search" id="Ua8-aC-KFb"/>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="hamburgerMenuButton" destination="IjD-2C-28Q" id="eoP-9q-jPB"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMh-2A-aoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

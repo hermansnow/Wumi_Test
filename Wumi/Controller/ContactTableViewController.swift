@@ -11,8 +11,6 @@ import BTNavigationDropdownMenu
 
 class ContactTableViewController: UITableViewController {
     
-    @IBOutlet weak var hamburgerMenuButton: UIBarButtonItem!
-    
     var resultSearchController = UISearchController(searchResultsController: nil)
     
     var currentUser = User.currentUser()
@@ -72,15 +70,6 @@ class ContactTableViewController: UITableViewController {
         
         // Add dropdown list
         self.addDropdownList()
-        
-        // Add action for hamburgerMenuButton
-        if let revealViewController = self.revealViewController() {
-            revealViewController.rearViewRevealOverdraw = 0
-            revealViewController.rearViewRevealWidth = UIScreen.mainScreen().bounds.width
-            self.hamburgerMenuButton.target = revealViewController
-            self.hamburgerMenuButton.action = "revealToggle:"
-            self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
-        }
         
         // Load data
         self.currentUser.loadFavoriteUsers { (results, error) -> Void in
