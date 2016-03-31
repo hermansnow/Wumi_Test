@@ -14,6 +14,8 @@ class UserBannerView: UIView {
     lazy var detailLabel = UILabel()
     private lazy var stackView = UIStackView()
     
+    var userObjectId: String?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

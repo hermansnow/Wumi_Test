@@ -80,6 +80,15 @@ class PostViewController: UITableViewController {
         self.tableView.addSubview(refreshControl!)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
+            guard let view = sender as? UserBannerView, selectedUserId = view.userObjectId else { return }
+            contactVC.delegate = self
+            contactVC.selectedUserId = selectedUserId
+            contactVC.isFavorite = false
+        }
+    }
+    
     // MARK: Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -123,7 +132,10 @@ class PostViewController: UITableViewController {
         post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
             
+            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "showUserContact:"))
+            
             cell.authorView.detailLabel.text = user.name
+            cell.authorView.userObjectId = user.objectId
             
             user.loadAvatar { (imageResult, imageError) -> Void in
                 guard let image = imageResult where imageError == nil else { return }
@@ -147,7 +159,10 @@ class PostViewController: UITableViewController {
         comment.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
             
+            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "showUserContact:"))
+            
             cell.authorView.detailLabel.text = user.name
+            cell.authorView.userObjectId = user.objectId
             
             user.loadAvatar { (imageResult, imageError) -> Void in
                 guard let image = imageResult where imageError == nil else { return }
@@ -216,6 +231,10 @@ class PostViewController: UITableViewController {
         }
     }
     
+    func showUserContact(recognizer: UITapGestureRecognizer) {
+        self.performSegueWithIdentifier("Show Contact", sender: recognizer.view)
+    }
+    
     // Scroll view when showing the keyboard
     func keyboardWasShown(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
@@ -281,7 +300,11 @@ class PostViewController: UITableViewController {
             self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
         }
     }
-
-
-
 }
+
+extension PostViewController: ContactViewControllerDelegate {
+    func finishViewContact(contactViewController: ContactViewController) {
+        return
+    }
+}
+

@@ -862,6 +862,9 @@
                             <barButtonItem systemItem="search" id="Ua8-aC-KFb"/>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="17z-oZ-H8W"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMh-2A-aoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -903,6 +906,7 @@
                         <outlet property="commentTextView" destination="pvE-NL-rdM" id="ya5-Un-yzc"/>
                         <outlet property="commentView" destination="r48-xA-cUa" id="OHk-0b-ep1"/>
                         <outlet property="myUserBannerView" destination="dPJ-B5-4a6" id="XVk-Po-0or"/>
+                        <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="T0p-az-lM5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZa-Ap-oLM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -957,7 +961,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="4047" y="-329"/>
+            <point key="canvasLocation" x="4046.5" y="-423.5"/>
         </scene>
         <!--Post-->
         <scene sceneID="I8X-wm-mWx">
@@ -1155,7 +1159,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="95g-LS-cPz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4090.5" y="657.5"/>
+            <point key="canvasLocation" x="4046.5" y="657.5"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="qnk-Co-b7K">
@@ -1503,4 +1507,7 @@
         <image name="Logo" width="104" height="104"/>
         <image name="Menu" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="17z-oZ-H8W"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -69,9 +69,16 @@ class PostTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let postViewController = segue.destinationViewController as? PostViewController where segue.identifier == "Show Post" {
+        if let postVC = segue.destinationViewController as? PostViewController where segue.identifier == "Show Post" {
             guard let cell = sender as? MessageTableViewCell, indexPath = tableView.indexPathForCell(cell), selectedPost = self.posts[safe: indexPath.row] else { return }
-            postViewController.post = selectedPost
+            postVC.post = selectedPost
+        }
+        
+        if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
+            guard let view = sender as? UserBannerView, selectedUserId = view.userObjectId else { return }
+            contactVC.delegate = self
+            contactVC.selectedUserId = selectedUserId
+            contactVC.isFavorite = false
         }
     }
     
@@ -99,7 +106,10 @@ class PostTableViewController: UITableViewController {
         post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
             
+            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "showUserContact:"))
+            
             cell.authorView.detailLabel.text = user.name
+            cell.authorView.userObjectId = user.objectId
             
             user.loadAvatar { (imageResult, imageError) -> Void in
                 guard let image = imageResult where imageError == nil else { return }
@@ -128,6 +138,11 @@ class PostTableViewController: UITableViewController {
         if maximumOffset - currentOffset <= 10.0 {
             self.loadMorePosts()
         }
+    }
+    
+    // MARK: Action
+    func showUserContact(recognizer: UITapGestureRecognizer) {
+        self.performSegueWithIdentifier("Show Contact", sender: recognizer.view)
     }
     
     // MARK: Help function
@@ -164,5 +179,10 @@ class PostTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
+}
 
+extension PostTableViewController: ContactViewControllerDelegate {
+    func finishViewContact(contactViewController: ContactViewController) {
+        return
+    }
 }
