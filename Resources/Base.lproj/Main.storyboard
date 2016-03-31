@@ -628,7 +628,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPn-RR-0Ek">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="191"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
                                                 <rect key="frame" x="135" y="44" width="104" height="104"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="OE2-Ai-BLg" secondAttribute="height" multiplier="1:1" id="36G-u2-Qso"/>
@@ -1239,6 +1239,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="m5M-y8-nRm" kind="show" identifier="Select City" id="RwH-fO-PMJ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1497,6 +1500,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ChO-TW-KPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4750.5" y="2207.5"/>
+        </scene>
+        <!--Location-->
+        <scene sceneID="82k-sg-8j1">
+            <objects>
+                <tableViewController id="m5M-y8-nRm" customClass="CityListTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6Kd-g7-lRL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="City Cell" id="EIW-nw-FTr">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EIW-nw-FTr" id="7ug-2o-BLE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="m5M-y8-nRm" id="geZ-u7-Q5n"/>
+                            <outlet property="delegate" destination="m5M-y8-nRm" id="geG-2v-DtW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Location" id="uvI-Ya-f9K"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kVF-U2-j5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5228.5" y="1345.5"/>
         </scene>
     </scenes>
     <resources>

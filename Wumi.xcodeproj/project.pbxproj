@@ -15,6 +15,8 @@
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		9519A6BCABED44F1D7D798F5 /* Pods_Wumi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C897A1341D196EA1C0BC21 /* Pods_Wumi.framework */; };
 		B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15824021C82C40F00D314B3 /* ContactTableViewController.swift */; };
+		B1997AF61CACDADC0086F8F4 /* CityListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */; };
+		B1C922A31CACF68400335A60 /* cities.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1C922A21CACF68400335A60 /* cities.plist */; };
 		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
 		DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEB1C86A55F00018B4A /* Constants.swift */; };
 		DF173EF21C86A58600018B4A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEF1C86A58600018B4A /* Extensions.swift */; };
@@ -99,6 +101,8 @@
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		B15824021C82C40F00D314B3 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewController.swift; path = Controller/ContactTableViewController.swift; sourceTree = "<group>"; };
+		B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityListTableViewController.swift; path = Controller/CityListTableViewController.swift; sourceTree = "<group>"; };
+		B1C922A21CACF68400335A60 /* cities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cities.plist; sourceTree = "<group>"; };
 		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF173EEB1C86A55F00018B4A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "Supporting Files/Constants.swift"; sourceTree = "<group>"; };
 		DF173EEF1C86A58600018B4A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Supporting Files/Extensions.swift"; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 		814C3AC51B69877600E307BB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B1C922A21CACF68400335A60 /* cities.plist */,
 				DF159E181C80231C00DB65FF /* Images.xcassets */,
 				814C3AC91B69877600E307BB /* Info.plist */,
 			);
@@ -376,6 +381,7 @@
 				DFA93AC41C90E04000ECA503 /* EditProfileViewController.swift */,
 				DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */,
 				DF7E3B4C1C923C0A000E8741 /* ProfessionListViewController.swift */,
+				B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -479,6 +485,7 @@
 				DFA93AD31C91299500ECA503 /* ProfileInputCell.xib in Resources */,
 				DF8D518F1C971419004D808E /* ProfessionSectionHeader.xib in Resources */,
 				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
+				B1C922A31CACF68400335A60 /* cities.plist in Resources */,
 				DFA93AD51C912A4D00ECA503 /* ProfileInputSwitchCell.xib in Resources */,
 				DFA93AD91C91DFFA00ECA503 /* ContactLabelCell.xib in Resources */,
 				DF159E191C80231C00DB65FF /* Images.xcassets in Resources */,
@@ -588,6 +595,7 @@
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */,
 				DFB0DC731C99CB87006BCD07 /* ProfileRow.swift in Sources */,
+				B1997AF61CACDADC0086F8F4 /* CityListTableViewController.swift in Sources */,
 				DFA077451C92A79A00E3382E /* SettingSwitch.swift in Sources */,
 				DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */,
 				DF21176A1C927FDD009109EE /* ProfileCollectionCell.swift in Sources */,

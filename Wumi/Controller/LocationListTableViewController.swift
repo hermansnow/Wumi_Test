@@ -20,6 +20,8 @@ class LocationListTableViewController: UITableViewController {
     var isLocating = false
     var currentLocation: CLPlacemark?
     
+    lazy var cityData = [String: [String]]()
+    
     // Add index collation
     lazy var collation = UILocalizedIndexedCollation.currentCollation()
     lazy var sections = [[String]]()
@@ -142,7 +144,7 @@ class LocationListTableViewController: UITableViewController {
                 cell.accessoryType = .Checkmark
             }
             else {
-                cell.accessoryType = .None
+                cell.accessoryType = .DisclosureIndicator
             }
         }
         
@@ -154,16 +156,35 @@ class LocationListTableViewController: UITableViewController {
         case 0:
             guard let location = self.currentLocation else { break }
             self.selectedLocation = Location(Country: location.country, City: location.locality)
-        default:
-            guard let sectionArray = self.sections[safe: indexPath.section], country = sectionArray[safe: indexPath.row] else { break }
-            self.selectedLocation = Location(Country: country, City: nil)
+            
+            if let location = selectedLocation, delegate = locationDelegate {
+                delegate.finishLocationSelection(location)
+            }
+            
+            self.navigationController?.popViewControllerAnimated(true)
+            break
+        default: break
+//            guard let sectionArray = self.sections[safe: indexPath.section], country = sectionArray[safe: indexPath.row] else { break }
+//            self.selectedLocation = Location(Country: country, City: nil)
         }
         
-        if let location = selectedLocation, delegate = locationDelegate {
-            delegate.finishLocationSelection(location)
+//        if let location = selectedLocation, delegate = locationDelegate {
+//            delegate.finishLocationSelection(location)
+//        }
+//        
+//        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let cityListTableViewController = segue.destinationViewController as? CityListTableViewController where segue.identifier == "Select City" {
+            guard let index = self.tableView.indexPathForSelectedRow else { return }
+            guard let sectionArray = self.sections[safe: index.section], countryName = sectionArray[safe: index.row] else { return }
+            cityListTableViewController.countryName = countryName
+            cityListTableViewController.cityList = cityData[countryName]!
+            
+            cityListTableViewController.locationDelegate = self.locationDelegate
+            cityListTableViewController.selectedLocation = self.selectedLocation
         }
-        
-        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: Help functions
@@ -198,11 +219,16 @@ class LocationListTableViewController: UITableViewController {
     private func loadCountries() -> Void {
         var countryList = [String]()
         
-        for countryCode in NSLocale.ISOCountryCodes() {
-            if let countryName = NSLocale.currentLocale().displayNameForKey(NSLocaleCountryCode, value: countryCode) {
-                countryList.append(countryName)
-            }
-        }
+//        for countryCode in NSLocale.ISOCountryCodes() {
+//            if let countryName = NSLocale.currentLocale().displayNameForKey(NSLocaleCountryCode, value: countryCode) {
+//                countryList.append(countryName)
+//            }
+//        }
+//        countryList.sortInPlace()
+
+        guard let plistPath = NSBundle.mainBundle().pathForResource("cities", ofType: "plist") else { return }
+        cityData = NSDictionary.init(contentsOfFile: plistPath) as! [String: [String]]
+        countryList = Array(cityData.keys)
         countryList.sortInPlace()
         
         self.buildSectionIndex(countryList)
