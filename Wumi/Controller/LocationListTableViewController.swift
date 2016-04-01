@@ -139,13 +139,7 @@ class LocationListTableViewController: UITableViewController {
             
             cell.textLabel!.text = country
             
-            // Add checkmark for selected country
-            if let location = self.selectedLocation where location.country == country {
-                cell.accessoryType = .Checkmark
-            }
-            else {
-                cell.accessoryType = .DisclosureIndicator
-            }
+            cell.accessoryType = .DisclosureIndicator
         }
         
         return cell
