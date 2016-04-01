@@ -82,13 +82,13 @@ class ContactViewController: UIViewController {
         guard let user = self.selectedUser else { return }
         
         if MFMailComposeViewController.canSendMail() {
-            let mailComposeViewController = MFMailComposeViewController()
-            mailComposeViewController.mailComposeDelegate = self
-            mailComposeViewController.setToRecipients([user.email])
-            presentViewController(mailComposeViewController, animated: true, completion: nil)
+            let mailComposeVC = MFMailComposeViewController()
+            mailComposeVC.mailComposeDelegate = self
+            mailComposeVC.setToRecipients([user.email])
+            presentViewController(mailComposeVC, animated: true, completion: nil)
         }
         else {
-            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available", block: nil)
+            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
         }
         
     }
@@ -97,14 +97,11 @@ class ContactViewController: UIViewController {
     func sendSMS(sender: AnyObject) {
         guard let user = self.selectedUser, phoneNumber = user.phoneNumber else { return }
         
-        if MFMailComposeViewController.canSendMail() {
-            let mailComposeViewController = MFMailComposeViewController()
-            mailComposeViewController.mailComposeDelegate = self
-            mailComposeViewController.setToRecipients([phoneNumber])
-            presentViewController(mailComposeViewController, animated: true, completion: nil)
+        if let url = NSURL(string: "sms:\(phoneNumber)") where UIApplication.sharedApplication().canOpenURL(url) {
+            UIApplication.sharedApplication().openURL(url)
         }
         else {
-            Helper.PopupErrorAlert(self, errorMessage: "Message services are not available", block: nil)
+            Helper.PopupErrorAlert(self, errorMessage: "Failed to send message to \(phoneNumber)")
         }
     }
     
@@ -112,9 +109,14 @@ class ContactViewController: UIViewController {
     func phoneCall(sender: AnyObject) {
         guard let user = self.selectedUser, phoneNumber = user.phoneNumber else { return }
         
-        if let url = NSURL(string: "tel://\(phoneNumber)") {
-            UIApplication.sharedApplication().openURL(url)
-        }
+        Helper.PopupConfirmationBox(self, boxTitle: nil, message: "Call \(phoneNumber)?", cancelBlock: nil) { (action) -> Void in
+                if let url = NSURL(string: "tel:\(phoneNumber)") where UIApplication.sharedApplication().canOpenURL(url) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
+                else {
+                    Helper.PopupErrorAlert(self, errorMessage: "Failed to call \(phoneNumber)")
+                }
+            }
     }
     
     // MARK: Help functions
@@ -238,7 +240,7 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
             // Add phone button
             let phoneButton = cell.actionButtons[1]
             phoneButton.setTitle("Call", forState: .Normal)
-            phoneButton.addTarget(self, action: "callPhone:", forControlEvents: .TouchUpInside)
+            phoneButton.addTarget(self, action: "phoneCall:", forControlEvents: .TouchUpInside)
             
             return cell
         }
@@ -303,10 +305,10 @@ extension ContactViewController: MFMailComposeViewControllerDelegate {
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is cancelled")
         case MFMailComposeResultFailed:
             if error != nil {
-                Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!, block: nil)
+                Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
             }
             else {
-                Helper.PopupErrorAlert(self, errorMessage: "Send failed", block: nil)
+                Helper.PopupErrorAlert(self, errorMessage: "Send failed")
             }
         default:
             break

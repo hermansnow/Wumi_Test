@@ -140,7 +140,7 @@ class EditProfileViewController: UIViewController {
             
             self.locationLabel.text = "\(self.currentUser.location)"
             
-            self.currentUser.loadAvatar(ScaleToSize: CGSize(width: self.profileImageView.frame.width, height: self.profileImageView.frame.height)) { (image, error) -> Void in
+            self.currentUser.loadAvatar() { (image, error) -> Void in
                 guard error == nil else {
                     print("\(error)")
                     return
@@ -215,7 +215,7 @@ class EditProfileViewController: UIViewController {
                 self.currentUser.confirmPassword = confirmPassword
                 self.currentUser.validateUser { (valid, validateError) -> Void in
                     guard valid else {
-                        Helper.PopupErrorAlert(self, errorMessage: "\(validateError)", block: nil)
+                        Helper.PopupErrorAlert(self, errorMessage: "\(validateError)")
                         // Do not save anything in password properties
                         self.currentUser.password = nil
                         self.currentUser.confirmPassword = nil
@@ -380,7 +380,7 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
             
             self.currentUser.saveAvatarFile(profileImage) { (success, imageError) -> Void in
                 guard success else {
-                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)", block: nil)
+                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
                     return
                 }
                 

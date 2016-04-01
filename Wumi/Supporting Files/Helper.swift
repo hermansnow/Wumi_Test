@@ -28,7 +28,7 @@ class Helper {
     }
     
     // Popup an UIAlertController for error message
-    static func PopupErrorAlert (controller: UIViewController, errorMessage: String, dismissButtonTitle: String = "Cancel", block: ((UIAlertAction) -> Void)?) {
+    static func PopupErrorAlert (controller: UIViewController, errorMessage: String, dismissButtonTitle: String = "Cancel", block: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: "Failed", message: errorMessage, preferredStyle: .Alert)
         
         // Add a dismiss button to dismiss the popup alert
@@ -39,17 +39,29 @@ class Helper {
     }
     
     // Popup an UIAlertController for showing information
-    static func PopupInformationBox (controller: UIViewController, boxTitle: String, message: String) {
+    static func PopupInformationBox (controller: UIViewController, boxTitle: String?, message: String, block: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: boxTitle, message: message, preferredStyle: .Alert)
         
         // Add a dismiss button to dismiss the popup alert
-        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: block))
         
         // Present alert controller
         controller.presentViewController(alert, animated: true, completion: nil)
     }
     
-    static func PopupInputBox (controller: UIViewController, boxTitle: String, message: String, numberOfFileds: Int, textValues: [[String: String?]], WithBlock block: (inputValues: [String?]) -> Void) {
+    // Popup an UIAlertController for Yes/No selction
+    static func PopupConfirmationBox (controller: UIViewController, boxTitle: String?, message: String, cancelBlock: ((UIAlertAction) -> Void)? = nil, confirmBlock: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(title: boxTitle, message: message, preferredStyle: .Alert)
+        
+        // Add a dismiss button to dismiss the popup alert
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: cancelBlock))
+        alert.addAction(UIAlertAction(title: "Confirm", style: .Default, handler: confirmBlock))
+        
+        // Present alert controller
+        controller.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    static func PopupInputBox (controller: UIViewController, boxTitle: String?, message: String, numberOfFileds: Int, textValues: [[String: String?]], WithBlock block: (inputValues: [String?]) -> Void) {
         let alert = UIAlertController(title: boxTitle, message: message, preferredStyle: .Alert)
         
         // Add an input text field

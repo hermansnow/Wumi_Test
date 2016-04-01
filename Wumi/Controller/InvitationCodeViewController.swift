@@ -19,6 +19,8 @@ class InvitationCodeViewController: UIViewController {
         
         // Hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        self.invitationCodeTextField.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -40,7 +42,7 @@ class InvitationCodeViewController: UIViewController {
         invitationCode.invitationCode = invitationCodeTextField.text
         invitationCode.verifyCodeWhithBlock({ (verified) -> Void in
             if !verified {
-                Helper.PopupErrorAlert(self, errorMessage: "Invalid invitation code", block: nil)
+                Helper.PopupErrorAlert(self, errorMessage: "Invalid invitation code")
             }
             else {
                 self.performSegueWithIdentifier("Show New Account Form", sender: self)
@@ -52,3 +54,19 @@ class InvitationCodeViewController: UIViewController {
         Helper.RedirectToSignIn()
     }
 }
+
+extension InvitationCodeViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        guard let nextResponder = textField.nextResponderTextField() else {
+            textField.resignFirstResponder()
+            return true
+        }
+        
+        nextResponder.becomeFirstResponder()
+        return false // Do not dismiss keyboard
+    }
+}
+
+// MARK: DataInputTextField delegate
+
+extension InvitationCodeViewController: DataInputTextFieldDelegate { }

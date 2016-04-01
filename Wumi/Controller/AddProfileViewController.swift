@@ -96,7 +96,7 @@ class AddProfileViewController: ScrollTextFieldViewController {
         
         self.user.saveInBackgroundWithBlock { (success, error) -> Void in
             if !success {
-                Helper.PopupErrorAlert(self, errorMessage: "\(error)", block: nil)
+                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
             }
             else {
                 Helper.RedirectToSignIn()

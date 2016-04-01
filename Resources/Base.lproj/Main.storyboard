@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0zA-Rn-0Qq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0zA-Rn-0Qq">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -75,16 +75,16 @@
                                                             <action selector="verifyCode:" destination="JHq-b6-pjD" eventType="touchUpInside" id="gV2-Vn-sbr"/>
                                                         </connections>
                                                     </button>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BKO-le-fla">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKO-le-fla">
                                                         <rect key="frame" x="103" y="35" width="171" height="26"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" misplaced="YES" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5S-hD-5T7">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5S-hD-5T7">
                                                                 <rect key="frame" x="0.0" y="0.0" width="135" height="26"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBX-bx-J5D">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBX-bx-J5D">
                                                                 <rect key="frame" x="135" y="0.0" width="36" height="26"/>
                                                                 <accessibility key="accessibilityConfiguration">
                                                                     <accessibilityTraits key="traits" link="YES"/>
@@ -814,6 +814,7 @@
         <!--Navigation Controller-->
         <scene sceneID="gX6-PT-vZu">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tPr-Xz-0Zw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="Post Table Navigation Controller" id="rLT-mV-RoB" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="mostViewed" id="c4A-pQ-SvJ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="om8-RP-gad">
@@ -824,7 +825,6 @@
                         <segue destination="Y0j-Xp-f3W" kind="relationship" relationship="rootViewController" id="66C-L6-N5A"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tPr-Xz-0Zw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2989.5" y="-899.5"/>
         </scene>
@@ -866,8 +866,8 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="17z-oZ-H8W"/>
                         <outlet property="hamburgerMenuButton" destination="IjD-2C-28Q" id="eoP-9q-jPB"/>
+                        <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="17z-oZ-H8W"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMh-2A-aoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1265,6 +1265,7 @@
         <!--Navigation Controller-->
         <scene sceneID="UOk-Pg-Wks">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hX5-y4-slT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sKb-pl-sVC" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="2oi-c7-H6h"/>
                     <toolbarItems/>
@@ -1277,7 +1278,6 @@
                         <segue destination="Cb4-n4-RtF" kind="relationship" relationship="rootViewController" id="iGU-iA-jJj"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hX5-y4-slT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3004.5" y="657.5"/>
         </scene>
@@ -1545,6 +1545,6 @@
         <image name="Menu" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="17z-oZ-H8W"/>
+        <segue reference="zkE-Zw-0o6"/>
     </inferredMetricsTieBreakers>
 </document>

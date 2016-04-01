@@ -23,6 +23,8 @@ class PostTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.extendedLayoutIncludesOpaqueBars = true
+        
         // Register nib
         self.tableView.registerNib(UINib(nibName: "MessageTableViewCell", bundle: nil), forCellReuseIdentifier: "MessageTableViewCell")
         
@@ -91,6 +93,7 @@ class PostTableViewController: UITableViewController {
             contactVC.delegate = self
             contactVC.selectedUserId = selectedUserId
             contactVC.isFavorite = false
+            contactVC.hidesBottomBarWhenPushed = true
         }
     }
     
@@ -133,7 +136,9 @@ class PostTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.hidesBottomBarWhenPushed = true
         self.performSegueWithIdentifier("Show Post", sender: tableView.cellForRowAtIndexPath(indexPath))
+        self.hidesBottomBarWhenPushed = false
     }
     
     // MARK: ScrollView delegete

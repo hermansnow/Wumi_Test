@@ -32,14 +32,13 @@ class SelectPhotoActionSheet: UIAlertController {
     func openCamera() {
         // Check whether camera device is available
         if !UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            Helper.PopupErrorAlert(self, errorMessage: "Camera device is not available.", dismissButtonTitle: "OK", block: nil)
+            Helper.PopupErrorAlert(self, errorMessage: "Camera device is not available.", dismissButtonTitle: "OK")
             return
         }
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self.delegate
         imagePicker.sourceType = .Camera
-        imagePicker.mediaTypes = ["\(kUTTypeJPEG)"]
         
         if let parentViewController = self.launchViewController {
             parentViewController.presentViewController(imagePicker, animated: true, completion: nil)
@@ -50,7 +49,7 @@ class SelectPhotoActionSheet: UIAlertController {
     func openPhotoLibrary() {
         // Check whether photo library is available
         if !UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
-            Helper.PopupErrorAlert(self, errorMessage: "Photo library is not available.", dismissButtonTitle: "OK", block: nil)
+            Helper.PopupErrorAlert(self, errorMessage: "Photo library is not available.", dismissButtonTitle: "OK")
             return
         }
         

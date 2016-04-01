@@ -81,7 +81,7 @@ class ContactTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let contactViewController = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
+        if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
             guard let cell = sender as? ContactTableViewCell,
                 indexPath = tableView.indexPathForCell(cell),
                 selectedUser = displayUsers[safe: indexPath.row] else { return }
@@ -89,9 +89,10 @@ class ContactTableViewController: UITableViewController {
             self.stopTimer()
             
             self.selectedUserIndexPath = indexPath
-            contactViewController.delegate = self
-            contactViewController.selectedUserId = selectedUser.objectId
-            contactViewController.isFavorite = cell.favoriteButton.selected
+            contactVC.delegate = self
+            contactVC.selectedUserId = selectedUser.objectId
+            contactVC.isFavorite = cell.favoriteButton.selected
+            contactVC.hidesBottomBarWhenPushed = true
         }
     }
     

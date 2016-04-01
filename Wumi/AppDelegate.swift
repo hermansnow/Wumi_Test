@@ -56,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = Constants.General.Color.TintColor
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Constants.General.Color.TitleColor]
         UINavigationBar.appearance().translucent = false
+        UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UINavigationBar.self]).tintColor = Constants.General.Color.TintColor
         
         // Set Tab bar color
         UITabBar.appearance().barTintColor = Constants.General.Color.ThemeColor

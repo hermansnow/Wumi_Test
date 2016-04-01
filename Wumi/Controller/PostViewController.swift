@@ -86,6 +86,7 @@ class PostViewController: UITableViewController {
             contactVC.delegate = self
             contactVC.selectedUserId = selectedUserId
             contactVC.isFavorite = false
+            contactVC.hidesBottomBarWhenPushed = true
         }
     }
     
