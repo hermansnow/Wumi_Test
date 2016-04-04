@@ -33,7 +33,7 @@ class PostViewController: UITableViewController {
         
         // Setup keyboard Listener
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "keyboardWasShown:",
+            selector: "keyboardWillShown:",
             name: UIKeyboardWillShowNotification,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -58,6 +58,7 @@ class PostViewController: UITableViewController {
         
         // Initialize comment subview
         self.commentView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 160)
+        self.commentTextView.characterLimit = 300  // Limitation for lenght of comment
         self.currentUser.loadAvatar(ScaleToSize: CGSize(width: 20, height: 20)) { (result, error) -> Void in
             guard error == nil else { return }
             self.myUserBannerView.avatarImageView.image = result
@@ -72,6 +73,10 @@ class PostViewController: UITableViewController {
         
         // Load posts
         self.loadData()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     private func addRefreshControl() {
@@ -124,10 +129,10 @@ class PostViewController: UITableViewController {
         
         guard let post = self.post else { return cell }
         
-        cell.titleLabel.text = post.title
-        cell.contentLabel.text = post.content
+        cell.title = post.title
+        cell.content = post.content
         cell.showSummary = false
-        cell.timeStampLabel.text = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
+        cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
         post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
@@ -236,10 +241,10 @@ class PostViewController: UITableViewController {
         self.performSegueWithIdentifier("Show Contact", sender: recognizer.view)
     }
     
-    // Scroll view when showing the keyboard
-    func keyboardWasShown(notification: NSNotification) {
+    // Pop up comment view when showing the keyboard
+    func keyboardWillShown(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
-            keyboardRect = keyboardInfo["UIKeyboardFrameEndUserInfoKey"]?.CGRectValue() else { return }
+            keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() else { return }
         
         if let commentTextView = UIResponder.currentFirstResponder() as? PostTextView where commentTextView == self.commentTextView {
             var visibleRect = UIApplication.sharedApplication().delegate?.window!!.frame
@@ -250,7 +255,7 @@ class PostViewController: UITableViewController {
         }
     }
     
-    // Reset view when dismissing the keyboard
+    // Hide comment view when dismissing the keyboard
     func keyboardWillHiden(notification: NSNotification) {
         if let commentTextView = UIResponder.currentFirstResponder() as? PostTextView where commentTextView == self.commentTextView {
             self.commentView.frame.origin.y = (UIApplication.sharedApplication().delegate?.window!!.frame.height)!

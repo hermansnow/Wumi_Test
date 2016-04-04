@@ -39,6 +39,15 @@ class ComposePostView: UIView {
         }
     }
     
+    var contentLengthLimit: Int? {
+        get {
+            return self.contentTextView.characterLimit
+        }
+        set {
+            self.contentTextView.characterLimit = newValue
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

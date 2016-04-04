@@ -24,7 +24,7 @@ class ScrollTextFieldViewController: UIViewController {
         
         // Setup keyboard Listener
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                               selector: "keyboardWasShown:",
+                                               selector: "keyboardWillShown:",
                                                    name: UIKeyboardWillShowNotification,
                                                  object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -33,32 +33,46 @@ class ScrollTextFieldViewController: UIViewController {
                                                  object: nil)
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     // MARK: Actions
     
     // Scroll view when showing the keyboard
-    func keyboardWasShown(notification: NSNotification) {
+    func keyboardWillShown(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
-               keyboardRect = keyboardInfo["UIKeyboardFrameEndUserInfoKey"]?.CGRectValue(),
-               textField = UIResponder.currentFirstResponder() as? UITextField else { return }
-        
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.size.height, right: 0)
-        self.formScrollView.contentInset = contentInsets
-        self.formScrollView.scrollIndicatorInsets = contentInsets
+            keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue(),
+            keyboardDurVal = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey],
+            textField = UIResponder.currentFirstResponder() as? UITextField else { return }
         
         // If active text field is hidden by keyboard, scroll it so it's visible
-        var visibleRect = self.view.frame
-        visibleRect.size.height -= keyboardRect.size.height
-        if !CGRectContainsPoint(visibleRect, textField.frame.origin) {
-            self.formScrollView.setContentOffset(CGPointMake(0.0, textField.frame.origin.y - keyboardRect.size.height),
-                                       animated: true)
+        if let textFieldOrigin = textField.superview?.convertPoint(textField.frame.origin, toView: self.view) {
+            let overlapHeight = textFieldOrigin.y + keyboardRect.size.height - self.view.frame.size.height + textField.frame.size.height
+            guard overlapHeight > 0 else { return }
+            
+            // Get keyboard animation duration
+            var keyboardDuration: NSTimeInterval = 0.0
+            keyboardDurVal.getValue(&keyboardDuration)
+            // Scroll view
+            UIView.animateWithDuration(keyboardDuration, animations: { () -> Void in
+                self.formScrollView.setContentOffset(CGPointMake(0.0, overlapHeight), animated: false)
+            })
         }
     }
     
     // Reset view when dismissing the keyboard
     func keyboardWillHiden(notification: NSNotification) {
-        formScrollView.contentInset = UIEdgeInsetsZero
-        formScrollView.scrollIndicatorInsets = UIEdgeInsetsZero
-        self.formScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
+            keyboardDurVal = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey] else { return }
+        
+        // Get keyboard animation duration
+        var keyboardDuration: NSTimeInterval = 0.0
+        keyboardDurVal.getValue(&keyboardDuration)
+        // Scroll view
+        UIView.animateWithDuration(keyboardDuration, animations: { () -> Void in
+            self.formScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        })
     }
     
     // Dismiss inputView when touching any other areas on the screen

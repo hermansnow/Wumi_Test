@@ -22,23 +22,23 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tsO-FS-pM0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="558"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="24"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="104"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
-                                        <rect key="frame" x="0.0" y="24" width="375" height="453"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
+                                        <rect key="frame" x="0.0" y="104" width="375" height="373"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="izv-Vt-sbK">
                                                 <rect key="frame" x="67" y="20" width="240" height="60"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Please verify the invitation code:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wG-Z6-9kJ">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please verify the invitation code:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wG-Z6-9kJ">
                                                         <rect key="frame" x="0.0" y="0.0" width="240" height="0.0"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sr6-Uh-f0v" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sr6-Uh-f0v" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="11" width="240" height="49"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </view>
@@ -46,6 +46,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="25b-lq-IeR"/>
                                                     <constraint firstAttribute="width" constant="240" id="S4T-vz-LIu"/>
+                                                    <constraint firstItem="Sr6-Uh-f0v" firstAttribute="top" secondItem="izv-Vt-sbK" secondAttribute="top" constant="11" id="VPo-0F-fIO"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
@@ -814,7 +815,6 @@
         <!--Navigation Controller-->
         <scene sceneID="gX6-PT-vZu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tPr-Xz-0Zw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="Post Table Navigation Controller" id="rLT-mV-RoB" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="mostViewed" id="c4A-pQ-SvJ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="om8-RP-gad">
@@ -825,6 +825,7 @@
                         <segue destination="Y0j-Xp-f3W" kind="relationship" relationship="rootViewController" id="66C-L6-N5A"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tPr-Xz-0Zw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2989.5" y="-899.5"/>
         </scene>
@@ -1024,7 +1025,7 @@
                                             <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -1265,7 +1266,6 @@
         <!--Navigation Controller-->
         <scene sceneID="UOk-Pg-Wks">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hX5-y4-slT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sKb-pl-sVC" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="2oi-c7-H6h"/>
                     <toolbarItems/>
@@ -1278,6 +1278,7 @@
                         <segue destination="Cb4-n4-RtF" kind="relationship" relationship="rootViewController" id="iGU-iA-jJj"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hX5-y4-slT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3004.5" y="657.5"/>
         </scene>

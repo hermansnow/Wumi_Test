@@ -11,7 +11,8 @@ import KMPlaceholderTextView
 
 class PostTextView: KMPlaceholderTextView {
     
-    static var characterLimit = 300
+    var characterLimit: Int?
+    var selfUserInteractionEnabled: Bool = true // control user interaction of view itself but not subviews
     
     convenience init() {
         self.init(frame: CGRectZero)
@@ -31,11 +32,27 @@ class PostTextView: KMPlaceholderTextView {
     
     private func setProperty() {
         self.font = Constants.General.Font.InputFont
+        self.dataDetectorTypes = .All
     }
     
-    func checkRemainingCharacters() -> Int {
-        return PostTextView.characterLimit - self.text.characters.count
+    func checkRemainingCharacters() -> Int? {
+        if let limit = self.characterLimit {
+            return limit - self.text.characters.count
+        }
+        else {
+            return nil
+        }
     }
     
-    
+    // Override hitTest function to only disable user interaction with this view but not subviews
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, withEvent: event)
+        
+        if hitView == self && self.selfUserInteractionEnabled == false {
+            return nil
+        }
+        else {
+            return hitView
+        }
+    }
 }

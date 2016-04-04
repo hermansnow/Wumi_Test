@@ -26,6 +26,20 @@ class NewPostViewController: UIViewController {
         // Initialize navigation bar
         self.nextButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: "next:")
         self.navigationItem.rightBarButtonItem = self.nextButton
+        
+        // Setup keyboard Listener
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "keyboardWillShown:",
+            name: UIKeyboardWillShowNotification,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "keyboardWillHiden:",
+            name: UIKeyboardWillHideNotification,
+            object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     // MARK: Navigation
@@ -48,13 +62,26 @@ class NewPostViewController: UIViewController {
         
         self.performSegueWithIdentifier("chooseCategory", sender: self)
     }
+    
+    // Resize text view when showing the keyboard
+    func keyboardWillShown(notification: NSNotification) {
+        guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
+            keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() else { return }
+        
+        self.composePostView.contentTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.height, right: 0)
+    }
+    
+    // Resize text view when dismissing the keyboard
+    func keyboardWillHiden(notification: NSNotification) {
+        self.composePostView.contentTextView.contentInset = UIEdgeInsetsZero
+    }
 }
 
 extension NewPostViewController: UITextViewDelegate {
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        guard let postView = textView as? PostTextView else { return false }
+        guard let postView = textView as? PostTextView, remainingCharaters = postView.checkRemainingCharacters() else { return true }
         
-        return text.characters.count - range.length <= postView.checkRemainingCharacters()
+        return text.characters.count - range.length <= remainingCharaters
     }
 }
 

@@ -10,27 +10,56 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet weak var authorView: UserBannerView!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var timeStampLabel: UILabel!
+    @IBOutlet private weak var contentTextView: PostTextView!
+    @IBOutlet private weak var timeStampLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var saveLabel: UILabel!
+    @IBOutlet private weak var saveLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
-    @IBOutlet weak var replyLabel: UILabel!
+    @IBOutlet private weak var replyLabel: UILabel!
     @IBOutlet weak var repliesButton: UIButton!
     
     var showSummary: Bool {
         get {
-            return self.contentLabel.numberOfLines > 0
+            return self.contentTextView.textContainer.maximumNumberOfLines > 0
         }
         set {
             if newValue {
-                self.contentLabel.numberOfLines = 3
+                self.contentTextView.textContainer.maximumNumberOfLines = 3
+                self.contentTextView.selfUserInteractionEnabled = false
             }
             else {
-                self.contentLabel.numberOfLines = 0
+                self.contentTextView.textContainer.maximumNumberOfLines = 0
+                self.contentTextView.selfUserInteractionEnabled = true
             }
+        }
+    }
+    
+    var title: String? {
+        get {
+            return self.titleLabel.text
+        }
+        set {
+            self.titleLabel.text = newValue
+        }
+    }
+    
+    var content: String? {
+        get {
+            return self.contentTextView.text
+        }
+        set {
+            self.contentTextView.text = newValue
+        }
+    }
+    
+    var timeStamp: String? {
+        get {
+            return self.timeStampLabel.text
+        }
+        set {
+            self.timeStampLabel.text = newValue
         }
     }
     
@@ -54,10 +83,15 @@ class MessageTableViewCell: UITableViewCell {
         // Set up user banner
         self.authorView.detailLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
         self.authorView.detailLabel.textColor = UIColor.lightGrayColor()
+        self.authorView.backgroundColor = Constants.General.Color.BackgroundColor
         
         // Set up content label
         self.showSummary = true
-        self.contentLabel.font = UIFont(name: ".SFUIText-Regular", size: 14)
+        self.contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 14)
+        self.contentTextView.scrollEnabled = false
+        self.contentTextView.editable = false
+        self.contentTextView.selectable = true
+        self.contentTextView.dataDetectorTypes = .All
         
         // Set up timestamp
         self.timeStampLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)

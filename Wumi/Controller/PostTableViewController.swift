@@ -113,9 +113,9 @@ class PostTableViewController: UITableViewController {
         
         guard let post = self.posts[safe: indexPath.row] else { return cell }
 
-        cell.titleLabel.text = post.title
-        cell.contentLabel.text = post.content
-        cell.timeStampLabel.text = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
+        cell.title = post.title
+        cell.content = post.content
+        cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
         post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in

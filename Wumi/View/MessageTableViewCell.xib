@@ -31,14 +31,14 @@
                                     <constraint firstAttribute="height" constant="40" id="822-9p-d80"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1F-CV-qaG">
-                                <rect key="frame" x="0.0" y="71" width="679" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vgy-Oi-paX" customClass="PostTextView" customModule="Wumi" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="71" width="679" height="156.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Time stamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mo3-cr-1bc">
-                                <rect key="frame" x="0.0" y="97" width="679" height="157"/>
+                                <rect key="frame" x="0.0" y="232.5" width="679" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -65,7 +65,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="fSs-JH-VEa">
-                                        <rect key="frame" x="80" y="0.0" width="76" height="30"/>
+                                        <rect key="frame" x="80" y="0.0" width="75.5" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hv1-rJ-PDe">
                                                 <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -75,7 +75,7 @@
                                                 <state key="normal" title="Button" image="Reply"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reply" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5Z-Ik-JNJ">
-                                                <rect key="frame" x="33" y="0.0" width="43" height="30"/>
+                                                <rect key="frame" x="33" y="0.0" width="42.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -83,7 +83,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eIx-VF-iB7">
-                                        <rect key="frame" x="165" y="0.0" width="445" height="30"/>
+                                        <rect key="frame" x="165.5" y="0.0" width="444.5" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOu-cl-PCA">
@@ -107,7 +107,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="authorView" destination="sjI-JE-1eO" id="TrA-aB-oiN"/>
-                <outlet property="contentLabel" destination="w1F-CV-qaG" id="RWv-pP-nZx"/>
+                <outlet property="contentTextView" destination="vgy-Oi-paX" id="rSl-Tn-GQh"/>
                 <outlet property="repliesButton" destination="hOu-cl-PCA" id="WVb-YD-rRC"/>
                 <outlet property="replyButton" destination="Hv1-rJ-PDe" id="Q8T-hk-wAy"/>
                 <outlet property="replyLabel" destination="y5Z-Ik-JNJ" id="3wg-xS-E1F"/>
