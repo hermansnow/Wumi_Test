@@ -52,4 +52,9 @@ class UserBannerView: UIView {
         // Add sub stackview
         self.stackView.frame = rect
     }
+    
+    func reset() {
+        self.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
+        self.detailLabel.text = nil
+    }
 }

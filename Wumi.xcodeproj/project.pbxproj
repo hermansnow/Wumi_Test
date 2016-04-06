@@ -411,16 +411,16 @@
 			children = (
 				DFA93AC11C90DDC000ECA503 /* CustomCell */,
 				DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */,
+				DFB861471BEDBDF60075014A /* SystemButton.swift */,
+				DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */,
+				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
+				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
+				DFA077441C92A79A00E3382E /* SettingSwitch.swift */,
+				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
 				DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */,
 				DFB612941CA2637600B3271B /* UserBannerView.swift */,
 				DFD90A141CAB87A1003A3B46 /* ComposePostView.swift */,
-				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
-				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
-				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
-				DFB861471BEDBDF60075014A /* SystemButton.swift */,
-				DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */,
 				DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */,
-				DFA077441C92A79A00E3382E /* SettingSwitch.swift */,
 				DFB612A01CA6158F00B3271B /* PostTextView.swift */,
 			);
 			name = View;

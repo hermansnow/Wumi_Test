@@ -18,6 +18,13 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var commentCount: Int
     @NSManaged var categories: [PostCategory]
     
+    // Use objectId as hashValue
+    override var hashValue: Int {
+        get {
+            return self.objectId.hashValue
+        }
+    }
+    
     // MARK: Initializer and subclassing functions
     
     // Must have this init for subclassing AVObject
@@ -72,4 +79,10 @@ class Post: AVObject, AVSubclassing {
         
         post.saveInBackgroundWithBlock(block)
     }
+}
+
+// MARK: Equatable
+
+func ==(lhs: Post, rhs: Post) -> Bool {
+    return lhs.objectId == rhs.objectId
 }

@@ -14,7 +14,7 @@ class MessageTableViewCell: UITableViewCell {
     @IBOutlet weak var authorView: UserBannerView!
     @IBOutlet private weak var contentTextView: PostTextView!
     @IBOutlet private weak var timeStampLabel: UILabel!
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var saveButton: FavoriteButton!
     @IBOutlet private weak var saveLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet private weak var replyLabel: UILabel!
@@ -104,6 +104,15 @@ class MessageTableViewCell: UITableViewCell {
         self.replyLabel.textColor = Constants.General.Color.ThemeColor
         self.repliesButton.titleLabel?.font = UIFont(name: ".SFUIText-Medium", size: 14)!
         self.repliesButton.titleLabel?.textColor = Constants.General.Color.ThemeColor
+    }
+    
+    func reset() {
+        self.title = nil
+        self.content = nil
+        self.timeStamp = nil
+        self.authorView.reset()
+        self.saveButton.delegate = nil
+        self.saveButton.selected = false
     }
     
 }

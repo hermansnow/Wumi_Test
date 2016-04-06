@@ -24,9 +24,13 @@ class User: AVUser {
     @NSManaged var country: String?
     @NSManaged var favoriteUsers: AVRelation?
     @NSManaged var professions: [Profession]
+    @NSManaged var savedPosts: AVRelation?
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
+    var favoriteUsersArray: [User] = []
+    var savedPostsArray: [Post] = []
+    
     var location: Location {
         get {
             return Location(Country: self.country, City: self.city)
@@ -253,11 +257,16 @@ class User: AVUser {
         
         favoriteUsers.addObject(user)
         
-        if block != nil {
-            self.saveInBackgroundWithBlock(block!)
-        }
-        else {
-            self.saveInBackground()
+        self.saveInBackgroundWithBlock { (success, error) -> Void in
+            defer {
+                if block != nil {
+                    block!(success, error)
+                }
+            }
+            
+            guard success && error == nil else { return }
+            
+            self.favoriteUsersArray.appendUniqueObject(user)
         }
     }
     
@@ -273,15 +282,20 @@ class User: AVUser {
         
         favoriteUsers.removeObject(user)
         
-        if block != nil {
-            self.saveInBackgroundWithBlock(block!)
-        }
-        else {
-            self.saveInBackground()
+        self.saveInBackgroundWithBlock { (success, error) -> Void in
+            defer {
+                if block != nil {
+                    block!(success, error)
+                }
+            }
+            
+            guard success && error == nil else { return }
+            
+            self.favoriteUsersArray.removeObject(user)
         }
     }
     
-    func findFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
+    func hasFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
         let query = favoriteUsers!.query()
         
         query.whereKey("objectId", equalTo: user.objectId)
@@ -291,11 +305,15 @@ class User: AVUser {
     
     func loadFavoriteUsers(block: AVArrayResultBlock!) {
         guard let favoriteUsers = self.favoriteUsers else {
+            self.favoriteUsersArray.removeAll()
             block([], NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
         }
-        // Load favorite users for current user
-        favoriteUsers.query().findObjectsInBackgroundWithBlock(block)
+        // Load favorite users for user
+        favoriteUsers.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            self.favoriteUsersArray = results as! [User]
+            block(results, error)
+        }
     }
     
     // MARK: Profession queries
@@ -305,6 +323,71 @@ class User: AVUser {
         professions.appendContentsOf(newProfessions)
         
         saveInBackground()
+    }
+    
+    // MARK: Saved post queries
+    
+    func savePost(post: Post!, block: AVBooleanResultBlock?) {
+        guard let savedPosts = self.savedPosts else {
+            if block != nil {
+                return block!(false, NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            }
+            else {
+                return
+            }
+        }
+        
+        savedPosts.addObject(post)
+        
+        self.saveInBackgroundWithBlock { (success, error) -> Void in
+            defer {
+                if block != nil {
+                    block!(success, error)
+                }
+            }
+            
+            guard success && error == nil else { return }
+            
+            self.savedPostsArray.appendUniqueObject(post)
+        }
+    }
+    
+    func unsavePost(post: Post!, block: AVBooleanResultBlock?) {
+        guard let savedPosts = self.savedPosts else {
+            if block != nil {
+                return block!(false, NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            }
+            else {
+                return
+            }
+        }
+        
+        savedPosts.removeObject(post)
+        
+        self.saveInBackgroundWithBlock { (success, error) -> Void in
+            defer {
+                if block != nil {
+                    block!(success, error)
+                }
+            }
+            
+            guard success && error == nil else { return }
+            
+            self.savedPostsArray.removeObject(post)
+        }
+    }
+    
+    func loadSavedPosts(block: AVArrayResultBlock!) {
+        guard let savedPosts = self.savedPosts else {
+            self.savedPostsArray.removeAll()
+            block([], NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            return
+        }
+        // Load saved posts for user
+        savedPosts.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            self.savedPostsArray = results as! [Post]
+            block(results, error)
+        }
     }
 }
 

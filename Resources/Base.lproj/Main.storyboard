@@ -1191,7 +1191,7 @@
         <!--Main Tab Bar Controller-->
         <scene sceneID="4xu-ev-eK6">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="SNN-Gs-X3M" customClass="WMMainTabBarController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="SNN-Gs-X3M" customClass="MainTabBarController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="fT3-wm-oAn">

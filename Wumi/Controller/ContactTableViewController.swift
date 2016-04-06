@@ -16,7 +16,6 @@ class ContactTableViewController: UITableViewController {
     var currentUser = User.currentUser()
     lazy var users = [User]() // array of users records
     lazy var filteredUsers = [User]() // array of filter results
-    lazy var favoriteUsers = [User]() // set of favorite users
     
     var selectedUserIndexPath: NSIndexPath?
     var inputTimer: NSTimer?
@@ -71,9 +70,8 @@ class ContactTableViewController: UITableViewController {
         
         // Load data
         self.currentUser.loadFavoriteUsers { (results, error) -> Void in
-            guard let favoriteUsers = results as? [User] else { return }
+            guard results.count > 0 && error == nil else { return }
             
-            self.favoriteUsers = favoriteUsers
             // Reload table data
             self.tableView.reloadData()
         }
@@ -84,14 +82,13 @@ class ContactTableViewController: UITableViewController {
         if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
             guard let cell = sender as? ContactTableViewCell,
                 indexPath = tableView.indexPathForCell(cell),
-                selectedUser = displayUsers[safe: indexPath.row] else { return }
+                selectedUser = self.displayUsers[safe: indexPath.row] else { return }
             // Stop input timer if one is running
             self.stopTimer()
             
             self.selectedUserIndexPath = indexPath
             contactVC.delegate = self
             contactVC.selectedUserId = selectedUser.objectId
-            contactVC.isFavorite = cell.favoriteButton.selected
             contactVC.hidesBottomBarWhenPushed = true
         }
     }
@@ -167,7 +164,7 @@ class ContactTableViewController: UITableViewController {
         cell.locationLabel.text = "\(user.location)"
             
         // Load favorite status with login user
-        cell.favoriteButton.selected = self.favoriteUsers.contains(user)
+        cell.favoriteButton.selected = self.currentUser.favoriteUsersArray.contains(user)
         cell.favoriteButton.tag = indexPath.row
         cell.favoriteButton.delegate = self
         
@@ -280,7 +277,6 @@ extension ContactTableViewController: FavoriteButtonDelegate {
         self.currentUser.addFavoriteUser(user) { (result, error) -> Void in
             guard result && error == nil else { return }
             
-            self.favoriteUsers.append(user)
             favoriteButton.selected = true
         }
     }
@@ -290,7 +286,6 @@ extension ContactTableViewController: FavoriteButtonDelegate {
         self.currentUser.removeFavoriteUser(user) { (result, error) -> Void in
             guard result && error == nil else { return }
             
-            self.favoriteUsers.removeObject(user)
             favoriteButton.selected = false
             
             // Remove cell if we are on the Favorite Search Type whcih should only show favorite users
@@ -304,12 +299,10 @@ extension ContactTableViewController: FavoriteButtonDelegate {
 // MARK: ContactViewController delegate
 
 extension ContactTableViewController: ContactViewControllerDelegate {
-    func finishViewContact(contactViewController: ContactViewController) {
-        guard let indexPath = self.selectedUserIndexPath, cell = self.tableView.cellForRowAtIndexPath(indexPath) as? ContactTableViewCell else { return }
+    func finishViewContact(contactVC: ContactViewController) {
+        guard let indexPath = self.selectedUserIndexPath,
+            cell = self.tableView.cellForRowAtIndexPath(indexPath) as? ContactTableViewCell else { return }
         
-        // save favorite list
-        if cell.favoriteButton.selected != contactViewController.isFavorite {
-            cell.favoriteButton.tapped(cell.favoriteButton)
-        }
+        cell.favoriteButton.selected = contactVC.isFavorite
     }
 }

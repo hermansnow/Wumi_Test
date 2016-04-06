@@ -19,10 +19,16 @@ class PostViewController: UITableViewController {
     lazy var sendButton = UIBarButtonItem()
     lazy var maskView = UIView()
     
+    var delegate: PostViewControllerDelegate?
+    
     var currentUser = User.currentUser()
     var post: Post?
     var updatedAtDateFormatter = NSDateFormatter()
     lazy var comments = [Comment]()
+    
+    var isSaved: Bool = false
+    
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,18 +85,26 @@ class PostViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        super.willMoveToParentViewController(parent)
+        if let delegate = self.delegate where parent == nil {
+            delegate.finishViewPost(self)
+        }
+    }
+    
     private func addRefreshControl() {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: Selector("loadData"), forControlEvents: .ValueChanged)
         self.tableView.addSubview(refreshControl!)
     }
     
+    // MARK: Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
             guard let view = sender as? UserBannerView, selectedUserId = view.userObjectId else { return }
             contactVC.delegate = self
             contactVC.selectedUserId = selectedUserId
-            contactVC.isFavorite = false
             contactVC.hidesBottomBarWhenPushed = true
         }
     }
@@ -148,6 +162,10 @@ class PostViewController: UITableViewController {
                 cell.authorView.avatarImageView.image = image
             }
         }
+        
+        self.isSaved = self.currentUser.savedPostsArray.contains(post)
+        cell.saveButton.delegate = self
+        cell.saveButton.selected = self.isSaved
         
         cell.selectionStyle = .None
         
@@ -269,10 +287,7 @@ class PostViewController: UITableViewController {
         guard let post = self.post else { return }
         
         post.fetchInBackgroundWithBlock { (result, error) -> Void in
-            guard error == nil else {
-                print("\(error)")
-                return
-            }
+            guard error == nil else { return }
             
             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
         }
@@ -289,7 +304,10 @@ class PostViewController: UITableViewController {
             
             self.comments = comments
             
-            self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
+            // Disable animation for displaying comment list
+            UIView.performWithoutAnimation { () -> Void in
+                self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
+            }
         }
     }
     
@@ -303,7 +321,32 @@ class PostViewController: UITableViewController {
             
             self.comments.appendContentsOf(comments)
             
-            self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
+            // Disable animation for displaying comment list
+            UIView.performWithoutAnimation { () -> Void in
+                self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
+            }
+        }
+    }
+}
+
+extension PostViewController: FavoriteButtonDelegate {
+    func addFavorite(favoriteButton: FavoriteButton) {
+        guard let post = self.post else { return }
+        self.currentUser.savePost(post) { (result, error) -> Void in
+            guard result && error == nil else { return }
+            
+            self.isSaved = true
+            favoriteButton.selected = self.isSaved
+        }
+    }
+    
+    func removeFavorite(favoriteButton: FavoriteButton) {
+        guard let post = self.post else { return }
+        self.currentUser.unsavePost(post) { (result, error) -> Void in
+            guard result && error == nil else { return }
+            
+            self.isSaved = false
+            favoriteButton.selected = self.isSaved
         }
     }
 }
@@ -312,5 +355,11 @@ extension PostViewController: ContactViewControllerDelegate {
     func finishViewContact(contactViewController: ContactViewController) {
         return
     }
+}
+
+// MARK: Custome delegate
+
+protocol PostViewControllerDelegate {
+    func finishViewPost(postVC: PostViewController)
 }
 

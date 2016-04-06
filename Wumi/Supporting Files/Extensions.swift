@@ -30,6 +30,13 @@ extension Array {
         return result
     }
     
+    mutating func appendUniqueObject<T: Equatable>(object: T) {
+        for index in indices.sort(>) {
+            if let element = self[index] as? T where element == object { return }
+        }
+        self.append(object as! Element)
+    }
+    
     // Remove list of items
     mutating func removeAtIndexes(indexes:[Int]) -> () {
         for index in indexes.sort(>) {

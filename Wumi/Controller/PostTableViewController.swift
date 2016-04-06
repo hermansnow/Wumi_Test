@@ -13,12 +13,15 @@ import SWRevealViewController
 class PostTableViewController: UITableViewController {
 
     @IBOutlet weak var hamburgerMenuButton: UIBarButtonItem!
+    
     var currentUser = User.currentUser()
     
     lazy var posts = [Post]()
+    
     var updatedAtDateFormatter = NSDateFormatter()
     var searchType: Post.PostSearchType = .All
     var hasMoreResults: Bool = false
+    var selectedPostIndexPath: NSIndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +44,6 @@ class PostTableViewController: UITableViewController {
         // Add Dropdown list
         self.addDropdownList()
         
-        // Load posts
-        self.loadPosts()
-        
         // Add action for hamburgerMenuButton
         if let revealViewController = self.revealViewController() {
             revealViewController.rearViewRevealOverdraw = 0
@@ -53,6 +53,14 @@ class PostTableViewController: UITableViewController {
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
 
+        // Load posts
+        self.currentUser.loadSavedPosts { (results, error) -> Void in
+            guard results.count > 0 && error == nil else { return }
+            
+            // Reload table
+            self.tableView.reloadData()
+        }
+        self.loadPosts()
     }
     
     private func addRefreshControl() {
@@ -82,17 +90,19 @@ class PostTableViewController: UITableViewController {
         }
     }
     
+    // MARK: Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let postVC = segue.destinationViewController as? PostViewController where segue.identifier == "Show Post" {
             guard let cell = sender as? MessageTableViewCell, indexPath = tableView.indexPathForCell(cell), selectedPost = self.posts[safe: indexPath.row] else { return }
+            postVC.delegate = self
             postVC.post = selectedPost
+            self.selectedPostIndexPath = indexPath
         }
         
         if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
             guard let view = sender as? UserBannerView, selectedUserId = view.userObjectId else { return }
-            contactVC.delegate = self
             contactVC.selectedUserId = selectedUserId
-            contactVC.isFavorite = false
             contactVC.hidesBottomBarWhenPushed = true
         }
     }
@@ -106,13 +116,13 @@ class PostTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.posts.count
     }
-
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MessageTableViewCell", forIndexPath: indexPath) as! MessageTableViewCell
         
         guard let post = self.posts[safe: indexPath.row] else { return cell }
-
+        
+        cell.reset()
         cell.title = post.title
         cell.content = post.content
         cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
@@ -131,6 +141,11 @@ class PostTableViewController: UITableViewController {
                 cell.authorView.avatarImageView.image = image
             }
         }
+        
+        // Set up buttons
+        cell.saveButton.tag = indexPath.row
+        cell.saveButton.selected = self.currentUser.savedPostsArray.contains(post)
+        cell.saveButton.delegate = self
 
         return cell
     }
@@ -198,8 +213,32 @@ class PostTableViewController: UITableViewController {
     }
 }
 
-extension PostTableViewController: ContactViewControllerDelegate {
-    func finishViewContact(contactViewController: ContactViewController) {
-        return
+extension PostTableViewController: FavoriteButtonDelegate {
+    func addFavorite(favoriteButton: FavoriteButton) {
+        guard let post = self.posts[safe: favoriteButton.tag] else { return }
+        self.currentUser.savePost(post) { (result, error) -> Void in
+            guard result && error == nil else { return }
+            
+            favoriteButton.selected = true
+        }
+    }
+    
+    func removeFavorite(favoriteButton: FavoriteButton) {
+        guard let post = self.posts[safe: favoriteButton.tag] else { return }
+        self.currentUser.unsavePost(post) { (result, error) -> Void in
+            guard result && error == nil else { return }
+            
+            favoriteButton.selected = false
+        }
+    }
+}
+
+extension PostTableViewController: PostViewControllerDelegate {
+    func finishViewPost(postVC: PostViewController) {
+        guard let indexPath = self.selectedPostIndexPath,
+            cell = self.tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell else { return }
+        
+        cell.saveButton.selected = postVC.isSaved
+        //self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
     }
 }

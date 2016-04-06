@@ -28,8 +28,7 @@ class ContactViewController: UIViewController {
     
     var isFavorite: Bool = false {
         didSet {
-            guard let favoriteButton = self.favoriteButton else { return }
-            favoriteButton.selected = self.isFavorite
+            self.favoriteButton.selected = self.isFavorite
         }
     }
     
@@ -60,9 +59,6 @@ class ContactViewController: UIViewController {
         
         // Initialize the mask view
         self.maskView.backgroundColor = Constants.General.Color.MaskColor
-        
-        // Set initial status for the favorite button
-        self.favoriteButton.selected = self.isFavorite
         
         // Show data
         self.displayUserData()
@@ -153,15 +149,10 @@ class ContactViewController: UIViewController {
                 self.graduationYearLabel.text = graduationText
             }
             
+            self.isFavorite = self.currentUser.favoriteUsersArray.contains(user)
+            
             // Reload specific rows
             self.reloadRowForTypes([.Email, .Phone])
-            
-            // Fetch favorite relatonship with current user again as a double check
-            self.currentUser.findFavoriteUser(user, block: { (count, error) -> Void in
-                guard error == nil else { return }
-                
-                self.isFavorite = count > 0
-            })
             
             // Reload profession row
             self.reloadRowForTypes([.Professions])
@@ -323,18 +314,28 @@ extension ContactViewController: MFMailComposeViewControllerDelegate {
 
 extension ContactViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
-        self.isFavorite = true
+        guard let user = self.selectedUser else { return }
+        self.currentUser.addFavoriteUser(user) { (result, error) -> Void in
+            guard result && error == nil else { return }
+            
+            self.isFavorite = true
+        }
     }
     
     func removeFavorite(favoriteButton: FavoriteButton) {
-        self.isFavorite = false
+        guard let user = self.selectedUser else { return }
+        self.currentUser.removeFavoriteUser(user) { (result, error) -> Void in
+            guard result && error == nil else { return }
+            
+            self.isFavorite = false
+        }
     }
 }
 
 // MARK: Custome delegate
 
 protocol ContactViewControllerDelegate {
-    func finishViewContact(contactViewController: ContactViewController)
+    func finishViewContact(contactVC: ContactViewController)
 }
 
 // MARK: Custom row type

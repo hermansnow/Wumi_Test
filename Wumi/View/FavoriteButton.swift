@@ -24,7 +24,7 @@ class FavoriteButton: UIButton {
         self.setBackgroundImage(UIImage(named: "Favorite"), forState: .Selected)
         
         self.adjustsImageWhenHighlighted = false
-        self.showsTouchWhenHighlighted = true
+        self.showsTouchWhenHighlighted = false
     }
     
     private func addTarget() {
