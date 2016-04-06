@@ -19,7 +19,8 @@ class ContactTableViewController: UITableViewController {
     
     var selectedUserIndexPath: NSIndexPath?
     var inputTimer: NSTimer?
-    var searchString: String = ""
+    var searchString: String = "" // String of next search
+    var lastSearchString: String? // String of last search
     var searchType: User.UserSearchType = .All
     var hasMoreResults: Bool = false
     
@@ -58,15 +59,17 @@ class ContactTableViewController: UITableViewController {
         self.tableView.separatorStyle = .None
         self.tableView.backgroundColor = Constants.General.Color.BackgroundColor
         
-        // Set delegates
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        
         // Add resultSearchController
         self.addSearchController()
         
         // Add dropdown list
         self.addDropdownList()
+        
+        // Set delegates
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.resultSearchController.delegate = self
+        self.resultSearchController.searchBar.delegate = self
         
         // Load data
         self.currentUser.loadFavoriteUsers { (results, error) -> Void in
@@ -201,6 +204,7 @@ class ContactTableViewController: UITableViewController {
                 
                                 self.displayUsers = users
                                 self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
+                                self.lastSearchString = self.searchString
                                 
                                 self.tableView.reloadData()
                             
@@ -219,6 +223,8 @@ class ContactTableViewController: UITableViewController {
                                 
                                 self.displayUsers.appendContentsOf(users)
                                 self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
+                                self.lastSearchString = self.searchString
+                                
                                 self.tableView.reloadData()
                             }
     }
@@ -227,19 +233,40 @@ class ContactTableViewController: UITableViewController {
 
 // MARK: Search delegates
 
-extension ContactTableViewController: UISearchControllerDelegate, UISearchResultsUpdating {
+extension ContactTableViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+    
+    // When end editing, try search results if there is a change in the non-empty search string
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        self.triggerSearch(searchBar.text, useTimer: false)
+    }
+    
+    // Try search results if there is a pause when typing
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        if let searchInput = searchController.searchBar.text {
+        self.triggerSearch(searchController.searchBar.text, useTimer: true)
+    }
+    
+    //Helper functions
+    
+    func triggerSearch(searchBarText: String?, useTimer: Bool) {
+        // Stop current running timer from run loop on main queue
+        self.stopTimer()
+        
+        if let searchInput = searchBarText {
             // Quit if there is no change in the search string
-            if searchString == searchInput && !searchInput.isEmpty { return }
-            searchString = searchInput
+            if searchInput == lastSearchString && !searchInput.isEmpty { return }
+            else {
+                searchString = searchInput
+            }
         }
         
-        self.stopTimer()
-            
         if !self.searchString.isEmpty {
-            // Restart a new timer
-            self.startTimer()
+            // Start a search
+            if useTimer {
+                self.startTimer() // restart the timer if we are using timer
+            }
+            else {
+                self.loadUsers() // search instantly if we are not using timer
+            }
         }
         else {
             self.filteredUsers.removeAll(keepCapacity: false)
@@ -247,7 +274,6 @@ extension ContactTableViewController: UISearchControllerDelegate, UISearchResult
         }
     }
     
-    //Helper functions
     func stopTimer() {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             // Stop input timer if one is running
