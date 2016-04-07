@@ -143,8 +143,12 @@ class PostViewController: UITableViewController {
         
         guard let post = self.post else { return cell }
         
-        cell.title = post.title
-        cell.content = post.content
+        if let title = post.title {
+            cell.title = NSMutableAttributedString(string: title)
+        }
+        if let content = post.content {
+            cell.content = NSMutableAttributedString(string: content)
+        }
         cell.showSummary = false
         cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)

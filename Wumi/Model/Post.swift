@@ -52,13 +52,24 @@ class Post: AVObject, AVSubclassing {
     }
     
     // MARK: Queries
-    class func loadPosts(limit limit: Int = 200, cutoffTime: NSDate? = nil,  block: AVArrayResultBlock!) {
-        let query = Post.query()
+    class func loadPosts(limit limit: Int = 200, cutoffTime: NSDate? = nil, searchString: String = "", block: AVArrayResultBlock!) {
+        var query = Post.query()
         let index = "updatedAt" // Sort based on last update time
         
+        // Handler search string
+        if !searchString.isEmpty {
+            let titleQuery = Post.query()
+            titleQuery.whereKey("title", matchesRegex: searchString, modifiers: "i")
+            let contentQuery = Post.query()
+            contentQuery.whereKey("content", matchesRegex: searchString, modifiers: "i")
+            query = AVQuery.orQueryWithSubqueries([titleQuery, contentQuery])
+        }
+        
+        // Load posts earlier than a cut-off timestamp
         if let cutoffTime = cutoffTime {
             query.whereKey(index, lessThan: cutoffTime)
         }
+        
         query.orderByDescending(index)
         
         query.cachePolicy = .NetworkElseCache

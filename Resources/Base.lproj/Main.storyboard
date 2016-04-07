@@ -4,7 +4,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Verify Invitation Code-->
@@ -857,18 +856,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="dpL-Tb-o6k">
                         <barButtonItem key="leftBarButtonItem" image="Menu" id="IjD-2C-28Q"/>
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="compose" id="bgw-0I-I4I">
-                                <connections>
-                                    <segue destination="dTU-vq-anB" kind="show" identifier="Compose Post" id="QK4-F9-msp"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="search" id="Ua8-aC-KFb"/>
-                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="hamburgerMenuButton" destination="IjD-2C-28Q" id="eoP-9q-jPB"/>
                         <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="17z-oZ-H8W"/>
+                        <segue destination="dTU-vq-anB" kind="show" identifier="Compose Post" id="chf-O0-Vka"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMh-2A-aoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1546,6 +1538,6 @@
         <image name="Menu" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zkE-Zw-0o6"/>
+        <segue reference="17z-oZ-H8W"/>
     </inferredMetricsTieBreakers>
 </document>

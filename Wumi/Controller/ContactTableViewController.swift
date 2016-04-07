@@ -34,12 +34,12 @@ class ContactTableViewController: UITableViewController {
                 return self.users
             }
         }
-        set(results) {
+        set {
             if self.resultSearchController.active {
-                self.filteredUsers = results
+                self.filteredUsers = newValue
             }
             else {
-                self.users = results
+                self.users = newValue
             }
         }
     }
@@ -108,7 +108,7 @@ class ContactTableViewController: UITableViewController {
         self.definesPresentationContext = true
         
         self.tableView.tableHeaderView = self.resultSearchController.searchBar // Add search bar as the tableview's header
-        self.tableView.setContentOffset(CGPoint(x: 0, y: tableView.tableHeaderView!.frame.size.height), animated: true) // Initially, hide search bar under the navigation bar
+        self.tableView.setContentOffset(CGPoint(x: 0, y: tableView.tableHeaderView!.frame.size.height), animated: false) // Initially, hide search bar under the navigation bar
     }
     
     
@@ -245,8 +245,7 @@ extension ContactTableViewController: UISearchBarDelegate, UISearchControllerDel
         self.triggerSearch(searchController.searchBar.text, useTimer: true)
     }
     
-    //Helper functions
-    
+    // Trigger search
     func triggerSearch(searchBarText: String?, useTimer: Bool) {
         // Stop current running timer from run loop on main queue
         self.stopTimer()

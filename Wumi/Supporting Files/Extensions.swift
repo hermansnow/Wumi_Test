@@ -76,7 +76,7 @@ extension String {
     // Check whether string contains Chinese characters
     func containChinese() -> Bool {
         do {
-            let regex = try NSRegularExpression(pattern: "\\p{script=Han}", options: .AnchorsMatchLines);
+            let regex = try NSRegularExpression(pattern: "\\p{script=Han}", options: .AnchorsMatchLines)
             return regex.numberOfMatchesInString(self, options: [], range: NSRange(location: 0, length: self.characters.count)) > 0
         } catch {
             print("Failed in creating NSRegularExpression for Han")

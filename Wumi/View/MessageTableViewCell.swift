@@ -36,21 +36,25 @@ class MessageTableViewCell: UITableViewCell {
         }
     }
     
-    var title: String? {
+    var title: NSMutableAttributedString? {
         get {
-            return self.titleLabel.text
+            guard let attributedTitle = self.titleLabel.attributedText else { return nil }
+            
+            return NSMutableAttributedString(attributedString: attributedTitle)
         }
         set {
-            self.titleLabel.text = newValue
+            self.titleLabel.attributedText = newValue
         }
     }
     
-    var content: String? {
+    var content: NSMutableAttributedString? {
         get {
-            return self.contentTextView.text
+            guard let attributedContent = self.contentTextView.attributedText else { return nil }
+        
+            return NSMutableAttributedString(attributedString: attributedContent)
         }
         set {
-            self.contentTextView.text = newValue
+            self.contentTextView.attributedText = newValue
         }
     }
     
@@ -60,6 +64,16 @@ class MessageTableViewCell: UITableViewCell {
         }
         set {
             self.timeStampLabel.text = newValue
+        }
+    }
+    
+    var highlightString: String? {
+        didSet {
+            // Check title
+            self.highlightString(&self.title)
+            
+            // Check content
+            self.highlightString(&self.content)
         }
     }
     
@@ -115,4 +129,17 @@ class MessageTableViewCell: UITableViewCell {
         self.saveButton.selected = false
     }
     
+    func highlightString(inout attributeString: NSMutableAttributedString?) {
+        guard let keywords = self.highlightString where keywords.characters.count > 0, let attribute = attributeString else { return }
+        
+        do {
+            let regex = try NSRegularExpression(pattern: keywords, options: .CaseInsensitive)
+            
+            for match in regex.matchesInString(attribute.string, options: [], range: NSRange(location: 0, length: attribute.string.utf16.count)) as [NSTextCheckingResult] {
+                attribute.addAttribute(NSForegroundColorAttributeName, value: Constants.General.Color.ThemeColor, range: match.range)
+            }
+        } catch {
+            print("Failed in creating NSRegularExpression for string matching")
+        }
+    }
 }
