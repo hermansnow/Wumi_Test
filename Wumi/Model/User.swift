@@ -21,6 +21,7 @@ class User: AVUser {
     @NSManaged var name: String?
     @NSManaged var pinyin: String?
     @NSManaged var city: String?
+    @NSManaged var state: String?
     @NSManaged var country: String?
     @NSManaged var favoriteUsers: AVRelation?
     @NSManaged var professions: [Profession]
@@ -33,10 +34,11 @@ class User: AVUser {
     
     var location: Location {
         get {
-            return Location(Country: self.country, City: self.city)
+            return Location(Country: self.country, State: self.state, City: self.city)
         }
         set {
             self.country = newValue.country
+            self.state = newValue.state
             self.city = newValue.city
         }
         
