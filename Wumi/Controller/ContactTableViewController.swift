@@ -21,7 +21,7 @@ class ContactTableViewController: UITableViewController {
     var inputTimer: NSTimer?
     var searchString: String = "" // String of next search
     var lastSearchString: String? // String of last search
-    var searchType: User.UserSearchType = .All
+    var searchType: UserSearchType = .All
     var hasMoreResults: Bool = false
     
     // Computed properties
@@ -116,7 +116,7 @@ class ContactTableViewController: UITableViewController {
     private func addDropdownList() {
         // Initial a dropdown list with options
         let optionTitles = ["All", "Favorites", "Graduation Year"]
-        let optionSearchTypes: [User.UserSearchType] = [.All, .Favorites, .Graduation]
+        let optionSearchTypes: [UserSearchType] = [.All, .Favorites, .Graduation]
         
         // Initial title
         guard let index = optionSearchTypes.indexOf(self.searchType), title = optionTitles[safe: index] else { return }
@@ -167,8 +167,7 @@ class ContactTableViewController: UITableViewController {
         cell.locationLabel.text = "\(user.location)"
             
         // Load favorite status with login user
-        cell.favoriteButton.selected = self.currentUser.favoriteUsersArray.contains(user)
-        cell.favoriteButton.tag = indexPath.row
+        cell.favoriteButton.selected = self.currentUser.favoriteUsersArray.contains( { $0 == user } )
         cell.favoriteButton.delegate = self
         
         return cell
@@ -219,7 +218,7 @@ class ContactTableViewController: UITableViewController {
                                     type: self.searchType,
                             searchString: self.searchString,
                                sinceUser: self.displayUsers.last) { (results, error) -> Void in
-                                guard let users = results as? [User] where error == nil else { return }
+                                guard let users = results as? [User] where error == nil && users.count > 0 else { return }
                                 
                                 self.displayUsers.appendContentsOf(users)
                                 self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
@@ -298,7 +297,9 @@ extension ContactTableViewController: UISearchBarDelegate, UISearchControllerDel
 
 extension ContactTableViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
-        guard let user = self.displayUsers[safe: favoriteButton.tag] else { return }
+        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row] else { return }
+        
         self.currentUser.addFavoriteUser(user) { (result, error) -> Void in
             guard result && error == nil else { return }
             
@@ -307,7 +308,9 @@ extension ContactTableViewController: FavoriteButtonDelegate {
     }
     
     func removeFavorite(favoriteButton: FavoriteButton) {
-        guard let user = self.displayUsers[safe: favoriteButton.tag] else { return }
+        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row] else { return }
+        
         self.currentUser.removeFavoriteUser(user) { (result, error) -> Void in
             guard result && error == nil else { return }
             
@@ -315,7 +318,8 @@ extension ContactTableViewController: FavoriteButtonDelegate {
             
             // Remove cell if we are on the Favorite Search Type whcih should only show favorite users
             if self.searchType == .Favorites {
-                self.loadUsers()
+                self.displayUsers.removeObject(user)
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
         }
     }

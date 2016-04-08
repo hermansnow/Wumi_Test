@@ -30,6 +30,7 @@
 		DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF3629561C9B305100D87574 /* ContactTableViewCell.xib */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
+		DF6D56651CB75A1C001E0AFF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D56641CB75A1C001E0AFF /* Protocols.swift */; };
 		DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */; };
 		DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */; };
 		DF7E3B4B1C92324D000E8741 /* Profession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7E3B4A1C92324D000E8741 /* Profession.swift */; };
@@ -120,6 +121,7 @@
 		DF3629561C9B305100D87574 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactTableViewCell.xib; path = View/ContactTableViewCell.xib; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
+		DF6D56641CB75A1C001E0AFF /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = "Supporting Files/Protocols.swift"; sourceTree = "<group>"; };
 		DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AvatarImageView.swift; path = View/AvatarImageView.swift; sourceTree = "<group>"; };
 		DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationListTableViewController.swift; path = Controller/LocationListTableViewController.swift; sourceTree = "<group>"; };
 		DF7E3B4A1C92324D000E8741 /* Profession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Profession.swift; path = Model/Profession.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				DF173EEF1C86A58600018B4A /* Extensions.swift */,
 				DF173EF01C86A58600018B4A /* Helper.swift */,
 				DF173EEB1C86A55F00018B4A /* Constants.swift */,
+				DF6D56641CB75A1C001E0AFF /* Protocols.swift */,
 			);
 			name = "Supporting Files";
 			path = Wumi;
@@ -615,6 +618,7 @@
 				DFA93ABA1C88FCDB00ECA503 /* ColorGradientView.swift in Sources */,
 				DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */,
 				DFA93ADB1C91E0B900ECA503 /* ContactLabelCell.swift in Sources */,
+				DF6D56651CB75A1C001E0AFF /* Protocols.swift in Sources */,
 				DFA93AD71C912AFB00ECA503 /* ProfileInputSwitchCell.swift in Sources */,
 				DFD90A151CAB87A1003A3B46 /* ComposePostView.swift in Sources */,
 				B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */,

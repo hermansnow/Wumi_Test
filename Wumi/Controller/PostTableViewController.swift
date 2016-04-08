@@ -27,7 +27,7 @@ class PostTableViewController: UITableViewController {
     var inputTimer: NSTimer?
     var searchString: String = "" // String of next search
     var lastSearchString: String? // String of last search
-    var searchType: Post.PostSearchType = .All
+    var searchType: PostSearchType = .All
     var hasMoreResults: Bool = false
     var selectedPostIndexPath: NSIndexPath?
     
@@ -118,8 +118,8 @@ class PostTableViewController: UITableViewController {
     
     private func addDropdownList() {
         // Initial a dropdown list with options
-        let optionTitles = ["All Activity", "News"]
-        let optionSearchTypes: [Post.PostSearchType] = [.All, .Category]
+        let optionTitles = ["All Activity", "Saved"]
+        let optionSearchTypes: [PostSearchType] = [.All, .Saved]
         
         // Initial title
         guard let index = optionSearchTypes.indexOf(self.searchType), title = optionTitles[safe: index] else { return }
@@ -195,8 +195,7 @@ class PostTableViewController: UITableViewController {
         }
         
         // Set up buttons
-        cell.saveButton.tag = indexPath.row
-        cell.saveButton.selected = self.currentUser.savedPostsArray.contains(post)
+        cell.saveButton.selected = self.currentUser.savedPostsArray.contains( { $0 == post} )
         cell.saveButton.delegate = self
 
         return cell
@@ -241,21 +240,18 @@ class PostTableViewController: UITableViewController {
 
     // MARK: Help function
     func loadPosts() {
-        switch self.searchType {
-        case .All:
-            Post.loadPosts(limit: Constants.Query.LoadPostLimit,
-                    searchString: self.searchString) { (results, error) -> Void in
-                self.refreshControl?.endRefreshing()
+        Post.loadPosts(limit: Constants.Query.LoadPostLimit,
+                        type: self.searchType,
+                searchString: self.searchString,
+                        user: self.currentUser) { (results, error) -> Void in
+            self.refreshControl?.endRefreshing()
                 
-                guard let posts = results as? [Post] where posts.count > 0 else { return }
+            guard let posts = results as? [Post] where error == nil else { return }
                 
-                self.displayPosts = posts
-                self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
+            self.displayPosts = posts
+            self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
                 
-                self.tableView.reloadData()
-            }
-        default:
-            break
+            self.tableView.reloadData()
         }
     }
     
@@ -263,11 +259,13 @@ class PostTableViewController: UITableViewController {
         guard let lastPost = self.displayPosts.last else { return }
         
         Post.loadPosts(limit: Constants.Query.LoadPostLimit,
+                        type: self.searchType,
                   cutoffTime: lastPost.updatedAt,
-                searchString: self.searchString) { (results, error) -> Void in
+                searchString: self.searchString,
+                        user: self.currentUser) { (results, error) -> Void in
             self.refreshControl?.endRefreshing()
             
-            guard let posts = results as? [Post] where posts.count > 0 else { return }
+            guard let posts = results as? [Post] where error == nil && posts.count > 0 else { return }
             
             self.displayPosts.appendContentsOf(posts)
             self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
@@ -345,7 +343,9 @@ extension PostTableViewController: UISearchBarDelegate, UISearchResultsUpdating 
 
 extension PostTableViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
-        guard let post = self.displayPosts[safe: favoriteButton.tag] else { return }
+        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), post = self.displayPosts[safe: indexPath.row] else { return }
+        
         self.currentUser.savePost(post) { (result, error) -> Void in
             guard result && error == nil else { return }
             
@@ -354,11 +354,19 @@ extension PostTableViewController: FavoriteButtonDelegate {
     }
     
     func removeFavorite(favoriteButton: FavoriteButton) {
-        guard let post = self.displayPosts[safe: favoriteButton.tag] else { return }
+        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), post = self.displayPosts[safe: indexPath.row] else { return }
+        
         self.currentUser.unsavePost(post) { (result, error) -> Void in
             guard result && error == nil else { return }
             
             favoriteButton.selected = false
+            
+            // Remove cell if we are on the Saved Search Type which should only show saved posts
+            if self.searchType == .Saved {
+                self.displayPosts.removeObject(post)
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
         }
     }
 }

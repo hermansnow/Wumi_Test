@@ -42,17 +42,6 @@ class User: AVUser {
         
     }
     
-    // Use objectId as hashValue
-    override var hashValue: Int {
-        get {
-            return self.objectId.hashValue
-        }
-    }
-    
-    enum UserSearchType {
-        case All, Favorites, Graduation
-    }
-    
     // MARK: Initializer
     
     override class func initialize() {
@@ -177,7 +166,7 @@ class User: AVUser {
     }
     
     func loadUsers(limit limit: Int = 200, type: UserSearchType = .All, searchString: String = "", sinceUser: User? = nil, block: AVArrayResultBlock!) {
-        guard let query = self.getQueryFromSearchType(type) else {
+        guard var query = User.getQueryFromSearchType(type, forUser: self) else {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
             return
         }
@@ -192,49 +181,47 @@ class User: AVUser {
         }
         
         // Handle load more
-        let finalQuery: AVQuery
-        if let user = sinceUser, equalQuery = self.getQueryFromSearchType(type) {
-            query.whereKey(index, greaterThan: user[index])
-            equalQuery.whereKey(index, equalTo: user[index])
-            equalQuery.whereKey("objectId", greaterThan: user.objectId)
-            finalQuery = AVQuery.orQueryWithSubqueries([query, equalQuery])
-        }
-        else {
-            finalQuery = query
+        if let user = sinceUser, indexQuery = User.getQueryFromSearchType(type, forUser: self), tieBreakerQuery = User.getQueryFromSearchType(type, forUser: self) {
+            indexQuery.whereKey(index, greaterThan: user[index])
+            tieBreakerQuery.whereKey(index, equalTo: user[index])
+            tieBreakerQuery.whereKey("objectId", greaterThan: user.objectId)
+            query = AVQuery.orQueryWithSubqueries([indexQuery, tieBreakerQuery])
         }
         
         // Add filter based on search type
         if type == .Graduation {
-            finalQuery.whereKey("graduationYear", equalTo: self.graduationYear)
+            query.whereKey("graduationYear", equalTo: self.graduationYear)
         }
         
         // Handler search string
         if !searchString.isEmpty {
-            finalQuery.whereKey(index, containsString: searchString)
+            query.whereKey(index, containsString: searchString)
         }
         
         // Sort results by
-        finalQuery.orderByAscending(index)
-        finalQuery.addAscendingOrder("objectId")
+        query.orderByAscending(index)
+        query.addAscendingOrder("objectId")
         
-        finalQuery.limit = limit
+        query.limit = limit
         
         // Cache policy
-        finalQuery.cachePolicy = .NetworkElseCache
-        finalQuery.maxCacheAge = 24 * 3600
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 24 * 3600
         
-        finalQuery.findObjectsInBackgroundWithBlock(block)
+        query.findObjectsInBackgroundWithBlock(block)
     }
     
     // Get associated AVQuery object based on search type
-    func getQueryFromSearchType(type: UserSearchType) -> AVQuery? {
-        let query: AVQuery?
+    class func getQueryFromSearchType(searchType: UserSearchType, forUser user: User? = nil) -> AVQuery? {
+        var query: AVQuery? = nil
         
-        switch (type) {
+        switch (searchType) {
         case .All:
             query = User.query()
         case .Favorites:
-            query = self.favoriteUsers?.query()
+            guard let searchUser = user else { break }
+            
+            query = searchUser.favoriteUsers?.query()
         case .Graduation:
             query = User.query()
         }
@@ -392,6 +379,13 @@ class User: AVUser {
 }
 
 // MARK: Equatable
+
 func ==(lhs: User, rhs: User) -> Bool {
     return lhs.objectId == rhs.objectId
+}
+
+// MARK: User Search Type enum
+
+enum UserSearchType {
+    case All, Favorites, Graduation
 }

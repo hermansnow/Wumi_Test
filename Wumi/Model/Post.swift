@@ -18,13 +18,6 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var commentCount: Int
     @NSManaged var categories: [PostCategory]
     
-    // Use objectId as hashValue
-    override var hashValue: Int {
-        get {
-            return self.objectId.hashValue
-        }
-    }
-    
     // MARK: Initializer and subclassing functions
     
     // Must have this init for subclassing AVObject
@@ -46,24 +39,21 @@ class Post: AVObject, AVSubclassing {
         return "Post"
     }
     
-    enum PostSearchType {
-        case All
-        case Category
-    }
-    
     // MARK: Queries
-    class func loadPosts(limit limit: Int = 200, cutoffTime: NSDate? = nil, searchString: String = "", block: AVArrayResultBlock!) {
-        var query = Post.query()
-        let index = "updatedAt" // Sort based on last update time
+    class func loadPosts(limit limit: Int = 200, type: PostSearchType = .All, cutoffTime: NSDate? = nil, searchString: String = "", user: User? = nil, block: AVArrayResultBlock!) {
+        guard var query = Post.getQueryFromSearchType(type, forUser: user) else {
+            block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
+            return
+        }
         
         // Handler search string
-        if !searchString.isEmpty {
-            let titleQuery = Post.query()
-            titleQuery.whereKey("title", matchesRegex: searchString, modifiers: "i")
-            let contentQuery = Post.query()
-            contentQuery.whereKey("content", matchesRegex: searchString, modifiers: "i")
+        if let titleQuery = Post.getQueryFromSearchType(type, forUser: user), contentQuery = Post.getQueryFromSearchType(type, forUser: user) where !searchString.isEmpty {
+            titleQuery.whereKey("title", matchesRegex: searchString, modifiers: "im")
+            contentQuery.whereKey("content", matchesRegex: searchString, modifiers: "im")
             query = AVQuery.orQueryWithSubqueries([titleQuery, contentQuery])
         }
+        
+        let index = "updatedAt" // Sort based on last update time
         
         // Load posts earlier than a cut-off timestamp
         if let cutoffTime = cutoffTime {
@@ -72,10 +62,10 @@ class Post: AVObject, AVSubclassing {
         
         query.orderByDescending(index)
         
+        query.limit = limit
+        
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 24 * 3600
-        
-        query.limit = limit
         
         query.findObjectsInBackgroundWithBlock(block)
     }
@@ -90,10 +80,33 @@ class Post: AVObject, AVSubclassing {
         
         post.saveInBackgroundWithBlock(block)
     }
+    
+    // Get associated AVQuery object based on search type
+    class func getQueryFromSearchType(searchType: PostSearchType, forUser user: User? = nil) -> AVQuery? {
+        var query: AVQuery? = nil
+        
+        switch (searchType) {
+        case .All:
+            query = Post.query()
+        case .Saved:
+            guard let searchUser = user else { break }
+            
+            query = searchUser.savedPosts!.query()
+        }
+        
+        return query
+    }
 }
 
 // MARK: Equatable
 
 func ==(lhs: Post, rhs: Post) -> Bool {
     return lhs.objectId == rhs.objectId
+}
+
+// MARK: Post Search Type enum
+
+enum PostSearchType {
+    case All
+    case Saved
 }
