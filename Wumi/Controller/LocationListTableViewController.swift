@@ -20,7 +20,7 @@ class LocationListTableViewController: UITableViewController {
     var isLocating = false
     var currentLocation: CLPlacemark?
     
-    lazy var cityData = [String: [String]]()
+    lazy var cityData = [String: [String: [String]]]()
     
     // Add index collation
     lazy var collation = UILocalizedIndexedCollation.currentCollation()
@@ -132,7 +132,7 @@ class LocationListTableViewController: UITableViewController {
                 }
             }
             else if let location = self.currentLocation {
-                cell.textLabel!.text = "\(Location(Country: location.country, City: location.locality))"
+                cell.textLabel!.text = "\(Location(Country: location.country, State: location.administrativeArea, City: location.locality))"
             }
         default:
             guard let sectionArray = self.sections[safe: indexPath.section], country = sectionArray[safe: indexPath.row] else { break }
@@ -149,7 +149,7 @@ class LocationListTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             guard let location = self.currentLocation else { break }
-            self.selectedLocation = Location(Country: location.country, City: location.locality)
+            self.selectedLocation = Location(Country: location.country, State: location.administrativeArea, City: location.locality)
             
             if let location = selectedLocation, delegate = locationDelegate {
                 delegate.finishLocationSelection(location)
@@ -158,26 +158,18 @@ class LocationListTableViewController: UITableViewController {
             self.navigationController?.popViewControllerAnimated(true)
             break
         default: break
-//            guard let sectionArray = self.sections[safe: indexPath.section], country = sectionArray[safe: indexPath.row] else { break }
-//            self.selectedLocation = Location(Country: country, City: nil)
         }
-        
-//        if let location = selectedLocation, delegate = locationDelegate {
-//            delegate.finishLocationSelection(location)
-//        }
-//        
-//        self.navigationController?.popViewControllerAnimated(true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let cityListTableViewController = segue.destinationViewController as? CityListTableViewController where segue.identifier == "Select City" {
+        if let stateListTableViewController = segue.destinationViewController as? StateListTableViewController where segue.identifier == "Select State" {
             guard let index = self.tableView.indexPathForSelectedRow else { return }
             guard let sectionArray = self.sections[safe: index.section], countryName = sectionArray[safe: index.row] else { return }
-            cityListTableViewController.countryName = countryName
-            cityListTableViewController.cityList = cityData[countryName]!
+            stateListTableViewController.countryName = countryName
+            stateListTableViewController.stateDict = cityData[countryName]!
             
-            cityListTableViewController.locationDelegate = self.locationDelegate
-            cityListTableViewController.selectedLocation = self.selectedLocation
+            stateListTableViewController.locationDelegate = self.locationDelegate
+            stateListTableViewController.selectedLocation = self.selectedLocation
         }
     }
     
@@ -220,8 +212,8 @@ class LocationListTableViewController: UITableViewController {
 //        }
 //        countryList.sortInPlace()
 
-        guard let plistPath = NSBundle.mainBundle().pathForResource("cities", ofType: "plist") else { return }
-        cityData = NSDictionary.init(contentsOfFile: plistPath) as! [String: [String]]
+        guard let plistPath = NSBundle.mainBundle().pathForResource("country_state_city", ofType: "plist") else { return }
+        cityData = NSDictionary.init(contentsOfFile: plistPath) as! [String: [String: [String]]]
         countryList = Array(cityData.keys)
         countryList.sortInPlace()
         

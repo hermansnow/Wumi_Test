@@ -11,7 +11,8 @@ import UIKit
 class CityListTableViewController: UITableViewController {
     
     var countryName = String()
-    lazy var cityList = [String]()
+    var stateName = String()
+    lazy var cityArray = [String]()
     var selectedLocation: Location?
     var locationDelegate: LocationListDelegate?
     
@@ -25,7 +26,7 @@ class CityListTableViewController: UITableViewController {
         super.viewDidLoad()
 
         self.tableView.sectionIndexBackgroundColor = UIColor(white: 1.0, alpha: 0.1)
-        self.buildSectionIndex(cityList)
+        self.buildSectionIndex(cityArray)
     }
 
     // MARK: - Table view data source
@@ -75,7 +76,7 @@ class CityListTableViewController: UITableViewController {
         switch indexPath.section {
         default:
             guard let sectionArray = self.sections[safe: indexPath.section], cityName = sectionArray[safe: indexPath.row] else { break }
-            self.selectedLocation = Location(Country: countryName, City: cityName)
+            self.selectedLocation = Location(Country: countryName, State: stateName, City: cityName)
             if let location = selectedLocation, delegate = locationDelegate {
                 delegate.finishLocationSelection(location)
             }
