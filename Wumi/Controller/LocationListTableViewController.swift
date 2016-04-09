@@ -119,10 +119,11 @@ class LocationListTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Country Cell", forIndexPath: indexPath)
         
+        let cell: UITableViewCell
         switch indexPath.section {
         case 0:
+            cell = tableView.dequeueReusableCellWithIdentifier("Current Location Cell", forIndexPath: indexPath)
             if self.currentLocation == nil {
                 if isLocating {
                     cell.textLabel!.text = "Location..."
@@ -135,6 +136,7 @@ class LocationListTableViewController: UITableViewController {
                 cell.textLabel!.text = "\(Location(Country: location.country, State: location.administrativeArea, City: location.locality))"
             }
         default:
+            cell = tableView.dequeueReusableCellWithIdentifier("Country Cell", forIndexPath: indexPath)
             guard let sectionArray = self.sections[safe: indexPath.section], country = sectionArray[safe: indexPath.row] else { break }
             
             cell.textLabel!.text = country
