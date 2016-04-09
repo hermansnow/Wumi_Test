@@ -119,7 +119,6 @@ class LocationListTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell: UITableViewCell
         switch indexPath.section {
         case 0:
