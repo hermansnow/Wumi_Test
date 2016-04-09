@@ -11,7 +11,7 @@ import UIKit
 class CommentTableViewCell: UITableViewCell {
     
     @IBOutlet weak var authorView: UserBannerView!
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var contentLabel: CommentTextLabel!
     @IBOutlet weak var timeStampLabel: UILabel!
     
     

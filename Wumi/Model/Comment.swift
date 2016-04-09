@@ -47,16 +47,18 @@ class Comment: AVObject, AVSubclassing {
         query.skip = skip
         query.limit = limit
         query.whereKey("post", equalTo: post)
+        query.includeKey("reply.author")
         query.orderByDescending("createdAt")
         
         query.findObjectsInBackgroundWithBlock(block)
     }
     
-    class func sendNewCommentForPost(post: Post, author: User, content: String?, block: AVBooleanResultBlock!) {
+    class func sendNewCommentForPost(post: Post, author: User, content: String?, replyComment: Comment?,block: AVBooleanResultBlock!) {
         let comment = Comment()
         comment.author = author
         comment.post = post
         comment.content = content
+        comment.reply = replyComment
         
         comment.saveInBackgroundWithBlock { (success, error) -> Void in
             guard success && error == nil else {

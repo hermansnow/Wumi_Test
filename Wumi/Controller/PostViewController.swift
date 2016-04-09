@@ -23,6 +23,7 @@ class PostViewController: UITableViewController {
     
     var currentUser = User.currentUser()
     var post: Post?
+    var replyComment: Comment? = nil
     var updatedAtDateFormatter = NSDateFormatter()
     lazy var comments = [Comment]()
     
@@ -181,8 +182,18 @@ class PostViewController: UITableViewController {
         
         guard let comment = self.comments[safe: indexPath.row] else { return cell }
         
-        cell.contentLabel.text = comment.content
+        if let replyToUser = comment.reply?.author?.name {
+            let content = comment.content!
+            cell.contentLabel.text = "Reply to \(replyToUser): \(content)"
+        } else {
+            cell.contentLabel.text = comment.content
+        }
+        
         cell.timeStampLabel.text = self.updatedAtDateFormatter.stringFromDate(comment.createdAt)
+        
+        cell.contentLabel.parentCell = cell
+        cell.contentLabel.userInteractionEnabled = true
+        cell.contentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.replyComment(_:))))
         
         comment.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
@@ -226,6 +237,30 @@ class PostViewController: UITableViewController {
         
         self.navigationItem.leftBarButtonItem = self.cancelButton
         self.navigationItem.rightBarButtonItem = self.sendButton
+        
+        self.commentTextView.text = ""
+        self.replyComment = nil
+        self.commentTextView.placeholder = ""
+    }
+    
+    func replyComment(recognizer: UITapGestureRecognizer) {
+        
+        guard let contentLabel = recognizer.view as? CommentTextLabel else { return }
+        guard let commentCell = contentLabel.parentCell, indexPath = tableView.indexPathForCell(commentCell),
+            selectedComment = self.comments[safe: indexPath.row] else { return }
+        
+        self.commentTextView.text = ""
+        self.replyComment = selectedComment
+        if let name = selectedComment.author?.name {
+            self.commentTextView.placeholder = "Reply to: \(name)"
+        } else {
+            self.commentTextView.placeholder = ""
+        }
+        
+        UIApplication.sharedApplication().delegate?.window!!.addSubview(self.commentView)
+        self.commentTextView.becomeFirstResponder()
+        self.navigationItem.leftBarButtonItem = self.cancelButton
+        self.navigationItem.rightBarButtonItem = self.sendButton
     }
     
     func cancelReply(sender: AnyObject) {
@@ -250,7 +285,7 @@ class PostViewController: UITableViewController {
         
         guard let post = self.post else { return }
         
-        Comment.sendNewCommentForPost(post, author: self.currentUser, content: self.commentTextView.text) { (success, error) -> Void in
+        Comment.sendNewCommentForPost(post, author: self.currentUser, content: self.commentTextView.text, replyComment: replyComment) { (success, error) -> Void in
             guard success && error == nil else {
                 print("\(error)")
                 return
@@ -305,6 +340,11 @@ class PostViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
             
             guard let comments = results as? [Comment] where comments.count > 0 else { return }
+            
+            // Get user which the comment reply to
+            for comment in comments {
+                
+            }
             
             self.comments = comments
             

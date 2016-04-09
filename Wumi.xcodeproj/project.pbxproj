@@ -15,6 +15,7 @@
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		9519A6BCABED44F1D7D798F5 /* Pods_Wumi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C897A1341D196EA1C0BC21 /* Pods_Wumi.framework */; };
 		B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15824021C82C40F00D314B3 /* ContactTableViewController.swift */; };
+		B175B2521CB872B800C95B33 /* CommentTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175B2511CB872B800C95B33 /* CommentTextLabel.swift */; };
 		B1997AF61CACDADC0086F8F4 /* CityListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */; };
 		B1C922A31CACF68400335A60 /* cities.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1C922A21CACF68400335A60 /* cities.plist */; };
 		B1F045211CB614DB0025CF7D /* StateListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */; };
@@ -107,6 +108,7 @@
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		B15824021C82C40F00D314B3 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewController.swift; path = Controller/ContactTableViewController.swift; sourceTree = "<group>"; };
+		B175B2511CB872B800C95B33 /* CommentTextLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTextLabel.swift; path = View/CommentTextLabel.swift; sourceTree = "<group>"; };
 		B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityListTableViewController.swift; path = Controller/CityListTableViewController.swift; sourceTree = "<group>"; };
 		B1C922A21CACF68400335A60 /* cities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cities.plist; sourceTree = "<group>"; };
 		B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateListTableViewController.swift; path = Controller/StateListTableViewController.swift; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */,
 				DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */,
 				DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */,
+				B175B2511CB872B800C95B33 /* CommentTextLabel.swift */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -639,6 +642,7 @@
 				DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */,
 				DF21176A1C927FDD009109EE /* ProfileCollectionCell.swift in Sources */,
 				DF7E3B4D1C923C0A000E8741 /* ProfessionListViewController.swift in Sources */,
+				B175B2521CB872B800C95B33 /* CommentTextLabel.swift in Sources */,
 				DF7E3B4B1C92324D000E8741 /* Profession.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
 				DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */,
