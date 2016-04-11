@@ -40,11 +40,11 @@ class PostViewController: UITableViewController {
         
         // Setup keyboard Listener
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "keyboardWillShown:",
+            selector: #selector(PostViewController.keyboardWillShown(_:)),
             name: UIKeyboardWillShowNotification,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "keyboardWillHiden:",
+            selector: #selector(PostViewController.keyboardWillHiden(_:)),
             name: UIKeyboardWillHideNotification,
             object: nil)
         
@@ -57,9 +57,9 @@ class PostViewController: UITableViewController {
         
         
         // Initialize navigation bar
-        self.replyButton = UIBarButtonItem(title: "Reply", style: .Done, target: self, action: "replyPost:")
-        self.cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelReply:")
-        self.sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: "sendReply:")
+        self.replyButton = UIBarButtonItem(title: "Reply", style: .Done, target: self, action: #selector(replyPost(_:)))
+        self.cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(cancelReply(_:)))
+        self.sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: #selector(sendReply(_:)))
         self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
         self.navigationItem.rightBarButtonItem = self.replyButton
         
@@ -95,7 +95,7 @@ class PostViewController: UITableViewController {
     
     private func addRefreshControl() {
         self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: Selector("loadData"), forControlEvents: .ValueChanged)
+        self.refreshControl!.addTarget(self, action: #selector(PostViewController.loadData), forControlEvents: .ValueChanged)
         self.tableView.addSubview(refreshControl!)
     }
     
@@ -157,7 +157,7 @@ class PostViewController: UITableViewController {
         post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
             
-            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "showUserContact:"))
+            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
             
             cell.authorView.detailLabel.text = user.name
             cell.authorView.userObjectId = user.objectId
@@ -198,7 +198,7 @@ class PostViewController: UITableViewController {
         comment.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
             
-            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "showUserContact:"))
+            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
             
             cell.authorView.detailLabel.text = user.name
             cell.authorView.userObjectId = user.objectId
@@ -340,11 +340,6 @@ class PostViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
             
             guard let comments = results as? [Comment] where comments.count > 0 else { return }
-            
-            // Get user which the comment reply to
-            for comment in comments {
-                
-            }
             
             self.comments = comments
             

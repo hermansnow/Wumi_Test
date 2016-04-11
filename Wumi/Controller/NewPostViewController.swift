@@ -24,16 +24,16 @@ class NewPostViewController: UIViewController {
         self.composePostView.delegate = self
         
         // Initialize navigation bar
-        self.nextButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: "next:")
+        self.nextButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: #selector(next(_:)))
         self.navigationItem.rightBarButtonItem = self.nextButton
         
         // Setup keyboard Listener
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "keyboardWillShown:",
+            selector: #selector(keyboardWillShown(_:)),
             name: UIKeyboardWillShowNotification,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "keyboardWillHiden:",
+            selector: #selector(keyboardWillHiden(_:)),
             name: UIKeyboardWillHideNotification,
             object: nil)
     }

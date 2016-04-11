@@ -272,7 +272,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             cell.reset()
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
             cell.titleLabel.text = EditProfileCellRowType.Location.rawValue.title
-            cell.addButton.addTarget(self, action: "selectLocation:", forControlEvents: .TouchUpInside)
+            cell.addButton.addTarget(self, action: #selector(selectLocation(_:)), forControlEvents: .TouchUpInside)
             return cell
             
         // Profession Cell
@@ -281,7 +281,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             cell.reset()
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
             cell.titleLabel.text = EditProfileCellRowType.Profession.rawValue.title
-            cell.addButton.addTarget(self, action: "selectProfession:", forControlEvents: .TouchUpInside)
+            cell.addButton.addTarget(self, action: #selector(selectProfession(_:)), forControlEvents: .TouchUpInside)
             return cell
         
         // Email Cell
@@ -295,7 +295,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             cell.inputTextField.delegate = self
             cell.inputTextField.tag = indexPath.row
             cell.showPublic = self.currentUser.emailPublic
-            cell.statusSwitch.addTarget(self, action: "changeEmailStatus:", forControlEvents: .ValueChanged)
+            cell.statusSwitch.addTarget(self, action: #selector(changeEmailStatus(_:)), forControlEvents: .ValueChanged)
             return cell
         
         // Phone Cell
@@ -309,7 +309,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             cell.inputTextField.delegate = self
             cell.inputTextField.tag = indexPath.row
             cell.showPublic = self.currentUser.phonePublic
-            cell.statusSwitch.addTarget(self, action: "changePhoneStatus:", forControlEvents: .ValueChanged)
+            cell.statusSwitch.addTarget(self, action: #selector(changePhoneStatus(_:)), forControlEvents: .ValueChanged)
             return cell
         }
     }

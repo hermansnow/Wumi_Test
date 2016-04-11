@@ -103,7 +103,7 @@ class StateListTableViewController: UITableViewController {
         var sectionArrays: [[String]] = Array(count: self.collation.sectionTitles.count, repeatedValue: [String]())
         
         for state in states {
-            let sectionIndex = collation.sectionForObject(state, collationStringSelector: Selector("self"))
+            let sectionIndex = collation.sectionForObject(state, collationStringSelector: #selector(NSObject.selfMethod))
             sectionArrays[sectionIndex].append(state)
         }
         

@@ -286,7 +286,7 @@ extension ContactTableViewController: UISearchBarDelegate, UISearchControllerDel
             // start a new timer
             self.inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval,
                                                              target: self,
-                                                           selector: "loadUsers",
+                                                           selector: #selector(self.loadUsers),
                                                            userInfo: nil,
                                                             repeats: false)
         }

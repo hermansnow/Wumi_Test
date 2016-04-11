@@ -229,7 +229,7 @@ class LocationListTableViewController: UITableViewController {
         var sectionArrays: [[String]] = Array(count: self.collation.sectionTitles.count, repeatedValue: [String]())
         
         for country in data {
-            let sectionIndex = collation.sectionForObject(country, collationStringSelector: Selector("self"))
+            let sectionIndex = collation.sectionForObject(country, collationStringSelector: #selector(NSObject.selfMethod))
             sectionArrays[sectionIndex].append(country)
         }
         

@@ -15,7 +15,7 @@ class AvatarImageView: UIView {
         didSet {
             if let delegate = self.delegate {
                 // Add gestures
-                let singleTapGesture = UITapGestureRecognizer(target: delegate, action: Selector("singleTap:"))
+                let singleTapGesture = UITapGestureRecognizer(target: delegate, action: #selector(AvatarImageDelegate.singleTap(_:)))
                 
                 self.userInteractionEnabled = true
                 self.addGestureRecognizer(singleTapGesture)

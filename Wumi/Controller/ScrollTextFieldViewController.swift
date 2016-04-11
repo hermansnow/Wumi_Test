@@ -19,16 +19,16 @@ class ScrollTextFieldViewController: UIViewController {
             
         // Setup scroll view
         self.formScrollView.scrollEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: "dismissInputView")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissInputView))
         self.formScrollView.addGestureRecognizer(tap)
         
         // Setup keyboard Listener
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                               selector: "keyboardWillShown:",
+                                               selector: #selector(keyboardWillShown(_:)),
                                                    name: UIKeyboardWillShowNotification,
                                                  object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                               selector: "keyboardWillHiden:",
+                                               selector: #selector(keyboardWillHiden(_:)),
                                                    name: UIKeyboardWillHideNotification,
                                                  object: nil)
     }

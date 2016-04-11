@@ -30,6 +30,7 @@
 		DF1BE2691C9F9C7500F934EE /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1BE2681C9F9C7500F934EE /* Post.swift */; };
 		DF21176A1C927FDD009109EE /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */; };
 		DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */; };
+		DF28BCCE1CBB6D59004116AB /* Extension+AVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF28BCCD1CBB6D59004116AB /* Extension+AVFile.swift */; };
 		DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF3629561C9B305100D87574 /* ContactTableViewCell.xib */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
@@ -124,6 +125,7 @@
 		DF1BE2681C9F9C7500F934EE /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Model/Post.swift; sourceTree = "<group>"; };
 		DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCollectionCell.swift; path = View/ProfileCollectionCell.swift; sourceTree = "<group>"; };
 		DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategoryTableViewController.swift; path = Controller/PostCategoryTableViewController.swift; sourceTree = "<group>"; };
+		DF28BCCD1CBB6D59004116AB /* Extension+AVFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+AVFile.swift"; sourceTree = "<group>"; };
 		DF3629561C9B305100D87574 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactTableViewCell.xib; path = View/ContactTableViewCell.xib; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 			children = (
 				DF173EF51C86A73D00018B4A /* Wumi-Bridging-Header.h */,
 				DF173EEF1C86A58600018B4A /* Extensions.swift */,
+				DF28BCCD1CBB6D59004116AB /* Extension+AVFile.swift */,
 				DF173EF01C86A58600018B4A /* Helper.swift */,
 				DF173EEB1C86A55F00018B4A /* Constants.swift */,
 				DF6D56641CB75A1C001E0AFF /* Protocols.swift */,
@@ -608,6 +611,7 @@
 				DFB612A11CA6158F00B3271B /* PostTextView.swift in Sources */,
 				DFA93ACB1C91016A00ECA503 /* ProfileListCell.swift in Sources */,
 				DFB612A31CA61B7800B3271B /* PostViewController.swift in Sources */,
+				DF28BCCE1CBB6D59004116AB /* Extension+AVFile.swift in Sources */,
 				DFB612A61CA6284000B3271B /* CommentTableViewCell.swift in Sources */,
 				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,
 				DFB861481BEDBDF60075014A /* SystemButton.swift in Sources */,

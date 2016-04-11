@@ -46,7 +46,7 @@ class SigninViewController: UIViewController {
         self.forgotPasswordButton = TextLinkButton()
         self.forgotPasswordButton.textLinkFont = Constants.General.Font.ErrorFont
         self.forgotPasswordButton.setTitle(Constants.SignIn.String.forgotPasswordLink, forState: .Normal)
-        self.forgotPasswordButton.addTarget(self, action: Selector("forgotPassword"), forControlEvents: .TouchUpInside)
+        self.forgotPasswordButton.addTarget(self, action: #selector(forgotPassword), forControlEvents: .TouchUpInside)
         
         // Add delegates
         self.usernameTextField.delegate = self

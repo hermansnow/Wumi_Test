@@ -211,7 +211,7 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
             // Add email button
             let emailButton = cell.actionButtons[1]
             emailButton.setTitle("Sent", forState: .Normal)
-            emailButton.addTarget(self, action: "sendEmail:", forControlEvents: .TouchUpInside)
+            emailButton.addTarget(self, action: #selector(sendEmail(_:)), forControlEvents: .TouchUpInside)
             
             return cell
         
@@ -226,12 +226,12 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
             // Add SMS button
             let smsButton = cell.actionButtons[0]
             smsButton.setTitle("Message", forState: .Normal)
-            smsButton.addTarget(self, action: "sendSMS:", forControlEvents: .TouchUpInside)
+            smsButton.addTarget(self, action: #selector(sendSMS(_:)), forControlEvents: .TouchUpInside)
                 
             // Add phone button
             let phoneButton = cell.actionButtons[1]
             phoneButton.setTitle("Call", forState: .Normal)
-            phoneButton.addTarget(self, action: "phoneCall:", forControlEvents: .TouchUpInside)
+            phoneButton.addTarget(self, action: #selector(phoneCall(_:)), forControlEvents: .TouchUpInside)
             
             return cell
         }

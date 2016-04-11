@@ -21,7 +21,7 @@ class PostCategoryTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Initialize navigation bar
-        self.sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: "sendPost:")
+        self.sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: #selector(sendPost(_:)))
         self.navigationItem.rightBarButtonItem = self.sendButton
         
         // Load categories
@@ -50,7 +50,7 @@ class PostCategoryTableViewController: UITableViewController {
         checkButton.setImage(Constants.General.Image.Check, forState: .Selected)
         checkButton.setImage(Constants.General.Image.Uncheck, forState: .Normal)
         checkButton.tag = indexPath.row
-        checkButton.addTarget(self, action: "selectCategory:", forControlEvents: .TouchUpInside)
+        checkButton.addTarget(self, action: #selector(selectCategory(_:)), forControlEvents: .TouchUpInside)
         cell.accessoryView = checkButton
         
         cell.selectionStyle = .None
