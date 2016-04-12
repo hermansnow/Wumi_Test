@@ -188,7 +188,7 @@ class PostTableViewController: UITableViewController {
             cell.authorView.detailLabel.text = user.name
             cell.authorView.userObjectId = user.objectId
             
-            user.loadAvatar { (imageResult, imageError) -> Void in
+            user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
                 guard let image = imageResult where imageError == nil else { return }
                 cell.authorView.avatarImageView.image = image
             }

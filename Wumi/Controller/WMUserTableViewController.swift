@@ -20,7 +20,6 @@ class WMUserTableViewController: UITableViewController {
     var sections: [[Setting]] =
         [[Setting(identifier: "User Profile", type: .DisplayOnly, value: nil)],
         [Setting(identifier:"Log Out", type: .Button, value: nil)]]
-    var userDefault = NSUserDefaults.standardUserDefaults()
     
     var hasEnterMenu = false
     
@@ -38,7 +37,7 @@ class WMUserTableViewController: UITableViewController {
         // Show current user's profile
         userDisplayName.text = user.name
         userEmail.text = user.email
-        self.user.loadAvatar(ScaleToSize: self.userProfileImageView.frame.size) { (avatarImage, imageError) -> Void in
+        self.user.loadAvatarThumbnail(ScaleToSize: self.userProfileImageView.frame.size) { (avatarImage, imageError) -> Void in
             if imageError == nil && avatarImage != nil {
                 self.userProfileImageView.image = avatarImage
             }

@@ -113,7 +113,7 @@ extension String {
 }
 
 extension UIImage {
-    // Compress image in JPEG format. The max size of image save in Parse server is 10.0MB
+    // Compress image in JPEG format. The max size of image save in server is 10.0MB
     func compressToSize(size: Int) -> NSData? {
         var compress:CGFloat = 1.0
         var imageData:NSData?

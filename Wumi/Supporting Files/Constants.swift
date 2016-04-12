@@ -37,6 +37,13 @@ struct Constants {
             static let Check = UIImage(named: "Checkmark")
             static let Uncheck = UIImage(named: "Uncheck")
         }
+        
+        struct Size {
+            struct  AvatarThumbnail {
+                static let Height = 40.0
+                static let Width = 40.0
+            }
+        }
     }
     
     struct SignIn {

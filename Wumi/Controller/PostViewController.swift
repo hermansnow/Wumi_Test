@@ -66,7 +66,7 @@ class PostViewController: UITableViewController {
         // Initialize comment subview
         self.commentView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 160)
         self.commentTextView.characterLimit = 300  // Limitation for lenght of comment
-        self.currentUser.loadAvatar(ScaleToSize: CGSize(width: 20, height: 20)) { (result, error) -> Void in
+        self.currentUser.loadAvatarThumbnail(ScaleToSize: CGSize(width: 20, height: 20)) { (result, error) -> Void in
             guard error == nil else { return }
             self.myUserBannerView.avatarImageView.image = result
         }
@@ -154,15 +154,14 @@ class PostViewController: UITableViewController {
         cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
+        cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
         post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
-            
-            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
             
             cell.authorView.detailLabel.text = user.name
             cell.authorView.userObjectId = user.objectId
             
-            user.loadAvatar { (imageResult, imageError) -> Void in
+            user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
                 guard let image = imageResult where imageError == nil else { return }
                 cell.authorView.avatarImageView.image = image
             }
@@ -195,15 +194,13 @@ class PostViewController: UITableViewController {
         cell.contentLabel.userInteractionEnabled = true
         cell.contentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.replyComment(_:))))
         
+        cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
         comment.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
             guard let user = result as? User where error == nil else { return }
-            
-            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
-            
             cell.authorView.detailLabel.text = user.name
             cell.authorView.userObjectId = user.objectId
             
-            user.loadAvatar { (imageResult, imageError) -> Void in
+            user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
                 guard let image = imageResult where imageError == nil else { return }
                 cell.authorView.avatarImageView.image = image
             }

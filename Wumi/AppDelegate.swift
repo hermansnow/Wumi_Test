@@ -38,11 +38,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set initial view controller
         self.setupLaunchViewController()
         
+        // Load cached data from disk into memory
+        self.loadDataFromDisk()
+        
         return true
     }
     
+    func applicationDidEnterBackground(application: UIApplication) {
+        self.saveDataToDisk()
+    }
+    
+    func applicationWillTerminate(application: UIApplication) {
+        self.saveDataToDisk()
+    }
+    
+    func applicationDidReceiveMemoryWarning(application: UIApplication) {
+        self.clearMemoryCache()
+    }
+    
     // Register classes
-    func registerClass() {
+    private func registerClass() {
         Profession.registerSubclass()
         Post.registerSubclass()
         PostCategory.registerSubclass()
@@ -50,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Set up application level appearance
-    func setupAppearance() {
+    private func setupAppearance() {
         // Set Navigation bar color
         UINavigationBar.appearance().barTintColor = Constants.General.Color.ThemeColor
         UINavigationBar.appearance().tintColor = Constants.General.Color.TintColor
@@ -69,13 +84,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Customize the status bar
-    func setStatusBarBackgroundColor(color: UIColor) {
+    private func setStatusBarBackgroundColor(color: UIColor) {
         guard let statusBar = UIApplication.sharedApplication().valueForKey("statusBarWindow")?.valueForKey("statusBar") as? UIView else { return }
         statusBar.backgroundColor = color
     }
     
     // Set up the initial launch view controller
-    func setupLaunchViewController() {
+    private func setupLaunchViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let user = User.currentUser() {
             user.fetchInBackgroundWithBlock(nil)
@@ -88,12 +103,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Set up AVOSCloud
-    func setupAVOSCloudSetting() {
-        AVOSCloud.setAllLogsEnabled(true)
+    private func setupAVOSCloudSetting() {
+        //AVOSCloud.setAllLogsEnabled(true)
         AVOSCloud.setServiceRegion(.US)
         AVOSCloud.setApplicationId("WtWKobgICmjMgPlmNBiVaeme-MdYXbMMI", clientKey: "OEKOIcQ7Wjnk4wuurFNlvmO1")
         // China Setting
         //AVOSCloud.setServiceRegion(.CN)
         //AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
+    }
+    
+    // Local cached data from disk
+    private func loadDataFromDisk() {
+        DataManager.loadAllDataFromDisk()
+    }
+    
+    private func saveDataToDisk() {
+        DataManager.SaveAllDataToDisk()
+    }
+    
+    private func clearMemoryCache() {
+        AVFile.clearAllCachedFiles()
+        AVQuery.clearAllCachedResults()
     }
 }
