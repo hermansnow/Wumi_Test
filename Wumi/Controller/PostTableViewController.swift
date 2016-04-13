@@ -180,17 +180,19 @@ class PostTableViewController: UITableViewController {
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         cell.highlightString = self.searchString
         
-        post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-            guard let user = result as? User where error == nil else { return }
+        if let author = post.author {
+            author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
+                guard let user = result as? User where error == nil else { return }
             
-            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostTableViewController.showUserContact(_:))))
+                cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostTableViewController.showUserContact(_:))))
             
-            cell.authorView.detailLabel.text = user.name
-            cell.authorView.userObjectId = user.objectId
+                cell.authorView.detailLabel.text = user.name
+                cell.authorView.userObjectId = user.objectId
             
-            user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
-                guard let image = imageResult where imageError == nil else { return }
-                cell.authorView.avatarImageView.image = image
+                user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
+                    guard let image = imageResult where imageError == nil else { return }
+                    cell.authorView.avatarImageView.image = image
+                }
             }
         }
         

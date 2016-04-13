@@ -7,12 +7,28 @@
 //
 
 import Foundation
+import CoreData
 
-struct DataManager {
-    static var cache = NSCache()
+class DataManager {
     
-    static func createDataDirectory(fileName: String) -> Bool {
-        guard let path = DataManager.pathForDataFile(fileName) else { return false }
+    static let sharedDataManager = DataManager() // Singleton instance
+    
+    init() {
+        self.cache.countLimit = 1000
+    }
+    
+    // MARK: In-memory cache
+    
+    lazy var cache = NSCache() // NSCache object for in-memory cache
+    
+    func cleanMemoryCache() {
+        self.cache.removeAllObjects()
+    }
+    
+    // MARK: Disk File Manager
+    
+    func createDataDirectory(fileName: String) -> Bool {
+        guard let path = self.pathForDataFile(fileName) else { return false }
         
         let fileManager = NSFileManager.defaultManager()
         do {
@@ -27,7 +43,7 @@ struct DataManager {
     }
     
     // Get path of data store on disk
-    static func pathForDataFile(fileName: String) -> String? {
+    func pathForDataFile(fileName: String) -> String? {
         let documentDirArray = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         guard let path = documentDirArray.first else { return nil }
         
@@ -43,26 +59,61 @@ struct DataManager {
         return "\(path)/\(fileName).bin"
     }
     
-    static func loadAllDataFromDisk() {
-        DataManager.loadDataFromDisk(User.diskFileName, cacheKey: "users")
-    }
-    
-    static func loadDataFromDisk(fileName: String, cacheKey: String) -> AnyObject? {
-        guard let path = DataManager.pathForDataFile(fileName), rootObject = NSKeyedUnarchiver.unarchiveObjectWithFile(path) else { return nil }
+    // Load and save disk directory files
+    func loadDataFromDisk(fileName: String, cacheKey: String) -> AnyObject? {
+        guard let path = self.pathForDataFile(fileName), rootObject = NSKeyedUnarchiver.unarchiveObjectWithFile(path) else { return nil }
         
         print(rootObject)
-        DataManager.cache.setObject(rootObject, forKey: cacheKey)
+        self.cache.setObject(rootObject, forKey: cacheKey)
         return rootObject
     }
     
-    static func SaveAllDataToDisk() {
-        DataManager.saveDataToDisk(User.diskFileName, cacheKey: "users")
+    func saveDataToDisk(fileName: String, cacheKey: String) {
+        // User cache
+        if let path = self.pathForDataFile(fileName), rootObject = self.cache.objectForKey(cacheKey) {
+            NSKeyedArchiver.archiveRootObject(rootObject, toFile: path)
+        }
     }
     
-    static func saveDataToDisk(fileName: String, cacheKey: String) {
-        // User cache
-        if let path = DataManager.pathForDataFile(fileName), rootObject = self.cache.objectForKey(cacheKey) {
-            NSKeyedArchiver.archiveRootObject(rootObject, toFile: path)
+    // MARK: Core Data
+    func getManagerObjectContext() -> NSManagedObjectContext? {
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+            return appDelegate.managedObjectContext
+        }
+        else {
+            return nil
+        }
+    }
+}
+
+// Extension for NSCache to support expiration
+
+protocol TimeBaseCacheable: AnyObject {
+    var expireAt: NSDate? { get set }
+    var maxCacheAge: NSTimeInterval? { get set }
+}
+
+extension NSCache {
+    subscript(key: AnyObject) -> TimeBaseCacheable? {
+        get {
+            if let obj = objectForKey(key) as? TimeBaseCacheable, expireDate = obj.expireAt {
+                if  NSDate().compare(expireDate) == .OrderedDescending {
+                    removeObjectForKey(key)
+                }
+            }
+            
+            return objectForKey(key) as? TimeBaseCacheable
+        }
+        set {
+            if let value = newValue {
+                setObject(value, forKey: key)
+                if let age = value.maxCacheAge {
+                    value.expireAt = NSDate(timeIntervalSinceNow: age)
+                }
+            }
+            else {
+                removeObjectForKey(key)
+            }
         }
     }
 }

@@ -11,8 +11,6 @@ import Foundation
 extension AVFile {
     // Load avatar. This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background
     class func loadImageFile(file: AVFile, size: CGSize? = nil, block: AVImageResultBlock!) {
-        print(file.isDataAvailable)
-        
         file.getDataInBackgroundWithBlock { (imageData, error) -> Void in
             // create a queue to parse image
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in

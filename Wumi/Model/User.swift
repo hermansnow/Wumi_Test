@@ -8,8 +8,9 @@
 
 import AVOSCloud
 import UIKit
+import CoreData
 
-class User: AVUser, NSCoding {
+class User: AVUser, NSCoding, TimeBaseCacheable {
     // MARK: Properties
     
     // Extended properties
@@ -29,10 +30,11 @@ class User: AVUser, NSCoding {
     @NSManaged var savedPosts: AVRelation?
     
     // Properties should not be saved into PFUser
-    static var diskFileName = "users"
     var confirmPassword: String?
-    var favoriteUsersArray: [User] = []
-    var savedPostsArray: [Post] = []
+    lazy var favoriteUsersArray: [User] = []
+    lazy var savedPostsArray: [Post] = []
+    var maxCacheAge: NSTimeInterval? = 3600 * 48
+    var expireAt: NSDate? = nil
     
     var location: Location {
         get {
@@ -44,18 +46,6 @@ class User: AVUser, NSCoding {
             self.city = newValue.city
         }
         
-    }
-    
-    private static var userFetchHandler = { (result: AVObject, error: NSError?, block: AVObjectResultBlock!) -> Void in
-        guard let user = result as? User where error == nil else {
-            block(nil, NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed to fetch user data"]))
-            return
-        }
-        
-        // Save into local cache
-        User.cacheUserData(user)
-        
-        block(result, error)
     }
     
     // MARK: Initializer
@@ -77,6 +67,7 @@ class User: AVUser, NSCoding {
         super.init()
     }
     
+    // initilizer for NSCoding
     required init(coder aDecoder: NSCoder) {
         super.init()
         
@@ -86,9 +77,6 @@ class User: AVUser, NSCoding {
         if let name = aDecoder.decodeObjectForKey("name") as? String {
             self.name = name
         }
-        if let avatarThumbnailUrl = aDecoder.decodeObjectForKey("avatarThumbnailUrl") as? String {
-            self.avatarThumbnail = AVFile(URL: avatarThumbnailUrl)
-        }
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
@@ -97,9 +85,6 @@ class User: AVUser, NSCoding {
         }
         if let name = self.name {
             aCoder.encodeObject(name, forKey: "name")
-        }
-        if let avatarThumbnail = self.avatarThumbnail {
-            aCoder.encodeObject(avatarThumbnail.url, forKey: "avatarThumbnailUrl")
         }
     }
     
@@ -191,52 +176,6 @@ class User: AVUser, NSCoding {
     }
     
     // MARK: User queries
-    
-    // Fetch an user based on object ID
-    class func fetchUser(objectId id: String, block: AVObjectResultBlock!) {
-        let query = User.query()
-        query.includeKey("professions")
-        
-        query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 24 * 3600
-        
-        query.getObjectInBackgroundWithId(id) { (result, error) in
-            User.userFetchHandler(result, error, block)
-        }
-    }
-    
-    override func fetchIfNeededInBackgroundWithBlock(block: AVObjectResultBlock!) {
-        // Try fetch data from memory by objectId
-         if let userDictionary = DataManager.cache.objectForKey("users") as? [String: User], user = userDictionary[self.objectId] {
-            block(user, nil)
-            return
-        }
-        
-        // Try fetch data from disk by objectId
-        if let userDictionary = DataManager.loadDataFromDisk(User.diskFileName, cacheKey: "users") as? [String: User], user = userDictionary[self.objectId] {
-            block(user, nil)
-            return
-        }
-        
-        // Try fetch data from
-        super.fetchIfNeededInBackgroundWithBlock { (result, error) in
-            User.userFetchHandler(result, error, block)
-        }
-    }
-
-    private class func cacheUserData(user: User) {
-        // Save into local cache
-        if var userDictionary = DataManager.cache.objectForKey("users") as? [String: User] {
-            userDictionary[user.objectId] = user
-            DataManager.cache.setObject(userDictionary, forKey: "users")
-        }
-        else {
-            var userDictionary = [String: User]()
-            userDictionary[user.objectId] = user
-            DataManager.cache.setObject(userDictionary, forKey: "users")
-        }
-    }
-    
     func loadUsers(limit limit: Int = 200, type: UserSearchType = .All, searchString: String = "", sinceUser: User? = nil, block: AVArrayResultBlock!) {
         guard var query = User.getQueryFromSearchType(type, forUser: self) else {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
@@ -278,9 +217,60 @@ class User: AVUser, NSCoding {
         
         // Cache policy
         query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 24 * 3600
+        query.maxCacheAge = 3600 * 24 * 30
         
-        query.findObjectsInBackgroundWithBlock(block)
+        query.findObjectsInBackgroundWithBlock { (results, error) in
+            if let users = results as? [User] where error == nil {
+                for user in users {
+                    User.cacheUserData(user)
+                }
+            }
+            block(results, error)
+        }
+    }
+    
+    // Fetch an user based on object ID
+    class func fetchUserInBackground(objectId id: String, block: AVObjectResultBlock!) {
+        let query = User.query()
+        query.includeKey("professions")
+        
+        query.cachePolicy = .CacheThenNetwork
+        query.maxCacheAge = 3600 * 24 * 30
+        
+        query.getObjectInBackgroundWithId(id) { (result, error) in
+            if let user = result as? User where error == nil {
+                User.cacheUserData(user)
+            }
+            
+            block(result, error)
+        }
+    }
+    
+    override func fetchIfNeededInBackgroundWithBlock(block: AVObjectResultBlock!) {
+        if self.isDataAvailable() {
+            block(self, nil)
+            return
+        }
+        
+        // Try fetch data from memory by objectId
+        if let user = DataManager.sharedDataManager.cache["user_" + self.objectId] as? User {
+            print("Found \(user.name) in memory cache")
+            block(user, nil)
+            return
+        }
+        
+        // Try fetch data from
+        User.fetchUserInBackground(objectId: self.objectId, block: block)
+    }
+
+    private class func cacheUserData(user: User) {
+        //BackupUser.saveUser(user)
+        
+        // Save into local cache
+        user.maxCacheAge = 3600 * 24
+        DataManager.sharedDataManager.cache["user_" + user.objectId] = user
+        
+        print("Cached \(user.name) in memory")
     }
     
     // Get associated AVQuery object based on search type
@@ -354,10 +344,13 @@ class User: AVUser, NSCoding {
         }
     }
     
-    func hasFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
+    func isFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
         let query = favoriteUsers!.query()
         
         query.whereKey("objectId", equalTo: user.objectId)
+        
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 3600 * 24 * 30
         
         query.countObjectsInBackgroundWithBlock(block)
     }
@@ -368,8 +361,14 @@ class User: AVUser, NSCoding {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
         }
-        // Load favorite users for user
-        favoriteUsers.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
+        
+        // Load favorite users
+        let query = favoriteUsers.query()
+        
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 3600 * 24 * 30
+        
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
             guard let favoriteUsers = results as? [User] else { return }
             
             self.favoriteUsersArray = favoriteUsers
@@ -444,8 +443,14 @@ class User: AVUser, NSCoding {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
         }
-        // Load saved posts for user
-        savedPosts.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
+        
+        // Load saved posts
+        let query = savedPosts.query()
+        
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 3600 * 24 * 30
+        
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
             guard let savedPosts = results as? [Post] else { return }
             
             self.savedPostsArray = savedPosts

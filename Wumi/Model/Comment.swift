@@ -42,7 +42,7 @@ class Comment: AVObject, AVSubclassing {
         let query = Comment.query()
         
         query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 24 * 3600
+        query.maxCacheAge = 3600 * 24 * 2
         
         query.skip = skip
         query.limit = limit

@@ -121,7 +121,7 @@ class ContactViewController: UIViewController {
         guard let selectedUserId = self.selectedUserId else { return }
         
         // Fetch user data
-        User.fetchUser(objectId: selectedUserId) { (result, error) -> Void in
+        User.fetchUserInBackground(objectId: selectedUserId) { (result, error) -> Void in
             guard let user = result as? User where error == nil else {
                 print("\(error)")
                 return
