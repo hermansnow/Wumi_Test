@@ -628,7 +628,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPn-RR-0Ek">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="191"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
                                                 <rect key="frame" x="135" y="44" width="104" height="104"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="OE2-Ai-BLg" secondAttribute="height" multiplier="1:1" id="36G-u2-Qso"/>
@@ -1192,6 +1192,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="rLT-mV-RoB" kind="relationship" relationship="viewControllers" id="bSK-K2-uPu"/>
+                        <segue destination="xnC-N3-ssG" kind="relationship" relationship="viewControllers" id="Vce-yJ-jwS"/>
                         <segue destination="sKb-pl-sVC" kind="relationship" relationship="viewControllers" id="4eK-Mi-OHc"/>
                     </connections>
                 </tabBarController>
@@ -1571,6 +1572,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oSc-fP-lBK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5098.5" y="1335.5"/>
+        </scene>
+        <!--Inbox-->
+        <scene sceneID="TjA-40-x0j">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Inbox" id="xnC-N3-ssG" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="zvT-Ml-3qu"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vgH-Ww-t8r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2949" y="92"/>
         </scene>
     </scenes>
     <resources>
