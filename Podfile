@@ -12,4 +12,15 @@ target 'Wumi' do
     pod 'KMPlaceholderTextView', '~> 1.2.0' 
 
     pod 'SWRevealViewController'
+
+    pod 'SDWebImage'
+
+    pod 'FMDB'
+
+    pod 'JSBadgeView'
+
+    pod 'DateTools'
+
+    pod 'CYLDeallocBlockExecutor'
+
 end
