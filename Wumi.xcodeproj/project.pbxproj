@@ -289,7 +289,6 @@
 		B1ECD7AA1CCC1F4000CED9C4 /* UIImage+Icon.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD69F1CCC1F3F00CED9C4 /* UIImage+Icon.m */; };
 		B1ECD7AC1CCC1F6B00CED9C4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B1ECD7AB1CCC1F6B00CED9C4 /* libc++.tbd */; };
 		B1ECD7B01CCC240900CED9C4 /* Inbox.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD7AE1CCC240900CED9C4 /* Inbox.storyboard */; };
-		B1ECD7B31CCC25C200CED9C4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7B21CCC25C200CED9C4 /* ChatViewController.swift */; };
 		B1ECD7B51CCC2A8200CED9C4 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7B41CCC2A8200CED9C4 /* ChatListViewController.swift */; };
 		B1ECD7B71CCC2AA800CED9C4 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7B61CCC2AA800CED9C4 /* ChatRoomViewController.swift */; };
 		B1ECD7B91CCC2ACA00CED9C4 /* AddChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7B81CCC2ACA00CED9C4 /* AddChatViewController.swift */; };
@@ -777,7 +776,6 @@
 		B1ECD7AB1CCC1F6B00CED9C4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		B1ECD7AD1CCC21AA00CED9C4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B1ECD7AF1CCC240900CED9C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Inbox.storyboard; sourceTree = SOURCE_ROOT; };
-		B1ECD7B21CCC25C200CED9C4 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = Controller/ChatViewController.swift; sourceTree = "<group>"; };
 		B1ECD7B41CCC2A8200CED9C4 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatListViewController.swift; path = Controller/ChatListViewController.swift; sourceTree = "<group>"; };
 		B1ECD7B61CCC2AA800CED9C4 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatRoomViewController.swift; path = Controller/ChatRoomViewController.swift; sourceTree = "<group>"; };
 		B1ECD7B81CCC2ACA00CED9C4 /* AddChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddChatViewController.swift; path = Controller/AddChatViewController.swift; sourceTree = "<group>"; };
@@ -1743,7 +1741,6 @@
 		B1ECD7B11CCC254600CED9C4 /* Inbox */ = {
 			isa = PBXGroup;
 			children = (
-				B1ECD7B21CCC25C200CED9C4 /* ChatViewController.swift */,
 				B1ECD7B41CCC2A8200CED9C4 /* ChatListViewController.swift */,
 				B1ECD7B61CCC2AA800CED9C4 /* ChatRoomViewController.swift */,
 				B1ECD7B81CCC2ACA00CED9C4 /* AddChatViewController.swift */,
@@ -2239,7 +2236,6 @@
 				DFB612A31CA61B7800B3271B /* PostViewController.swift in Sources */,
 				B1ECD74A1CCC1F3F00CED9C4 /* Emoji.m in Sources */,
 				B1ECD79A1CCC1F4000CED9C4 /* XHMessageStatusView.m in Sources */,
-				B1ECD7B31CCC25C200CED9C4 /* ChatViewController.swift in Sources */,
 				B1ECD6A31CCC1F3F00CED9C4 /* AVIMEmotionMessage.m in Sources */,
 				DFB612A61CA6284000B3271B /* CommentTableViewCell.swift in Sources */,
 				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,

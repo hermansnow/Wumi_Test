@@ -12,7 +12,8 @@ class ChatListViewController: CDChatListVC, CDChatListVCDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "消息";
+        
+//        self.title = "消息";
         let image = UIImage(named: "tabbar_chat_active")
         self.tabBarItem.image = image
         
@@ -20,6 +21,7 @@ class ChatListViewController: CDChatListVC, CDChatListVCDelegate {
         
         let addItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ChatListViewController.addButtonClicked))
         self.navigationItem.rightBarButtonItem = addItem
+  
     }
     
     func addButtonClicked() {

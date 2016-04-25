@@ -35,8 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up AVOSCloud
         self.setupAVOSCloudSetting()
         
-        // Set initial view controller
-        self.setupLaunchViewController()
+        CDChatManager.sharedManager().userDelegate = IMUserFactory()
+        CDChatManager.sharedManager().openWithClientId(User.currentUser().email, callback: { (result: Bool, error: NSError!) -> Void in
+            if (error == nil) {
+                // Set initial view controller
+                self.setupLaunchViewController()
+            }
+        })
         
         return true
     }
