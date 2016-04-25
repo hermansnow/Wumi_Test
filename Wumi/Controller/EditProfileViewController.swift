@@ -98,11 +98,13 @@ class EditProfileViewController: UIViewController {
         // Dismiss current first responder
         self.view.endEditing(true)
         
-        let addImageSheet = SelectPhotoActionSheet(title: "Change Profile Image", message: "Choose a photo as your profile image.", preferredStyle: .ActionSheet)
-        addImageSheet.delegate = self
-        addImageSheet.launchViewController = self
+        let picker = PIKAImageCropViewController()
         
-        presentViewController(addImageSheet, animated: true, completion: nil)
+        picker.cropType = .Circle
+        picker.cropCircleRadius = self.view.bounds.width * 0.5
+        picker.delegate = self
+        
+        self.presentViewController(picker, animated: true, completion: nil)
     }
     
     // Action when click the add button on location cell
@@ -373,10 +375,10 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
 
 // MARK: UIImagePicker delegate
 
-extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        picker.dismissViewControllerAnimated(true) { () -> Void in
-            guard let profileImage = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+extension EditProfileViewController: PIKAImageCropViewControllerDelegate  {
+    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithImage image: UIImage?) {
+        cropVC.dismissViewControllerAnimated(true) { () -> Void in
+            guard let profileImage = image else { return }
             
             self.currentUser.saveAvatarFile(profileImage) { (success, imageError) -> Void in
                 guard success else {

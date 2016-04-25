@@ -176,13 +176,13 @@ extension SignUpAccountViewController: UITextFieldDelegate {
 
 extension SignUpAccountViewController: AvatarImageDelegate, UINavigationControllerDelegate {
     func singleTap(imageView: AvatarImageView) {
-        let addImageSheet = SelectPhotoActionSheet(title: Constants.SignIn.String.Alert.AddImageSheet.Title,
-            message: Constants.SignIn.String.Alert.AddImageSheet.Message,
-            preferredStyle: .ActionSheet)
-        addImageSheet.delegate = self
-        addImageSheet.launchViewController = self
+        let picker = PIKAImageCropViewController()
         
-        presentViewController(addImageSheet, animated: true, completion: nil)
+        picker.cropType = .Circle
+        picker.cropCircleRadius = self.view.bounds.width * 0.5
+        picker.delegate = self
+        
+        presentViewController(picker, animated: true, completion: nil)
     }
 }
 
@@ -196,10 +196,10 @@ extension SignUpAccountViewController: DataInputTextFieldDelegate {
 
 // MARK: UIImagePicker delegate
 
-extension SignUpAccountViewController: UIImagePickerControllerDelegate {
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        picker.dismissViewControllerAnimated(true) { () -> Void in
-            if let avatarImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+extension SignUpAccountViewController: PIKAImageCropViewControllerDelegate {
+    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithImage image: UIImage?) {
+        cropVC.dismissViewControllerAnimated(true) { () -> Void in
+            if let avatarImage = image {
                 self.addAvatarImageView.image = avatarImage
                 self.newAvatarImage = avatarImage
             }

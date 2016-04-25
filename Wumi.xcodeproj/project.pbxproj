@@ -32,6 +32,8 @@
 		DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */; };
 		DF28BCCE1CBB6D59004116AB /* Extension+AVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF28BCCD1CBB6D59004116AB /* Extension+AVFile.swift */; };
 		DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF3629561C9B305100D87574 /* ContactTableViewCell.xib */; };
+		DF4F532C1CCD9076009F3D2E /* PIKAImageCropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */; };
+		DF4F532D1CCD9076009F3D2E /* PIKAImageCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF6D56651CB75A1C001E0AFF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D56641CB75A1C001E0AFF /* Protocols.swift */; };
@@ -128,6 +130,8 @@
 		DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategoryTableViewController.swift; path = Controller/PostCategoryTableViewController.swift; sourceTree = "<group>"; };
 		DF28BCCD1CBB6D59004116AB /* Extension+AVFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+AVFile.swift"; sourceTree = "<group>"; };
 		DF3629561C9B305100D87574 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactTableViewCell.xib; path = View/ContactTableViewCell.xib; sourceTree = "<group>"; };
+		DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PIKAImageCropView.xib; path = Controller/PIKA/PIKAImageCropView.xib; sourceTree = "<group>"; };
+		DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PIKAImageCropViewController.swift; path = Controller/PIKA/PIKAImageCropViewController.swift; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF6D56641CB75A1C001E0AFF /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = "Supporting Files/Protocols.swift"; sourceTree = "<group>"; };
@@ -332,6 +336,15 @@
 			name = Post;
 			sourceTree = "<group>";
 		};
+		DF4F53291CCD9067009F3D2E /* PIKA */ = {
+			isa = PBXGroup;
+			children = (
+				DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */,
+				DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */,
+			);
+			name = PIKA;
+			sourceTree = "<group>";
+		};
 		DF5E3D381BE9457900F44FFF /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +365,7 @@
 		DF5E3D3D1BE9461300F44FFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DF4F53291CCD9067009F3D2E /* PIKA */,
 				DFA74C201BF8215900609E83 /* MainTabBarController.swift */,
 				DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */,
 				DFB4152B1C1E706F00835EFE /* SignIn/SignUp */,
@@ -521,6 +535,7 @@
 				DF159E191C80231C00DB65FF /* Images.xcassets in Resources */,
 				DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */,
 				DFB612A71CA6284000B3271B /* CommentTableViewCell.xib in Resources */,
+				DF4F532C1CCD9076009F3D2E /* PIKAImageCropView.xib in Resources */,
 				DF9840111C96874F00620F3B /* ProfileCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,6 +641,7 @@
 				DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */,
 				DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */,
 				DF9F060E1C7B7280008CA6DC /* Location.swift in Sources */,
+				DF4F532D1CCD9076009F3D2E /* PIKAImageCropViewController.swift in Sources */,
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
 				DFA93AC51C90E04000ECA503 /* EditProfileViewController.swift in Sources */,
 				DFA93AD11C91127800ECA503 /* ProfileCollectionLabel.swift in Sources */,
