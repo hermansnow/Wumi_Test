@@ -8,8 +8,9 @@
 
 import AVOSCloud
 import UIKit
+import CoreData
 
-class User: AVUser {
+class User: AVUser, NSCoding, TimeBaseCacheable {
     // MARK: Properties
     
     // Extended properties
@@ -17,6 +18,7 @@ class User: AVUser {
     @NSManaged var phoneNumber: String?
     @NSManaged var phonePublic: Bool
     @NSManaged var avatarImageFile: AVFile?
+    @NSManaged var avatarThumbnail: AVFile?
     @NSManaged var graduationYear: Int
     @NSManaged var name: String?
     @NSManaged var pinyin: String?
@@ -29,8 +31,10 @@ class User: AVUser {
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
-    var favoriteUsersArray: [User] = []
-    var savedPostsArray: [Post] = []
+    lazy var favoriteUsersArray: [User] = []
+    lazy var savedPostsArray: [Post] = []
+    var maxCacheAge: NSTimeInterval? = 3600 * 48
+    var expireAt: NSDate? = nil
     
     var location: Location {
         get {
@@ -52,6 +56,35 @@ class User: AVUser {
         }
         dispatch_once(&Static.onceToken) {
              self.registerSubclass() // Register the subclass
+        }
+    }
+    
+    override init!(className newClassName: String!) {
+        super.init(className: newClassName)
+    }
+    
+    override init() {
+        super.init()
+    }
+    
+    // initilizer for NSCoding
+    required init(coder aDecoder: NSCoder) {
+        super.init()
+        
+        if let objectId = aDecoder.decodeObjectForKey("objectId") as? String {
+            self.objectId = objectId
+        }
+        if let name = aDecoder.decodeObjectForKey("name") as? String {
+            self.name = name
+        }
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        if let objectId = self.objectId {
+            aCoder.encodeObject(objectId, forKey: "objectId")
+        }
+        if let name = self.name {
+            aCoder.encodeObject(name, forKey: "name")
         }
     }
     
@@ -111,33 +144,24 @@ class User: AVUser {
     }
     
     // MARK: Avatar functions
-    
+ 
     // Load avatar. This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background
-    func loadAvatar(ScaleToSize size: CGSize? = nil, WithBlock block: AVImageResultBlock!) {
-        guard let file = avatarImageFile else {
+    func loadAvatar(ScaleToSize size: CGSize? = nil, block: AVImageResultBlock!) {
+        guard let file = self.avatarImageFile else {
             block!(nil, NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
         }
         
-        file.getDataInBackgroundWithBlock { (data, error) -> Void in
-            // create a queue to parse image
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-                var image: UIImage?
-                
-                if let imageData = data where error == nil, let originalImage = UIImage(data: imageData) {
-                    if size != nil {
-                        image = originalImage.scaleToSize(size!)
-                    }
-                    else {
-                        image = originalImage
-                    }
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    block(image, error)
-                })
-            })
+        AVFile.loadImageFile(file, size: size, block: block)
+    }
+    
+    func loadAvatarThumbnail(ScaleToSize size: CGSize? = nil, block: AVImageResultBlock!) {
+        guard let file = self.avatarThumbnail else {
+            block!(nil, NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            return
         }
+        
+        AVFile.loadImageFile(file, size: size, block: block)
     }
     
     // Save avatar to cloud server
@@ -147,26 +171,11 @@ class User: AVUser {
             return
         }
         
-        // Scale image
-        guard let imageData = image.compressToSize(500) else {
-            block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Cannot scale image"]))
-            return
-        }
-        
-        self.avatarImageFile = AVFile(name: "avatar.jpeg", data: imageData)
-        self.avatarImageFile!.saveInBackgroundWithBlock(block)
+        AVFile.saveImageFile(&self.avatarThumbnail, image: image, size: CGSize(width: Constants.General.Size.AvatarThumbnail.Width, height: Constants.General.Size.AvatarThumbnail.Height), block: block)
+        AVFile.saveImageFile(&self.avatarImageFile, image: image, block: block)
     }
     
     // MARK: User queries
-    
-    // Fetch a user based on objectID
-    class func fetchUser(objectId id: String, block: AVObjectResultBlock!) {
-        let query = User.query()
-        query.cachePolicy = .NetworkElseCache
-        query.includeKey("professions")
-        query.getObjectInBackgroundWithId(id, block: block)
-    }
-    
     func loadUsers(limit limit: Int = 200, type: UserSearchType = .All, searchString: String = "", sinceUser: User? = nil, block: AVArrayResultBlock!) {
         guard var query = User.getQueryFromSearchType(type, forUser: self) else {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
@@ -208,9 +217,60 @@ class User: AVUser {
         
         // Cache policy
         query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 24 * 3600
+        query.maxCacheAge = 3600 * 24 * 30
         
-        query.findObjectsInBackgroundWithBlock(block)
+        query.findObjectsInBackgroundWithBlock { (results, error) in
+            if let users = results as? [User] where error == nil {
+                for user in users {
+                    User.cacheUserData(user)
+                }
+            }
+            block(results, error)
+        }
+    }
+    
+    // Fetch an user based on object ID
+    class func fetchUserInBackground(objectId id: String, block: AVObjectResultBlock!) {
+        let query = User.query()
+        query.includeKey("professions")
+        
+        query.cachePolicy = .CacheThenNetwork
+        query.maxCacheAge = 3600 * 24 * 30
+        
+        query.getObjectInBackgroundWithId(id) { (result, error) in
+            if let user = result as? User where error == nil {
+                User.cacheUserData(user)
+            }
+            
+            block(result, error)
+        }
+    }
+    
+    override func fetchIfNeededInBackgroundWithBlock(block: AVObjectResultBlock!) {
+        if self.isDataAvailable() {
+            block(self, nil)
+            return
+        }
+        
+        // Try fetch data from memory by objectId
+        if let user = DataManager.sharedDataManager.cache["user_" + self.objectId] as? User {
+            print("Found \(user.name) in memory cache")
+            block(user, nil)
+            return
+        }
+        
+        // Try fetch data from
+        User.fetchUserInBackground(objectId: self.objectId, block: block)
+    }
+
+    private class func cacheUserData(user: User) {
+        //BackupUser.saveUser(user)
+        
+        // Save into local cache
+        user.maxCacheAge = 3600 * 24
+        DataManager.sharedDataManager.cache["user_" + user.objectId] = user
+        
+        print("Cached \(user.name) in memory")
     }
     
     // Get associated AVQuery object based on search type
@@ -284,10 +344,13 @@ class User: AVUser {
         }
     }
     
-    func hasFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
+    func isFavoriteUser(user: User!, block: AVIntegerResultBlock!) {
         let query = favoriteUsers!.query()
         
         query.whereKey("objectId", equalTo: user.objectId)
+        
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 3600 * 24 * 30
         
         query.countObjectsInBackgroundWithBlock(block)
     }
@@ -298,9 +361,17 @@ class User: AVUser {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
         }
-        // Load favorite users for user
-        favoriteUsers.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
-            self.favoriteUsersArray = results as! [User]
+        
+        // Load favorite users
+        let query = favoriteUsers.query()
+        
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 3600 * 24 * 30
+        
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            guard let favoriteUsers = results as? [User] else { return }
+            
+            self.favoriteUsersArray = favoriteUsers
             block(results, error)
         }
     }
@@ -372,9 +443,17 @@ class User: AVUser {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: nil))
             return
         }
-        // Load saved posts for user
-        savedPosts.query().findObjectsInBackgroundWithBlock { (results, error) -> Void in
-            self.savedPostsArray = results as! [Post]
+        
+        // Load saved posts
+        let query = savedPosts.query()
+        
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 3600 * 24 * 30
+        
+        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+            guard let savedPosts = results as? [Post] else { return }
+            
+            self.savedPostsArray = savedPosts
             block(results, error)
         }
     }

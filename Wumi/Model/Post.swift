@@ -40,7 +40,7 @@ class Post: AVObject, AVSubclassing {
     }
     
     // MARK: Queries
-    class func loadPosts(limit limit: Int = 200, type: PostSearchType = .All, cutoffTime: NSDate? = nil, searchString: String = "", user: User? = nil, block: AVArrayResultBlock!) {
+    class func loadPosts(limit limit: Int = 10, type: PostSearchType = .All, cutoffTime: NSDate? = nil, searchString: String = "", user: User? = nil, block: AVArrayResultBlock!) {
         guard var query = Post.getQueryFromSearchType(type, forUser: user) else {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
             return
@@ -65,7 +65,7 @@ class Post: AVObject, AVSubclassing {
         query.limit = limit
         
         query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 24 * 3600
+        query.maxCacheAge = 3600 * 24
         
         query.findObjectsInBackgroundWithBlock(block)
     }

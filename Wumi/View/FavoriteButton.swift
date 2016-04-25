@@ -28,7 +28,7 @@ class FavoriteButton: UIButton {
     }
     
     private func addTarget() {
-        self.addTarget(self, action: Selector("tapped:"), forControlEvents: .TouchUpInside)
+        self.addTarget(self, action: #selector(tapped(_:)), forControlEvents: .TouchUpInside)
     }
     
     func tapped(sender: FavoriteButton) {

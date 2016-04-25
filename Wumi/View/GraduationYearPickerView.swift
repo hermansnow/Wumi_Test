@@ -49,11 +49,11 @@ class GraduationYearPickerView: UIView {
         let cancelButton: UIBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                             style: .Plain,
                                                            target: self,
-                                                           action: "cancel:")
+                                                           action: #selector(cancel(_:)))
         let confirmButton: UIBarButtonItem = UIBarButtonItem(title: "Confirm",
                                                              style: .Plain,
                                                             target: self,
-                                                            action: "confirm:")
+                                                            action: #selector(confirm(_:)))
         let flexibleSpaceBarItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
                                                                                  target: nil,
                                                                                  action: nil)
@@ -96,7 +96,7 @@ class GraduationYearPickerView: UIView {
     private func setupYearList() {
         self.years.append(0) // Use 0 for empty input
         
-        for var year = self.currentYear; year >= 1964; year-- {
+        for year in (1964...self.currentYear).reverse() {
             self.years.append(year)
         }
         

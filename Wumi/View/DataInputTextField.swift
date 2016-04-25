@@ -166,7 +166,7 @@ class DataInputTextField: UIView {
     func addDoneButtonToInputTextField() {
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 44))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("doneToolButtonClicked:"))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(doneToolButtonClicked(_:)))
         
         toolbar.barStyle = .Default
         toolbar.setItems([flexibleSpace, doneButton], animated: false)

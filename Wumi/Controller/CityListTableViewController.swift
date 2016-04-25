@@ -87,13 +87,13 @@ class CityListTableViewController: UITableViewController {
     // MARK: - Helper functions
     
     private func buildSectionIndex(data: [String]) {
-        // Reser collasion
+        // Reset collasion
         self.collation = UILocalizedIndexedCollation.currentCollation()
         
         var sectionArrays: [[String]] = Array(count: self.collation.sectionTitles.count, repeatedValue: [String]())
         
         for city in data {
-            let sectionIndex = collation.sectionForObject(city, collationStringSelector: Selector("self"))
+            let sectionIndex = collation.sectionForObject(city, collationStringSelector: #selector(NSObject.selfMethod))
             sectionArrays[sectionIndex].append(city)
         }
         

@@ -60,8 +60,8 @@ class PostTableViewController: UITableViewController {
         self.tableView.registerNib(UINib(nibName: "MessageTableViewCell", bundle: nil), forCellReuseIdentifier: "MessageTableViewCell")
         
         // Initialize navigation bar
-        self.searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "showSearchBar:")
-        self.composePostButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "composePost:")
+        self.searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(showSearchBar(_:)))
+        self.composePostButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: #selector(composePost(_:)))
         self.navigationItem.rightBarButtonItems = [self.composePostButton, self.searchButton]
         
         // Initialize tableview
@@ -85,7 +85,7 @@ class PostTableViewController: UITableViewController {
             revealViewController.rearViewRevealOverdraw = 0
             revealViewController.rearViewRevealWidth = UIScreen.mainScreen().bounds.width
             self.hamburgerMenuButton.target = revealViewController
-            self.hamburgerMenuButton.action = "revealToggle:"
+            self.hamburgerMenuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
 
@@ -112,7 +112,7 @@ class PostTableViewController: UITableViewController {
     
     private func addRefreshControl() {
         self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: Selector("loadPosts"), forControlEvents: .ValueChanged)
+        self.refreshControl!.addTarget(self, action: #selector(PostTableViewController.loadPosts), forControlEvents: .ValueChanged)
         self.tableView.addSubview(refreshControl!)
     }
     
@@ -180,17 +180,19 @@ class PostTableViewController: UITableViewController {
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         cell.highlightString = self.searchString
         
-        post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-            guard let user = result as? User where error == nil else { return }
+        if let author = post.author {
+            author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
+                guard let user = result as? User where error == nil else { return }
             
-            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "showUserContact:"))
+                cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostTableViewController.showUserContact(_:))))
             
-            cell.authorView.detailLabel.text = user.name
-            cell.authorView.userObjectId = user.objectId
+                cell.authorView.detailLabel.text = user.name
+                cell.authorView.userObjectId = user.objectId
             
-            user.loadAvatar { (imageResult, imageError) -> Void in
-                guard let image = imageResult where imageError == nil else { return }
-                cell.authorView.avatarImageView.image = image
+                user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
+                    guard let image = imageResult where imageError == nil else { return }
+                    cell.authorView.avatarImageView.image = image
+                }
             }
         }
         
@@ -334,7 +336,7 @@ extension PostTableViewController: UISearchBarDelegate, UISearchResultsUpdating 
             // start a new timer
             self.inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval,
                                                              target: self,
-                                                           selector: "loadPosts",
+                                                           selector: #selector(PostTableViewController.loadPosts),
                                                            userInfo: nil,
                                                             repeats: false)
         }

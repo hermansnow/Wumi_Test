@@ -98,11 +98,13 @@ class EditProfileViewController: UIViewController {
         // Dismiss current first responder
         self.view.endEditing(true)
         
-        let addImageSheet = SelectPhotoActionSheet(title: "Change Profile Image", message: "Choose a photo as your profile image.", preferredStyle: .ActionSheet)
-        addImageSheet.delegate = self
-        addImageSheet.launchViewController = self
+        let picker = PIKAImageCropViewController()
         
-        presentViewController(addImageSheet, animated: true, completion: nil)
+        picker.cropType = .Circle
+        picker.cropCircleRadius = self.view.bounds.width * 0.5
+        picker.delegate = self
+        
+        self.presentViewController(picker, animated: true, completion: nil)
     }
     
     // Action when click the add button on location cell
@@ -272,7 +274,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             cell.reset()
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
             cell.titleLabel.text = EditProfileCellRowType.Location.rawValue.title
-            cell.addButton.addTarget(self, action: "selectLocation:", forControlEvents: .TouchUpInside)
+            cell.addButton.addTarget(self, action: #selector(selectLocation(_:)), forControlEvents: .TouchUpInside)
             return cell
             
         // Profession Cell
@@ -281,7 +283,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             cell.reset()
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
             cell.titleLabel.text = EditProfileCellRowType.Profession.rawValue.title
-            cell.addButton.addTarget(self, action: "selectProfession:", forControlEvents: .TouchUpInside)
+            cell.addButton.addTarget(self, action: #selector(selectProfession(_:)), forControlEvents: .TouchUpInside)
             return cell
         
         // Email Cell
@@ -295,7 +297,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             cell.inputTextField.delegate = self
             cell.inputTextField.tag = indexPath.row
             cell.showPublic = self.currentUser.emailPublic
-            cell.statusSwitch.addTarget(self, action: "changeEmailStatus:", forControlEvents: .ValueChanged)
+            cell.statusSwitch.addTarget(self, action: #selector(changeEmailStatus(_:)), forControlEvents: .ValueChanged)
             return cell
         
         // Phone Cell
@@ -309,7 +311,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             cell.inputTextField.delegate = self
             cell.inputTextField.tag = indexPath.row
             cell.showPublic = self.currentUser.phonePublic
-            cell.statusSwitch.addTarget(self, action: "changePhoneStatus:", forControlEvents: .ValueChanged)
+            cell.statusSwitch.addTarget(self, action: #selector(changePhoneStatus(_:)), forControlEvents: .ValueChanged)
             return cell
         }
     }
@@ -373,10 +375,10 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
 
 // MARK: UIImagePicker delegate
 
-extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        picker.dismissViewControllerAnimated(true) { () -> Void in
-            guard let profileImage = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+extension EditProfileViewController: PIKAImageCropViewControllerDelegate  {
+    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithImage image: UIImage?) {
+        cropVC.dismissViewControllerAnimated(true) { () -> Void in
+            guard let profileImage = image else { return }
             
             self.currentUser.saveAvatarFile(profileImage) { (success, imageError) -> Void in
                 guard success else {

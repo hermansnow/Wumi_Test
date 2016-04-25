@@ -8,6 +8,12 @@
 
 import Foundation
 
+extension NSObject {
+    @objc func selfMethod() -> NSObject {
+        return self
+    }
+}
+
 extension Array {
     // Subscript to get element from index safely without overflow crash
     subscript(safe index: Int) -> Element? {
@@ -107,7 +113,7 @@ extension String {
 }
 
 extension UIImage {
-    // Compress image in JPEG format. The max size of image save in Parse server is 10.0MB
+    // Compress image in JPEG format. The max size of image save in server is 10.0MB
     func compressToSize(size: Int) -> NSData? {
         var compress:CGFloat = 1.0
         var imageData:NSData?
@@ -140,7 +146,7 @@ extension UIResponder {
     // Return current first responder
     public class func currentFirstResponder() -> UIResponder? {
         UIResponder._currentFirstResponder = nil
-        UIApplication.sharedApplication().sendAction("findFirstResponder:", to: nil, from: nil, forEvent: nil)
+        UIApplication.sharedApplication().sendAction(#selector(findFirstResponder(_:)), to: nil, from: nil, forEvent: nil)
         return UIResponder._currentFirstResponder
     }
     

@@ -155,7 +155,7 @@ class ContactTableViewController: UITableViewController {
             
         // Load avatar image
         cell.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
-        user.loadAvatar(ScaleToSize: cell.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
+        user.loadAvatarThumbnail(ScaleToSize: cell.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
             guard imageError == nil && avatarImage != nil else {
                 print("\(imageError)")
                 return
@@ -286,7 +286,7 @@ extension ContactTableViewController: UISearchBarDelegate, UISearchControllerDel
             // start a new timer
             self.inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval,
                                                              target: self,
-                                                           selector: "loadUsers",
+                                                           selector: #selector(self.loadUsers),
                                                            userInfo: nil,
                                                             repeats: false)
         }

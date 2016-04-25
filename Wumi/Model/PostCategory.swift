@@ -40,7 +40,7 @@ class PostCategory: AVObject, AVSubclassing {
         let query = PostCategory.query()
         
         query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 24 * 3600
+        query.maxCacheAge = 3600 * 24 * 2
         
         query.orderByAscending("name")
         

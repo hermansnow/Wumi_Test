@@ -40,11 +40,11 @@ class PostViewController: UITableViewController {
         
         // Setup keyboard Listener
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "keyboardWillShown:",
+            selector: #selector(PostViewController.keyboardWillShown(_:)),
             name: UIKeyboardWillShowNotification,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "keyboardWillHiden:",
+            selector: #selector(PostViewController.keyboardWillHiden(_:)),
             name: UIKeyboardWillHideNotification,
             object: nil)
         
@@ -57,16 +57,16 @@ class PostViewController: UITableViewController {
         
         
         // Initialize navigation bar
-        self.replyButton = UIBarButtonItem(title: "Reply", style: .Done, target: self, action: "replyPost:")
-        self.cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelReply:")
-        self.sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: "sendReply:")
+        self.replyButton = UIBarButtonItem(title: "Reply", style: .Done, target: self, action: #selector(replyPost(_:)))
+        self.cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(cancelReply(_:)))
+        self.sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: #selector(sendReply(_:)))
         self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
         self.navigationItem.rightBarButtonItem = self.replyButton
         
         // Initialize comment subview
         self.commentView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 160)
         self.commentTextView.characterLimit = 300  // Limitation for lenght of comment
-        self.currentUser.loadAvatar(ScaleToSize: CGSize(width: 20, height: 20)) { (result, error) -> Void in
+        self.currentUser.loadAvatarThumbnail(ScaleToSize: CGSize(width: 20, height: 20)) { (result, error) -> Void in
             guard error == nil else { return }
             self.myUserBannerView.avatarImageView.image = result
         }
@@ -95,7 +95,7 @@ class PostViewController: UITableViewController {
     
     private func addRefreshControl() {
         self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: Selector("loadData"), forControlEvents: .ValueChanged)
+        self.refreshControl!.addTarget(self, action: #selector(PostViewController.loadData), forControlEvents: .ValueChanged)
         self.tableView.addSubview(refreshControl!)
     }
     
@@ -154,17 +154,19 @@ class PostViewController: UITableViewController {
         cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
-        post.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-            guard let user = result as? User where error == nil else { return }
+        cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
+        
+        if let author = post.author {
+            author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
+                guard let user = result as? User where error == nil else { return }
             
-            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "showUserContact:"))
+                cell.authorView.detailLabel.text = user.name
+                cell.authorView.userObjectId = user.objectId
             
-            cell.authorView.detailLabel.text = user.name
-            cell.authorView.userObjectId = user.objectId
-            
-            user.loadAvatar { (imageResult, imageError) -> Void in
-                guard let image = imageResult where imageError == nil else { return }
-                cell.authorView.avatarImageView.image = image
+                user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
+                    guard let image = imageResult where imageError == nil else { return }
+                    cell.authorView.avatarImageView.image = image
+                }
             }
         }
         
@@ -195,17 +197,18 @@ class PostViewController: UITableViewController {
         cell.contentLabel.userInteractionEnabled = true
         cell.contentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.replyComment(_:))))
         
-        comment.author?.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-            guard let user = result as? User where error == nil else { return }
+        cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
+        
+        if let author = comment.author {
+            author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
+                guard let user = result as? User where error == nil else { return }
+                cell.authorView.detailLabel.text = user.name
+                cell.authorView.userObjectId = user.objectId
             
-            cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "showUserContact:"))
-            
-            cell.authorView.detailLabel.text = user.name
-            cell.authorView.userObjectId = user.objectId
-            
-            user.loadAvatar { (imageResult, imageError) -> Void in
-                guard let image = imageResult where imageError == nil else { return }
-                cell.authorView.avatarImageView.image = image
+                user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
+                    guard let image = imageResult where imageError == nil else { return }
+                    cell.authorView.avatarImageView.image = image
+                }
             }
         }
         
@@ -340,11 +343,6 @@ class PostViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
             
             guard let comments = results as? [Comment] where comments.count > 0 else { return }
-            
-            // Get user which the comment reply to
-            for comment in comments {
-                
-            }
             
             self.comments = comments
             

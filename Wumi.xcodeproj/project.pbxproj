@@ -306,7 +306,10 @@
 		DF1BE2691C9F9C7500F934EE /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1BE2681C9F9C7500F934EE /* Post.swift */; };
 		DF21176A1C927FDD009109EE /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */; };
 		DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */; };
+		DF28BCCE1CBB6D59004116AB /* Extension+AVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF28BCCD1CBB6D59004116AB /* Extension+AVFile.swift */; };
 		DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF3629561C9B305100D87574 /* ContactTableViewCell.xib */; };
+		DF4F532C1CCD9076009F3D2E /* PIKAImageCropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */; };
+		DF4F532D1CCD9076009F3D2E /* PIKAImageCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF6D56651CB75A1C001E0AFF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D56641CB75A1C001E0AFF /* Protocols.swift */; };
@@ -363,6 +366,7 @@
 		DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */; };
 		DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */; };
 		DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D441BEEF8F800D6FEBC /* Setting.swift */; };
+		DFC754261CBCE7C900C7E111 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC754251CBCE7C900C7E111 /* DataManager.swift */; };
 		DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */; };
 		DFD4A6101BE6CF3C00C8B09E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */; };
 		DFD4A6121BE6CF4200C8B09E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */; };
@@ -794,7 +798,10 @@
 		DF1BE2681C9F9C7500F934EE /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Model/Post.swift; sourceTree = "<group>"; };
 		DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCollectionCell.swift; path = View/ProfileCollectionCell.swift; sourceTree = "<group>"; };
 		DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategoryTableViewController.swift; path = Controller/PostCategoryTableViewController.swift; sourceTree = "<group>"; };
+		DF28BCCD1CBB6D59004116AB /* Extension+AVFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+AVFile.swift"; sourceTree = "<group>"; };
 		DF3629561C9B305100D87574 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactTableViewCell.xib; path = View/ContactTableViewCell.xib; sourceTree = "<group>"; };
+		DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PIKAImageCropView.xib; path = Controller/PIKA/PIKAImageCropView.xib; sourceTree = "<group>"; };
+		DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PIKAImageCropViewController.swift; path = Controller/PIKA/PIKAImageCropViewController.swift; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF6D56641CB75A1C001E0AFF /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = "Supporting Files/Protocols.swift"; sourceTree = "<group>"; };
@@ -851,6 +858,7 @@
 		DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationCode.swift; path = Model/InvitationCode.swift; sourceTree = "<group>"; };
 		DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddProfileViewController.swift; path = Controller/AddProfileViewController.swift; sourceTree = "<group>"; };
 		DFBD2D441BEEF8F800D6FEBC /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Setting.swift; path = Model/Setting.swift; sourceTree = "<group>"; };
+		DFC754251CBCE7C900C7E111 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataManager.swift; path = Model/DataManager.swift; sourceTree = "<group>"; };
 		DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -1762,6 +1770,7 @@
 			children = (
 				DF173EF51C86A73D00018B4A /* Wumi-Bridging-Header.h */,
 				DF173EEF1C86A58600018B4A /* Extensions.swift */,
+				DF28BCCD1CBB6D59004116AB /* Extension+AVFile.swift */,
 				DF173EF01C86A58600018B4A /* Helper.swift */,
 				DF173EEB1C86A55F00018B4A /* Constants.swift */,
 				DF6D56641CB75A1C001E0AFF /* Protocols.swift */,
@@ -1782,6 +1791,15 @@
 			name = Post;
 			sourceTree = "<group>";
 		};
+		DF4F53291CCD9067009F3D2E /* PIKA */ = {
+			isa = PBXGroup;
+			children = (
+				DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */,
+				DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */,
+			);
+			name = PIKA;
+			sourceTree = "<group>";
+		};
 		DF5E3D381BE9457900F44FFF /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1791,6 +1809,7 @@
 				DFB250791CAB9C9800413D52 /* PostCategory.swift */,
 				DFB612A81CA62CAD00B3271B /* Comment.swift */,
 				DF9F060D1C7B7280008CA6DC /* Location.swift */,
+				DFC754251CBCE7C900C7E111 /* DataManager.swift */,
 				DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */,
 				DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */,
 				DFBD2D441BEEF8F800D6FEBC /* Setting.swift */,
@@ -1803,6 +1822,7 @@
 		DF5E3D3D1BE9461300F44FFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DF4F53291CCD9067009F3D2E /* PIKA */,
 				DFA74C201BF8215900609E83 /* MainTabBarController.swift */,
 				DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */,
 				DFB4152B1C1E706F00835EFE /* SignIn/SignUp */,
@@ -2258,6 +2278,7 @@
 				DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */,
 				DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */,
 				DF9F060E1C7B7280008CA6DC /* Location.swift in Sources */,
+				DF4F532D1CCD9076009F3D2E /* PIKAImageCropViewController.swift in Sources */,
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
 				B1ECD7A91CCC1F4000CED9C4 /* NSString+Emojize.m in Sources */,
 				DFA93AC51C90E04000ECA503 /* EditProfileViewController.swift in Sources */,
