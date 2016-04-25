@@ -14,6 +14,8 @@
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		9519A6BCABED44F1D7D798F5 /* Pods_Wumi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C897A1341D196EA1C0BC21 /* Pods_Wumi.framework */; };
+		B10C22271CCDC0E10055ED35 /* AVIMEmotionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD4F91CCC1F3F00CED9C4 /* AVIMEmotionMessage.m */; };
+		B10C22281CCDC1760055ED35 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A21CA61B7800B3271B /* PostViewController.swift */; };
 		B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15824021C82C40F00D314B3 /* ContactTableViewController.swift */; };
 		B175B2521CB872B800C95B33 /* CommentTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175B2511CB872B800C95B33 /* CommentTextLabel.swift */; };
 		B1997AF61CACDADC0086F8F4 /* CityListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */; };
@@ -23,7 +25,6 @@
 		B1ECD6A01CCC1F3F00CED9C4 /* CDChatListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD4F21CCC1F3F00CED9C4 /* CDChatListVC.m */; };
 		B1ECD6A11CCC1F3F00CED9C4 /* CDChatRoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD4F41CCC1F3F00CED9C4 /* CDChatRoomVC.m */; };
 		B1ECD6A21CCC1F3F00CED9C4 /* AVIMConversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD4F71CCC1F3F00CED9C4 /* AVIMConversation+Custom.m */; };
-		B1ECD6A31CCC1F3F00CED9C4 /* AVIMEmotionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD4F91CCC1F3F00CED9C4 /* AVIMEmotionMessage.m */; };
 		B1ECD6A41CCC1F3F00CED9C4 /* CDChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD4FB1CCC1F3F00CED9C4 /* CDChatManager.m */; };
 		B1ECD6A51CCC1F3F00CED9C4 /* CDConversationStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD4FE1CCC1F3F00CED9C4 /* CDConversationStore.m */; };
 		B1ECD6A61CCC1F3F00CED9C4 /* CDEmotionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD5001CCC1F3F00CED9C4 /* CDEmotionUtils.m */; };
@@ -91,7 +92,6 @@
 		B1ECD6E41CCC1F3F00CED9C4 /* rabbit_9_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD5461CCC1F3F00CED9C4 /* rabbit_9_cover@2x.png */; };
 		B1ECD6E51CCC1F3F00CED9C4 /* tusiji_0.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD5471CCC1F3F00CED9C4 /* tusiji_0.gif */; };
 		B1ECD6E61CCC1F3F00CED9C4 /* tusiji_0_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD5481CCC1F3F00CED9C4 /* tusiji_0_cover@2x.png */; };
-		B1ECD6E71CCC1F3F00CED9C4 /* tusiji_1.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD5491CCC1F3F00CED9C4 /* tusiji_1.gif */; };
 		B1ECD6E81CCC1F3F00CED9C4 /* tusiji_10.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD54A1CCC1F3F00CED9C4 /* tusiji_10.gif */; };
 		B1ECD6E91CCC1F3F00CED9C4 /* tusiji_10_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD54B1CCC1F3F00CED9C4 /* tusiji_10_cover@2x.png */; };
 		B1ECD6EA1CCC1F3F00CED9C4 /* tusiji_11.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD54C1CCC1F3F00CED9C4 /* tusiji_11.gif */; };
@@ -125,7 +125,6 @@
 		B1ECD7061CCC1F3F00CED9C4 /* face@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD5691CCC1F3F00CED9C4 /* face@2x.png */; };
 		B1ECD7071CCC1F3F00CED9C4 /* face_HL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD56A1CCC1F3F00CED9C4 /* face_HL@2x.png */; };
 		B1ECD7081CCC1F3F00CED9C4 /* Fav_Cell_Loc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD56B1CCC1F3F00CED9C4 /* Fav_Cell_Loc@2x.png */; };
-		B1ECD7091CCC1F3F00CED9C4 /* group_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD56C1CCC1F3F00CED9C4 /* group_icon.png */; };
 		B1ECD70A1CCC1F3F00CED9C4 /* input-bar-background.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD56D1CCC1F3F00CED9C4 /* input-bar-background.png */; };
 		B1ECD70B1CCC1F3F00CED9C4 /* input-bar-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD56E1CCC1F3F00CED9C4 /* input-bar-background@2x.png */; };
 		B1ECD70C1CCC1F3F00CED9C4 /* input-bar-flat.png in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD56F1CCC1F3F00CED9C4 /* input-bar-flat.png */; };
@@ -353,7 +352,6 @@
 		DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612941CA2637600B3271B /* UserBannerView.swift */; };
 		DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */; };
 		DFB612A11CA6158F00B3271B /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A01CA6158F00B3271B /* PostTextView.swift */; };
-		DFB612A31CA61B7800B3271B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A21CA61B7800B3271B /* PostViewController.swift */; };
 		DFB612A61CA6284000B3271B /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */; };
 		DFB612A71CA6284000B3271B /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */; };
 		DFB612A91CA62CAD00B3271B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A81CA62CAD00B3271B /* Comment.swift */; };
@@ -1948,7 +1946,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Parse;
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
@@ -2151,8 +2149,7 @@
 				B1ECD7331CCC1F3F00CED9C4 /* SenderVoiceNodePlaying002@2x.png in Resources */,
 				B1ECD6AB1CCC1F3F00CED9C4 /* AddGroupMemberBtnHL@2x.png in Resources */,
 				DFB612A71CA6284000B3271B /* CommentTableViewCell.xib in Resources */,
-				B1ECD6E71CCC1F3F00CED9C4 /* tusiji_1.gif in Resources */,
-				B1ECD7091CCC1F3F00CED9C4 /* group_icon.png in Resources */,
+				DF4F532C1CCD9076009F3D2E /* PIKAImageCropView.xib in Resources */,
 				DF9840111C96874F00620F3B /* ProfileCollectionCell.xib in Resources */,
 				B1ECD6DF1CCC1F3F00CED9C4 /* rabbit_7.gif in Resources */,
 				B1ECD6AF1CCC1F3F00CED9C4 /* CellRedSelected@2x.png in Resources */,
@@ -2245,6 +2242,7 @@
 			files = (
 				DF9F06101C7BC72D008CA6DC /* ContactTableViewCell.swift in Sources */,
 				B1ECD6A51CCC1F3F00CED9C4 /* CDConversationStore.m in Sources */,
+				B10C22281CCDC1760055ED35 /* PostViewController.swift in Sources */,
 				B1ECD7851CCC1F4000CED9C4 /* SETextAttachment.m in Sources */,
 				B1ECD78C1CCC1F4000CED9C4 /* SETextSelection.m in Sources */,
 				DFA93ADD1C91EE0600ECA503 /* FavoriteButton.swift in Sources */,
@@ -2253,10 +2251,10 @@
 				B1ECD75F1CCC1F3F00CED9C4 /* XHMessageBubbleHelper.m in Sources */,
 				B1ECD7511CCC1F3F00CED9C4 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				DFA93ACB1C91016A00ECA503 /* ProfileListCell.swift in Sources */,
-				DFB612A31CA61B7800B3271B /* PostViewController.swift in Sources */,
 				B1ECD74A1CCC1F3F00CED9C4 /* Emoji.m in Sources */,
 				B1ECD79A1CCC1F4000CED9C4 /* XHMessageStatusView.m in Sources */,
-				B1ECD6A31CCC1F3F00CED9C4 /* AVIMEmotionMessage.m in Sources */,
+				B10C22271CCDC0E10055ED35 /* AVIMEmotionMessage.m in Sources */,
+				DF28BCCE1CBB6D59004116AB /* Extension+AVFile.swift in Sources */,
 				DFB612A61CA6284000B3271B /* CommentTableViewCell.swift in Sources */,
 				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,
 				B1ECD7A81CCC1F4000CED9C4 /* XHRefreshView.m in Sources */,
@@ -2287,6 +2285,7 @@
 				B1ECD6A11CCC1F3F00CED9C4 /* CDChatRoomVC.m in Sources */,
 				DFA93AD11C91127800ECA503 /* ProfileCollectionLabel.swift in Sources */,
 				B1ECD76F1CCC1F4000CED9C4 /* XHOperationNetworkKit.m in Sources */,
+				DFC754261CBCE7C900C7E111 /* DataManager.swift in Sources */,
 				DFA93AC31C90DE3600ECA503 /* ProfileInputCell.swift in Sources */,
 				B1ECD7971CCC1F4000CED9C4 /* XHBubblePhotoImageView.m in Sources */,
 				B1ECD7691CCC1F4000CED9C4 /* XHDisplayMediaViewController.m in Sources */,
