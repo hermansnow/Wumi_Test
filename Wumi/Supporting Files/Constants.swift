@@ -20,7 +20,10 @@ struct Constants {
             static let InputTextColor = UIColor(red: 51/255, green: 52/255, blue: 53/255, alpha: 1.0)
             static let BorderColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
             static let ErrorColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
+            static let LightBackgroundColor = UIColor(red: 240/255, green: 241/255, blue: 242/255, alpha: 1.0)
+            static let ProfileTitleColor = UIColor(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
             static let MaskColor = UIColor(white: 1.0, alpha: 0.9)
+            static let LightMaskColor = UIColor(white: 1.0, alpha: 0.6)
         }
         
         struct Font {
@@ -28,10 +31,15 @@ struct Constants {
             static let ErrorFont = UIFont(name: ".SFUIText-Light", size: 12)
             static let LinkButtonFont = UIFont(name: ".SFUIText-Medium", size: 14)
             static let ButtonFont = UIFont(name: ".SFUIText-Medium", size: 16)
+            static let DetailFont = UIFont(name: ".SFUIText-Bold", size: 16)
+            static let ProfileTitleFont = UIFont(name: ".SFUIText-Regular", size: 14)
+            static let ProfileNameFont = UIFont(name: ".STHeitiSC-Medium", size: 18)
+            static let ProfileLocationFont = UIFont(name: ".SFUIText-Regular", size: 16)
+            static let ProfileCollectionFont = UIFont(name: ".SFUIText-Regular", size: 14)
+            static let ProfileTextFont = UIFont(name: ".SFUIText-Regular", size: 16)
         }
         
         struct Image {
-            static let Add = UIImage(named: "Add")
             static let Favorite = UIImage(named: "Favorite")
             static let AnonymousAvatarImage = UIImage(named: "Anonymous")
             static let Check = UIImage(named: "Checkmark")
@@ -53,7 +61,7 @@ struct Constants {
         }
         
         struct Image {
-            static let AddAvatarImage = UIImage(named: "Add")
+            static let AddAvatarImage = UIImage(named: "Add_Photo")
         }
         
         struct Size {

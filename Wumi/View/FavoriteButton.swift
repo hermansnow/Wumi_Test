@@ -12,16 +12,41 @@ class FavoriteButton: UIButton {
     
     var delegate: FavoriteButtonDelegate?
     
-    override func drawRect(rect: CGRect) {
+    // MARK: Initializers
+    
+    override var selected: Bool {
+        get {
+           return super.selected
+        }
+        set {
+            if let delegate = self.delegate, didChangeSelected = delegate.didChangeSelected where newValue != super.selected {
+                didChangeSelected(self, selected: newValue)
+            }
+            super.selected = newValue
+        }
+    }
+    
+    convenience init() {
+        self.init(frame: CGRectZero)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
         self.setProperty()
         self.addTarget()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         
-        super.drawRect(rect)
+        self.setProperty()
+        self.addTarget()
     }
     
     private func setProperty() {
-        self.setBackgroundImage(UIImage(named: "Unfavorite"), forState: .Normal)
-        self.setBackgroundImage(UIImage(named: "Favorite"), forState: .Selected)
+        self.setBackgroundImage(UIImage(named: "Star"), forState: .Normal)
+        self.setBackgroundImage(UIImage(named: "Star_Selected"), forState: .Selected)
         
         self.adjustsImageWhenHighlighted = false
         self.showsTouchWhenHighlighted = false
@@ -45,7 +70,8 @@ class FavoriteButton: UIButton {
     }
 }
 
-protocol FavoriteButtonDelegate {
+@objc protocol FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton)
     func removeFavorite(favoriteButton: FavoriteButton)
+    optional func didChangeSelected(favoriteButton: FavoriteButton, selected: Bool)
 }

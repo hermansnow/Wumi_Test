@@ -30,9 +30,9 @@ class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         
         // Register nib
-        self.tableView.registerNib(UINib(nibName: "ProfileInputCell", bundle: nil), forCellReuseIdentifier: "ProfileInputCell")
-        self.tableView.registerNib(UINib(nibName: "ProfileListCell", bundle: nil), forCellReuseIdentifier: "ProfileListCell")
-        self.tableView.registerNib(UINib(nibName: "ProfileInputSwitchCell", bundle: nil), forCellReuseIdentifier: "ProfileInputSwitchCell")
+        self.tableView.registerNib(UINib(nibName: "ProfileInputTableCell", bundle: nil), forCellReuseIdentifier: "ProfileInputTableCell")
+        self.tableView.registerNib(UINib(nibName: "ProfileListTableCell", bundle: nil), forCellReuseIdentifier: "ProfileListTableCell")
+        self.tableView.registerNib(UINib(nibName: "ProfileInputSwitchTableCell", bundle: nil), forCellReuseIdentifier: "ProfileInputSwitchTableCell")
         
         // Enable navigation bar
         self.navigationController?.setNavigationBarHidden(false, animated: false)
@@ -57,7 +57,18 @@ class EditProfileViewController: UIViewController {
         self.graduationYearPickerView.cancelSelection = nil
         
         // Initialize the mask view
-        self.maskView.backgroundColor = Constants.General.Color.MaskColor
+        self.maskView.backgroundColor = Constants.General.Color.LightMaskColor
+        
+        // Set font
+        self.nameLabel.font = Constants.General.Font.ProfileNameFont
+        self.graduationYearLabel.font = Constants.General.Font.ProfileNameFont
+        self.locationLabel.font = Constants.General.Font.ProfileLocationFont
+        
+        
+        // Set color
+        self.nameLabel.textColor = Constants.General.Color.InputTextColor
+        self.graduationYearLabel.textColor = Constants.General.Color.InputTextColor
+        self.locationLabel.textColor = Constants.General.Color.InputTextColor
         
         // Add delegates
         self.tableView.dataSource = self
@@ -80,6 +91,12 @@ class EditProfileViewController: UIViewController {
             professionListViewController.avatarImage = self.profileImageView.image
             professionListViewController.selectedProfessions = self.selectedProfessions
         }
+    }
+    
+    // Dismiss inputView when touching any other areas on the screen
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
     }
     
     // MARK: Actions
@@ -245,8 +262,9 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
         switch (rowType) {
         // Name Cell
         case .Name:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputCell") as! ProfileInputCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputTableCell") as! ProfileInputTableCell
             cell.reset()
+            cell.enableBorder = true
             cell.titleLabel.text = EditProfileCellRowType.Name.rawValue.title
             cell.inputTextField.placeholder = "Please enter your name"
             cell.inputTextField.text = self.currentUser.name
@@ -257,8 +275,9 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
         
         // Graduation Year Cell
         case .GraduationYear:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputCell") as! ProfileInputCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputTableCell") as! ProfileInputTableCell
             cell.reset()
+            cell.enableBorder = true
             cell.titleLabel.text = EditProfileCellRowType.GraduationYear.rawValue.title
             cell.inputTextField.text = GraduationYearPickerView.showGraduationString(self.graduationYearPickerView.year)
             cell.inputTextField.placeholder = "Please select your graduation year"
@@ -270,8 +289,9 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
         
         // Location Cell
         case .Location:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListCell") as! ProfileListCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListTableCell") as! ProfileListTableCell
             cell.reset()
+            cell.enableBorder = true
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
             cell.titleLabel.text = EditProfileCellRowType.Location.rawValue.title
             cell.addButton.addTarget(self, action: #selector(selectLocation(_:)), forControlEvents: .TouchUpInside)
@@ -279,8 +299,9 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             
         // Profession Cell
         case .Profession:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListCell") as! ProfileListCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListTableCell") as! ProfileListTableCell
             cell.reset()
+            cell.enableBorder = true
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
             cell.titleLabel.text = EditProfileCellRowType.Profession.rawValue.title
             cell.addButton.addTarget(self, action: #selector(selectProfession(_:)), forControlEvents: .TouchUpInside)
@@ -288,8 +309,9 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
         
         // Email Cell
         case .Email:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchCell") as! ProfileInputSwitchCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchTableCell") as! ProfileInputSwitchTableCell
             cell.reset()
+            cell.enableBorder = true
             cell.titleLabel.text = EditProfileCellRowType.Email.rawValue.title
             cell.inputTextField.text = self.currentUser.email
             cell.inputTextField.placeholder = "Please enter your email"
@@ -302,8 +324,9 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
         
         // Phone Cell
         case .Phone:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchCell") as! ProfileInputSwitchCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchTableCell") as! ProfileInputSwitchTableCell
             cell.reset()
+            cell.enableBorder = true
             cell.titleLabel.text = EditProfileCellRowType.Phone.rawValue.title
             cell.inputTextField.text = self.currentUser.phoneNumber
             cell.inputTextField.placeholder = "Please enter your phone number"
@@ -368,8 +391,25 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        guard let rowType = self.cells[safe: collectionView.tag] else { return CGSizeZero }
+        
+        switch (rowType) {
+        case .Location:
+            let text = "\(self.currentUser.location)"
+            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont!).width + 16, height: 24)
+            
+        case .Profession:
+            guard let profession = self.selectedProfessions[index: indexPath.row], text = profession.name else { return CGSizeZero }
+            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont!).width + 16, height: 24)
+            
+        default:
+            return CGSizeZero
+        }
+    }
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 5
+        return 6
     }
 }
 
