@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileInputSwitchTableCell" rowHeight="91" id="qJF-gX-txF" customClass="ProfileInputSwitchTableCell" customModule="Wumi" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="627" height="91"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qJF-gX-txF" id="5rz-Rd-aqe">
+                <rect key="frame" x="0.0" y="0.0" width="627" height="90.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yIj-63-2LX">
+                        <rect key="frame" x="16" y="10" width="595" height="13.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RiV-9D-8kd">
+                                <rect key="frame" x="0.0" y="0.0" width="546" height="13.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Private" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEn-5w-WsD">
+                                <rect key="frame" x="546" y="0.0" width="49" height="13.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="8Za-eG-wwo">
+                        <rect key="frame" x="16" y="36.5" width="595" height="48"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hbs-Dt-12p">
+                                <rect key="frame" x="0.0" y="12" width="540" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="Ak4-88-b2k"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ku-Gc-qNE" customClass="SettingSwitch" customModule="Wumi" customModuleProvider="target">
+                                <rect key="frame" x="546" y="8.5" width="51" height="31"/>
+                            </switch>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="8Za-eG-wwo" firstAttribute="top" secondItem="yIj-63-2LX" secondAttribute="bottom" constant="13" id="IUj-Mc-rvu"/>
+                    <constraint firstAttribute="bottom" secondItem="8Za-eG-wwo" secondAttribute="bottom" constant="6" id="RDd-ss-2UQ"/>
+                    <constraint firstItem="yIj-63-2LX" firstAttribute="leading" secondItem="5rz-Rd-aqe" secondAttribute="leading" constant="16" id="SIR-4I-TZA"/>
+                    <constraint firstItem="yIj-63-2LX" firstAttribute="top" secondItem="5rz-Rd-aqe" secondAttribute="top" constant="10" id="X9r-cg-3lK"/>
+                    <constraint firstItem="8Za-eG-wwo" firstAttribute="leading" secondItem="5rz-Rd-aqe" secondAttribute="leading" constant="16" id="ZPH-AT-Osx"/>
+                    <constraint firstItem="yIj-63-2LX" firstAttribute="centerX" secondItem="5rz-Rd-aqe" secondAttribute="centerX" id="hVJ-GB-NQK"/>
+                    <constraint firstItem="WEn-5w-WsD" firstAttribute="width" secondItem="9ku-Gc-qNE" secondAttribute="width" id="hth-UI-pMd"/>
+                    <constraint firstAttribute="trailing" secondItem="8Za-eG-wwo" secondAttribute="trailing" constant="16" id="i5h-cO-wvX"/>
+                    <constraint firstItem="WEn-5w-WsD" firstAttribute="centerX" secondItem="9ku-Gc-qNE" secondAttribute="centerX" id="sc2-KT-aMv"/>
+                    <constraint firstAttribute="trailing" secondItem="yIj-63-2LX" secondAttribute="trailing" constant="16" id="uuR-X0-Uzh"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="inputTextField" destination="Hbs-Dt-12p" id="bbG-2i-BEY"/>
+                <outlet property="statusLabel" destination="WEn-5w-WsD" id="4V0-VR-3eP"/>
+                <outlet property="statusSwitch" destination="9ku-Gc-qNE" id="kzk-Aa-kxj"/>
+                <outlet property="titleLabel" destination="RiV-9D-8kd" id="sq3-Xi-Xow"/>
+                <outlet property="titleStack" destination="yIj-63-2LX" id="DHg-DX-15g"/>
+            </connections>
+            <point key="canvasLocation" x="-116.5" y="254.5"/>
+        </tableViewCell>
+    </objects>
+</document>

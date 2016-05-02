@@ -15,7 +15,7 @@ class ProfessionSectionHeader: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.titleLabel.font = UIFont(name: ".SFUIText-Bold", size: 14)
+        self.titleLabel.font = Constants.General.Font.DetailFont
         self.titleLabel.textColor = Constants.General.Color.InputTextColor
     }
     

@@ -15,7 +15,6 @@ class ProfessionListViewController: UIViewController {
     @IBOutlet weak var headerStack: UIStackView!
     @IBOutlet weak var avatarImageView: AvatarImageView!
     @IBOutlet weak var listDescription: UILabel!
-    
     @IBOutlet weak var professionCollectionView: UICollectionView!
     
     var professionDelegate: ProfessionListDelegate?
@@ -33,11 +32,15 @@ class ProfessionListViewController: UIViewController {
         // Initialize header
         let title = "Professions"
         let details = "you can select up to 3 related professions"
-        let description = NSMutableAttributedString(string: "\(title) (\(details))",
-            attributes: [NSFontAttributeName: UIFont(name: ".SFUIText-Light", size: 12)!])
-        description.addAttribute(NSForegroundColorAttributeName,
-                          value: UIColor.grayColor(),
-                          range: NSRange(location: title.characters.count, length: details.characters.count + 3))
+        let description = NSMutableAttributedString(string: "\(title) (\(details))")
+        description.addAttributes(
+            [NSForegroundColorAttributeName: Constants.General.Color.InputTextColor,
+                NSFontAttributeName: Constants.General.Font.DetailFont!],
+            range: NSRange(location: 0, length: title.characters.count))
+        description.addAttributes(
+            [NSForegroundColorAttributeName: Constants.General.Color.ProfileTitleColor,
+                NSFontAttributeName: Constants.General.Font.ProfileTitleFont!],
+            range: NSRange(location: title.characters.count, length: details.characters.count + 3))
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
         description.addAttribute(NSParagraphStyleAttributeName,
@@ -46,16 +49,13 @@ class ProfessionListViewController: UIViewController {
         self.listDescription.attributedText = description
         self.listDescription.numberOfLines = 0
         self.avatarImageView.image = self.avatarImage
-        self.headerView.backgroundColor = Constants.General.Color.BackgroundColor
-        self.headerStack.layoutMargins = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        self.headerStack.layoutMarginsRelativeArrangement = true
+        self.headerView.backgroundColor = Constants.General.Color.LightBackgroundColor
         
         // Initializde collection view
         let flowLayout = NHAlignmentFlowLayout ()
         flowLayout.scrollDirection = .Vertical
         flowLayout.alignment = .TopLeftAligned
-        flowLayout.estimatedItemSize = CGSize(width: 40, height: 30)
-        flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         self.professionCollectionView.collectionViewLayout = flowLayout
         self.professionCollectionView.backgroundColor = UIColor.whiteColor()
         
@@ -74,11 +74,13 @@ class ProfessionListViewController: UIViewController {
         self.loadProfessions()
     }
     
-    override func willMoveToParentViewController(parent: UIViewController?) {
-        super.willMoveToParentViewController(parent)
-        if let delegate = professionDelegate where parent == nil {
+    // MARK: Actions
+    
+    @IBAction func done(sender: AnyObject) {
+        if let delegate = self.professionDelegate {
             delegate.finishProfessionSelection(selectedProfessions)
         }
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: Help functions
@@ -159,11 +161,20 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 5
+        return 8
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        guard let key = self.professionCategories[safe: indexPath.section], profession = self.professions[key]?[indexPath.row], text = profession.name else {
+                return CGSizeZero
+        }
+        
+        return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont!).width + 16, height: 24)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 40.0)
+        return CGSize(width: collectionView.frame.width, height: 34)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

@@ -26,11 +26,7 @@ class ProfileCollectionLabel: UILabel {
         self.setProperty()
     }
     
-    func setProperty() {
-        // Set border
-        self.layer.borderColor = Constants.General.Color.ThemeColor.CGColor
-        self.layer.borderWidth = 1.0
-        
+    func setProperty() {        
         // Set properties
         self.font = Constants.General.Font.ButtonFont
     }

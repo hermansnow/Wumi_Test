@@ -19,17 +19,31 @@ class ProfileCollectionCell: UICollectionViewCell {
     
     var style = ProfessionCollectionCellStyle.Original {
         didSet {
+            switch (self.style) {
+            case .Original:
+                self.cellLabel.backgroundColor = Constants.General.Color.TitleColor
+                self.backgroundColor = Constants.General.Color.TitleColor
+                self.cellLabel.textColor = Constants.General.Color.InputTextColor
+            case .Selected:
+                self.cellLabel.backgroundColor = Constants.General.Color.ThemeColor
+                self.backgroundColor = Constants.General.Color.ThemeColor
+                self.cellLabel.textColor = Constants.General.Color.TitleColor
+            }
             // Redisplay if value is changed
             if self.style != oldValue {
-                switch (self.style) {
-                case .Original:
-                    self.cellLabel.backgroundColor = UIColor.whiteColor()
-                    self.cellLabel.textColor = UIColor.blackColor()
-                case .Selected:
-                    self.cellLabel.backgroundColor = Constants.General.Color.ThemeColor
-                    self.cellLabel.textColor = Constants.General.Color.TitleColor
-                }
                 self.cellLabel.setNeedsDisplay()
+            }
+        }
+    }
+    
+    var width: CGFloat {
+        get {
+            return self.cellLabel.bounds.size.width
+        }
+        set {
+            if self.cellLabel.bounds.size.width != newValue {
+                self.cellLabel.bounds.size.width = newValue
+                self.sizeToFit()
             }
         }
     }
@@ -38,7 +52,9 @@ class ProfileCollectionCell: UICollectionViewCell {
         super.awakeFromNib()
         
         // Set properties
-        self.cellLabel.backgroundColor = UIColor.whiteColor()
-        self.cellLabel.textColor = UIColor.blackColor()
+        self.style = .Original
+        self.cellLabel.font = Constants.General.Font.ProfileCollectionFont
+        self.layer.borderColor = Constants.General.Color.ThemeColor.CGColor
+        self.layer.borderWidth = 1.0
     }
 }

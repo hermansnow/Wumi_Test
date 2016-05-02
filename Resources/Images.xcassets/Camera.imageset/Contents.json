@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "camera_white_36pt.png",
+      "filename" : "camera normal state 20px.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "camera_white_36pt_2x.png",
+      "filename" : "camera normal state 20px@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "camera_white_36pt_3x.png",
+      "filename" : "camera normal state 20px@3x.png",
       "scale" : "3x"
     }
   ],

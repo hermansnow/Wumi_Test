@@ -125,8 +125,8 @@ class MessageTableViewCell: UITableViewCell {
         self.content = nil
         self.timeStamp = nil
         self.authorView.reset()
-        self.saveButton.delegate = nil
-        self.saveButton.selected = false
+        //self.saveButton.delegate = nil
+        //self.saveButton.selected = false
     }
     
     func highlightString(inout attributeString: NSMutableAttributedString?) {

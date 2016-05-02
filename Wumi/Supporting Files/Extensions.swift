@@ -110,6 +110,21 @@ extension String {
         
         return boundingBox.height
     }
+    
+    func widthWithConstrainedHeight(height: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: CGFloat.max, height: height)
+        
+        let boundingBox = self.boundingRectWithSize(constraintRect, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        
+        return ceil(boundingBox.width)
+    }
+    
+    func getSizeWithFont(font: UIFont)->CGSize {
+        
+        let textSize = NSString(string: self ?? "").sizeWithAttributes([NSFontAttributeName: font])
+        
+        return textSize
+    }
 }
 
 extension UIImage {

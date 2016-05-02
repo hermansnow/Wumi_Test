@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 import BTNavigationDropdownMenu
 
 class ContactTableViewController: UITableViewController {
@@ -81,6 +82,20 @@ class ContactTableViewController: UITableViewController {
         self.loadUsers()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Modify the height of textfield
+        for view in self.resultSearchController.searchBar.subviews {
+            for subView in view.subviews {
+                if let textField = subView as? UITextField {
+                    textField.borderStyle = .None
+                    textField.backgroundColor = UIColor.whiteColor()
+                }
+            }
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
             guard let cell = sender as? ContactTableViewCell,
@@ -104,6 +119,7 @@ class ContactTableViewController: UITableViewController {
         self.resultSearchController.hidesNavigationBarDuringPresentation = false
         self.resultSearchController.searchBar.sizeToFit()
         self.resultSearchController.searchBar.autocapitalizationType = .None;
+        self.resultSearchController.searchBar.tintColor = Constants.General.Color.ThemeColor
         self.resultSearchController.searchBar.barTintColor = Constants.General.Color.BackgroundColor
         self.definesPresentationContext = true
         
@@ -143,6 +159,10 @@ class ContactTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayUsers.count
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 68
+    }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ContactTableViewCell", forIndexPath: indexPath) as! ContactTableViewCell
@@ -167,8 +187,19 @@ class ContactTableViewController: UITableViewController {
         cell.locationLabel.text = "\(user.location)"
             
         // Load favorite status with login user
+        cell.delegate = self
         cell.favoriteButton.selected = self.currentUser.favoriteUsersArray.contains( { $0 == user } )
-        cell.favoriteButton.delegate = self
+        
+        //
+        if !user.emailPublic || user.email.characters.count <= 0 {
+            cell.emailButton.enabled = false
+        }
+        if !user.phonePublic || user.phoneNumber == nil || user.phoneNumber!.characters.count <= 0 {
+            cell.phoneButton.enabled = false
+        }
+        if user == self.currentUser {
+            cell.favoriteButton.enabled = false
+        }
         
         return cell
     }
@@ -298,7 +329,9 @@ extension ContactTableViewController: UISearchBarDelegate, UISearchControllerDel
 extension ContactTableViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
         let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row] else { return }
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition) else { return }
+        
+        guard let user = self.displayUsers[safe: indexPath.row] else { return }
         
         self.currentUser.addFavoriteUser(user) { (result, error) -> Void in
             guard result && error == nil else { return }
@@ -322,6 +355,88 @@ extension ContactTableViewController: FavoriteButtonDelegate {
                 self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
         }
+    }
+    
+    func didChangeSelected(favoriteButton: FavoriteButton, selected: Bool) {
+        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
+        if let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), cell = self.tableView.cellForRowAtIndexPath(indexPath) as? ContactTableViewCell where cell.additionalButton.selected {
+            favoriteButton.alpha = 1.0
+        }
+        else {
+            favoriteButton.alpha = selected ? 1.0: 0.0
+        }
+    }
+}
+
+// MARK: Email button delegate
+
+extension ContactTableViewController: EmailButtonDelegate {
+    func sendEmail(emailButton: EmailButton) {
+        let buttonPosition = emailButton.convertPoint(CGPointZero, toView: self.tableView)
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row], email = user.email else { return }
+        
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposeVC = MFMailComposeViewController()
+            mailComposeVC.mailComposeDelegate = self
+            mailComposeVC.setToRecipients([email])
+            presentViewController(mailComposeVC, animated: true, completion: nil)
+        }
+        else {
+            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
+        }
+    }
+}
+
+// MARK: Phone button delegate
+
+extension ContactTableViewController: PhoneButtonDelegate {
+    func callPhone(phoneButton: PhoneButton) {
+        let buttonPosition = phoneButton.convertPoint(CGPointZero, toView: self.tableView)
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row], phoneNumber = user.phoneNumber else { return }
+        
+        Helper.PopupConfirmationBox(self, boxTitle: nil, message: "Call \(phoneNumber)?", cancelBlock: nil) { (action) -> Void in
+            if let url = NSURL(string: "tel:\(phoneNumber)") where UIApplication.sharedApplication().canOpenURL(url) {
+                UIApplication.sharedApplication().openURL(url)
+            }
+            else {
+                Helper.PopupErrorAlert(self, errorMessage: "Failed to call \(phoneNumber)")
+            }
+        }
+    }
+}
+
+// MARK: Private message button delegate
+
+extension ContactTableViewController: PrivateMessageButtonDelegate {
+    func sendMessage(privateMessageButton: PrivateMessageButton) {
+        // TODO: launch private message
+    }
+}
+
+// MARK: MFMailComposeViewController delegates
+
+extension ContactTableViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        switch (result) {
+        case MFMailComposeResultSent:
+            Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is sent successfully")
+        case MFMailComposeResultSaved:
+            Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is saved in draft folder")
+        case MFMailComposeResultCancelled:
+            Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is cancelled")
+        case MFMailComposeResultFailed:
+            if error != nil {
+                Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
+            }
+            else {
+                Helper.PopupErrorAlert(self, errorMessage: "Send failed")
+            }
+        default:
+            break
+        }
+        
+        // Dimiss the main compose view controller
+        controller.dismissViewControllerAnimated(true, completion: nil)
     }
 }
     
