@@ -54,7 +54,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="zUG-aa-JUc" secondAttribute="height" multiplier="1:1" id="5D1-4R-YgT"/>
                                                 </constraints>
-                                                <state key="normal" backgroundImage="Unfavorite"/>
+                                                <state key="normal" backgroundImage="Star"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3yX-ov-Oc4">
                                                 <rect key="frame" x="33" y="0.0" width="37" height="30"/>
@@ -121,6 +121,6 @@
     </objects>
     <resources>
         <image name="Reply" width="50" height="50"/>
-        <image name="Unfavorite" width="16" height="16"/>
+        <image name="Star" width="16" height="16"/>
     </resources>
 </document>

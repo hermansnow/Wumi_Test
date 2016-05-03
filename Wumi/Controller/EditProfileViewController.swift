@@ -451,7 +451,6 @@ extension EditProfileViewController: UITextFieldDelegate {
         UIView.animateWithDuration(0.5) { () -> Void in
             self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.tableView.frame.size.height - 140, right: 0)
         }
-        
         return true
     }
     
@@ -462,6 +461,10 @@ extension EditProfileViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        textField.backgroundColor = Constants.General.Color.LightBackgroundColor
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
@@ -488,6 +491,8 @@ extension EditProfileViewController: UITextFieldDelegate {
         default:
             break
         }
+        
+        textField.backgroundColor = UIColor.whiteColor()
     }
 }
     

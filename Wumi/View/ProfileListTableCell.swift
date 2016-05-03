@@ -65,7 +65,7 @@ class ProfileListTableCell: ProfileTableCell {
     
     override func systemLayoutSizeFittingSize(targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         
-        let minHeight = max(30, self.collectionView.collectionViewLayout.collectionViewContentSize().height)
+        let minHeight = max(24, self.collectionView.collectionViewLayout.collectionViewContentSize().height)
         
         let size = CGSize(width: targetSize.width,
                          height: minHeight + self.collectionView.frame.origin.y + 10)

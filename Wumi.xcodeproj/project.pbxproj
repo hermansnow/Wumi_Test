@@ -339,7 +339,6 @@
 		DFA93AC31C90DE3600ECA503 /* ProfileInputTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93AC21C90DE3600ECA503 /* ProfileInputTableCell.swift */; };
 		DFA93AC51C90E04000ECA503 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93AC41C90E04000ECA503 /* EditProfileViewController.swift */; };
 		DFA93ACB1C91016A00ECA503 /* ProfileListTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93ACA1C91016A00ECA503 /* ProfileListTableCell.swift */; };
-		DFA93ACD1C910C4C00ECA503 /* ProfileListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93ACC1C910C4C00ECA503 /* ProfileListTableCell.xib */; };
 		DFA93ACF1C910DD700ECA503 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93ACE1C910DD700ECA503 /* ProfileTableCell.swift */; };
 		DFA93AD11C91127800ECA503 /* ProfileCollectionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93AD01C91127800ECA503 /* ProfileCollectionLabel.swift */; };
 		DFA93AD31C91299500ECA503 /* ProfileInputTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93AD21C91299500ECA503 /* ProfileInputTableCell.xib */; };
@@ -376,6 +375,7 @@
 		DFF712BB1CD6D57F00EAEFD2 /* PhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF712BA1CD6D57F00EAEFD2 /* PhotoButton.swift */; };
 		DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF712BC1CD7060100EAEFD2 /* ProfileLabelTableCell.swift */; };
 		DFF712BF1CD7076400EAEFD2 /* ProfileLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */; };
+		DFF712C01CD70B4A00EAEFD2 /* ProfileListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93ACC1C910C4C00ECA503 /* ProfileListTableCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -920,7 +920,6 @@
 			isa = PBXGroup;
 			children = (
 				81BA81471A49DA1800E65899 /* Project */,
-				B1ECD4EF1CCC1F3F00CED9C4 /* LeanChatLib */,
 				DF159E141C7FF74700DB65FF /* Supporting Files */,
 				814C3AC51B69877600E307BB /* Resources */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
@@ -955,6 +954,7 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1ECD4EF1CCC1F3F00CED9C4 /* LeanChatLib */,
 				B1ECD7AB1CCC1F6B00CED9C4 /* libc++.tbd */,
 				DF9F06051C5B6346008CA6DC /* libz.tbd */,
 				DF9F06021C5B5FF0008CA6DC /* libicucore.tbd */,
@@ -1999,7 +1999,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFA93ACD1C910C4C00ECA503 /* ProfileListTableCell.xib in Resources */,
+				DFF712C01CD70B4A00EAEFD2 /* ProfileListTableCell.xib in Resources */,
 				B1ECD6B21CCC1F3F00CED9C4 /* contacts_add_photo@2x.png in Resources */,
 				B1ECD6CD1CCC1F3F00CED9C4 /* rabbit_19_cover@2x.png in Resources */,
 				B1ECD6BD1CCC1F3F00CED9C4 /* rabbit_11_cover@2x.png in Resources */,
@@ -2008,7 +2008,6 @@
 				B1ECD6FD1CCC1F3F00CED9C4 /* tusiji_6.gif in Resources */,
 				B1ECD6FE1CCC1F3F00CED9C4 /* tusiji_6_cover@2x.png in Resources */,
 				B1ECD6F41CCC1F3F00CED9C4 /* tusiji_1_cover@2x.png in Resources */,
-				DFA93ACD1C910C4C00ECA503 /* ProfileListTableCell.xib in Resources */,
 				DF1BE2641C9F2EA300F934EE /* MessageTableViewCell.xib in Resources */,
 				B1ECD7311CCC1F3F00CED9C4 /* SenderVoiceNodePlaying000@2x.png in Resources */,
 				B1ECD71E1CCC1F3F00CED9C4 /* receive.caf in Resources */,
