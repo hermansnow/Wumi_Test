@@ -176,6 +176,7 @@ class ContactTableViewCell: UITableViewCell {
         self.phoneButton.enabled = true
         self.privateMessageButton.enabled = true
         self.emailButton.enabled = true
+        self.favoriteButton.enabled = true
         self.showAdditonalActions(false, withAnimation: false)
     }
     
