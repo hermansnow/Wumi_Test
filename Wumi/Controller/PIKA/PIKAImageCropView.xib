@@ -15,14 +15,14 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vkb-yi-Dc1">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
                         <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t9D-HD-WA4" userLabel="Action Bar">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="bMo-cJ-3x2"/>
                             </constraints>
@@ -41,10 +41,10 @@
                             </items>
                         </toolbar>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOz-Es-g9z">
-                            <rect key="frame" x="0.0" y="44" width="414" height="692"/>
+                            <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                             <subviews>
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Wx-HD-Itm">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 </scrollView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -67,7 +67,6 @@
                 <constraint firstItem="Vkb-yi-Dc1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uN9-Ot-Yam"/>
                 <constraint firstAttribute="bottom" secondItem="Vkb-yi-Dc1" secondAttribute="bottom" id="yjl-K7-22B"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
             <point key="canvasLocation" x="111" y="478"/>
         </view>
     </objects>

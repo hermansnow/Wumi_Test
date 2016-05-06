@@ -84,18 +84,26 @@ class PIKAImageCropViewController: UIViewController {
         
         self.imageContainner.contentMode = .ScaleAspectFill
         
-        self.scrollView.addSubview(imageContainner)
-        self.view.addSubview(self.cropMaskView)
-        
-        self.showImage(fitSize: true, animated: false)
-        self.showCropMask()
-        
         // Add gesture recognizers
         self.cropMaskView.addGestureRecognizer(scrollView.panGestureRecognizer)
         self.cropMaskView.addGestureRecognizer(scrollView.pinchGestureRecognizer!)
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(reset(_:)))
         doubleTapGesture.numberOfTapsRequired = 2
         self.cropMaskView.addGestureRecognizer(doubleTapGesture)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.showImage(fitSize: true, animated: false)
+        self.showCropMask()
+        
+        if !self.scrollView.subviews.contains(self.imageContainner) {
+            self.scrollView.addSubview(imageContainner)
+        }
+        if !self.view.subviews.contains(self.cropMaskView) {
+            self.view.addSubview(self.cropMaskView)
+        }
     }
     
     override func prefersStatusBarHidden() -> Bool {
