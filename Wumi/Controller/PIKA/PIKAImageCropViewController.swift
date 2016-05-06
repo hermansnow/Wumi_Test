@@ -19,12 +19,9 @@ class PIKAImageCropViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var actionBar: UIToolbar!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    @IBOutlet weak var libraryButton: UIButton!
-    @IBOutlet weak var cameraButton: UIButton!
     
     lazy private var imageContainner = UIImageView()
     lazy private var cropMaskView = UIView()
-    lazy private var imagePicker = UIImagePickerController()
     lazy private var cropRect: CGRect = CGRectZero
     
     var cropType: CropType = .Rect
@@ -33,16 +30,17 @@ class PIKAImageCropViewController: UIViewController {
     
     var delegate: PIKAImageCropViewControllerDelegate?
     
-    static let TitleColor = UIColor.whiteColor()
-    static let BackgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
-    static let ThemeColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
+    var titleColor = UIColor.whiteColor()
+    var backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
+    var themeColor = UIColor.cyanColor()
+    var maskColor = UIColor(white: 0.0, alpha: 0.5)
     
     var image: UIImage? {
         didSet {
             if self.image != nil {
                 if self.saveButton != nil {
                     self.saveButton.enabled = true
-                    self.saveButton.tintColor = PIKAImageCropViewController.TitleColor
+                    self.saveButton.tintColor = self.titleColor
                 }
                 
                 if self.image?.size != oldValue?.size {
@@ -53,7 +51,7 @@ class PIKAImageCropViewController: UIViewController {
             else {
                 if self.saveButton != nil {
                     self.saveButton.enabled = false
-                    self.saveButton.tintColor = PIKAImageCropViewController.BackgroundColor
+                    self.saveButton.tintColor = self.backgroundColor
                 }
             }
         }
@@ -74,45 +72,30 @@ class PIKAImageCropViewController: UIViewController {
         self.scrollView.minimumZoomScale = 1.0
         self.scrollView.maximumZoomScale = 5.0
         self.scrollView.delegate = self
-        self.scrollView.backgroundColor = PIKAImageCropViewController.BackgroundColor
+        self.scrollView.backgroundColor = self.backgroundColor
         
-        self.actionBar.barTintColor = PIKAImageCropViewController.ThemeColor
-        self.actionBar.tintColor = PIKAImageCropViewController.TitleColor
+        self.actionBar.barTintColor = self.themeColor
+        self.actionBar.tintColor = self.titleColor
+        self.actionBar.translucent = false
         if self.image == nil {
             self.saveButton.enabled = false
-            self.saveButton.tintColor = PIKAImageCropViewController.BackgroundColor
+            self.saveButton.tintColor = self.backgroundColor
         }
-        
-        self.libraryButton.tintColor = PIKAImageCropViewController.TitleColor
-        self.libraryButton.backgroundColor = PIKAImageCropViewController.ThemeColor
-        
-        self.cameraButton.tintColor = PIKAImageCropViewController.TitleColor
-        self.cameraButton.backgroundColor = PIKAImageCropViewController.ThemeColor
         
         self.imageContainner.contentMode = .ScaleAspectFill
         
         self.scrollView.addSubview(imageContainner)
         self.view.addSubview(self.cropMaskView)
         
+        self.showImage(fitSize: true, animated: false)
+        self.showCropMask()
+        
         // Add gesture recognizers
         self.cropMaskView.addGestureRecognizer(scrollView.panGestureRecognizer)
         self.cropMaskView.addGestureRecognizer(scrollView.pinchGestureRecognizer!)
-        
-        // Set image picker
-        self.imagePicker.navigationBar.barTintColor = PIKAImageCropViewController.ThemeColor
-        self.imagePicker.navigationBar.tintColor = PIKAImageCropViewController.TitleColor
-        self.imagePicker.navigationBar.titleTextAttributes = [
-             NSForegroundColorAttributeName: PIKAImageCropViewController.TitleColor // Title color
-        ]
-        self.imagePicker.delegate = self
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        self.showImage(fitSize: true, animated: false)
-        
-        self.showCropMask()
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(reset(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        self.cropMaskView.addGestureRecognizer(doubleTapGesture)
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -149,7 +132,7 @@ class PIKAImageCropViewController: UIViewController {
     private func showCropMask() {
         // Initialize mask layercropMaskView
         self.cropMaskView.frame = self.contentView.frame
-        self.cropMaskView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+        self.cropMaskView.backgroundColor = self.maskColor
         
         // Add crop view
         if let cropLayer = self.createCropLayer() {
@@ -191,6 +174,8 @@ class PIKAImageCropViewController: UIViewController {
         return shape
     }
     
+    // MARK: Actions
+    
     @IBAction func save(sender: AnyObject) {
         guard let delegate = self.delegate else { return }
         
@@ -219,44 +204,10 @@ class PIKAImageCropViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // Open Camera to take a photo
-    @IBAction func openCamera() {
-        // Check whether camera device is available
-        guard UIImagePickerController.isSourceTypeAvailable(.Camera) else {
-            let alert = UIAlertController(title: "Failed", message: "Camera device is not available.", preferredStyle: .Alert)
-            
-            // Add a dismiss button to dismiss the popup alert
-            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-            
-            // Present alert controller
-            self.presentViewController(alert, animated: true, completion: nil)
-
-            return
-        }
-        
-        self.imagePicker.sourceType = .Camera
-        self.presentViewController(imagePicker, animated: true, completion: nil)
-    }
-    
-    // Open local photo library
-    @IBAction func openPhotoLibrary() {
-        // Check whether photo library is available
-        guard UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) else {
-            let alert = UIAlertController(title: "Failed", message: "Photo library is not available.", preferredStyle: .Alert)
-            
-            // Add a dismiss button to dismiss the popup alert
-            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-            
-            // Present alert controller
-            self.presentViewController(alert, animated: true, completion: nil)
-            
-            return
-        }
-        
-        self.imagePicker.sourceType = .PhotoLibrary
-        self.imagePicker.mediaTypes = ["\(kUTTypeImage)"]
-        
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+    func reset(sender: UITapGestureRecognizer) {
+        self.scrollView.zoomScale = 1.0
+        self.scrollView.contentOffset = CGPoint(x: 0, y: 0)
+        self.showImage(fitSize: true, animated: false)
     }
 }
 
@@ -270,27 +221,13 @@ extension PIKAImageCropViewController: UIScrollViewDelegate {
     }
 }
 
-extension PIKAImageCropViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        picker.dismissViewControllerAnimated(true) { () -> Void in
-            guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
-            
-            self.image = image
-            
-            self.scrollView.zoomScale = 1.0
-            self.scrollView.contentOffset = CGPoint(x: 0, y: 0)
-            
-            self.showImage(fitSize: true, animated: false)
-        }
-    }
-}
-
 protocol PIKAImageCropViewControllerDelegate {
     func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithImage image: UIImage?);
 }
 
 extension UIImageView {
     
+    // Return bounds of displayed image
     func displayedImageBounds() -> CGRect {
         
         let boundsWidth = bounds.size.width
@@ -308,5 +245,24 @@ extension UIImageView {
         let height = scale * imageSize.height
         let topLeftY = (boundsHeight - height) * 0.5
         return CGRectMake(0,topLeftY, boundsWidth,height)
+    }
+    
+    // Return image scale factor
+    func imageScaleFactor() -> CGFloat {
+        guard let image = self.image else { return 1.0 }
+        
+        let widthScale = self.bounds.size.width / image.size.width
+        let heightScale = self.bounds.size.height / image.size.height
+        
+        if (self.contentMode == .ScaleToFill) {
+            return widthScale == heightScale ? widthScale : 0
+        }
+        if (self.contentMode == .ScaleAspectFit) {
+            return min(widthScale, heightScale)
+        }
+        if (self.contentMode == .ScaleAspectFill) {
+            return max(widthScale, heightScale)
+        }
+        return 1.0;
     }
 }

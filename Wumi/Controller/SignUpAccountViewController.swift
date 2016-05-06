@@ -176,10 +176,8 @@ extension SignUpAccountViewController: UITextFieldDelegate {
 
 extension SignUpAccountViewController: AvatarImageDelegate, UINavigationControllerDelegate {
     func singleTap(imageView: AvatarImageView) {
-        let picker = PIKAImageCropViewController()
+        let picker = SelectPhotoActionSheet()
         
-        picker.cropType = .Circle
-        picker.cropCircleRadius = self.view.bounds.width * 0.5
         picker.delegate = self
         
         presentViewController(picker, animated: true, completion: nil)

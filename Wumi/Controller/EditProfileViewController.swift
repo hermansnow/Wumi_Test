@@ -115,10 +115,8 @@ class EditProfileViewController: UIViewController {
         // Dismiss current first responder
         self.view.endEditing(true)
         
-        let picker = PIKAImageCropViewController()
+        let picker = SelectPhotoActionSheet()
         
-        picker.cropType = .Circle
-        picker.cropCircleRadius = self.view.bounds.width * 0.5
         picker.delegate = self
         
         self.presentViewController(picker, animated: true, completion: nil)

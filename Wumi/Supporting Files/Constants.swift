@@ -24,6 +24,7 @@ struct Constants {
             static let ProfileTitleColor = UIColor(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
             static let MaskColor = UIColor(white: 1.0, alpha: 0.9)
             static let LightMaskColor = UIColor(white: 1.0, alpha: 0.6)
+            static let DarkMaskColor = UIColor(white: 0.0, alpha: 0.6)
         }
         
         struct Font {
@@ -47,9 +48,12 @@ struct Constants {
         }
         
         struct Size {
-            struct  AvatarThumbnail {
+            struct AvatarThumbnail {
                 static let Height = 40.0
                 static let Width = 40.0
+            }
+            struct AvatarImage {
+                static let WidthHeightRatio = 375.0 / 240.0
             }
         }
     }

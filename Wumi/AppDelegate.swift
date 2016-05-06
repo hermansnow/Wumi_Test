@@ -69,6 +69,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Set up application level appearance
     private func setupAppearance() {
+        // Set general tint color
+        self.window?.tintColor = Constants.General.Color.ThemeColor
+        
         // Set Navigation bar color
         UINavigationBar.appearance().barTintColor = Constants.General.Color.ThemeColor
         UINavigationBar.appearance().tintColor = Constants.General.Color.TintColor

@@ -11,8 +11,7 @@ import MobileCoreServices
 
 class SelectPhotoActionSheet: UIAlertController {
 
-    var delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>?
-    var launchViewController: UIViewController?
+    var delegate: PIKAImageCropViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +36,10 @@ class SelectPhotoActionSheet: UIAlertController {
         }
         
         let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self.delegate
+        imagePicker.delegate = self
         imagePicker.sourceType = .Camera
         
-        if let parentViewController = self.launchViewController {
+        if let parentViewController = self.delegate as? UIViewController {
             parentViewController.presentViewController(imagePicker, animated: true, completion: nil)
         }
     }
@@ -54,12 +53,36 @@ class SelectPhotoActionSheet: UIAlertController {
         }
         
         let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self.delegate
+        imagePicker.delegate = self
         imagePicker.sourceType = .PhotoLibrary
         imagePicker.mediaTypes = ["\(kUTTypeImage)"]
         
-        if let parentViewController = self.launchViewController {
+        if let parentViewController = self.delegate as? UIViewController {
             parentViewController.presentViewController(imagePicker, animated: true, completion: nil)
+        }
+    }
+}
+
+extension SelectPhotoActionSheet: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        picker.dismissViewControllerAnimated(true) { () -> Void in
+            guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+            
+            let imageCropper = PIKAImageCropViewController()
+            
+            imageCropper.image = image
+            imageCropper.cropType = .Rect
+            let cropperWidth = picker.view.bounds.width - 2
+            imageCropper.cropRectSize = CGSize(width: cropperWidth, height: cropperWidth / CGFloat(Constants.General.Size.AvatarImage.WidthHeightRatio))
+            imageCropper.backgroundColor = Constants.General.Color.BackgroundColor
+            imageCropper.themeColor = Constants.General.Color.ThemeColor
+            imageCropper.titleColor = Constants.General.Color.TitleColor
+            imageCropper.maskColor = Constants.General.Color.DarkMaskColor
+            imageCropper.delegate = self.delegate
+            
+            if let parentViewController = self.delegate as? UIViewController {
+                parentViewController.presentViewController(imageCropper, animated: true, completion: nil)
+            }
         }
     }
 }
