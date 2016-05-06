@@ -37,12 +37,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupAVOSCloudSetting()
         
         CDChatManager.sharedManager().userDelegate = IMUserFactory()
-        CDChatManager.sharedManager().openWithClientId(User.currentUser().email, callback: { (result: Bool, error: NSError!) -> Void in
-            if (error == nil) {
-                // Set initial view controller
-                self.setupLaunchViewController()
-            }
-        })
+        if let user = User.currentUser() {
+            CDChatManager.sharedManager().openWithClientId(user.email, callback: { (result: Bool, error: NSError!) -> Void in
+                if (error == nil) {
+                    // Set initial view controller
+                    self.setupLaunchViewController()
+                }
+            })
+        } else {
+            self.setupLaunchViewController()
+        }
         
         return true
     }
@@ -99,8 +103,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupLaunchViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let user = User.currentUser() {
-            user.fetchInBackgroundWithBlock(nil)
-            window?.rootViewController = storyboard.instantiateInitialViewController()
+            CDChatManager.sharedManager().openWithClientId(user.email, callback: { (result: Bool, error: NSError!) -> Void in
+                if (error == nil) {
+                    user.fetchInBackgroundWithBlock(nil)
+                    self.window?.rootViewController = storyboard.instantiateInitialViewController()
+                }
+            })
+//            user.fetchInBackgroundWithBlock(nil)
+//            window?.rootViewController = storyboard.instantiateInitialViewController()
         }
         else {
             let loginNavigation = storyboard.instantiateViewControllerWithIdentifier("Sign In Navigation Controller")
