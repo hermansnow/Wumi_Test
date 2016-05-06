@@ -44,6 +44,9 @@ class EditProfileViewController: UIViewController {
         self.tableView.separatorStyle = .None
         self.tableView.backgroundColor = Constants.General.Color.BackgroundColor
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.tableView.bounces = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissInputView))
+        self.tableView.addGestureRecognizer(tap)
         
         // Initialize the graduation year picker view
         self.graduationYearPickerView = GraduationYearPickerView(frame: CGRect(origin: CGPoint(x: 0, y: view.frame.height / 3 * 2),
@@ -73,9 +76,23 @@ class EditProfileViewController: UIViewController {
         // Add delegates
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+        // Setup keyboard Listener
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(keyboardWillShown(_:)),
+                                                         name: UIKeyboardWillShowNotification,
+                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(keyboardWillHiden(_:)),
+                                                         name: UIKeyboardWillHideNotification,
+                                                         object: nil)
 
         // Fetch user data. We will refetch current user to guarantee to show latest data
         self.displayUserData()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -93,13 +110,44 @@ class EditProfileViewController: UIViewController {
         }
     }
     
-    // Dismiss inputView when touching any other areas on the screen
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.view.endEditing(true)
-        super.touchesBegan(touches, withEvent: event)
+    // MARK: Actions
+    // Scroll view when showing the keyboard
+    func keyboardWillShown(notification: NSNotification) {
+        guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
+            keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue(),
+            keyboardDurVal = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey],
+            textField = UIResponder.currentFirstResponder() as? UITextField else { return }
+        
+        // If active text field is hidden by keyboard, scroll it so it's visible
+        if let textFieldOrigin = textField.superview?.convertPoint(textField.frame.origin, toView: self.view) {
+            let overlapHeight = textFieldOrigin.y + keyboardRect.size.height - self.view.frame.size.height + textField.frame.size.height
+            guard overlapHeight > 0 else { return }
+            
+            // Get keyboard animation duration
+            var keyboardDuration: NSTimeInterval = 0.0
+            keyboardDurVal.getValue(&keyboardDuration)
+            // Scroll view
+            UIView.animateWithDuration(keyboardDuration, animations: { () -> Void in
+                let currentContentOffset = self.tableView.contentOffset
+                self.tableView.setContentOffset(CGPointMake(currentContentOffset.x, currentContentOffset.y + overlapHeight), animated: false)
+            })
+        }
     }
     
-    // MARK: Actions
+    // Reset view when dismissing the keyboard
+    func keyboardWillHiden(notification: NSNotification) {
+        guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
+            keyboardDurVal = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey] else { return }
+        
+        // Get keyboard animation duration
+        var keyboardDuration: NSTimeInterval = 0.0
+        keyboardDurVal.getValue(&keyboardDuration)
+        // Scroll view
+        UIView.animateWithDuration(keyboardDuration, animations: { () -> Void in
+            self.tableView.contentInset = UIEdgeInsetsZero
+            self.tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        })
+    }
     
     @IBAction func save(sender: AnyObject) {
         // Dismiss current first responder

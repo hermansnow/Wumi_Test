@@ -56,7 +56,8 @@ class ScrollTextFieldViewController: UIViewController {
             keyboardDurVal.getValue(&keyboardDuration)
             // Scroll view
             UIView.animateWithDuration(keyboardDuration, animations: { () -> Void in
-                self.formScrollView.setContentOffset(CGPointMake(0.0, overlapHeight), animated: false)
+                let currentContentOffset = self.formScrollView.contentOffset
+                self.formScrollView.setContentOffset(CGPointMake(currentContentOffset.x, currentContentOffset.y + overlapHeight), animated: false)
             })
         }
     }
@@ -73,15 +74,5 @@ class ScrollTextFieldViewController: UIViewController {
         UIView.animateWithDuration(keyboardDuration, animations: { () -> Void in
             self.formScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         })
-    }
-    
-    // Dismiss inputView when touching any other areas on the screen
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.view.endEditing(true)
-        super.touchesBegan(touches, withEvent: event)
-    }
-    
-    func dismissInputView() {
-        self.view.endEditing(true)
     }
 }

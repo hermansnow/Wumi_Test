@@ -155,6 +155,18 @@ extension UIImage {
 
 }
 
+extension UIViewController {
+    // Dismiss inputView when touching any other areas on the screen
+    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+    }
+    
+    func dismissInputView() {
+        self.view.endEditing(true)
+    }
+}
+
 extension UIResponder {
     private weak static var _currentFirstResponder: UIResponder? = nil
     

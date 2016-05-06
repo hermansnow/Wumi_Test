@@ -60,6 +60,9 @@ class ContactViewController: UIViewController {
         self.tableView.separatorStyle = .None
         self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: 20))
         self.tableView.keyboardDismissMode = .OnDrag
+        self.tableView.bounces = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissInputView))
+        self.tableView.addGestureRecognizer(tap)
         
         // Initialize the mask view
         self.maskView.backgroundColor = Constants.General.Color.LightMaskColor
@@ -122,12 +125,6 @@ class ContactViewController: UIViewController {
     // Resize text view when dismissing the keyboard
     func keyboardWillHiden(notification: NSNotification) {
         self.privateMessageWrapperView.frame = CGRect(origin: CGPoint(x: self.privateMessageWrapperView.frame.origin.x, y: self.view.bounds.size.height - self.privateMessageWrapperView.bounds.size.height), size: self.privateMessageWrapperView.bounds.size)
-    }
-    
-    // Dismiss inputView when touching any other areas on the screen
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.view.endEditing(true)
-        super.touchesBegan(touches, withEvent: event)
     }
     
     func addPrivateMessageInputField() {

@@ -80,12 +80,6 @@ class SigninViewController: UIViewController {
         self.passwordTextField.drawUnderlineBorder()
     }
     
-    // Dismiss inputView when touching any other areas on the screen
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.view.endEditing(true)
-        super.touchesBegan(touches, withEvent: event)
-    }
-    
     // MARK: Actions
     
     // Sign in with username/ password filled in
