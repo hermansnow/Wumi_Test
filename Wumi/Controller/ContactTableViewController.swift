@@ -410,6 +410,18 @@ extension ContactTableViewController: PhoneButtonDelegate {
 extension ContactTableViewController: PrivateMessageButtonDelegate {
     func sendMessage(privateMessageButton: PrivateMessageButton) {
         // TODO: launch private message
+        let buttonPosition = privateMessageButton.convertPoint(CGPointZero, toView: self.tableView)
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row], email = user.email else { return }
+        
+        CDChatManager.sharedManager().fetchConversationWithOtherId(email, callback: { (conv: AVIMConversation!, error: NSError!) -> Void in
+            if (error != nil) {
+                print("error: \(error)")
+            } else {
+                let chatRoomVC = ChatRoomViewController(conversation: conv)
+                self.navigationController?.pushViewController(chatRoomVC, animated: true)
+            }
+        })
+
     }
 }
 

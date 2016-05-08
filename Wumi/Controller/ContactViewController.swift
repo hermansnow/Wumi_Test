@@ -132,6 +132,7 @@ class ContactViewController: UIViewController {
         self.privateMessageTextInputField.font = Constants.General.Font.InputFont
         self.privateMessageTextInputField.placeholder = "Send Message..."
         self.privateMessageButton.enabled = false
+        self.privateMessageButton.delegate = self
         self.privateMessageTextInputField.delegate = self
         self.privateMessageTextInputField.addTarget(self, action: #selector(textFieldDidChange(_:)), forControlEvents: .EditingChanged)
     }
@@ -420,6 +421,29 @@ extension ContactViewController: UITextFieldDelegate {
     func textFieldDidChange(textField: UITextField) -> Bool {
         self.privateMessageButton.enabled = textField.text?.characters.count > 0
         return true
+    }
+}
+
+// MARK: PrivateMessage button delegate
+
+extension ContactViewController: PrivateMessageButtonDelegate {
+    func sendMessage(privateMessageButton: PrivateMessageButton) {
+        guard let user = self.selectedUser, email = user.email, text = privateMessageTextInputField.text else { return }
+        
+        CDChatManager.sharedManager().sendWelcomeMessageToOther(email, text: text, block: {(result, error) -> Void in
+            if (error != nil) {
+                print("error: \(error)")
+            } else {
+                CDChatManager.sharedManager().fetchConversationWithOtherId(email, callback: { (conv: AVIMConversation!, error: NSError!) -> Void in
+                    if (error != nil) {
+                        print("error: \(error)")
+                    } else {
+                        let chatRoomVC = ChatRoomViewController(conversation: conv)
+                        self.navigationController?.pushViewController(chatRoomVC, animated: true)
+                    }
+                })
+            }
+        })
     }
 }
 
