@@ -27,6 +27,7 @@ class PIKAImageCropViewController: UIViewController {
     var cropType: CropType = .Rect
     var cropRectSize: CGSize = CGSizeZero
     var cropCircleRadius: CGFloat = 0.0
+    var thumbnailSize: CGSize?
     
     var delegate: PIKAImageCropViewControllerDelegate?
     
@@ -95,8 +96,8 @@ class PIKAImageCropViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.showImage(fitSize: true, animated: false)
         self.showCropMask()
+        self.showImage(fitSize: true, center: true,animated: false)
         
         if !self.scrollView.subviews.contains(self.imageContainner) {
             self.scrollView.addSubview(imageContainner)
@@ -110,37 +111,48 @@ class PIKAImageCropViewController: UIViewController {
         return true;
     }
     
-    private func showImage(fitSize fitSize: Bool, animated: Bool) {
+    private func showImage(fitSize fitSize: Bool, center: Bool, animated: Bool) {
         guard self.imageContainner.image != nil else { return }
         
-        if (fitSize) {
+        // Resize the image to fit the size of scrollview
+        if fitSize {
             let width = self.scrollView.frame.size.width
             let height = self.imageContainner.frame.size.height / self.imageContainner.frame.size.width * width
             
             self.imageContainner.frame.size = CGSize(width: width, height: height)
         }
         
-        var offx = self.scrollView.frame.size.width > self.imageContainner.frame.width ? (scrollView.frame.size.width - self.imageContainner.frame.width) / 2 : 0
-        offx = offx > self.cropRect.origin.x ? offx: self.cropRect.origin.x
-        var offy = self.scrollView.frame.size.height > self.imageContainner.frame.height ? (scrollView.frame.size.height - self.imageContainner.frame.height) / 2 : 0
-        offy = offy > self.cropRect.origin.y ? offy: self.cropRect.origin.y
-        
+        // Add inset so that we can move to reach the top/bottom of image
+        var insetX = self.scrollView.frame.size.width > self.imageContainner.frame.width ? (scrollView.frame.size.width - self.imageContainner.frame.width) / 2 : 0
+        insetX = insetX > self.cropRect.origin.x ? insetX: self.cropRect.origin.x
+        var insetY = self.scrollView.frame.size.height > self.imageContainner.frame.height ? (scrollView.frame.size.height - self.imageContainner.frame.height) / 2 : 0
+        insetY = insetY > self.cropRect.origin.y ? insetY: self.cropRect.origin.y
         
         if animated {
             UIView.animateWithDuration(0.3) {
-                self.scrollView.contentInset = UIEdgeInsets(top: offy, left: offx, bottom: offy, right: offx)
+                self.scrollView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
             }
         }
         else {
-            self.scrollView.contentInset = UIEdgeInsets(top: offy, left: offx, bottom: offy, right: offx)
+            self.scrollView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
         }
+        
         self.scrollView.contentSize = self.imageContainner.frame.size
+        
+        // Change offset to move image to center
+        if center {
+            let offY = self.imageContainner.bounds.size.height > self.cropRect.size.height ? insetY - (self.imageContainner.bounds.size.height - self.cropRect.size.height) / 2 : insetY
+            let offX = self.imageContainner.bounds.size.width > self.cropRect.size.width ? insetY - (self.imageContainner.bounds.size.width - self.cropRect.size.width) / 2 : insetX
+            self.scrollView.contentOffset = CGPoint(x: -offX, y: -offY)
+        }
     }
     
     private func showCropMask() {
         // Initialize mask layercropMaskView
         self.cropMaskView.frame = self.contentView.frame
         self.cropMaskView.backgroundColor = self.maskColor
+        self.cropMaskView.layer.borderWidth = 1.0
+        self.cropMaskView.layer.borderColor = self.maskColor.CGColor
         
         // Add crop view
         if let cropLayer = self.createCropLayer() {
@@ -197,12 +209,28 @@ class PIKAImageCropViewController: UIViewController {
             visibleImageRect.size.height *= ratioY
             
             var croppedImage: UIImage?
+            var thumbnail: UIImage?
             if let image = self.image, cgImage = image.CGImage, imageRef = CGImageCreateWithImageInRect(cgImage, visibleImageRect) {
                 croppedImage = UIImage(CGImage: imageRef)
+                
+                // Generate thumbnail if needed
+                if let thumbnailSize = self.thumbnailSize {
+                    let rect = CGRect(x: 0, y: 0, width: thumbnailSize.width, height: thumbnailSize.height)
+                    UIGraphicsBeginImageContext(thumbnailSize)
+                    croppedImage?.drawInRect(rect)
+                    thumbnail = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                }
+                
             }
             
             dispatch_async(dispatch_get_main_queue(), {
-                delegate.imageCropViewController(self, didFinishCropImageWithImage: croppedImage)
+                var info = [String: UIImage]()
+                
+                info["OriginalImage"] = self.image
+                info["CroppedImage"] = croppedImage
+                info["Thumbnail"] = thumbnail
+                delegate.imageCropViewController(self, didFinishCropImageWithInfo: info)
             })
             
         }
@@ -215,7 +243,7 @@ class PIKAImageCropViewController: UIViewController {
     func reset(sender: UITapGestureRecognizer) {
         self.scrollView.zoomScale = 1.0
         self.scrollView.contentOffset = CGPoint(x: 0, y: 0)
-        self.showImage(fitSize: true, animated: false)
+        self.showImage(fitSize: true, center: true, animated: false)
     }
 }
 
@@ -225,12 +253,12 @@ extension PIKAImageCropViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
-        self.showImage(fitSize: false, animated: true)
+        self.showImage(fitSize: false, center: false, animated: true)
     }
 }
 
 protocol PIKAImageCropViewControllerDelegate {
-    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithImage image: UIImage?);
+    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithInfo info: [String: UIImage?])
 }
 
 extension UIImageView {

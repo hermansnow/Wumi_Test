@@ -195,9 +195,9 @@ extension SignUpAccountViewController: DataInputTextFieldDelegate {
 // MARK: UIImagePicker delegate
 
 extension SignUpAccountViewController: PIKAImageCropViewControllerDelegate {
-    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithImage image: UIImage?) {
+    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithInfo info: [String: UIImage?]) {
         cropVC.dismissViewControllerAnimated(true) { () -> Void in
-            if let avatarImage = image {
+            if let avatarImage = info["CroppedImage"] {
                 self.addAvatarImageView.image = avatarImage
                 self.newAvatarImage = avatarImage
             }

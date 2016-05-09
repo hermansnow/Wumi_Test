@@ -66,7 +66,7 @@ class PostViewController: UITableViewController {
         // Initialize comment subview
         self.commentView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 160)
         self.commentTextView.characterLimit = 300  // Limitation for lenght of comment
-        self.currentUser.loadAvatarThumbnail(ScaleToSize: CGSize(width: 20, height: 20)) { (result, error) -> Void in
+        self.currentUser.loadAvatarThumbnail() { (result, error) -> Void in
             guard error == nil else { return }
             self.myUserBannerView.avatarImageView.image = result
         }

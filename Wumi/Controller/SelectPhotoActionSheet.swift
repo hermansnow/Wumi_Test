@@ -72,7 +72,7 @@ extension SelectPhotoActionSheet: UIImagePickerControllerDelegate, UINavigationC
             
             imageCropper.image = image
             imageCropper.cropType = .Rect
-            let cropperWidth = picker.view.bounds.width - 2
+            let cropperWidth = picker.view.bounds.width
             imageCropper.cropRectSize = CGSize(width: cropperWidth, height: cropperWidth / CGFloat(Constants.General.Size.AvatarImage.WidthHeightRatio))
             imageCropper.backgroundColor = Constants.General.Color.BackgroundColor
             imageCropper.themeColor = Constants.General.Color.ThemeColor

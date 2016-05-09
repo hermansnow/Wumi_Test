@@ -50,7 +50,7 @@ struct Constants {
         struct Size {
             struct AvatarThumbnail {
                 static let Height = 40.0
-                static let Width = 40.0
+                static let Width = 62.5
             }
             struct AvatarImage {
                 static let WidthHeightRatio = 375.0 / 240.0

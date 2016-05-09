@@ -175,7 +175,7 @@ class ContactTableViewController: UITableViewController {
             
         // Load avatar image
         cell.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
-        user.loadAvatarThumbnail(ScaleToSize: cell.avatarImageView.frame.size) { (avatarImage, imageError) -> Void in
+        user.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
             guard imageError == nil && avatarImage != nil else {
                 print("\(imageError)")
                 return

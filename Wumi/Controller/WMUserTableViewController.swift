@@ -37,7 +37,7 @@ class WMUserTableViewController: UITableViewController {
         // Show current user's profile
         userDisplayName.text = user.name
         userEmail.text = user.email
-        self.user.loadAvatarThumbnail(ScaleToSize: self.userProfileImageView.frame.size) { (avatarImage, imageError) -> Void in
+        self.user.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
             if imageError == nil && avatarImage != nil {
                 self.userProfileImageView.image = avatarImage
             }

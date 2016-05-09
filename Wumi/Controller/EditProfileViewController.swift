@@ -462,9 +462,9 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
 // MARK: UIImagePicker delegate
 
 extension EditProfileViewController: PIKAImageCropViewControllerDelegate  {
-    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithImage image: UIImage?) {
+    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithInfo info: [String: UIImage?]) {
         cropVC.dismissViewControllerAnimated(true) { () -> Void in
-            guard let profileImage = image else { return }
+            guard let profileImage = info["CroppedImage"] else { return }
             
             self.currentUser.saveAvatarFile(profileImage) { (success, imageError) -> Void in
                 guard success else {
