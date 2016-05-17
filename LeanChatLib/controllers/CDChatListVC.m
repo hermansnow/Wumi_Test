@@ -52,7 +52,7 @@ static NSString *cellIdentifier = @"ContactCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [LZConversationCell registerCellToTableView:self.tableView];
+//    [LZConversationCell registerCellToTableView:self.tableView];
     self.refreshControl = [self getRefreshControl];
     // 当在其它 Tab 的时候，收到消息 badge 增加，所以需要一直监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:kCDNotificationMessageReceived object:nil];
@@ -181,31 +181,9 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LZConversationCell *cell = [LZConversationCell dequeueOrCreateCellByTableView:tableView];
+    ConversationCell *cell = [ConversationCell cellForRowWithTableView:tableView];
     AVIMConversation *conversation = [self.conversations objectAtIndex:indexPath.row];
-    if (conversation.type == CDConversationTypeSingle) {
-        id<CDUserModelDelegate> user = [[CDChatManager manager].userDelegate getUserById:conversation.otherId];
-        cell.nameLabel.text = user.username;
-        if ([self.chatListDelegate respondsToSelector:@selector(defaultAvatarImage)] && user.avatarUrl) {
-            [cell.avatarImageView sd_setImageWithURL:[NSURL URLWithString:user.avatarUrl] placeholderImage:[self.chatListDelegate defaultAvatarImage]];
-        } else {
-            [cell.avatarImageView sd_setImageWithURL:[NSURL URLWithString:user.avatarUrl] placeholderImage:[UIImage imageNamed:@"lcim_conversation_placeholder_avator"]];
-        }
-    } else {
-        [cell.avatarImageView setImage:conversation.icon];
-        cell.nameLabel.text = conversation.displayName;
-    }
-    if (conversation.lastMessage) {
-        cell.messageTextLabel.attributedText = [[CDMessageHelper helper] attributedStringWithMessage:conversation.lastMessage conversation:conversation];
-        cell.timestampLabel.text = [[NSDate dateWithTimeIntervalSince1970:conversation.lastMessage.sendTimestamp / 1000] timeAgoSinceNow];
-    }
-    if (conversation.unreadCount > 0) {
-        if (conversation.muted) {
-            cell.litteBadgeView.hidden = NO;
-        } else {
-            cell.badgeView.badgeText = [NSString stringWithFormat:@"%@", @(conversation.unreadCount)];
-        }
-    }
+    cell.conversation = conversation;
     if ([self.chatListDelegate respondsToSelector:@selector(configureCell:atIndexPath:withConversation:)]) {
         [self.chatListDelegate configureCell:cell atIndexPath:indexPath withConversation:conversation];
     }
@@ -235,7 +213,7 @@ static NSString *cellIdentifier = @"ContactCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [LZConversationCell heightOfCell];
+    return [ConversationCell heightOfCell];
 }
 
 @end

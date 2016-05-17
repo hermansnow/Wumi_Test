@@ -16,6 +16,8 @@
 		9519A6BCABED44F1D7D798F5 /* Pods_Wumi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C897A1341D196EA1C0BC21 /* Pods_Wumi.framework */; };
 		B10C22271CCDC0E10055ED35 /* AVIMEmotionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD4F91CCC1F3F00CED9C4 /* AVIMEmotionMessage.m */; };
 		B10C22281CCDC1760055ED35 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A21CA61B7800B3271B /* PostViewController.swift */; };
+		B12705AC1CE847D000BC21A7 /* ConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B12705AA1CE847D000BC21A7 /* ConversationCell.m */; };
+		B12705AD1CE847D000BC21A7 /* ConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12705AB1CE847D000BC21A7 /* ConversationCell.xib */; };
 		B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15824021C82C40F00D314B3 /* ContactTableViewController.swift */; };
 		B175B2521CB872B800C95B33 /* CommentTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175B2511CB872B800C95B33 /* CommentTextLabel.swift */; };
 		B1997AF61CACDADC0086F8F4 /* CityListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */; };
@@ -389,6 +391,9 @@
 		81BA81781A49E0DB00E65899 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
+		B12705A91CE847D000BC21A7 /* ConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationCell.h; path = view/ConversationCell.h; sourceTree = "<group>"; };
+		B12705AA1CE847D000BC21A7 /* ConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationCell.m; path = view/ConversationCell.m; sourceTree = "<group>"; };
+		B12705AB1CE847D000BC21A7 /* ConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConversationCell.xib; path = view/ConversationCell.xib; sourceTree = "<group>"; };
 		B15824021C82C40F00D314B3 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewController.swift; path = Controller/ContactTableViewController.swift; sourceTree = "<group>"; };
 		B175B2511CB872B800C95B33 /* CommentTextLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTextLabel.swift; path = View/CommentTextLabel.swift; sourceTree = "<group>"; };
 		B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityListTableViewController.swift; path = Controller/CityListTableViewController.swift; sourceTree = "<group>"; };
@@ -986,9 +991,20 @@
 			name = "System Frameworks";
 			sourceTree = "<group>";
 		};
+		B12705A81CE8477900BC21A7 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				B12705A91CE847D000BC21A7 /* ConversationCell.h */,
+				B12705AA1CE847D000BC21A7 /* ConversationCell.m */,
+				B12705AB1CE847D000BC21A7 /* ConversationCell.xib */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
 		B1ECD4EF1CCC1F3F00CED9C4 /* LeanChatLib */ = {
 			isa = PBXGroup;
 			children = (
+				B12705A81CE8477900BC21A7 /* view */,
 				B1ECD4F01CCC1F3F00CED9C4 /* controllers */,
 				B1ECD4F51CCC1F3F00CED9C4 /* data */,
 				B1ECD5091CCC1F3F00CED9C4 /* LeanChatLib.h */,
@@ -2038,6 +2054,7 @@
 				B1ECD6BC1CCC1F3F00CED9C4 /* rabbit_11.gif in Resources */,
 				B1ECD7271CCC1F3F00CED9C4 /* RecordingSignal002@2x.png in Resources */,
 				B1ECD73F1CCC1F3F00CED9C4 /* sharemore_wxtalk@2x.png in Resources */,
+				B12705AD1CE847D000BC21A7 /* ConversationCell.xib in Resources */,
 				B1ECD6E21CCC1F3F00CED9C4 /* rabbit_8_cover@2x.png in Resources */,
 				B1ECD6BF1CCC1F3F00CED9C4 /* rabbit_12_cover@2x.png in Resources */,
 				B1ECD7261CCC1F3F00CED9C4 /* RecordingSignal001@2x.png in Resources */,
@@ -2295,6 +2312,7 @@
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,
 				DF4F53341CD5A967009F3D2E /* PrivateMessageButton.swift in Sources */,
 				DF173EF31C86A58600018B4A /* Helper.swift in Sources */,
+				B12705AC1CE847D000BC21A7 /* ConversationCell.m in Sources */,
 				DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */,
 				DF4F532F1CD30F7E009F3D2E /* EmailButton.swift in Sources */,
 				DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */,

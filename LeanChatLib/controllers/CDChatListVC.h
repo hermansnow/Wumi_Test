@@ -7,7 +7,7 @@
 //
 
 #import "AVIMConversation+Custom.h"
-#import "LZConversationCell.h"
+#import "ConversationCell.h"
 
 @class CDChatListVC;
 
@@ -37,7 +37,7 @@
  *  @param indexPath
  *  @param conversation 相应的对话
  */
-- (void)configureCell:(LZConversationCell *)cell atIndexPath:(NSIndexPath *)indexPath withConversation:(AVIMConversation *)conversation;
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withConversation:(AVIMConversation *)conversation;
 
 - (void)prepareConversationsWhenLoad:(NSArray *)conversations completion:(AVIMBooleanResultBlock)completion;
 

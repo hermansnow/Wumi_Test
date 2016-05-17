@@ -263,7 +263,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         User.fetchUserInBackground(objectId: self.objectId, block: block)
     }
 
-    private class func cacheUserData(user: User) {
+    public class func cacheUserData(user: User) {
         //BackupUser.saveUser(user)
         
         // Save into local cache

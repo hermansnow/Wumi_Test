@@ -430,17 +430,19 @@ extension ContactViewController: PrivateMessageButtonDelegate {
     func sendMessage(privateMessageButton: PrivateMessageButton) {
         guard let user = self.selectedUser, email = user.email, text = privateMessageTextInputField.text else { return }
         
-        CDChatManager.sharedManager().sendWelcomeMessageToOther(email, text: text, block: {(result, error) -> Void in
+        CDChatManager.sharedManager().sendWelcomeMessageToOther(user.objectId, text: text, block: {(result, error) -> Void in
             if (error != nil) {
                 print("error: \(error)")
             } else {
-                CDChatManager.sharedManager().fetchConversationWithOtherId(email, callback: { (conv: AVIMConversation!, error: NSError!) -> Void in
+                CDChatManager.sharedManager().fetchConversationWithOtherId(user.objectId, callback: { (conv: AVIMConversation!, error: NSError!) -> Void in
                     if (error != nil) {
                         print("error: \(error)")
                     } else {
                         let chatRoomVC = ChatRoomViewController(conversation: conv)
                         self.navigationController?.pushViewController(chatRoomVC, animated: true)
                     }
+                    self.privateMessageTextInputField.text = ""
+                    self.dismissInputView()
                 })
             }
         })
