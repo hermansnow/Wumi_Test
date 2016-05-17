@@ -92,7 +92,7 @@ class SigninViewController: UIViewController {
                 self.passwordTextField.actionHolder = self.forgotPasswordButton
                 return
             }
-            CDChatManager.sharedManager().openWithClientId(User.currentUser().email, callback: { (result: Bool, error: NSError!) -> Void in
+            CDChatManager.sharedManager().openWithClientId(User.currentUser().objectId, callback: { (result: Bool, error: NSError!) -> Void in
                 if (error == nil) {
                     self.performSegueWithIdentifier("Launch Main View", sender: self)
                 }

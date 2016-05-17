@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupLaunchViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let user = User.currentUser() {
-            CDChatManager.sharedManager().openWithClientId(user.email, callback: { (result: Bool, error: NSError!) -> Void in
+            CDChatManager.sharedManager().openWithClientId(user.objectId, callback: { (result: Bool, error: NSError!) -> Void in
                 if (error == nil) {
                     user.fetchInBackgroundWithBlock(nil)
                     self.window?.rootViewController = storyboard.instantiateInitialViewController()
