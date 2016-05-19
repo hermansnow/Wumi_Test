@@ -17,6 +17,7 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var content: String?
     @NSManaged var commentCount: Int
     @NSManaged var categories: [PostCategory]
+    @NSManaged var favoriteUsers: [User]
     
     // MARK: Initializer and subclassing functions
     

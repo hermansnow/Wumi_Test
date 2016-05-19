@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Gxt-hb-BOe">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Notifications-->
+        <scene sceneID="lfu-mw-E7D">
+            <objects>
+                <tableViewController storyboardIdentifier="Notification Controller" id="PVI-fZ-yiy" customClass="NotificationTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="110" sectionHeaderHeight="28" sectionFooterHeight="28" id="rJ1-7f-CbY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="TsH-JW-8tR" customClass="NotificationTableViewCell" customModule="Wumi" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="110"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TsH-JW-8tR" id="alM-Iq-Mep">
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="109"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="7px-sl-tGB" kind="show" identifier="Show Post" id="ZbC-Kn-rBR"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="PVI-fZ-yiy" id="8uE-ZV-A96"/>
+                            <outlet property="delegate" destination="PVI-fZ-yiy" id="aY2-xw-wF8"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Notifications" id="Uan-8Z-wYA"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZGQ-Te-N8r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="331" y="256"/>
+        </scene>
+        <!--PostContentScene-->
+        <scene sceneID="ABi-YP-OWV">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="PostContentScene" id="7px-sl-tGB" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WLu-Ir-TBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="818.5" y="282"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eln-Zv-lqP">
+            <objects>
+                <navigationController id="Gxt-hb-BOe" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" selectedImage="Camera" id="pmi-nH-dPc"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="P7S-Ag-4wE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="PVI-fZ-yiy" kind="relationship" relationship="rootViewController" id="sx4-F1-K9N"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LiG-EB-vdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-489" y="256"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Camera" width="22" height="19"/>
+    </resources>
+</document>

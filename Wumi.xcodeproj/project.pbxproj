@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02932A9C1CEE6DE2001220E8 /* PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02932A9B1CEE6DE2001220E8 /* PushNotification.swift */; };
+		02932A9F1CEE6E07001220E8 /* Notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02932A9D1CEE6E07001220E8 /* Notification.storyboard */; };
+		02932AA21CEE6EA5001220E8 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02932AA11CEE6EA5001220E8 /* NotificationTableViewController.swift */; };
+		02932AA51CEE6ECC001220E8 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02932AA31CEE6ECC001220E8 /* NotificationTableViewCell.xib */; };
+		02932AA61CEE6ECC001220E8 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02932AA41CEE6ECC001220E8 /* NotificationTableViewCell.swift */; };
 		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81761A49E0D500E65899 /* libsqlite3.dylib */; };
@@ -381,6 +386,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02932A9B1CEE6DE2001220E8 /* PushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushNotification.swift; path = Model/PushNotification.swift; sourceTree = "<group>"; };
+		02932A9E1CEE6E07001220E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Notification.storyboard; sourceTree = SOURCE_ROOT; };
+		02932AA11CEE6EA5001220E8 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationTableViewController.swift; path = Controller/NotificationTableViewController.swift; sourceTree = "<group>"; };
+		02932AA31CEE6ECC001220E8 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NotificationTableViewCell.xib; path = View/NotificationTableViewCell.xib; sourceTree = "<group>"; };
+		02932AA41CEE6ECC001220E8 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationTableViewCell.swift; path = View/NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		0D932665988FC790685577AA /* Pods-Wumi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.debug.xcconfig"; sourceTree = "<group>"; };
 		54C897A1341D196EA1C0BC21 /* Pods_Wumi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wumi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -910,6 +920,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02932AA01CEE6E92001220E8 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				02932AA11CEE6EA5001220E8 /* NotificationTableViewController.swift */,
+			);
+			name = Notification;
+			sourceTree = "<group>";
+		};
 		814C3AC51B69877600E307BB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -944,6 +962,7 @@
 		81BA81471A49DA1800E65899 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				02932A9D1CEE6E07001220E8 /* Notification.storyboard */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
 				B1ECD7AE1CCC240900CED9C4 /* Inbox.storyboard */,
 				DFA93ABB1C8F8ECB00ECA503 /* LaunchScreen.storyboard */,
@@ -1839,6 +1858,7 @@
 		DF5E3D381BE9457900F44FFF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				02932A9B1CEE6DE2001220E8 /* PushNotification.swift */,
 				DF5E3D441BE9465000F44FFF /* User.swift */,
 				DF7E3B4A1C92324D000E8741 /* Profession.swift */,
 				DF1BE2681C9F9C7500F934EE /* Post.swift */,
@@ -1858,6 +1878,7 @@
 		DF5E3D3D1BE9461300F44FFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				02932AA01CEE6E92001220E8 /* Notification */,
 				DF4F53291CCD9067009F3D2E /* PIKA */,
 				DFA74C201BF8215900609E83 /* MainTabBarController.swift */,
 				DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */,
@@ -1873,6 +1894,8 @@
 		DFA93AC11C90DDC000ECA503 /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
+				02932AA31CEE6ECC001220E8 /* NotificationTableViewCell.xib */,
+				02932AA41CEE6ECC001220E8 /* NotificationTableViewCell.swift */,
 				DFA93AD21C91299500ECA503 /* ProfileInputTableCell.xib */,
 				DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */,
 				DFA93ACC1C910C4C00ECA503 /* ProfileListTableCell.xib */,
@@ -2068,6 +2091,7 @@
 				B1ECD7151CCC1F3F00CED9C4 /* MessageVideoPlay@2x.png in Resources */,
 				B1ECD6B31CCC1F3F00CED9C4 /* contacts_add_scan@2x.png in Resources */,
 				B1ECD6FB1CCC1F3F00CED9C4 /* tusiji_5.gif in Resources */,
+				02932A9F1CEE6E07001220E8 /* Notification.storyboard in Resources */,
 				B1ECD7301CCC1F3F00CED9C4 /* send.caf in Resources */,
 				DFA93AD31C91299500ECA503 /* ProfileInputTableCell.xib in Resources */,
 				B1F045231CB619080025CF7D /* country_state_city.plist in Resources */,
@@ -2181,6 +2205,7 @@
 				DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */,
 				B1ECD6AA1CCC1F3F00CED9C4 /* AddGroupMemberBtn@2x.png in Resources */,
 				B1ECD7351CCC1F3F00CED9C4 /* SenderVoiceNodePlaying@2x.png in Resources */,
+				02932AA51CEE6ECC001220E8 /* NotificationTableViewCell.xib in Resources */,
 				B1ECD71A1CCC1F3F00CED9C4 /* multiMedia_HL@2x.png in Resources */,
 				B1ECD6BE1CCC1F3F00CED9C4 /* rabbit_12.gif in Resources */,
 				B1ECD7331CCC1F3F00CED9C4 /* SenderVoiceNodePlaying002@2x.png in Resources */,
@@ -2313,6 +2338,7 @@
 				DF4F53341CD5A967009F3D2E /* PrivateMessageButton.swift in Sources */,
 				DF173EF31C86A58600018B4A /* Helper.swift in Sources */,
 				B12705AC1CE847D000BC21A7 /* ConversationCell.m in Sources */,
+				02932AA61CEE6ECC001220E8 /* NotificationTableViewCell.swift in Sources */,
 				DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */,
 				DF4F532F1CD30F7E009F3D2E /* EmailButton.swift in Sources */,
 				DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */,
@@ -2357,6 +2383,7 @@
 				B1ECD7791CCC1F4000CED9C4 /* XHEmotionManager.m in Sources */,
 				B1ECD7B71CCC2AA800CED9C4 /* ChatRoomViewController.swift in Sources */,
 				DFA93AD71C912AFB00ECA503 /* ProfileInputSwitchTableCell.swift in Sources */,
+				02932A9C1CEE6DE2001220E8 /* PushNotification.swift in Sources */,
 				DFD90A151CAB87A1003A3B46 /* ComposePostView.swift in Sources */,
 				B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */,
 				B1ECD74D1CCC1F3F00CED9C4 /* LZStatusView.m in Sources */,
@@ -2414,6 +2441,7 @@
 				B1ECD78A1CCC1F4000CED9C4 /* SETextMagnifierCaret.m in Sources */,
 				B1ECD7701CCC1F4000CED9C4 /* XHMessageAvatorFactory.m in Sources */,
 				B1ECD7731CCC1F4000CED9C4 /* XHMessageVoiceFactory.m in Sources */,
+				02932AA21CEE6EA5001220E8 /* NotificationTableViewController.swift in Sources */,
 				B1ECD77B1CCC1F4000CED9C4 /* XHShareMenuItem.m in Sources */,
 				B1ECD7591CCC1F3F00CED9C4 /* UIView+XHBadgeView.m in Sources */,
 				B1ECD7991CCC1F4000CED9C4 /* XHMessageDisplayTextView.m in Sources */,
@@ -2460,6 +2488,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		02932A9D1CEE6E07001220E8 /* Notification.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02932A9E1CEE6E07001220E8 /* Base */,
+			);
+			name = Notification.storyboard;
+			sourceTree = "<group>";
+		};
 		814C3AC61B69877600E307BB /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

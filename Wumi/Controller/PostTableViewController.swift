@@ -352,6 +352,8 @@ extension PostTableViewController: FavoriteButtonDelegate {
             guard result && error == nil else { return }
             
             favoriteButton.selected = true
+            post.favoriteUsers.appendUniqueObject(self.currentUser)
+            post.saveInBackground()
         }
     }
     
@@ -363,6 +365,8 @@ extension PostTableViewController: FavoriteButtonDelegate {
             guard result && error == nil else { return }
             
             favoriteButton.selected = false
+            post.favoriteUsers.removeObject(self.currentUser)
+            post.saveInBackground()
             
             // Remove cell if we are on the Saved Search Type which should only show saved posts
             if self.searchType == .Saved {

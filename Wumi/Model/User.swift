@@ -28,11 +28,13 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     @NSManaged var favoriteUsers: AVRelation?
     @NSManaged var professions: [Profession]
     @NSManaged var savedPosts: AVRelation?
+    @NSManaged var pushNotifications: AVRelation?
     
     // Properties should not be saved into PFUser
     var confirmPassword: String?
     lazy var favoriteUsersArray: [User] = []
     lazy var savedPostsArray: [Post] = []
+    lazy var pushNotificationsArray: [PushNotification] = []
     var maxCacheAge: NSTimeInterval? = 3600 * 48
     var expireAt: NSDate? = nil
     

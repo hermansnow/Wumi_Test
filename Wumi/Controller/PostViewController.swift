@@ -295,10 +295,53 @@ class PostViewController: UITableViewController {
             }
             self.loadData()
         }
+        
+        // send push notification to users that saved this post
+        for user in post.favoriteUsers
+        {
+            if(!(user == self.currentUser))
+            {
+                sendPushForPost(post, toUser:user, isPostAuthor: false)
+            }
+        }
+        
+        // send push notification to the author of this post
+        guard let toUser = post.author else { return }
+        if(toUser == self.currentUser) {return}
+        sendPushForPost(post, toUser: toUser, isPostAuthor: true)
     }
     
     func showUserContact(recognizer: UITapGestureRecognizer) {
         self.performSegueWithIdentifier("Show Contact", sender: recognizer.view)
+    }
+    
+    func sendPushForPost(post: Post, toUser: User, isPostAuthor: Bool)
+    {
+        let pushNotification = PushNotification.init(fromUser: self.currentUser, toUser: toUser, post: post, isPostAuthor: isPostAuthor)
+        
+        pushNotification.saveInBackgroundWithBlock { (success, error) -> Void in
+            if !success {
+                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
+            }
+            else {
+                // Create our Installation query
+                let pushQuery = AVInstallation.query()
+                pushQuery.whereKey("owner", equalTo: pushNotification.toUser);
+                let pushMiddleMessage = isPostAuthor ? " replied to your post " : " replied to your saved post "
+                
+                let data: [NSObject : AnyObject] = [
+                    "alert" : self.currentUser.name! + pushMiddleMessage + post.title!,
+                    "badge" : "Increment"
+                ]
+                
+                let push: AVPush = AVPush()
+                AVPush.setProductionMode(false)
+                push.setQuery(pushQuery)
+                push.setData(data)
+                push.sendPushInBackground()
+            }
+        }
+        
     }
     
     // Pop up comment view when showing the keyboard
@@ -379,6 +422,8 @@ extension PostViewController: FavoriteButtonDelegate {
             
             self.isSaved = true
             favoriteButton.selected = self.isSaved
+            post.favoriteUsers.appendUniqueObject(self.currentUser)
+            post.saveInBackground()
         }
     }
     
@@ -389,6 +434,8 @@ extension PostViewController: FavoriteButtonDelegate {
             
             self.isSaved = false
             favoriteButton.selected = self.isSaved
+            post.favoriteUsers.removeObject(self.currentUser)
+            post.saveInBackground()
         }
     }
 }

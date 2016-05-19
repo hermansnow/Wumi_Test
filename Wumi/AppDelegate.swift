@@ -16,6 +16,8 @@ import CoreData
 // If you want to use Crash Reporting - uncomment this line
 // import ParseCrashReporting
 
+let APNSReceivedNotificationIdentifier = "APNSReceivedNotification"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -48,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.setupLaunchViewController()
         }
         
+        AVOSCloud.registerForRemoteNotification()
+        
         return true
     }
     
@@ -63,12 +67,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DataManager.sharedDataManager.cleanMemoryCache()
     }
     
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        guard let currentUser = User.currentUser() else { return }
+        PushNotification().loadPushNotifications(currentUser) { (results, error) -> Void in
+            guard results.count > 0 && error == nil else { return }
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(APNSReceivedNotificationIdentifier, object:nil)
+        }
+        
+    }
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        guard let currentInstallation = AVInstallation.currentInstallation() else {return}
+        currentInstallation.setDeviceTokenFromData(deviceToken)
+        currentInstallation.saveInBackground()
+    }
+    
     // Register classes
     private func registerClass() {
         Profession.registerSubclass()
         Post.registerSubclass()
         PostCategory.registerSubclass()
         Comment.registerSubclass()
+        PushNotification.registerSubclass()
     }
     
     // Set up application level appearance
