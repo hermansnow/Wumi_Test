@@ -21,11 +21,11 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tsO-FS-pM0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="558"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="16"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
                                         <rect key="frame" x="0.0" y="16" width="375" height="461"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="izv-Vt-sbK">
@@ -655,14 +655,14 @@
                                         <rect key="frame" x="0.0" y="235" width="375" height="142"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kV-ts-7dC" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36.5" y="0.0" width="302" height="64.5"/>
+                                                <rect key="frame" x="37" y="0.0" width="302" height="65"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gj1-Ez-EN1" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36.5" y="77.5" width="302" height="64.5"/>
+                                                <rect key="frame" x="37" y="78" width="302" height="65"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
@@ -773,7 +773,7 @@
         <!--Contact Table View Controller-->
         <scene sceneID="Oud-mm-z6O">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" clearsSelectionOnViewWillAppear="NO" id="Cb4-n4-RtF" customClass="ContactTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="Cb4-n4-RtF" customClass="ContactTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="110" sectionHeaderHeight="28" sectionFooterHeight="28" id="1ro-un-6fW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1657,6 +1657,6 @@
         <image name="Star" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T0p-az-lM5"/>
+        <segue reference="zkE-Zw-0o6"/>
     </inferredMetricsTieBreakers>
 </document>
