@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KIImagePager
 
 class PostViewController: UITableViewController {
     
@@ -23,6 +24,7 @@ class PostViewController: UITableViewController {
     
     var currentUser = User.currentUser()
     var post: Post?
+    var postAttributedContent: NSAttributedString?
     var replyComment: Comment? = nil
     var updatedAtDateFormatter = NSDateFormatter()
     lazy var comments = [Comment]()
@@ -35,7 +37,7 @@ class PostViewController: UITableViewController {
         super.viewDidLoad()
         
         // Register nib
-        self.tableView.registerNib(UINib(nibName: "MessageTableViewCell", bundle: nil), forCellReuseIdentifier: "MessageTableViewCell")
+        self.tableView.registerNib(UINib(nibName: "PostContentCell", bundle: nil), forCellReuseIdentifier: "PostContentCell")
         self.tableView.registerNib(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: "CommentTableViewCell")
         
         // Setup keyboard Listener
@@ -54,7 +56,6 @@ class PostViewController: UITableViewController {
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.maskView.frame = self.view.frame
         self.maskView.backgroundColor = UIColor(white: 0.0, alpha: 0.78)
-        
         
         // Initialize navigation bar
         self.replyButton = UIBarButtonItem(title: "Reply", style: .Done, target: self, action: #selector(replyPost(_:)))
@@ -139,18 +140,27 @@ class PostViewController: UITableViewController {
     }
     
         
-    private func cellForPost(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> MessageTableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MessageTableViewCell", forIndexPath: indexPath) as! MessageTableViewCell
+    private func cellForPost(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> PostContentCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostContentCell", forIndexPath: indexPath) as! PostContentCell
         
         guard let post = self.post else { return cell }
         
         if let title = post.title {
             cell.title = NSMutableAttributedString(string: title)
         }
+        
         if let content = post.content {
             cell.content = NSMutableAttributedString(string: content)
         }
-        cell.showSummary = false
+        
+        if post.attachedImages.count > 0 {
+            cell.hideImageView = false
+            cell.imagePager.dataSource = self
+        }
+        else {
+            cell.hideImageView = true
+        }
+        
         cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
@@ -221,11 +231,11 @@ class PostViewController: UITableViewController {
     
     // Load more users when dragging to bottom
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard self.refreshControl != nil && !self.refreshControl!.refreshing else { return }
+        guard let tableview = scrollView as? UITableView where self.refreshControl != nil && !self.refreshControl!.refreshing else { return }
         
         // UITableView only moves in one direction, y axis
-        let currentOffset = scrollView.contentOffset.y;
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+        let currentOffset = tableview.contentOffset.y;
+        let maximumOffset = tableview.contentSize.height - tableview.frame.size.height;
         
         // Change 10.0 to adjust the distance from bottom
         if maximumOffset - currentOffset <= 10.0 {
@@ -341,7 +351,54 @@ class PostViewController: UITableViewController {
                 push.sendPushInBackground()
             }
         }
+    }
+    
+    func showImage(recognizer: UITapGestureRecognizer) {
+        guard let textView = recognizer.view as? UITextView else { return }
         
+        // Location of the tap in text-container coordinates
+        let layoutManager = textView.layoutManager
+        var location = recognizer.locationInView(textView)
+        location.x -= textView.textContainerInset.left
+        location.y -= textView.textContainerInset.top
+        
+        // Find the character that's been tapped on
+        let characterIndex = layoutManager.characterIndexForPoint(location,
+                                                                  inTextContainer: textView.textContainer,
+                                                                  fractionOfDistanceBetweenInsertionPoints: nil)
+        if (characterIndex < textView.textStorage.length) {
+            if let attachment = textView.attributedText.attribute(NSAttachmentAttributeName, atIndex: characterIndex, effectiveRange: nil) as? NSTextAttachment{
+                var image: UIImage?
+                if attachment.image != nil {
+                    image = attachment.image
+                }
+                else {
+                    image = attachment.imageForBounds(attachment.bounds,
+                                                      textContainer: nil,
+                                                      characterIndex: characterIndex)
+                }
+                if image != nil {
+                    let imageCropper = PIKAImageCropViewController()
+                    
+                    imageCropper.image = image
+                    imageCropper.cropType = .Rect
+                    let cropperWidth = self.view.bounds.width
+                    imageCropper.cropRectSize = CGSize(width: cropperWidth, height: cropperWidth / CGFloat(Constants.General.Size.AvatarImage.WidthHeightRatio))
+                    imageCropper.backgroundColor = Constants.General.Color.BackgroundColor
+                    imageCropper.themeColor = Constants.General.Color.ThemeColor
+                    imageCropper.titleColor = Constants.General.Color.TitleColor
+                    imageCropper.maskColor = Constants.General.Color.DarkMaskColor
+                    
+                    self.presentViewController(imageCropper, animated: true, completion: nil)
+                }
+                else {
+                    print("Noooo")
+                }
+            }
+            else {
+                print("No")
+            }
+        }
     }
     
     // Pop up comment view when showing the keyboard
@@ -368,15 +425,23 @@ class PostViewController: UITableViewController {
     }
     
     // MARK: Help function
+    
     func loadData() {
+        self.loadPost()
+        self.loadComments()
+    }
+    
+    func loadPost() {
         guard let post = self.post else { return }
         
-        post.fetchInBackgroundWithBlock { (result, error) -> Void in
-            guard error == nil else { return }
+        Post.fetchInBackground(objectId: post.objectId) { (result, error) in
+            guard let post = result as? Post where error == nil else { return }
+            
+            self.post = post
             
             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
         }
-        self.loadComments()
+
     }
     
     func loadComments() {
@@ -414,6 +479,22 @@ class PostViewController: UITableViewController {
     }
 }
 
+// MARK: KIImagePager delegate
+
+extension PostViewController: KIImagePagerDataSource {
+    func arrayWithImages(pager: KIImagePager!) -> [AnyObject]! {
+        guard let post = self.post else { return [] }
+        
+        return  post.attachedImages
+    }
+    
+    func contentModeForImage(image: UInt, inPager pager: KIImagePager!) -> UIViewContentMode {
+        return .ScaleAspectFit
+    }
+}
+
+// MARK: FavoriteButton delegate
+
 extension PostViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
         guard let post = self.post else { return }
@@ -440,13 +521,15 @@ extension PostViewController: FavoriteButtonDelegate {
     }
 }
 
+// MARK: ContactViewController delegate
+
 extension PostViewController: ContactViewControllerDelegate {
     func finishViewContact(contactViewController: ContactViewController) {
         return
     }
 }
 
-// MARK: Custome delegate
+// MARK: PostViewControllerDelegate
 
 protocol PostViewControllerDelegate {
     func finishViewPost(postVC: PostViewController)

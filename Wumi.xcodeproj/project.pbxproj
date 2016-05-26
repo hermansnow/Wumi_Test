@@ -321,11 +321,14 @@
 		DF4F53341CD5A967009F3D2E /* PrivateMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
+		DF6A1B331CF2508C00CB6973 /* RichTextPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */; };
+		DF6A1B351CF266CA00CB6973 /* SelectedThumbnailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */; };
 		DF6D56651CB75A1C001E0AFF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D56641CB75A1C001E0AFF /* Protocols.swift */; };
 		DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */; };
 		DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */; };
 		DF7E3B4B1C92324D000E8741 /* Profession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7E3B4A1C92324D000E8741 /* Profession.swift */; };
 		DF7E3B4D1C923C0A000E8741 /* ProfessionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7E3B4C1C923C0A000E8741 /* ProfessionListViewController.swift */; };
+		DF86A2B41CE3B00800F67F48 /* PostContentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */; };
 		DF8D518F1C971419004D808E /* ProfessionSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF8D518E1C971419004D808E /* ProfessionSectionHeader.xib */; };
 		DF8D51911C9716F5004D808E /* ProfessionSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8D51901C9716F5004D808E /* ProfessionSectionHeader.swift */; };
 		DF9840111C96874F00620F3B /* ProfileCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF9840101C96874F00620F3B /* ProfileCollectionCell.xib */; };
@@ -372,6 +375,8 @@
 		DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */; };
 		DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D441BEEF8F800D6FEBC /* Setting.swift */; };
 		DFC754261CBCE7C900C7E111 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC754251CBCE7C900C7E111 /* DataManager.swift */; };
+		DFCCC8DC1CF617F900CA0F8F /* PostContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCCC8DA1CF617F900CA0F8F /* PostContentCell.swift */; };
+		DFCCC8DD1CF617F900CA0F8F /* PostContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFCCC8DB1CF617F900CA0F8F /* PostContentCell.xib */; };
 		DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */; };
 		DFD4A6101BE6CF3C00C8B09E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */; };
 		DFD4A6121BE6CF4200C8B09E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */; };
@@ -824,11 +829,14 @@
 		DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivateMessageButton.swift; path = View/PrivateMessageButton.swift; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
+		DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RichTextPostView.swift; path = View/RichTextPostView.swift; sourceTree = "<group>"; };
+		DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedThumbnailImageView.swift; path = View/SelectedThumbnailImageView.swift; sourceTree = "<group>"; };
 		DF6D56641CB75A1C001E0AFF /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = "Supporting Files/Protocols.swift"; sourceTree = "<group>"; };
 		DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AvatarImageView.swift; path = View/AvatarImageView.swift; sourceTree = "<group>"; };
 		DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationListTableViewController.swift; path = Controller/LocationListTableViewController.swift; sourceTree = "<group>"; };
 		DF7E3B4A1C92324D000E8741 /* Profession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Profession.swift; path = Model/Profession.swift; sourceTree = "<group>"; };
 		DF7E3B4C1C923C0A000E8741 /* ProfessionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfessionListViewController.swift; path = Controller/ProfessionListViewController.swift; sourceTree = "<group>"; };
+		DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostContentTextView.swift; path = View/PostContentTextView.swift; sourceTree = "<group>"; };
 		DF8D518E1C971419004D808E /* ProfessionSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfessionSectionHeader.xib; path = View/ProfessionSectionHeader.xib; sourceTree = "<group>"; };
 		DF8D51901C9716F5004D808E /* ProfessionSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfessionSectionHeader.swift; path = View/ProfessionSectionHeader.swift; sourceTree = "<group>"; };
 		DF9840101C96874F00620F3B /* ProfileCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileCollectionCell.xib; path = View/ProfileCollectionCell.xib; sourceTree = "<group>"; };
@@ -877,6 +885,8 @@
 		DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddProfileViewController.swift; path = Controller/AddProfileViewController.swift; sourceTree = "<group>"; };
 		DFBD2D441BEEF8F800D6FEBC /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Setting.swift; path = Model/Setting.swift; sourceTree = "<group>"; };
 		DFC754251CBCE7C900C7E111 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataManager.swift; path = Model/DataManager.swift; sourceTree = "<group>"; };
+		DFCCC8DA1CF617F900CA0F8F /* PostContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContentCell.swift; sourceTree = "<group>"; };
+		DFCCC8DB1CF617F900CA0F8F /* PostContentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostContentCell.xib; sourceTree = "<group>"; };
 		DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -1851,6 +1861,7 @@
 				DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */,
 				DFB861471BEDBDF60075014A /* SystemButton.swift */,
 				DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */,
+				DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -1905,6 +1916,7 @@
 				DF3629561C9B305100D87574 /* ContactTableViewCell.xib */,
 				DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */,
 				DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */,
+				DFCCC8DB1CF617F900CA0F8F /* PostContentCell.xib */,
 				DFA93ACE1C910DD700ECA503 /* ProfileTableCell.swift */,
 				DFA93AC21C90DE3600ECA503 /* ProfileInputTableCell.swift */,
 				DFF712BC1CD7060100EAEFD2 /* ProfileLabelTableCell.swift */,
@@ -1917,6 +1929,7 @@
 				DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */,
 				DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */,
 				B175B2511CB872B800C95B33 /* CommentTextLabel.swift */,
+				DFCCC8DA1CF617F900CA0F8F /* PostContentCell.swift */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -1967,8 +1980,10 @@
 				DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */,
 				DFB612941CA2637600B3271B /* UserBannerView.swift */,
 				DFD90A141CAB87A1003A3B46 /* ComposePostView.swift */,
+				DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */,
 				DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */,
 				DFB612A01CA6158F00B3271B /* PostTextView.swift */,
+				DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2146,6 +2161,7 @@
 				B1ECD72F1CCC1F3F00CED9C4 /* SECoreTextView.bundle in Resources */,
 				B1ECD72E1CCC1F3F00CED9C4 /* SearchIcon@2x.png in Resources */,
 				B1ECD6F51CCC1F3F00CED9C4 /* tusiji_2.gif in Resources */,
+				DFCCC8DD1CF617F900CA0F8F /* PostContentCell.xib in Resources */,
 				B1ECD6EB1CCC1F3F00CED9C4 /* tusiji_11_cover@2x.png in Resources */,
 				B1ECD6D51CCC1F3F00CED9C4 /* rabbit_22_cover@2x.png in Resources */,
 				B1ECD6C71CCC1F3F00CED9C4 /* rabbit_16_cover@2x.png in Resources */,
@@ -2310,6 +2326,7 @@
 				DFA93ADD1C91EE0600ECA503 /* FavoriteButton.swift in Sources */,
 				DFB612A11CA6158F00B3271B /* PostTextView.swift in Sources */,
 				B1ECD7651CCC1F4000CED9C4 /* XHPullRefreshTableViewController.m in Sources */,
+				DF86A2B41CE3B00800F67F48 /* PostContentTextView.swift in Sources */,
 				B1ECD75F1CCC1F3F00CED9C4 /* XHMessageBubbleHelper.m in Sources */,
 				B1ECD7511CCC1F3F00CED9C4 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				B1ECD74A1CCC1F3F00CED9C4 /* Emoji.m in Sources */,
@@ -2348,6 +2365,7 @@
 				B1ECD7A91CCC1F4000CED9C4 /* NSString+Emojize.m in Sources */,
 				DFA93AC51C90E04000ECA503 /* EditProfileViewController.swift in Sources */,
 				B1ECD7861CCC1F4000CED9C4 /* SETextEditingCaret.m in Sources */,
+				DF6A1B351CF266CA00CB6973 /* SelectedThumbnailImageView.swift in Sources */,
 				B1ECD7B51CCC2A8200CED9C4 /* ChatListViewController.swift in Sources */,
 				B1ECD6A11CCC1F3F00CED9C4 /* CDChatRoomVC.m in Sources */,
 				DFA93AD11C91127800ECA503 /* ProfileCollectionLabel.swift in Sources */,
@@ -2396,6 +2414,7 @@
 				B1ECD6A21CCC1F3F00CED9C4 /* AVIMConversation+Custom.m in Sources */,
 				B1ECD7901CCC1F4000CED9C4 /* XHViewState.m in Sources */,
 				DF173EF21C86A58600018B4A /* Extensions.swift in Sources */,
+				DFCCC8DC1CF617F900CA0F8F /* PostContentCell.swift in Sources */,
 				B1ECD7871CCC1F4000CED9C4 /* SETextGeometry.m in Sources */,
 				B1ECD76B1CCC1F4000CED9C4 /* XHMessageTableViewController.m in Sources */,
 				DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */,
@@ -2435,6 +2454,7 @@
 				B1ECD7981CCC1F4000CED9C4 /* XHMessageBubbleView.m in Sources */,
 				B1ECD7681CCC1F4000CED9C4 /* XHDisplayLocationViewController.m in Sources */,
 				B1ECD7771CCC1F4000CED9C4 /* XHContact.m in Sources */,
+				DF6A1B331CF2508C00CB6973 /* RichTextPostView.swift in Sources */,
 				B1ECD79C1CCC1F4000CED9C4 /* XHMessageTableViewCell.m in Sources */,
 				B1ECD7661CCC1F4000CED9C4 /* XHBaseViewController.m in Sources */,
 				B1ECD7951CCC1F4000CED9C4 /* XHBaseCollectionViewCell.m in Sources */,

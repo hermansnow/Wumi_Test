@@ -109,6 +109,9 @@ struct Constants {
         }
     }
     
+    struct Post {
+        static let maximumImages = 5 // number of images allows to be attached in a post
+    }
     
     struct Query {
         static let LoadUserLimit = 200 // number of user records load in each query

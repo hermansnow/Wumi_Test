@@ -152,6 +152,10 @@ class PostTableViewController: UITableViewController {
             contactVC.selectedUserId = selectedUserId
             contactVC.hidesBottomBarWhenPushed = true
         }
+        
+        if let newPostVC = segue.destinationViewController as? NewPostViewController where segue.identifier == "Compose Post" {
+            newPostVC.hidesBottomBarWhenPushed = true
+        }
     }
     
     // MARK: Table view data source

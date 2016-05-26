@@ -76,19 +76,19 @@ class PostCategoryTableViewController: UITableViewController {
     }
     
     func sendPost(sender: AnyObject) {
-        Post.sendNewPost(author: self.currentUser,
-            title: self.post.title,
-            content: self.post.content,
-            categories: self.selectedCategories) { (success, error) -> Void in
-                guard success && error == nil else {
-                    print("\(error)")
-                    return
-                }
-                
-                // Navigate back to post table view
-                if let postTVC = self.navigationController?.viewControllers.filter({ $0 is PostTableViewController }).first {
-                    self.navigationController?.popToViewController(postTVC, animated: true)
-                }
+        post.author = self.currentUser
+        post.categories = self.selectedCategories
+        
+        post.saveInBackgroundWithBlock { (success, error) in
+            guard success && error == nil else {
+                print("\(error)")
+                return
+            }
+            
+            // Navigate back to post table view
+            if let postTVC = self.navigationController?.viewControllers.filter({ $0 is PostTableViewController }).first {
+                self.navigationController?.popToViewController(postTVC, animated: true)
+            }
         }
     }
 

@@ -22,5 +22,9 @@ target 'Wumi' do
     pod 'DateTools'
 
     pod 'CYLDeallocBlockExecutor'
-
+    
+    pod 'CTAssetsPickerController' ,'~>3.3.0'
+    
+    pod 'KIImagePager'
+    
 end
