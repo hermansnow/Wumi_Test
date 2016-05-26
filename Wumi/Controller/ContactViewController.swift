@@ -106,6 +106,11 @@ class ContactViewController: UIViewController {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.privateMessageButton.enabled = self.privateMessageTextInputField.text?.characters.count > 0
+    }
 
     override func willMoveToParentViewController(parent: UIViewController?) {
         super.willMoveToParentViewController(parent)
@@ -131,6 +136,7 @@ class ContactViewController: UIViewController {
         self.privateMessageWrapperView.backgroundColor = Constants.General.Color.BackgroundColor
         self.privateMessageTextInputField.font = Constants.General.Font.InputFont
         self.privateMessageTextInputField.placeholder = "Send Message..."
+        self.privateMessageTextInputField.enablesReturnKeyAutomatically = true
         self.privateMessageButton.enabled = false
         self.privateMessageButton.delegate = self
         self.privateMessageTextInputField.delegate = self
@@ -331,6 +337,25 @@ extension ContactViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
 }
 
+
+// MARK: Textfield delegate
+
+extension ContactViewController: UITextFieldDelegate {
+    func textFieldDidChange(textField: UITextField) -> Bool {
+        self.privateMessageButton.enabled = textField.text?.characters.count > 0
+        return true
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        guard textField == self.privateMessageTextInputField else {
+            return true
+        }
+        
+        self.sendMessage(self.privateMessageButton)
+        return true
+    }
+}
+
 // MARK: MFMailComposeViewController delegates
 
 extension ContactViewController: MFMailComposeViewControllerDelegate {
@@ -415,20 +440,16 @@ extension ContactViewController: PhoneButtonDelegate {
     }
 }
 
-// MARK: Textfield delegate
-
-extension ContactViewController: UITextFieldDelegate {
-    func textFieldDidChange(textField: UITextField) -> Bool {
-        self.privateMessageButton.enabled = textField.text?.characters.count > 0
-        return true
-    }
-}
-
 // MARK: PrivateMessage button delegate
 
 extension ContactViewController: PrivateMessageButtonDelegate {
     func sendMessage(privateMessageButton: PrivateMessageButton) {
-        guard let user = self.selectedUser, email = user.email, text = privateMessageTextInputField.text else { return }
+        guard let user = self.selectedUser, text = privateMessageTextInputField.text else { return }
+        
+        guard text.characters.count > 0 else {
+            Helper.PopupErrorAlert(self, errorMessage: "Cannot send empty message")
+            return
+        }
         
         CDChatManager.sharedManager().sendWelcomeMessageToOther(user.objectId, text: text, block: {(result, error) -> Void in
             if (error != nil) {
