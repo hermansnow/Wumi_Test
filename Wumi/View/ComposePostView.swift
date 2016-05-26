@@ -12,12 +12,22 @@ class ComposePostView: UIView {
     
     lazy var subjectTextField = UITextField()
     lazy var contentTextView: PostTextView = PostTextView()
-    private lazy var stackView = UIStackView()
+    lazy var inputToolbar = UIView()
+    lazy var addImageButton = UIButton()
+    private lazy var postStackView = UIStackView()
+    lazy var selectedImageStackView = UIStackView()
     
-    var delegate: protocol<UITextViewDelegate, UITextFieldDelegate>? {
+    // MARK: Properties
+    
+    var delegate: protocol<ComposePostViewDelegate, SelectedThumbnailImageViewDelegate>? {
         didSet {
             self.subjectTextField.delegate = delegate
             self.contentTextView.delegate = delegate
+            for subview in self.selectedImageStackView.arrangedSubviews {
+                guard let imageView = subview as? SelectedThumbnailImageView else { continue }
+                
+                imageView.delegate = delegate
+            }
         }
     }
     
@@ -48,17 +58,25 @@ class ComposePostView: UIView {
         }
     }
     
+    var selectedImages = [UIImage]()
+    
+    // MARK: Initializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.setProperty()
+        self.setLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         self.setProperty()
+        self.setLayout()
     }
+    
+    // MARK: Help functions
     
     private func setProperty() {
         // Initialize subject text field
@@ -70,25 +88,87 @@ class ComposePostView: UIView {
         self.contentTextView.placeholder = "Write a message"
         
         // Add subviews
-        self.stackView.frame = self.bounds
-        self.addSubview(self.stackView)
-        self.stackView.addArrangedSubview(self.subjectTextField)
-        self.stackView.addArrangedSubview(self.contentTextView)
-        self.stackView.axis = .Vertical
-        self.stackView.distribution = .Fill
-        self.stackView.alignment = .Fill
-        self.stackView.spacing = 0
-        NSLayoutConstraint(item: self.subjectTextField,
-            attribute: .Height,
-            relatedBy: .Equal,
-            toItem: nil,
-            attribute: .NotAnAttribute,
-            multiplier: 1,
-            constant: 40).active = true
+        self.postStackView.addArrangedSubview(self.subjectTextField)
+        self.postStackView.addArrangedSubview(self.contentTextView)
+        self.postStackView.addArrangedSubview(self.inputToolbar)
+        self.postStackView.axis = .Vertical
+        self.postStackView.distribution = .Fill
+        self.postStackView.alignment = .Fill
+        self.postStackView.spacing = 0
+        self.addSubview(self.postStackView)
+        
+        // Add keyboard tool bar
+        self.inputToolbar.addSubview(self.selectedImageStackView)
+        self.selectedImageStackView.addArrangedSubview(self.addImageButton)
+        self.selectedImageStackView.addArrangedSubview(UIView())
+        self.selectedImageStackView.axis = .Horizontal
+        self.selectedImageStackView.distribution = .Fill
+        self.selectedImageStackView.alignment = .Center
+        self.selectedImageStackView.spacing = 3
+        self.addImageButton.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+        self.addImageButton.setBackgroundImage(UIImage(named: "Add"), forState: .Normal)
+        self.addImageButton.addTarget(self.delegate, action: #selector(self.delegate?.selectImage), forControlEvents: .TouchUpInside)
     }
     
-    override func drawRect(rect: CGRect) {
-        // Add sub stackview
-        self.stackView.frame = rect
+    private func setLayout() {
+        // Layout for subject text field
+        NSLayoutConstraint(item: self.subjectTextField,
+                           attribute: .Height,
+                           relatedBy: .Equal,
+                           toItem: nil,
+                           attribute: .NotAnAttribute,
+                           multiplier: 1,
+                           constant: 40).active = true
+        
+        // Layout for post stackview
+        self.postStackView.leftAnchor.constraintEqualToAnchor(self.leftAnchor).active = true
+        self.postStackView.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
+        self.postStackView.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
+        self.postStackView.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
+        self.postStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Layout for selected image stackview
+        self.selectedImageStackView.leftAnchor.constraintEqualToAnchor(self.inputToolbar.leftAnchor, constant: 10).active = true
+        self.selectedImageStackView.rightAnchor.constraintEqualToAnchor(self.inputToolbar.rightAnchor, constant: 10).active = true
+        self.selectedImageStackView.topAnchor.constraintEqualToAnchor(self.inputToolbar.topAnchor, constant: 2).active = true
+        self.selectedImageStackView.bottomAnchor.constraintEqualToAnchor(self.inputToolbar.bottomAnchor, constant: 2).active = true
+        self.selectedImageStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Layout for input tool bar
+        NSLayoutConstraint(item: self.inputToolbar,
+                           attribute: .Height,
+                           relatedBy: .Equal,
+                           toItem: nil,
+                           attribute: .NotAnAttribute,
+                           multiplier: 1,
+                           constant: 66).active = true
     }
+    
+    // MARK: Actions
+    
+    // Add a new image 
+    func insertImage(image: UIImage) {
+        let selectedImageView = SelectedThumbnailImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        selectedImageView.image = image
+        selectedImageView.delegate = self.delegate
+        self.selectedImageStackView.insertArrangedSubview(selectedImageView, atIndex: self.selectedImageStackView.arrangedSubviews.count - 2)
+        
+        self.selectedImages.append(image)
+    }
+    
+    // Remove all selected images
+    func removeAllImages() {
+        for subview in self.selectedImageStackView.arrangedSubviews {
+            guard let selectedImageView = subview as? SelectedThumbnailImageView else { continue }
+            
+            selectedImageView.removeFromSuperview()
+        }
+        self.selectedImages.removeAll()
+    }
+}
+
+// MARK: ComposePostViewDelegate delegate
+
+@objc protocol ComposePostViewDelegate: UITextViewDelegate, UITextFieldDelegate {
+     func selectImage()
 }

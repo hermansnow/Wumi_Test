@@ -1,40 +1,28 @@
 //
-//  MessageTableViewCell.swift
+//  PostContentCell.swift
 //  Wumi
 //
-//  Created by Zhe Cheng on 3/20/16.
+//  Created by Zhe Cheng on 5/25/16.
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
 import UIKit
+import KIImagePager
 
-class MessageTableViewCell: UITableViewCell {
-
-    @IBOutlet private weak var titleLabel: UILabel!
+class PostContentCell: UITableViewCell {
+    
+    @IBOutlet weak var imagePager: KIImagePager!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorView: UserBannerView!
     @IBOutlet weak var contentTextView: PostContentTextView!
-    @IBOutlet private weak var timeStampLabel: UILabel!
+    @IBOutlet weak var timeStampLabel: UILabel!
     @IBOutlet weak var saveButton: FavoriteButton!
     @IBOutlet private weak var saveLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet private weak var replyLabel: UILabel!
     @IBOutlet weak var repliesButton: UIButton!
     
-    var showSummary: Bool {
-        get {
-            return self.contentTextView.textContainer.maximumNumberOfLines > 0
-        }
-        set {
-            if newValue {
-                self.contentTextView.textContainer.maximumNumberOfLines = 3
-                self.contentTextView.selfUserInteractionEnabled = false
-            }
-            else {
-                self.contentTextView.textContainer.maximumNumberOfLines = 0
-                self.contentTextView.selfUserInteractionEnabled = true
-            }
-        }
-    }
+    // MARK: Properties
     
     var title: NSMutableAttributedString? {
         get {
@@ -50,7 +38,7 @@ class MessageTableViewCell: UITableViewCell {
     var content: NSMutableAttributedString? {
         get {
             guard let attributedContent = self.contentTextView.attributedText else { return nil }
-        
+            
             return NSMutableAttributedString(attributedString: attributedContent)
         }
         set {
@@ -67,15 +55,13 @@ class MessageTableViewCell: UITableViewCell {
         }
     }
     
-    var highlightString: String? {
+    var hideImageView = true {
         didSet {
-            // Check title
-            self.highlightString(&self.title)
-            
-            // Check content
-            self.highlightString(&self.content)
+            self.imagePager.hidden = self.hideImageView
         }
     }
+    
+    // MARK: Initializers
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -83,13 +69,15 @@ class MessageTableViewCell: UITableViewCell {
         self.setProperty()
     }
     
-    func setProperty() {
-        self.layer.borderColor = Constants.General.Color.BackgroundColor.CGColor
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        // Set up image pager
+        self.imagePager.imageCounterDisabled = true
+        self.imagePager.hidePageControlForSinglePages = true
+        self.imagePager.slideshowTimeInterval = 2
+        self.imagePager.bounces = false
+        self.imagePager.tintColor = Constants.General.Color.ThemeColor
         
         // Set up title label
         self.titleLabel.font = UIFont(name: ".SFUIText-Bold", size: 16)
@@ -100,12 +88,13 @@ class MessageTableViewCell: UITableViewCell {
         self.authorView.backgroundColor = Constants.General.Color.BackgroundColor
         
         // Set up content label
-        self.showSummary = true
         self.contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 14)
         self.contentTextView.scrollEnabled = false
         self.contentTextView.editable = false
         self.contentTextView.selectable = true
         self.contentTextView.dataDetectorTypes = .All
+        self.contentTextView.textContainer.maximumNumberOfLines = 0
+        self.contentTextView.selfUserInteractionEnabled = true
         
         // Set up timestamp
         self.timeStampLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
@@ -120,26 +109,9 @@ class MessageTableViewCell: UITableViewCell {
         self.repliesButton.titleLabel?.textColor = Constants.General.Color.ThemeColor
     }
     
-    func reset() {
-        self.title = nil
-        self.content = nil
-        self.timeStamp = nil
-        self.authorView.reset()
-        //self.saveButton.delegate = nil
-        //self.saveButton.selected = false
-    }
+    // MARK: Help functions
     
-    func highlightString(inout attributeString: NSMutableAttributedString?) {
-        guard let keywords = self.highlightString where keywords.characters.count > 0, let attribute = attributeString else { return }
-        
-        do {
-            let regex = try NSRegularExpression(pattern: keywords, options: .CaseInsensitive)
-            
-            for match in regex.matchesInString(attribute.string, options: [], range: NSRange(location: 0, length: attribute.string.utf16.count)) as [NSTextCheckingResult] {
-                attribute.addAttribute(NSForegroundColorAttributeName, value: Constants.General.Color.ThemeColor, range: match.range)
-            }
-        } catch {
-            print("Failed in creating NSRegularExpression for string matching")
-        }
+    func setProperty() {
+        self.layer.borderColor = Constants.General.Color.BackgroundColor.CGColor
     }
 }

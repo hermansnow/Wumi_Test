@@ -15,8 +15,14 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var author: User?
     @NSManaged var title: String?
     @NSManaged var content: String?
+    @NSManaged var htmlContent: String?
     @NSManaged var commentCount: Int
     @NSManaged var categories: [PostCategory]
+    @NSManaged var mediaAttachments: [AVFile]
+    
+    // Local properties, will not be stored into server
+    var attributedContent: NSAttributedString?
+    var attachedImages = [UIImage]()
     
     // MARK: Initializer and subclassing functions
     
@@ -40,6 +46,8 @@ class Post: AVObject, AVSubclassing {
     }
     
     // MARK: Queries
+    
+    // Search post based on several filters
     class func loadPosts(limit limit: Int = 10, type: PostSearchType = .All, cutoffTime: NSDate? = nil, searchString: String = "", user: User? = nil, block: AVArrayResultBlock!) {
         guard var query = Post.getQueryFromSearchType(type, forUser: user) else {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
@@ -70,15 +78,117 @@ class Post: AVObject, AVSubclassing {
         query.findObjectsInBackgroundWithBlock(block)
     }
     
-    class func sendNewPost(author author: User, title: String?, content: String?, categories: [PostCategory] = [PostCategory](), block: AVBooleanResultBlock!) {
-        let post = Post()
-        post.author = author
-        post.title = title ?? "No Title"
-        post.content = content
-        post.categories = categories
-        post.commentCount = 0
+    // Fetch a post record asynchronously based on record id
+    class func fetchInBackground(objectId id: String, block: AVObjectResultBlock!) {
+        let query = Post.query()
+        query.includeKey("mediaAttachments")
         
-        post.saveInBackgroundWithBlock(block)
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 3600 * 24 * 30
+        
+        query.getObjectInBackgroundWithId(id) { (result, error) in
+            guard let post = result as? Post where error == nil else {
+                block(nil, error)
+                return
+            }
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                post.decodeAttributedContent()
+                post.loadMediaAttachments()
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    block(post, error)
+                })
+            }
+
+        }
+    }
+    
+    // Save a post record asynchronously
+    override func saveInBackgroundWithBlock(block: AVBooleanResultBlock!) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            // Set default value
+            self.title = self.title ?? "No Title"
+            self.commentCount = 0
+            
+            // Save attached files
+            self.encodeAttributedContent()
+            self.saveMediaAttachments()
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                super.saveInBackgroundWithBlock(block)
+            })
+        }
+    }
+    
+    // Save attached images as AVFiles synchronously
+    private func saveMediaAttachments() {
+        self.mediaAttachments.removeAll()
+        for image in self.attachedImages {
+            if let file = AVFile.saveImageFile(image) {
+                self.mediaAttachments.append(file)
+            }
+        }
+    }
+    
+    // Convert attached AVFiles to local images
+    private func loadMediaAttachments() {
+        self.attachedImages.removeAll()
+        for attachment in self.mediaAttachments {
+            guard let image = AVFile.loadImageFile(attachment) else { return }
+            self.attachedImages.append(image)
+        }
+    }
+    
+    // Encode post's attributed content into a Html format
+    private func encodeAttributedContent() {
+        guard let attributedContent = self.attributedContent else { return }
+        
+        let modifiedContent = NSMutableAttributedString(attributedString: attributedContent)
+        do {
+            modifiedContent.enumerateAttribute(NSAttachmentAttributeName,
+                                               inRange: NSRange(location: 0, length: modifiedContent.length),
+                                               options: [],
+                                               usingBlock: { (result, range, stop) in
+                                                guard let attachment = result as? NSTextAttachment,
+                                                    image = attachment.image,
+                                                    file = AVFile.saveImageFile(image) else { return }
+                                                
+                                                modifiedContent.replaceCharactersInRange(range, withString: "[wumi_img:" + file.url + "]")
+            })
+            
+            let htmlData = try modifiedContent.dataFromRange(NSRange(location: 0, length: modifiedContent.length),
+                                                             documentAttributes: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType])
+            let htmlString = String(data: htmlData, encoding: NSUTF8StringEncoding)
+            
+            self.htmlContent = htmlString
+        }
+        catch {
+            print("Failed to encode attributed content")
+        }
+    }
+    
+    // Decode post's html content to attributed string
+    private func decodeAttributedContent() {
+        guard let htmlString = self.htmlContent, htmlData = htmlString.dataUsingEncoding(NSUTF8StringEncoding) else { return }
+        
+        do {
+            let attributedContent = try NSMutableAttributedString(data: htmlData,
+                                                                  options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+                                                                  documentAttributes: nil)
+            let regex = try NSRegularExpression(pattern: "\\[wumi_img:[^\\]]*\\]", options:[.CaseInsensitive])
+            let matches = regex.matchesInString(attributedContent.string, options: [],
+                                                range: NSRange(location: 0, length: attributedContent.length))
+                    
+            for match in matches {
+                attributedContent.replaceCharactersInRange(match.range, withString: "Here is an image")
+            }
+                    
+            self.attributedContent = attributedContent
+        }
+        catch {
+            print("Failed to decode the html content")
+        }
     }
     
     // Get associated AVQuery object based on search type

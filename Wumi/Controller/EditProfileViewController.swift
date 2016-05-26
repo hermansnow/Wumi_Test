@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class EditProfileViewController: UIViewController {
 
@@ -164,7 +165,7 @@ class EditProfileViewController: UIViewController {
         self.view.endEditing(true)
         
         let picker = SelectPhotoActionSheet()
-        
+        picker.cropImage = true
         picker.delegate = self
         
         self.presentViewController(picker, animated: true, completion: nil)
@@ -459,21 +460,19 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
     }
 }
 
-// MARK: UIImagePicker delegate
+// MARK: SelectPhotoActionSheetDelegate delegate
 
-extension EditProfileViewController: PIKAImageCropViewControllerDelegate  {
-    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithInfo info: [String: UIImage?]) {
-        cropVC.dismissViewControllerAnimated(true) { () -> Void in
-            guard let profileImage = info["CroppedImage"] else { return }
-            
-            self.currentUser.saveAvatarFile(profileImage) { (success, imageError) -> Void in
-                guard success else {
-                    Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
-                    return
-                }
-                
-                self.profileImageView.image = profileImage
+extension EditProfileViewController: SelectPhotoActionSheetDelegate  {
+    func selectPhotoActionSheet(controller: SelectPhotoActionSheet, didFinishePickingPhotos images: [UIImage], assets: [PHAsset]?, sourceType: UIImagePickerControllerSourceType) {
+        guard let profileImage = images.first else { return }
+        
+        self.currentUser.saveAvatarFile(profileImage) { (success, imageError) -> Void in
+            guard success else {
+                Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
+                return
             }
+            
+            self.profileImageView.image = profileImage
         }
     }
 }

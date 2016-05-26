@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Photos
 
 extension NSObject {
     @objc func selfMethod() -> NSObject {
@@ -145,6 +146,7 @@ extension UIImage {
         return imageData;
     }
     
+    // Scale an image to a specific size
     func scaleToSize(size: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         self.drawInRect(CGRect(x: 0, y: 0, width: size.width, height: size.height))
@@ -152,7 +154,42 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
-
+    
+    // Save an image into device's regular album of photo library
+    func saveToLibrary(completionHanlder handler: (PHAsset?, NSError?) -> Void){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            guard let assetCollection = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .AlbumRegular, options: nil).firstObject as? PHAssetCollection else { return }
+            
+            var assetPlaceholder: PHObjectPlaceholder?
+            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(self)
+                assetPlaceholder = assetRequest.placeholderForCreatedAsset
+                let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: assetCollection)
+                
+                albumChangeRequest!.addAssets([assetPlaceholder!])
+                }, completionHandler: { (success, error) in
+                    guard let placeholder = assetPlaceholder where success && error == nil else {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            handler(nil, error)
+                        })
+                        return
+                    }
+                    
+                    let assets:PHFetchResult = PHAsset.fetchAssetsWithLocalIdentifiers([placeholder.localIdentifier], options: nil)
+                    
+                    if let asset = assets.firstObject as? PHAsset {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            handler(asset, error)
+                        })
+                    }
+                    else {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            handler(nil, error)
+                        })
+                    }
+            })
+        }
+    }
 }
 
 extension UIViewController {

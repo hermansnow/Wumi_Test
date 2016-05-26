@@ -8,6 +8,7 @@
 
 import UIKit
 import MobileCoreServices
+import Photos
 
 class SignUpAccountViewController: ScrollTextFieldViewController {
     
@@ -177,7 +178,7 @@ extension SignUpAccountViewController: UITextFieldDelegate {
 extension SignUpAccountViewController: AvatarImageDelegate, UINavigationControllerDelegate {
     func singleTap(imageView: AvatarImageView) {
         let picker = SelectPhotoActionSheet()
-        
+        picker.cropImage = true
         picker.delegate = self
         
         presentViewController(picker, animated: true, completion: nil)
@@ -194,13 +195,11 @@ extension SignUpAccountViewController: DataInputTextFieldDelegate {
 
 // MARK: UIImagePicker delegate
 
-extension SignUpAccountViewController: PIKAImageCropViewControllerDelegate {
-    func imageCropViewController(cropVC: PIKAImageCropViewController, didFinishCropImageWithInfo info: [String: UIImage?]) {
-        cropVC.dismissViewControllerAnimated(true) { () -> Void in
-            if let avatarImage = info["CroppedImage"] {
-                self.addAvatarImageView.image = avatarImage
-                self.newAvatarImage = avatarImage
-            }
-        }
+extension SignUpAccountViewController: SelectPhotoActionSheetDelegate {
+    func selectPhotoActionSheet(controller: SelectPhotoActionSheet, didFinishePickingPhotos images: [UIImage], assets: [PHAsset]?, sourceType: UIImagePickerControllerSourceType) {
+        guard let avatarImage = images.first else { return }
+        
+        self.addAvatarImageView.image = avatarImage
+        self.newAvatarImage = avatarImage
     }
 }

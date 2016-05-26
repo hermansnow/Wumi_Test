@@ -28,7 +28,13 @@ extension AVFile {
         }
     }
     
-    // Save avatar to cloud server
+    // Load image AVfile synchronously
+    class func loadImageFile(file: AVFile, size: CGSize? = nil) -> UIImage? {
+        let imageData = file.getData()
+        return parseDataToImage(imageData, size: size)
+    }
+    
+    // Save avatar to cloud server asynchronously
     class func saveImageFile(inout file: AVFile?, image: UIImage, name: String? = nil, size: CGSize? = nil, block: (success: Bool, error: NSError?) -> Void) {
         // Scale image
         let resizedImage: UIImage
@@ -59,6 +65,40 @@ extension AVFile {
         }
     }
     
+    // Save avatar to cloud server synchronously
+    class func saveImageFile(image: UIImage, name: String? = nil, size: CGSize? = nil) -> AVFile? {
+        // Scale image
+        let resizedImage: UIImage
+        if size != nil {
+            resizedImage = image.scaleToSize(size!)
+        }
+        else {
+            resizedImage = image
+        }
+        
+        // Compress the image data if it excesses the max size defined for server (5 MB).
+        guard let imageData = resizedImage.compressToSize(500) else {
+            return nil
+        }
+        
+        // Set file name
+        var file: AVFile?
+        if let imageName = name {
+            file = AVFile(name: imageName, data: imageData)
+        }
+        else {
+            file = AVFile(data: imageData)
+        }
+        
+        // Save file
+        if file != nil {
+            file!.save()
+        }
+        
+        return file
+    }
+    
+    // Parse a NSData to an UIImage object with specific size
     private class func parseDataToImage(data: NSData?, size: CGSize? = nil) -> UIImage? {
         var image: UIImage?
         

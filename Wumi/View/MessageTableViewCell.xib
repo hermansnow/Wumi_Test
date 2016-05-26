@@ -31,7 +31,7 @@
                                     <constraint firstAttribute="height" constant="40" id="822-9p-d80"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vgy-Oi-paX" customClass="PostTextView" customModule="Wumi" customModuleProvider="target">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vgy-Oi-paX" customClass="PostContentTextView" customModule="Wumi" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="71" width="679" height="156.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -107,7 +107,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="authorView" destination="sjI-JE-1eO" id="TrA-aB-oiN"/>
-                <outlet property="contentTextView" destination="vgy-Oi-paX" id="rSl-Tn-GQh"/>
+                <outlet property="contentTextView" destination="vgy-Oi-paX" id="7NG-KX-VSq"/>
                 <outlet property="repliesButton" destination="hOu-cl-PCA" id="WVb-YD-rRC"/>
                 <outlet property="replyButton" destination="Hv1-rJ-PDe" id="Q8T-hk-wAy"/>
                 <outlet property="replyLabel" destination="y5Z-Ik-JNJ" id="3wg-xS-E1F"/>
@@ -116,7 +116,7 @@
                 <outlet property="timeStampLabel" destination="Mo3-cr-1bc" id="Y6j-Tm-XVi"/>
                 <outlet property="titleLabel" destination="Su0-Ah-6MB" id="Eay-Cu-BGn"/>
             </connections>
-            <point key="canvasLocation" x="391.5" y="480"/>
+            <point key="canvasLocation" x="42.5" y="511"/>
         </tableViewCell>
     </objects>
     <resources>
