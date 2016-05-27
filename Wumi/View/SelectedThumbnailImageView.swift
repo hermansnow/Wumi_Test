@@ -25,7 +25,7 @@ class SelectedThumbnailImageView: UIButton {
     var image: UIImage? {
         didSet {
             guard let image = self.image else { return }
-            self.thumbnail = image.scaleToSize(self.bounds.size, aspectRadio: false)
+            self.thumbnail = image.scaleToSize(self.bounds.size, aspectRatio: false)
         }
     }
     

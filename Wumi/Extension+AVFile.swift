@@ -107,7 +107,7 @@ extension AVFile {
         
         if let imageData = data, originalImage = UIImage(data: imageData) {
             if size != nil {
-                image = originalImage.scaleToSize(size!, aspectRadio: false)
+                image = originalImage.scaleToSize(size!, aspectRatio: false)
             }
             else {
                 image = originalImage

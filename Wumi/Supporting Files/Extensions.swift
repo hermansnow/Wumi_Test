@@ -147,13 +147,14 @@ extension UIImage {
     }
     
     // Scale an image to a specific size
-    func scaleToSize(size: CGSize, aspectRadio: Bool = true) -> UIImage {
+    func scaleToSize(size: CGSize, aspectRatio: Bool = true) -> UIImage {
         var scaleSize = size
-        if aspectRadio {
-            let scaleFactor = size.width / self.size.width
+        if aspectRatio {
+            var scaleFactor = size.width / self.size.width
             let newHeight = self.size.height * scaleFactor
             
             if newHeight > size.height {
+                scaleFactor = size.height / self.size.height
                 scaleSize = CGSize(width: self.size.width * scaleFactor, height: size.height)
             }
             else {
