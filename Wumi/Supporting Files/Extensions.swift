@@ -147,9 +147,22 @@ extension UIImage {
     }
     
     // Scale an image to a specific size
-    func scaleToSize(size: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        self.drawInRect(CGRect(x: 0, y: 0, width: size.width, height: size.height))
+    func scaleToSize(size: CGSize, aspectRadio: Bool = true) -> UIImage {
+        var scaleSize = size
+        if aspectRadio {
+            let scaleFactor = size.width / self.size.width
+            let newHeight = self.size.height * scaleFactor
+            
+            if newHeight > size.height {
+                scaleSize = CGSize(width: self.size.width * scaleFactor, height: size.height)
+            }
+            else {
+                scaleSize = CGSize(width: size.width, height: newHeight)
+            }
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(scaleSize, false, 0.0)
+        self.drawInRect(CGRect(x: 0, y: 0, width: scaleSize.width, height: scaleSize.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage

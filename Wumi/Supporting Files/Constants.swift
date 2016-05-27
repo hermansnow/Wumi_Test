@@ -111,6 +111,12 @@ struct Constants {
     
     struct Post {
         static let maximumImages = 5 // number of images allows to be attached in a post
+        struct Size {
+            struct Thumbnail {
+                static let Height = 200
+                static let Width = 360
+            }
+        }
     }
     
     struct Query {

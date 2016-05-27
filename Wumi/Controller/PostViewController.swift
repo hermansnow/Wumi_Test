@@ -153,7 +153,7 @@ class PostViewController: UITableViewController {
             cell.content = NSMutableAttributedString(string: content)
         }
         
-        if post.attachedImages.count > 0 {
+        if post.mediaThumbnails.count > 0 {
             cell.hideImageView = false
             cell.imagePager.dataSource = self
         }
@@ -428,7 +428,6 @@ class PostViewController: UITableViewController {
     
     func loadData() {
         self.loadPost()
-        self.loadComments()
     }
     
     func loadPost() {
@@ -440,6 +439,7 @@ class PostViewController: UITableViewController {
             self.post = post
             
             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
+            self.loadComments()
         }
 
     }
@@ -485,7 +485,7 @@ extension PostViewController: KIImagePagerDataSource {
     func arrayWithImages(pager: KIImagePager!) -> [AnyObject]! {
         guard let post = self.post else { return [] }
         
-        return  post.attachedImages
+        return  post.attachedThumbnails
     }
     
     func contentModeForImage(image: UInt, inPager pager: KIImagePager!) -> UIViewContentMode {

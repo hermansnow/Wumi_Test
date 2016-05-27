@@ -10,7 +10,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		iZkgeDBeUnfyJ62m46ZAwsO5oas=
+		fmxjgMq1QBZ45VoIZnncJSwNHmQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -24,17 +24,38 @@
 	<key>files2</key>
 	<dict>
 		<key>Headers/AVOSCloudCrashReporting.h</key>
-		<data>
-		4eWQTfqS8Y+CzeOAvdWZHh20xLs=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			4eWQTfqS8Y+CzeOAvdWZHh20xLs=
+			</data>
+			<key>hash2</key>
+			<data>
+			o9ZyXIAigOU2tJ/DMl6a3leSKJqUiIvPNw1Nb3U0D3k=
+			</data>
+		</dict>
 		<key>Modules/module.modulemap</key>
-		<data>
-		ZoHjYmf/FZsDPkfmx1Vnyl9Guss=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			ZoHjYmf/FZsDPkfmx1Vnyl9Guss=
+			</data>
+			<key>hash2</key>
+			<data>
+			YtTSmMaky9U0NtxkpEbBxs7B4MWRf4ua/LwuY/lUe2k=
+			</data>
+		</dict>
 		<key>embedded.mobileprovision</key>
-		<data>
-		3qDFVRfDLigl3Z3RRN45g1mncGU=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			3qDFVRfDLigl3Z3RRN45g1mncGU=
+			</data>
+			<key>hash2</key>
+			<data>
+			YoygHA67dI1jnaqB+Xu1LdNvdM/TycwLeDz5YkmX8gE=
+			</data>
+		</dict>
 	</dict>
 	<key>rules</key>
 	<dict>

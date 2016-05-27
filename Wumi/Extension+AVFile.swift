@@ -35,7 +35,7 @@ extension AVFile {
     }
     
     // Save avatar to cloud server asynchronously
-    class func saveImageFile(inout file: AVFile?, image: UIImage, name: String? = nil, size: CGSize? = nil, block: (success: Bool, error: NSError?) -> Void) {
+    class func saveImageFile(inout file: AVFile?, image: UIImage, name: String? = nil, size: CGSize? = nil, dataSize: Int? = nil, block: (success: Bool, error: NSError?) -> Void) {
         // Scale image
         let resizedImage: UIImage
         if size != nil {
@@ -46,7 +46,8 @@ extension AVFile {
         }
         
         // Compress the image data if it excesses the max size defined for server (5 MB).
-        guard let imageData = resizedImage.compressToSize(500) else {
+        let compressSize = dataSize ?? 500
+        guard let imageData = resizedImage.compressToSize(compressSize) else {
             block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Cannot scale image"]))
             return
         }
@@ -66,7 +67,7 @@ extension AVFile {
     }
     
     // Save avatar to cloud server synchronously
-    class func saveImageFile(image: UIImage, name: String? = nil, size: CGSize? = nil) -> AVFile? {
+    class func saveImageFile(image: UIImage, name: String? = nil, size: CGSize? = nil, dataSize: Int? = nil) -> AVFile? {
         // Scale image
         let resizedImage: UIImage
         if size != nil {
@@ -77,9 +78,11 @@ extension AVFile {
         }
         
         // Compress the image data if it excesses the max size defined for server (5 MB).
-        guard let imageData = resizedImage.compressToSize(500) else {
+        let compressSize = dataSize ?? 500
+        guard let imageData = resizedImage.compressToSize(compressSize) else {
             return nil
         }
+        print(imageData.length)
         
         // Set file name
         var file: AVFile?
@@ -104,7 +107,7 @@ extension AVFile {
         
         if let imageData = data, originalImage = UIImage(data: imageData) {
             if size != nil {
-                image = originalImage.scaleToSize(size!)
+                image = originalImage.scaleToSize(size!, aspectRadio: false)
             }
             else {
                 image = originalImage

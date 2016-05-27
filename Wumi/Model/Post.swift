@@ -20,10 +20,12 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var categories: [PostCategory]
     @NSManaged var favoriteUsers: [User]
     @NSManaged var mediaAttachments: [AVFile]
+    @NSManaged var mediaThumbnails: [AVFile]
     
     // Local properties, will not be stored into server
     var attributedContent: NSAttributedString?
     var attachedImages = [UIImage]()
+    var attachedThumbnails = [UIImage]()
     
     // MARK: Initializer and subclassing functions
     
@@ -82,7 +84,7 @@ class Post: AVObject, AVSubclassing {
     // Fetch a post record asynchronously based on record id
     class func fetchInBackground(objectId id: String, block: AVObjectResultBlock!) {
         let query = Post.query()
-        query.includeKey("mediaAttachments")
+        query.includeKey("mediaThumbnails")
         
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 3600 * 24 * 30
@@ -95,7 +97,7 @@ class Post: AVObject, AVSubclassing {
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                 post.decodeAttributedContent()
-                post.loadMediaAttachments()
+                post.loadMediaThumbnails()
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     block(post, error)
@@ -126,18 +128,22 @@ class Post: AVObject, AVSubclassing {
     private func saveMediaAttachments() {
         self.mediaAttachments.removeAll()
         for image in self.attachedImages {
-            if let file = AVFile.saveImageFile(image) {
+            print(image.size)
+            if let file = AVFile.saveImageFile(image, dataSize: 1) {
                 self.mediaAttachments.append(file)
+            }
+            if let thumbnail = AVFile.saveImageFile(image, size: CGSize(width: Constants.Post.Size.Thumbnail.Width, height: Constants.Post.Size.Thumbnail.Height)) {
+                self.mediaThumbnails.append(thumbnail)
             }
         }
     }
     
     // Convert attached AVFiles to local images
-    private func loadMediaAttachments() {
-        self.attachedImages.removeAll()
-        for attachment in self.mediaAttachments {
+    private func loadMediaThumbnails() {
+        self.attachedThumbnails.removeAll()
+        for attachment in self.mediaThumbnails {
             guard let image = AVFile.loadImageFile(attachment) else { return }
-            self.attachedImages.append(image)
+            self.attachedThumbnails.append(image)
         }
     }
     
