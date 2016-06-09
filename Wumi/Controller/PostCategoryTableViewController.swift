@@ -71,8 +71,6 @@ class PostCategoryTableViewController: UITableViewController {
             self.selectedCategories.append(category)
             sender.selected = true
         }
-        
-        print(self.selectedCategories)
     }
     
     func sendPost(sender: AnyObject) {
@@ -84,11 +82,11 @@ class PostCategoryTableViewController: UITableViewController {
                 print("\(error)")
                 return
             }
-            
-            // Navigate back to post table view
-            if let postTVC = self.navigationController?.viewControllers.filter({ $0 is PostTableViewController }).first {
-                self.navigationController?.popToViewController(postTVC, animated: true)
-            }
+        }
+        
+        // Navigate back to post table view
+        if let postTVC = self.navigationController?.viewControllers.filter({ $0 is PostTableViewController }).first {
+            self.navigationController?.popToViewController(postTVC, animated: true)
         }
     }
 

@@ -391,12 +391,6 @@ class PostViewController: UITableViewController {
                     
                     self.presentViewController(imageCropper, animated: true, completion: nil)
                 }
-                else {
-                    print("Noooo")
-                }
-            }
-            else {
-                print("No")
             }
         }
     }

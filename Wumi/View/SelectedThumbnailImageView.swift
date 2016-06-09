@@ -17,7 +17,6 @@ class SelectedThumbnailImageView: UIButton {
     var delegate: SelectedThumbnailImageViewDelegate? {
         didSet {
             // Add gestures
-            print(self.delegate)
             self.setAction()
         }
     }

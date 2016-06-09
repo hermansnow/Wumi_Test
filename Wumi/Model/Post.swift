@@ -127,8 +127,9 @@ class Post: AVObject, AVSubclassing {
     // Save attached images as AVFiles synchronously
     private func saveMediaAttachments() {
         self.mediaAttachments.removeAll()
+        
         for image in self.attachedImages {
-            print(image.size)
+            
             if let file = AVFile.saveImageFile(image, dataSize: 1) {
                 self.mediaAttachments.append(file)
             }

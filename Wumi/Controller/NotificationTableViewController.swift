@@ -23,7 +23,10 @@ class NotificationTableViewController: UITableViewController {
         
         PushNotification().loadPushNotifications(currentUser){ (results, error) -> Void in
             guard results.count > 0 && error == nil else { return }
-            self.navigationController!.tabBarItem.badgeValue = String(results.count)
+            
+            if let navigationController = self.navigationController {
+                navigationController.tabBarItem.badgeValue = String(results.count)
+            }
         }
 
         

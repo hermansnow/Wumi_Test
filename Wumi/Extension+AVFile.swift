@@ -82,7 +82,6 @@ extension AVFile {
         guard let imageData = resizedImage.compressToSize(compressSize) else {
             return nil
         }
-        print(imageData.length)
         
         // Set file name
         var file: AVFile?
