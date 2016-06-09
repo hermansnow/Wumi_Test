@@ -495,7 +495,7 @@ static CGPoint  delayOffset = {0.0};
     _allowsPanToDismissKeyboard = NO;
     _allowsSendVoice = YES;
     _allowsSendMultiMedia = YES;
-    _allowsSendFace = YES;
+    _allowsSendFace = NO;
     _inputViewStyle = XHMessageInputViewStyleFlat;
     _shouldLoadMoreMessagesScrollToTop = YES;
 

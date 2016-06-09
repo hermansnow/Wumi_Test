@@ -12,8 +12,8 @@
 #import "NSString+MessageInputView.h"
 #import "XHMacro.h"
 
-#define kXHTouchToRecord         @"按住 说话"
-#define kXHTouchToFinish         @"松开 结束"
+#define kXHTouchToRecord         @"Hold to Talk"
+#define kXHTouchToFinish         @"Realse to Send"
 
 #define MIN_AUDIO_RECORDING_INTERVAL 1
 
@@ -318,7 +318,7 @@
         buttonFrame.origin = CGPointMake(CGRectGetWidth(self.bounds) - horizontalPadding - CGRectGetWidth(buttonFrame), verticalPadding);
         button.frame = buttonFrame;
         [self addSubview:button];
-        allButtonWidth += CGRectGetWidth(buttonFrame) + horizontalPadding ;
+        allButtonWidth += CGRectGetWidth(buttonFrame) + horizontalPadding * 1.5 ;
         
         self.voiceChangeButton = button;
     }
@@ -373,7 +373,7 @@
     textView.returnKeyType = UIReturnKeySend;
     textView.enablesReturnKeyAutomatically = YES; // UITextView内部判断send按钮是否可以用
     
-    textView.placeHolder = @"发送新消息";
+    textView.placeHolder = @"";
     textView.delegate = self;
     
     [self addSubview:textView];

@@ -112,14 +112,14 @@ typedef void (^LCIMErrorBlock)(NSString *messageUUID, NSError *error);
 #pragma mark - ui init
 
 - (void)initBarButton {
-    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationItem setBackBarButtonItem:backBtn];
 }
 
 - (void)initBottomMenuAndEmotionView {
     NSMutableArray *shareMenuItems = [NSMutableArray array];
     NSArray *plugIcons = @[@"sharemore_pic", @"sharemore_video"];
-    NSArray *plugTitle = @[@"照片", @"拍摄"];
+    NSArray *plugTitle = @[@"Photos", @"Camera"];
     for (NSString *plugIcon in plugIcons) {
         XHShareMenuItem *shareMenuItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:plugIcon] title:[plugTitle objectAtIndex:[plugIcons indexOfObject:plugIcon]]];
         [shareMenuItems addObject:shareMenuItem];
@@ -397,7 +397,8 @@ typedef void (^LCIMErrorBlock)(NSString *messageUUID, NSError *error);
         } else if ([error.domain isEqualToString:NSURLErrorDomain]) {
             [self alert:@"网络连接发生错误"];
         } else {
-            [self alert:[NSString stringWithFormat:@"%@", error]];
+//            [self alert:[NSString stringWithFormat:@"%@", error]];
+            NSLog([NSString stringWithFormat:@"%@", error]);
         }
         return YES;
     }
@@ -741,7 +742,7 @@ typedef void (^LCIMErrorBlock)(NSString *messageUUID, NSError *error);
     int64_t timestamp = msg.sendTimestamp;
     [self queryAndCacheMessagesWithTimestamp:timestamp block:^(NSArray *avimTypedMessage, NSError *error) {
         self.shouldLoadMoreMessagesScrollToTop = YES;
-        if (avimTypedMessage.count != 0 && [self filterError:error]) {
+        if ([self filterError:error]) {
             if (avimTypedMessage.count == 0) {
                 self.shouldLoadMoreMessagesScrollToTop = NO;
                 self.loadingMoreMessage = NO;

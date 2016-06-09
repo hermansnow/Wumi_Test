@@ -39,11 +39,11 @@
             break;
             
         case kAVIMMessageMediaTypeAudio:
-            title = @"声音";
+            title = @"Audio";
             break;
             
         case kAVIMMessageMediaTypeImage:
-            title = @"图片";
+            title = @"Image";
             break;
             
         case kAVIMMessageMediaTypeLocation:
@@ -51,10 +51,10 @@
             title = locationMsg.text;
             break;
         case kAVIMMessageMediaTypeEmotion:
-            title = @"表情";
+            title = @"Emotion";
             break;
         case kAVIMMessageMediaTypeVideo:
-            title = @"视频";
+            title = @"Video";
         default:
             break;
     }
@@ -70,7 +70,7 @@
     if (conversation.muted && conversation.unreadCount > 0) {
         title = [NSString stringWithFormat:@"[%ld条] %@", conversation.unreadCount, title];
     }
-    NSString *mentionText = @"[有人@你] ";
+    NSString *mentionText = @"[Someone @you] ";
     NSString *finalText;
     if (conversation.mentioned) {
         finalText = [NSString stringWithFormat:@"%@%@", mentionText, title];
