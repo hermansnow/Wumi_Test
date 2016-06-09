@@ -30,6 +30,8 @@ class IMUserFactory: NSObject, CDUserDelegate {
                     User.cacheUserData(user)
                 }
                 block(true, error)
+            } else {
+                block(false, error)
             }
         }
 
@@ -43,12 +45,20 @@ class IMUserFactory: NSObject, CDUserDelegate {
             imUser.setUsername(user.name)
             imUser.setAvatarUrl(user.avatarThumbnail?.url)
             return imUser
+        } else {
+            if let user = AVQuery.getUserObjectWithId(userId) as? User {
+                print("Get \(user.name) from cloud")
+                imUser.setUserId(userId)
+                imUser.setUsername(user.name)
+                imUser.setAvatarUrl(user.avatarThumbnail?.url)
+                return imUser
+            }
+            print("fail to find \(userId) in cache")
+            imUser.setUserId(userId)
+            imUser.setUsername(userId)
+            imUser.setAvatarUrl("http://ac-x3o016bx.clouddn.com/86O7RAPx2BtTW5zgZTPGNwH9RZD5vNDtPm1YbIcu")
+            return imUser
         }
-        print("fail to find \(userId) in cache")
-        imUser.setUserId(userId)
-        imUser.setUsername(userId)
-        imUser.setAvatarUrl("http://ac-x3o016bx.clouddn.com/86O7RAPx2BtTW5zgZTPGNwH9RZD5vNDtPm1YbIcu")
-        return imUser
     }
     
 }

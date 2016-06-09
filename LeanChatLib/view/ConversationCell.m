@@ -24,12 +24,17 @@
     NSString * className = NSStringFromClass([self class]);
     
     [tableView registerNib:[UINib nibWithNibName:className bundle:nil] forCellReuseIdentifier:className];
-    return [tableView dequeueReusableCellWithIdentifier:className];
+//    return [tableView dequeueReusableCellWithIdentifier:className];
+    ConversationCell *cell = [tableView dequeueReusableCellWithIdentifier:className];
+    if (cell == nil) {
+        cell = [[ConversationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[[self class] identifier]];
+    }
+    return cell;
 }
 
 + (CGFloat)heightOfCell
 {
-    return 66;
+    return 65;
 }
 
 - (void)setConversation:(AVIMConversation *)conversation
@@ -63,6 +68,15 @@
     [super setSelected:selected animated:animated];
     
     // Configure the view for the selected state
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.badgeView.badgeText = nil;
+    self.litteBadgeView.hidden = YES;
+    self.messageTextLabel.text = nil;
+    self.timestampLabel.text = nil;
+    self.nameLabel.text = nil;
 }
 
 @end

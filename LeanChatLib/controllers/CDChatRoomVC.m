@@ -741,7 +741,7 @@ typedef void (^LCIMErrorBlock)(NSString *messageUUID, NSError *error);
     int64_t timestamp = msg.sendTimestamp;
     [self queryAndCacheMessagesWithTimestamp:timestamp block:^(NSArray *avimTypedMessage, NSError *error) {
         self.shouldLoadMoreMessagesScrollToTop = YES;
-        if ([self filterError:error]) {
+        if (avimTypedMessage.count != 0 && [self filterError:error]) {
             if (avimTypedMessage.count == 0) {
                 self.shouldLoadMoreMessagesScrollToTop = NO;
                 self.loadingMoreMessage = NO;
