@@ -12,7 +12,9 @@ class MessageTableViewCell: UITableViewCell {
 
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet weak var authorView: UserBannerView!
+    @IBOutlet private weak var contentStackView: UIStackView!
     @IBOutlet weak var contentTextView: PostContentTextView!
+    @IBOutlet weak var imagePreview: UIImageView!
     @IBOutlet private weak var timeStampLabel: UILabel!
     @IBOutlet weak var saveButton: FavoriteButton!
     @IBOutlet private weak var saveLabel: UILabel!
@@ -58,6 +60,18 @@ class MessageTableViewCell: UITableViewCell {
         }
     }
     
+    var previewImage: UIImage? {
+        get {
+            return self.imagePreview.image
+        }
+        set {
+            self.imagePreview.image = newValue
+            if newValue == nil {
+                self.hideImageView = true
+            }
+        }
+    }
+    
     var timeStamp: String? {
         get {
             return self.timeStampLabel.text
@@ -77,6 +91,12 @@ class MessageTableViewCell: UITableViewCell {
         }
     }
     
+    var hideImageView = true {
+        didSet {
+            self.imagePreview.hidden = self.hideImageView
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -90,7 +110,6 @@ class MessageTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        
         // Set up title label
         self.titleLabel.font = UIFont(name: ".SFUIText-Bold", size: 16)
         
@@ -99,13 +118,16 @@ class MessageTableViewCell: UITableViewCell {
         self.authorView.detailLabel.textColor = UIColor.lightGrayColor()
         self.authorView.backgroundColor = Constants.General.Color.BackgroundColor
         
-        // Set up content label
+        // Set up content text view
         self.showSummary = true
         self.contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 14)
         self.contentTextView.scrollEnabled = false
         self.contentTextView.editable = false
         self.contentTextView.selectable = true
         self.contentTextView.dataDetectorTypes = .All
+        
+        // Set up image view
+        self.imagePreview.contentMode = .ScaleAspectFit
         
         // Set up timestamp
         self.timeStampLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
@@ -125,8 +147,7 @@ class MessageTableViewCell: UITableViewCell {
         self.content = nil
         self.timeStamp = nil
         self.authorView.reset()
-        //self.saveButton.delegate = nil
-        //self.saveButton.selected = false
+        self.hideImageView = true
     }
     
     func highlightString(inout attributeString: NSMutableAttributedString?) {

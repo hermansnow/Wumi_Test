@@ -65,7 +65,7 @@ class PostTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItems = [self.composePostButton, self.searchButton]
         
         // Initialize tableview
-        self.tableView.estimatedRowHeight = 100
+        self.tableView.estimatedRowHeight = 180
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
@@ -168,6 +168,17 @@ class PostTableViewController: UITableViewController {
         return self.displayPosts.count
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        guard let post = self.displayPosts[safe: indexPath.row] else { return 0 }
+        
+        if post.mediaThumbnails.count > 0 {
+            return 230
+        }
+        else {
+            return UITableViewAutomaticDimension
+        }
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MessageTableViewCell", forIndexPath: indexPath) as! MessageTableViewCell
         
@@ -180,10 +191,22 @@ class PostTableViewController: UITableViewController {
         if let content = post.content {
             cell.content = NSMutableAttributedString(string: content)
         }
+        cell.imagePreview.hidden = post.mediaThumbnails.count == 0
+        if !cell.imagePreview.hidden {
+            post.loadFirstThumbnail({ (image, error) in
+                guard error == nil else {
+                    print(error.localizedDescription)
+                    return
+                }
+                cell.previewImage = image.scaleToHeight(100)
+            })
+        }
+        
         cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         cell.highlightString = self.searchString
-        
+            
+        // Fetch author information
         if let author = post.author {
             author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
                 guard let user = result as? User where error == nil else { return }

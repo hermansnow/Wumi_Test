@@ -71,6 +71,7 @@ class Post: AVObject, AVSubclassing {
             query.whereKey(index, lessThan: cutoffTime)
         }
         
+        query.includeKey("mediaThumbnails")
         query.orderByDescending(index)
         
         query.limit = limit
@@ -137,6 +138,19 @@ class Post: AVObject, AVSubclassing {
                 self.mediaThumbnails.append(thumbnail)
             }
         }
+    }
+    
+    func loadFirstThumbnail(block: AVImageResultBlock) {
+        guard self.attachedThumbnails.count == 0 else {
+            block(self.attachedThumbnails.first, nil)
+            return 
+        }
+        guard let firstImageFile = self.mediaThumbnails[safe: 0] else {
+            block(nil, NSError(domain: "wumi.com", code: 0, userInfo: [:]))
+            return
+        }
+        
+        AVFile.loadImageFile(firstImageFile, block: block)
     }
     
     // Convert attached AVFiles to local images
