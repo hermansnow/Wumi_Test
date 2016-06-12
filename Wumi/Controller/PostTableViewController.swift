@@ -193,13 +193,13 @@ class PostTableViewController: UITableViewController {
         }
         cell.imagePreview.hidden = post.mediaThumbnails.count == 0
         if !cell.imagePreview.hidden {
-            post.loadFirstThumbnail({ (image, error) in
+            post.loadFirstThumbnailWithBlock { (image, error) in
                 guard error == nil else {
                     print(error.localizedDescription)
                     return
                 }
                 cell.previewImage = image.scaleToHeight(100)
-            })
+            }
         }
         
         cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)

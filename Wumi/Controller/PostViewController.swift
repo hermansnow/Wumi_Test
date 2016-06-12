@@ -79,8 +79,8 @@ class PostViewController: UITableViewController {
         // Add Refresh Control
         self.addRefreshControl()
         
-        // Load posts
-        self.loadData()
+        // Load the post
+        self.loadPost()
     }
     
     deinit {
@@ -96,7 +96,7 @@ class PostViewController: UITableViewController {
     
     private func addRefreshControl() {
         self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: #selector(PostViewController.loadData), forControlEvents: .ValueChanged)
+        self.refreshControl!.addTarget(self, action: #selector(PostViewController.loadPost), forControlEvents: .ValueChanged)
         self.tableView.addSubview(refreshControl!)
     }
     
@@ -303,7 +303,7 @@ class PostViewController: UITableViewController {
                 print("\(error)")
                 return
             }
-            self.loadData()
+            self.loadPost()
         }
         
         // send push notification to users that saved this post
@@ -419,11 +419,6 @@ class PostViewController: UITableViewController {
     }
     
     // MARK: Help function
-    
-    func loadData() {
-        self.loadPost()
-    }
-    
     func loadPost() {
         guard let post = self.post else { return }
         

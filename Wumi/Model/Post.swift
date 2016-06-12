@@ -96,51 +96,83 @@ class Post: AVObject, AVSubclassing {
                 return
             }
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                post.decodeAttributedContent()
-                post.loadMediaThumbnails()
+            post.decodeAttributedContent()
+            post.loadMediaThumbnailsWithBlock { (success, error) in
+                guard success && error == nil else { return }
                 
-                dispatch_async(dispatch_get_main_queue(), {
-                    block(post, error)
-                })
+                block(post, error)
             }
-
         }
     }
     
     // Save a post record asynchronously
     override func saveInBackgroundWithBlock(block: AVBooleanResultBlock!) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            // Set default value
-            self.title = self.title ?? "No Title"
-            self.commentCount = 0
+        // Set default value
+        self.title = self.title ?? "No Title"
+        self.commentCount = 0
             
-            // Save attached files
-            self.encodeAttributedContent()
-            self.saveMediaAttachments()
+        // Save attached files
+        self.encodeAttributedContent() // TODO: Please make this function async when turning on the feature
+        self.saveMediaAttachmentsWithBlock { (success, error) in
+            guard success && error == nil else { return }
             
-            dispatch_async(dispatch_get_main_queue(), {
-                super.saveInBackgroundWithBlock(block)
-            })
+            super.saveInBackgroundWithBlock(block)
         }
     }
     
     // Save attached images as AVFiles synchronously
-    private func saveMediaAttachments() {
-        self.mediaAttachments.removeAll()
+    private func saveMediaAttachmentsWithBlock(block: AVBooleanResultBlock!) {
+        // Use dispatch_group to save a list of images
+        let taskGroup = dispatch_group_create()
+        let taskQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         
-        for image in self.attachedImages {
+        var images = [AVFile?](count: self.attachedImages.count, repeatedValue: nil)
+        var thumbnails = [AVFile?](count: self.attachedImages.count, repeatedValue: nil)
+        
+        for index in 0..<self.attachedImages.count {
+            guard let image = self.attachedImages[safe: index] else { continue }
             
-            if let file = AVFile.saveImageFile(image, dataSize: 1) {
-                self.mediaAttachments.append(file)
+            dispatch_group_async(taskGroup, taskQueue) {
+                guard let file = AVFile.saveImageFile(image) else { return }
+                
+                images[index] = file
             }
-            if let thumbnail = AVFile.saveImageFile(image, size: CGSize(width: Constants.Post.Size.Thumbnail.Width, height: Constants.Post.Size.Thumbnail.Height)) {
-                self.mediaThumbnails.append(thumbnail)
+            
+            dispatch_group_async(taskGroup, taskQueue) {
+                guard let thumbnail = AVFile.saveImageFile(image, size: CGSize(width: Constants.Post.Size.Thumbnail.Width, height: Constants.Post.Size.Thumbnail.Height)) else { return }
+                
+                thumbnails[index] = thumbnail
             }
+        }
+        
+        dispatch_group_notify(taskGroup, taskQueue) { 
+            guard let mediaAttachments = images.filter( { $0 != nil }) as? [AVFile] else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    block(false, NSError(domain: "wumi.com", code: 0, userInfo: [:]))
+                })
+                return
+            }
+            
+            self.mediaAttachments.removeAll()
+            self.mediaAttachments.appendContentsOf(mediaAttachments)
+            
+            guard let mediaThumbnails = thumbnails.filter( { $0 != nil }) as? [AVFile] else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    block(false, NSError(domain: "wumi.com", code: 0, userInfo: [:]))
+                })
+                return
+            }
+            
+            self.mediaThumbnails.removeAll()
+            self.mediaThumbnails.appendContentsOf(mediaThumbnails)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                block(true, nil)
+            })
         }
     }
     
-    func loadFirstThumbnail(block: AVImageResultBlock) {
+    func loadFirstThumbnailWithBlock(block: AVImageResultBlock) {
         guard self.attachedThumbnails.count == 0 else {
             block(self.attachedThumbnails.first, nil)
             return 
@@ -154,11 +186,37 @@ class Post: AVObject, AVSubclassing {
     }
     
     // Convert attached AVFiles to local images
-    private func loadMediaThumbnails() {
-        self.attachedThumbnails.removeAll()
-        for attachment in self.mediaThumbnails {
-            guard let image = AVFile.loadImageFile(attachment) else { return }
-            self.attachedThumbnails.append(image)
+    private func loadMediaThumbnailsWithBlock(block: AVBooleanResultBlock!) {
+        // Use dispatch_group to save a list of images
+        let taskGroup = dispatch_group_create()
+        let taskQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        
+        var thumbnails = [UIImage?](count: self.mediaThumbnails.count, repeatedValue: nil)
+        
+        for index in 0..<self.mediaThumbnails.count {
+            guard let thumbnail = self.mediaThumbnails[safe: index] else { continue }
+            
+            dispatch_group_async(taskGroup, taskQueue) {
+                guard let attachedThumbnail = AVFile.loadImageFile(thumbnail) else { return }
+                
+                thumbnails[index] = attachedThumbnail
+            }
+        }
+        
+        dispatch_group_notify(taskGroup, taskQueue) {
+            guard let attachedThumbnails = thumbnails.filter( { $0 != nil }) as? [UIImage] else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    block(false, NSError(domain: "wumi.com", code: 0, userInfo: [:]))
+                })
+                return
+            }
+            
+            self.attachedThumbnails.removeAll()
+            self.attachedThumbnails.appendContentsOf(attachedThumbnails)
+            
+            dispatch_async(dispatch_get_main_queue(), { 
+                block(true, nil)
+            })
         }
     }
     
