@@ -297,7 +297,7 @@
 		B1ECD7B01CCC240900CED9C4 /* Inbox.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1ECD7AE1CCC240900CED9C4 /* Inbox.storyboard */; };
 		B1ECD7B51CCC2A8200CED9C4 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7B41CCC2A8200CED9C4 /* ChatListViewController.swift */; };
 		B1ECD7B71CCC2AA800CED9C4 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7B61CCC2AA800CED9C4 /* ChatRoomViewController.swift */; };
-		B1ECD7B91CCC2ACA00CED9C4 /* AddChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7B81CCC2ACA00CED9C4 /* AddChatViewController.swift */; };
+		B1ECD7B91CCC2ACA00CED9C4 /* MessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7B81CCC2ACA00CED9C4 /* MessageTableViewController.swift */; };
 		B1ECD7BD1CCC2B2B00CED9C4 /* IMUserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7BC1CCC2B2B00CED9C4 /* IMUserFactory.swift */; };
 		B1ECD7BF1CCC2B3200CED9C4 /* IMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7BE1CCC2B3200CED9C4 /* IMUser.swift */; };
 		B1F045211CB614DB0025CF7D /* StateListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */; };
@@ -804,7 +804,7 @@
 		B1ECD7AF1CCC240900CED9C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Inbox.storyboard; sourceTree = SOURCE_ROOT; };
 		B1ECD7B41CCC2A8200CED9C4 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatListViewController.swift; path = Controller/ChatListViewController.swift; sourceTree = "<group>"; };
 		B1ECD7B61CCC2AA800CED9C4 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatRoomViewController.swift; path = Controller/ChatRoomViewController.swift; sourceTree = "<group>"; };
-		B1ECD7B81CCC2ACA00CED9C4 /* AddChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddChatViewController.swift; path = Controller/AddChatViewController.swift; sourceTree = "<group>"; };
+		B1ECD7B81CCC2ACA00CED9C4 /* MessageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageTableViewController.swift; path = Controller/MessageTableViewController.swift; sourceTree = "<group>"; };
 		B1ECD7BC1CCC2B2B00CED9C4 /* IMUserFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMUserFactory.swift; sourceTree = "<group>"; };
 		B1ECD7BE1CCC2B3200CED9C4 /* IMUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMUser.swift; sourceTree = "<group>"; };
 		B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateListTableViewController.swift; path = Controller/StateListTableViewController.swift; sourceTree = "<group>"; };
@@ -1802,7 +1802,7 @@
 			children = (
 				B1ECD7B41CCC2A8200CED9C4 /* ChatListViewController.swift */,
 				B1ECD7B61CCC2AA800CED9C4 /* ChatRoomViewController.swift */,
-				B1ECD7B81CCC2ACA00CED9C4 /* AddChatViewController.swift */,
+				B1ECD7B81CCC2ACA00CED9C4 /* MessageTableViewController.swift */,
 			);
 			name = Inbox;
 			sourceTree = "<group>";
@@ -2505,7 +2505,7 @@
 				DFA93ACF1C910DD700ECA503 /* ProfileTableCell.swift in Sources */,
 				DFA93AB61C882FE700ECA503 /* TextLinkButton.swift in Sources */,
 				B1ECD7A51CCC1F4000CED9C4 /* XHLoadMoreView.m in Sources */,
-				B1ECD7B91CCC2ACA00CED9C4 /* AddChatViewController.swift in Sources */,
+				B1ECD7B91CCC2ACA00CED9C4 /* MessageTableViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
