@@ -85,6 +85,7 @@ class Post: AVObject, AVSubclassing {
     // Fetch a post record asynchronously based on record id
     class func fetchInBackground(objectId id: String, block: AVObjectResultBlock!) {
         let query = Post.query()
+        query.includeKey("mediaAttachments")
         query.includeKey("mediaThumbnails")
         
         query.cachePolicy = .NetworkElseCache
@@ -191,10 +192,10 @@ class Post: AVObject, AVSubclassing {
         let taskGroup = dispatch_group_create()
         let taskQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         
-        var thumbnails = [UIImage?](count: self.mediaThumbnails.count, repeatedValue: nil)
+        var thumbnails = [UIImage?](count: self.mediaAttachments.count, repeatedValue: nil)
         
-        for index in 0..<self.mediaThumbnails.count {
-            guard let thumbnail = self.mediaThumbnails[safe: index] else { continue }
+        for index in 0..<self.mediaAttachments.count {
+            guard let thumbnail = self.mediaAttachments[safe: index] else { continue }
             
             dispatch_group_async(taskGroup, taskQueue) {
                 guard let attachedThumbnail = AVFile.loadImageFile(thumbnail) else { return }

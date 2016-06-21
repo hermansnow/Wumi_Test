@@ -478,7 +478,7 @@ extension PostViewController: KIImagePagerDataSource {
     }
     
     func contentModeForImage(image: UInt, inPager pager: KIImagePager!) -> UIViewContentMode {
-        return .ScaleAspectFit
+        return .ScaleAspectFill
     }
 }
 
