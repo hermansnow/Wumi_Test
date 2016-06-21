@@ -110,13 +110,20 @@ class Post: AVObject, AVSubclassing {
     override func saveInBackgroundWithBlock(block: AVBooleanResultBlock!) {
         // Set default value
         self.title = self.title ?? "No Title"
-        self.commentCount = 0
+        self.commentCount = self.commentCount ?? 0
             
         // Save attached files
-        self.encodeAttributedContent() // TODO: Please make this function async when turning on the feature
-        self.saveMediaAttachmentsWithBlock { (success, error) in
-            guard success && error == nil else { return }
+        if self.htmlContent == nil {
+            self.encodeAttributedContent() // TODO: Please make this function async when turning on the feature
+        }
+        if self.mediaAttachments.count == 0 {
+            self.saveMediaAttachmentsWithBlock { (success, error) in
+                guard success && error == nil else { return }
             
+                super.saveInBackgroundWithBlock(block)
+            }
+        }
+        else {
             super.saveInBackgroundWithBlock(block)
         }
     }
