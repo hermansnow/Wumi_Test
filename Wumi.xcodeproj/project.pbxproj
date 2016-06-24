@@ -303,6 +303,8 @@
 		B1F045211CB614DB0025CF7D /* StateListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */; };
 		B1F045231CB619080025CF7D /* country_state_city.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F045221CB619080025CF7D /* country_state_city.plist */; };
 		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
+		DF16E03F1D1D02DC00F4C4FC /* ImagePageItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */; };
+		DF16E0411D1D047D00F4C4FC /* ImagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E0401D1D047D00F4C4FC /* ImagePageViewController.swift */; };
 		DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEB1C86A55F00018B4A /* Constants.swift */; };
 		DF173EF21C86A58600018B4A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEF1C86A58600018B4A /* Extensions.swift */; };
 		DF173EF31C86A58600018B4A /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EF01C86A58600018B4A /* Helper.swift */; };
@@ -810,6 +812,8 @@
 		B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateListTableViewController.swift; path = Controller/StateListTableViewController.swift; sourceTree = "<group>"; };
 		B1F045221CB619080025CF7D /* country_state_city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_state_city.plist; sourceTree = "<group>"; };
 		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePageItemViewController.swift; path = Controller/ImagePageItemViewController.swift; sourceTree = "<group>"; };
+		DF16E0401D1D047D00F4C4FC /* ImagePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePageViewController.swift; path = Controller/ImagePageViewController.swift; sourceTree = "<group>"; };
 		DF173EEB1C86A55F00018B4A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "Supporting Files/Constants.swift"; sourceTree = "<group>"; };
 		DF173EEF1C86A58600018B4A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Supporting Files/Extensions.swift"; sourceTree = "<group>"; };
 		DF173EF01C86A58600018B4A /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Helper.swift; path = "Supporting Files/Helper.swift"; sourceTree = "<group>"; };
@@ -1831,6 +1835,17 @@
 			path = Wumi;
 			sourceTree = "<group>";
 		};
+		DF16E03D1D1D027F00F4C4FC /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				DF4F53291CCD9067009F3D2E /* PIKA */,
+				DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */,
+				DF16E0401D1D047D00F4C4FC /* ImagePageViewController.swift */,
+				DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
 		DF1BE2651C9F977300F934EE /* Post */ = {
 			isa = PBXGroup;
 			children = (
@@ -1889,10 +1904,9 @@
 		DF5E3D3D1BE9461300F44FFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				02932AA01CEE6E92001220E8 /* Notification */,
-				DF4F53291CCD9067009F3D2E /* PIKA */,
 				DFA74C201BF8215900609E83 /* MainTabBarController.swift */,
-				DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */,
+				DF16E03D1D1D027F00F4C4FC /* Shared */,
+				02932AA01CEE6E92001220E8 /* Notification */,
 				DFB4152B1C1E706F00835EFE /* SignIn/SignUp */,
 				DFB4152A1C1E705C00835EFE /* Settings */,
 				DFACE2511C5A2E3B00C6D737 /* Contact */,
@@ -2338,6 +2352,7 @@
 				B1ECD79A1CCC1F4000CED9C4 /* XHMessageStatusView.m in Sources */,
 				B10C22271CCDC0E10055ED35 /* AVIMEmotionMessage.m in Sources */,
 				DFA93ACB1C91016A00ECA503 /* ProfileListTableCell.swift in Sources */,
+				DF16E0411D1D047D00F4C4FC /* ImagePageViewController.swift in Sources */,
 				DF28BCCE1CBB6D59004116AB /* Extension+AVFile.swift in Sources */,
 				DFB612A61CA6284000B3271B /* CommentTableViewCell.swift in Sources */,
 				DFBD2D3C1BEC623E00D6FEBC /* InvitationCodeViewController.swift in Sources */,
@@ -2345,6 +2360,7 @@
 				B1ECD78E1CCC1F4000CED9C4 /* SETextView.m in Sources */,
 				B1ECD74F1CCC1F3F00CED9C4 /* NSString+XHDiskSizeTransfrom.m in Sources */,
 				B1ECD7621CCC1F3F00CED9C4 /* XHVoiceRecordHelper.m in Sources */,
+				DF16E03F1D1D02DC00F4C4FC /* ImagePageItemViewController.swift in Sources */,
 				B1ECD77D1CCC1F4000CED9C4 /* FLAnimatedImage.m in Sources */,
 				DFB861481BEDBDF60075014A /* SystemButton.swift in Sources */,
 				DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */,

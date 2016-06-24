@@ -958,10 +958,50 @@
             </objects>
             <point key="canvasLocation" x="4180" y="-742"/>
         </scene>
-        <!--Post-->
+        <!--Image Page Item View Controller-->
+        <scene sceneID="E29-NK-iC7">
+            <objects>
+                <viewController storyboardIdentifier="ImagePageItemViewController" id="goz-YT-RiF" customClass="ImagePageItemViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="u4N-Xj-P8N"/>
+                        <viewControllerLayoutGuide type="bottom" id="KPp-4j-kY7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TTQ-Ud-sGi">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D63-ug-qpT">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="D63-ug-qpT" firstAttribute="leading" secondItem="TTQ-Ud-sGi" secondAttribute="leading" id="4rL-tj-kwm"/>
+                            <constraint firstItem="KPp-4j-kY7" firstAttribute="top" secondItem="D63-ug-qpT" secondAttribute="bottom" id="70m-FQ-jty"/>
+                            <constraint firstItem="D63-ug-qpT" firstAttribute="top" secondItem="TTQ-Ud-sGi" secondAttribute="top" id="QS1-YQ-2fV"/>
+                            <constraint firstAttribute="trailing" secondItem="D63-ug-qpT" secondAttribute="trailing" id="up9-66-QZd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="D63-ug-qpT" id="r1h-JR-5OF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UjF-id-tIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5903" y="-608"/>
+        </scene>
+        <!--Image Page View Controller-->
+        <scene sceneID="vc2-Tz-Wox">
+            <objects>
+                <pageViewController storyboardIdentifier="ImagePageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="sB4-t6-3eT" customClass="ImagePageViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TQL-Vj-zG5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5173" y="-608"/>
+        </scene>
+        <!--New Post-->
         <scene sceneID="I8X-wm-mWx">
             <objects>
-                <viewController id="dTU-vq-anB" customClass="NewPostViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="New Post" id="dTU-vq-anB" customClass="NewPostViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tpi-zF-g4h"/>
                         <viewControllerLayoutGuide type="bottom" id="TXi-xH-MO0"/>
@@ -982,10 +1022,10 @@
             </objects>
             <point key="canvasLocation" x="4010.5" y="-1699.5"/>
         </scene>
-        <!--Post-->
+        <!--Post Category-->
         <scene sceneID="o7L-au-XvP">
             <objects>
-                <tableViewController id="T7C-hg-5dB" customClass="PostCategoryTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Post Category" id="T7C-hg-5dB" customClass="PostCategoryTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="dDW-o8-1Qg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1250,10 +1290,10 @@
             </objects>
             <point key="canvasLocation" x="2502.5" y="1441.5"/>
         </scene>
-        <!--Location-->
+        <!--Country-->
         <scene sceneID="Oxc-mU-50E">
             <objects>
-                <tableViewController id="uaJ-9u-JGY" customClass="LocationListTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Country" id="uaJ-9u-JGY" customClass="LocationListTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kOc-Xj-jpn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1564,10 +1604,10 @@
             </objects>
             <point key="canvasLocation" x="4750.5" y="2207.5"/>
         </scene>
-        <!--Location-->
+        <!--City-->
         <scene sceneID="82k-sg-8j1">
             <objects>
-                <tableViewController id="m5M-y8-nRm" customClass="CityListTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="City" id="m5M-y8-nRm" customClass="CityListTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6Kd-g7-lRL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1594,10 +1634,10 @@
             </objects>
             <point key="canvasLocation" x="5600.5" y="1335.5"/>
         </scene>
-        <!--Location-->
+        <!--State-->
         <scene sceneID="5Ew-4J-oE4">
             <objects>
-                <tableViewController id="0GD-74-Ffp" customClass="StateListTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="State" id="0GD-74-Ffp" customClass="StateListTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9E6-D2-bZx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1657,6 +1697,6 @@
         <image name="Star" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zkE-Zw-0o6"/>
+        <segue reference="T0p-az-lM5"/>
     </inferredMetricsTieBreakers>
 </document>
