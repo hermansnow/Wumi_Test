@@ -159,6 +159,7 @@ extension NewPostViewController: SelectedThumbnailImageViewDelegate {
         imagePageVC.images = self.composePostView.selectedImages
         imagePageVC.startIndex = index
         
+        imagePageVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         self.presentViewController(imagePageVC, animated: true, completion: nil)
     }
 }

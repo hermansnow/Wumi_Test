@@ -157,6 +157,7 @@ class PostViewController: UITableViewController {
         if post.mediaThumbnails.count > 0 {
             self.postCell.hideImageView = false
             self.postCell.imagePager.dataSource = self
+            self.postCell.imagePager.delegate = self
         }
         else {
             self.postCell.hideImageView = true
@@ -477,11 +478,26 @@ extension PostViewController: KIImagePagerDataSource {
     func arrayWithImages(pager: KIImagePager!) -> [AnyObject]! {
         guard let post = self.post else { return [] }
         
-        return  post.attachedThumbnails
+        return  post.attachedImages
     }
     
     func contentModeForImage(image: UInt, inPager pager: KIImagePager!) -> UIViewContentMode {
         return .ScaleAspectFill
+    }
+}
+
+extension PostViewController: KIImagePagerDelegate {
+    func imagePager(imagePager: KIImagePager!, didSelectImageAtIndex index: UInt) {
+        guard let post = self.post,
+            imagePageVC = storyboard!.instantiateViewControllerWithIdentifier("ImagePageViewController") as? ImagePageViewController else { return }
+        
+        imagePageVC.images = post.attachedImages
+        imagePageVC.startIndex = Int(index)
+        
+        imagePageVC.modalTransitionStyle = .CrossDissolve
+        imagePageVC.modalPresentationStyle = .FullScreen
+        
+        self.presentViewController(imagePageVC, animated: true, completion: nil)
     }
 }
 

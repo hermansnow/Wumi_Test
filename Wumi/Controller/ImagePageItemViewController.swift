@@ -13,6 +13,7 @@ class ImagePageItemViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     var itemIndex = 0
+    var itemCount = 0
     var image: UIImage? {
         didSet {
             if let imageView = self.imageView {
@@ -24,15 +25,31 @@ class ImagePageItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Constants.General.Color.BackgroundColor
+        self.view.backgroundColor = UIColor.blackColor()
         
         self.imageView.contentMode = .ScaleAspectFit
+        self.imageView.backgroundColor = UIColor.blackColor()
         self.imageView.image = self.image
+        
+        let tap = UITapGestureRecognizer()
+        tap.addTarget(self, action: #selector(tapImage(_:)))
+        
+        // Add gestures
+        self.view.addGestureRecognizer(tap)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func tapImage(gesture: UIGestureRecognizer) {
+        if let pageVC = self.parentViewController as? ImagePageViewController {
+            pageVC.dismissViewControllerAnimated(true, completion: nil)
+        }
+        else {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
 

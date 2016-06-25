@@ -13,31 +13,61 @@ class ImagePageViewController: UIPageViewController {
     var startIndex = 0
     lazy var images = [UIImage]()
     private var imagePageItemVCs = [ImagePageItemViewController]()
+    private var indexLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.dataSource = self
         
+        self.view.addSubview(self.indexLabel)
+        self.view.bringSubviewToFront(self.indexLabel)
+        
+        //self.addConstraints()
+        
         self.loadPages()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: Helper functions
+    /*private func addConstraints() {
+        //self.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        //self.pageVC.view.topAnchor.constraintEqualToAnchor(self.view.topAnchor).active = true
+        self.pageVC.view.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor).active = true
+        self.pageVC.view.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor).active = true
+        self.pageVC.view.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor).active = true
+        
+        NSLayoutConstraint(item: self.indexLabel,
+                           attribute: .CenterX,
+                           relatedBy: .Equal,
+                           toItem: self.view,
+                           attribute: .CenterX,
+                           multiplier: 1,
+                           constant: 0).active = true
+        NSLayoutConstraint(item: self.indexLabel,
+                           attribute: .Top,
+                           relatedBy: .Equal,
+                           toItem: self.view,
+                           attribute: .Top,
+                           multiplier: 1,
+                           constant: 0).active = true
+    }*/
+    
     private func loadPages() {
-        for image in images {
-            guard let imagePageItemVC = storyboard!.instantiateViewControllerWithIdentifier("ImagePageItemViewController") as? ImagePageItemViewController else { continue }
+        for index in 0..<self.images.count {
+            guard let image = self.images[safe: index],
+                imagePageItemVC = storyboard!.instantiateViewControllerWithIdentifier("ImagePageItemViewController") as? ImagePageItemViewController else { continue }
             imagePageItemVC.image = image
+            imagePageItemVC.itemIndex = index
+            imagePageItemVC.itemCount = self.images.count
             self.imagePageItemVCs.append(imagePageItemVC)
         }
         
         // Set first page
         if let startVC = imagePageItemVCs[safe: startIndex] {
             self.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
+            self.indexLabel.textColor = UIColor.whiteColor()
+            self.indexLabel.text = "\(self.startIndex + 1)/\(self.images.count)"
         }
     }
     
@@ -67,5 +97,17 @@ extension ImagePageViewController: UIPageViewControllerDataSource {
             index = self.imagePageItemVCs.indexOf(imagePageItemVC) where index >= 0 && index < self.imagePageItemVCs.count - 1 else { return nil }
         
         return self.imagePageItemVCs[safe: index + 1]
+    }
+    
+    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+        return self.imagePageItemVCs.count
+    }
+    
+    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+        guard let orderedVCs = self.viewControllers as? [ImagePageItemViewController],
+            firstVC = orderedVCs.first,
+            index = self.imagePageItemVCs.indexOf(firstVC) else { return 0 }
+        
+        return index
     }
 }

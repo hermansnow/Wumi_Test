@@ -98,7 +98,7 @@ class Post: AVObject, AVSubclassing {
             }
             
             post.decodeAttributedContent()
-            post.loadMediaThumbnailsWithBlock { (success, error) in
+            post.loadMediaAttachmentsWithBlock { (success, error) in
                 guard success && error == nil else { return }
                 
                 block(post, error)
@@ -194,7 +194,7 @@ class Post: AVObject, AVSubclassing {
     }
     
     // Convert attached AVFiles to local images
-    private func loadMediaThumbnailsWithBlock(block: AVBooleanResultBlock!) {
+    private func loadMediaAttachmentsWithBlock(block: AVBooleanResultBlock!) {
         // Use dispatch_group to save a list of images
         let taskGroup = dispatch_group_create()
         let taskQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -219,8 +219,8 @@ class Post: AVObject, AVSubclassing {
                 return
             }
             
-            self.attachedThumbnails.removeAll()
-            self.attachedThumbnails.appendContentsOf(attachedThumbnails)
+            self.attachedImages.removeAll()
+            self.attachedImages.appendContentsOf(attachedThumbnails)
             
             dispatch_async(dispatch_get_main_queue(), { 
                 block(true, nil)
