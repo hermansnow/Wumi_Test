@@ -24,6 +24,8 @@ class MessageTableViewController: UITableViewController {
     var searchType: UserSearchType = .All
     var hasMoreResults: Bool = false
     
+    lazy var nextButton = UIBarButtonItem()
+    
     // Computed properties
     var displayUsers: [User] {
         get {
@@ -58,6 +60,10 @@ class MessageTableViewController: UITableViewController {
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.tableView.separatorStyle = .None
         self.tableView.backgroundColor = Constants.General.Color.BackgroundColor
+        
+        // Initialize navigation bar
+        self.nextButton = UIBarButtonItem(title: "Next", style: .Done, target: self, action: #selector(startConversation(_:)))
+        self.navigationItem.rightBarButtonItem = self.nextButton
         
         // Add resultSearchController
         self.addSearchController()
@@ -190,6 +196,8 @@ class MessageTableViewController: UITableViewController {
         cell.favoriteButton.selected = self.currentUser.favoriteUsersArray.contains( { $0 == user } )
         
         cell.additionalButton.enabled = false
+        cell.additionalButton.hidden = true
+        
         //
         if !user.emailPublic || user.email.characters.count <= 0 {
             cell.emailButton.enabled = false
@@ -201,15 +209,54 @@ class MessageTableViewController: UITableViewController {
             cell.favoriteButton.enabled = false
         }
         
+        let checkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        checkButton.setImage(Constants.General.Image.Check, forState: .Selected)
+        checkButton.setImage(Constants.General.Image.Uncheck, forState: .Normal)
+        checkButton.tag = indexPath.row
+        checkButton.addTarget(self, action: #selector(selectUser(_:)), forControlEvents: .TouchUpInside)
+        cell.accessoryView = checkButton
+        
+        cell.selectionStyle = .None
+        
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let selectedUser = self.displayUsers[safe: indexPath.row] else { return }
+        guard let selectedUser = self.displayUsers[safe: indexPath.row]
+//            let currCheckBox = tableView.cellForRowAtIndexPath(indexPath)!.accessoryView as! UIButton?
+            where selectedUser != self.currentUser else { return }
         // Stop input timer if one is running
         self.stopTimer()
         
         self.selectedUserIndexPath = indexPath
+        
+        
+        
+    }
+    
+    // MARK: Action
+    func selectUser(sender: UIButton) {
+        if sender.selected {
+            sender.selected = false
+            self.selectedUserIndexPath = nil
+        } else {
+            sender.selected = true
+            if let prevIndexPath = self.selectedUserIndexPath {
+                let prevCheckButton = self.tableView.cellForRowAtIndexPath(prevIndexPath)!.accessoryView as! UIButton
+                prevCheckButton.selected = false
+            }
+            self.selectedUserIndexPath = NSIndexPath.init(forRow: sender.tag, inSection: 0)
+        }
+    }
+    
+    func startConversation(sender: UIButton) {
+        guard let indexPath = self.selectedUserIndexPath,
+            let selectedUser = self.displayUsers[safe: indexPath.row]
+            where selectedUser != self.currentUser
+            else { return }
+        
+        self.stopTimer()
+        
         CDChatManager.sharedManager().fetchConversationWithOtherId(selectedUser.objectId, callback: { (conv: AVIMConversation!, error: NSError!) -> Void in
             if (error != nil) {
                 print("error: \(error)")
@@ -218,7 +265,6 @@ class MessageTableViewController: UITableViewController {
                 self.navigationController?.pushViewController(chatRoomVC, animated: true)
             }
         })
-        
     }
 
     // MARK: ScrollView delegete
