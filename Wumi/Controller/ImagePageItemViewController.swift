@@ -12,8 +12,6 @@ class ImagePageItemViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    var itemIndex = 0
-    var itemCount = 0
     var image: UIImage? {
         didSet {
             if let imageView = self.imageView {
@@ -37,30 +35,15 @@ class ImagePageItemViewController: UIViewController {
         // Add gestures
         self.view.addGestureRecognizer(tap)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func tapImage(gesture: UIGestureRecognizer) {
-        if let pageVC = self.parentViewController as? ImagePageViewController {
-            pageVC.dismissViewControllerAnimated(true, completion: nil)
+        if let pageVC = self.parentViewController as? UIPageViewController,
+            imageFullScreenVC = pageVC.parentViewController as? ImageFullScreenViewController {
+                imageFullScreenVC.dismissViewControllerAnimated(true, completion: nil)
+                print("imageFullScreenVC")
         }
         else {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
