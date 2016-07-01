@@ -221,19 +221,6 @@ class MessageTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let selectedUser = self.displayUsers[safe: indexPath.row]
-//            let currCheckBox = tableView.cellForRowAtIndexPath(indexPath)!.accessoryView as! UIButton?
-            where selectedUser != self.currentUser else { return }
-        // Stop input timer if one is running
-        self.stopTimer()
-        
-        self.selectedUserIndexPath = indexPath
-        
-        
-        
-    }
-    
     // MARK: Action
     func selectUser(sender: UIButton) {
         if sender.selected {
