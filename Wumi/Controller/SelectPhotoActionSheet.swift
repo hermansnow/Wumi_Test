@@ -117,7 +117,7 @@ extension SelectPhotoActionSheet: UIImagePickerControllerDelegate, UINavigationC
             }
             else {
                 if sourceType == .Camera {
-                    image.saveToLibrary { (result, error) in
+                    image.saveToLibrary(album: nil) { (result, error) in
                         guard let asset = result where error == nil else { return }
                         
                         delegate.selectPhotoActionSheet(self, didFinishePickingPhotos: [image], assets: [asset], sourceType: sourceType)
@@ -143,7 +143,7 @@ extension SelectPhotoActionSheet: PIKAImageCropViewControllerDelegate {
                 sourceType = self.sourceType else { return }
             
             if sourceType == .Camera {
-                croppedImage.saveToLibrary { (result, error) in
+                croppedImage.saveToLibrary(album: nil) { (result, error) in
                     guard let asset = result where error == nil else { return }
                     
                     delegate.selectPhotoActionSheet(self, didFinishePickingPhotos: [croppedImage], assets: [asset], sourceType: sourceType)

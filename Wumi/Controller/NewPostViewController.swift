@@ -154,10 +154,10 @@ extension NewPostViewController: SelectedThumbnailImageViewDelegate {
     
     func showImage(imageView: SelectedThumbnailImageView) {
         guard let image = imageView.image, index = self.composePostView.selectedImages.indexOf(image),
-            imagePageVC = storyboard!.instantiateViewControllerWithIdentifier("ImagePageViewController") as? ImagePageViewController else { return }
+            imagePageVC = storyboard!.instantiateViewControllerWithIdentifier("ImageFullScreenViewController") as? ImageFullScreenViewController else { return }
         
         imagePageVC.images = self.composePostView.selectedImages
-        imagePageVC.startIndex = index
+        imagePageVC.currentIndex = index
         
         imagePageVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         self.presentViewController(imagePageVC, animated: true, completion: nil)

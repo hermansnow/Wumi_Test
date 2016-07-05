@@ -190,37 +190,83 @@ extension UIImage {
     }
     
     // Save an image into device's regular album of photo library
-    func saveToLibrary(completionHanlder handler: (PHAsset?, NSError?) -> Void){
+    func saveToLibrary(album albumName: String?, completionHanlder handler: ((PHAsset?, NSError?) -> Void)?){
+        self.fetchAlbum(album: albumName) { (album, error) in
+            guard let assetCollection = album where error == nil else { return }
+        
+            // Save image to the album
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                var assetPlaceholder: PHObjectPlaceholder?
+                PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                        let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(self)
+                        assetPlaceholder = assetRequest.placeholderForCreatedAsset
+                        let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: assetCollection)
+                    
+                        albumChangeRequest!.addAssets([assetPlaceholder!])
+                    }, completionHandler: { (success, error) in
+                        guard let placeholder = assetPlaceholder where success && error == nil else {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                if handler != nil {
+                                    handler!(nil, error)
+                                }
+                            })
+                            return
+                        }
+                    
+                        let assets:PHFetchResult = PHAsset.fetchAssetsWithLocalIdentifiers([placeholder.localIdentifier], options: nil)
+                        
+                        if let asset = assets.firstObject as? PHAsset {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                if handler != nil {
+                                    handler!(asset, error)
+                                }
+                            })
+                        }
+                        else {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                if handler != nil {
+                                    handler!(nil, error)
+                                }
+                            })
+                        }
+                })
+            }
+        }
+    }
+    
+    // Fetch an album from photo library
+    private func fetchAlbum(album albumName: String?, completionHanlder handler: (PHAssetCollection?, NSError?) -> Void) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            guard let assetCollection = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .AlbumRegular, options: nil).firstObject as? PHAssetCollection else { return }
+            let fetchOptions = PHFetchOptions()
+            if albumName != nil {
+                fetchOptions.predicate = NSPredicate(format: "title = %@", albumName!)
+            }
             
-            var assetPlaceholder: PHObjectPlaceholder?
-            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-                let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(self)
-                assetPlaceholder = assetRequest.placeholderForCreatedAsset
-                let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: assetCollection)
-                
-                albumChangeRequest!.addAssets([assetPlaceholder!])
-                }, completionHandler: { (success, error) in
-                    guard let placeholder = assetPlaceholder where success && error == nil else {
-                        dispatch_async(dispatch_get_main_queue(), {
+            // Get album
+            var album: PHAssetCollection?
+            if let collection = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .AlbumRegular, options: nil).firstObject as? PHAssetCollection {
+                album = collection
+            }
+            // If not found - Then create a new album
+            else if albumName != nil {
+                var assetPlaceholder: PHObjectPlaceholder?
+                PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                    let createAlbumRequest : PHAssetCollectionChangeRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle(albumName!)
+                    assetPlaceholder = createAlbumRequest.placeholderForCreatedAssetCollection
+                    }, completionHandler: { success, error in
+                        guard let placeholder = assetPlaceholder where success && error == nil else {
                             handler(nil, error)
-                        })
-                        return
-                    }
-                    
-                    let assets:PHFetchResult = PHAsset.fetchAssetsWithLocalIdentifiers([placeholder.localIdentifier], options: nil)
-                    
-                    if let asset = assets.firstObject as? PHAsset {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            handler(asset, error)
-                        })
-                    }
-                    else {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            handler(nil, error)
-                        })
-                    }
+                            return
+                        }
+                        
+                        if let collection = PHAssetCollection.fetchAssetCollectionsWithLocalIdentifiers([placeholder.localIdentifier], options: nil).firstObject as? PHAssetCollection {
+                            album = collection
+                        }
+                })
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                handler(album, nil)
             })
         }
     }

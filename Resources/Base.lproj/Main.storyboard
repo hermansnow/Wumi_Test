@@ -21,11 +21,11 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tsO-FS-pM0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="558"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="16"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
                                         <rect key="frame" x="0.0" y="16" width="375" height="461"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="izv-Vt-sbK">
@@ -655,14 +655,14 @@
                                         <rect key="frame" x="0.0" y="235" width="375" height="142"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kV-ts-7dC" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="37" y="0.0" width="302" height="65"/>
+                                                <rect key="frame" x="36.5" y="0.0" width="302" height="64.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gj1-Ez-EN1" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="37" y="78" width="302" height="65"/>
+                                                <rect key="frame" x="36.5" y="77.5" width="302" height="64.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
@@ -990,10 +990,62 @@
             </objects>
             <point key="canvasLocation" x="5903" y="-608"/>
         </scene>
-        <!--Image Page View Controller-->
+        <!--Image Full Screen View Controller-->
+        <scene sceneID="SG5-Gx-97D">
+            <objects>
+                <viewController storyboardIdentifier="ImageFullScreenViewController" id="2NO-kz-0HZ" customClass="ImageFullScreenViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7xB-bR-opZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Orx-No-ugg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5Ko-Ca-Xqn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PV0-v2-xsC">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <connections>
+                                    <segue destination="sB4-t6-3eT" kind="embed" identifier="Show Image Pager" id="0Lj-iw-cJj"/>
+                                </connections>
+                            </containerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfe-xt-nBv">
+                                <rect key="frame" x="300" y="50" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZIy-mz-ii6">
+                                <rect key="frame" x="554" y="50" width="26" height="26"/>
+                                <state key="normal" backgroundImage="More"/>
+                                <connections>
+                                    <action selector="showImageActions:" destination="2NO-kz-0HZ" eventType="touchUpInside" id="XKs-wV-caK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ZIy-mz-ii6" secondAttribute="trailing" constant="20" id="7Zi-Oe-hf5"/>
+                            <constraint firstItem="ZIy-mz-ii6" firstAttribute="top" secondItem="7xB-bR-opZ" secondAttribute="bottom" constant="30" id="8cv-Gv-7Iz"/>
+                            <constraint firstItem="dfe-xt-nBv" firstAttribute="top" secondItem="7xB-bR-opZ" secondAttribute="bottom" constant="30" id="DeE-Yi-80g"/>
+                            <constraint firstItem="Orx-No-ugg" firstAttribute="top" secondItem="PV0-v2-xsC" secondAttribute="bottom" id="QZP-um-FuG"/>
+                            <constraint firstItem="PV0-v2-xsC" firstAttribute="leading" secondItem="5Ko-Ca-Xqn" secondAttribute="leading" id="RFq-uu-sKC"/>
+                            <constraint firstItem="dfe-xt-nBv" firstAttribute="centerX" secondItem="5Ko-Ca-Xqn" secondAttribute="centerX" id="V5d-5f-7Ya"/>
+                            <constraint firstItem="PV0-v2-xsC" firstAttribute="top" secondItem="7xB-bR-opZ" secondAttribute="bottom" id="eM2-k8-x1h"/>
+                            <constraint firstAttribute="trailing" secondItem="PV0-v2-xsC" secondAttribute="trailing" id="ja2-CD-TNE"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="indexLabel" destination="dfe-xt-nBv" id="Ux1-4h-fsV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gFc-Lt-TQk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5175" y="-1370"/>
+        </scene>
+        <!--Page View Controller-->
         <scene sceneID="vc2-Tz-Wox">
             <objects>
-                <pageViewController storyboardIdentifier="ImagePageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="sB4-t6-3eT" customClass="ImagePageViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="sB4-t6-3eT" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TQL-Vj-zG5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5173" y="-608"/>
@@ -1691,6 +1743,10 @@
         <scene sceneID="qK6-ic-c31">
             <objects>
                 <viewController id="0BQ-Lj-wga" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="h9Z-Sc-NNE"/>
+                        <viewControllerLayoutGuide type="bottom" id="HLh-4g-PGo"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cic-Ab-0Fv">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1706,6 +1762,7 @@
         <image name="Camera" width="22" height="19"/>
         <image name="Logo" width="104" height="104"/>
         <image name="Menu" width="25" height="25"/>
+        <image name="More" width="26" height="26"/>
         <image name="Private_Message" width="23" height="23"/>
         <image name="Star" width="16" height="16"/>
     </resources>
