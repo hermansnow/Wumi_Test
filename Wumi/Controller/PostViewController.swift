@@ -492,7 +492,7 @@ extension PostViewController: KIImagePagerDelegate {
             imagePageVC = storyboard!.instantiateViewControllerWithIdentifier("ImageFullScreenViewController") as? ImageFullScreenViewController else { return }
         
         imagePageVC.images = post.attachedImages
-        imagePageVC.startIndex = Int(index)
+        imagePageVC.currentIndex = Int(index)
         
         imagePageVC.modalTransitionStyle = .CrossDissolve
         imagePageVC.modalPresentationStyle = .FullScreen

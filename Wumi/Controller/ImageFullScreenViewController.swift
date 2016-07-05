@@ -12,7 +12,7 @@ class ImageFullScreenViewController: UIViewController {
     
     @IBOutlet weak var indexLabel: UILabel!
     
-    var startIndex = 0
+    var currentIndex = 0
     lazy var images = [UIImage]()
     private var imagePageVC = UIPageViewController()
     private var imagePageItemVCs = [ImagePageItemViewController]()
@@ -38,9 +38,9 @@ class ImageFullScreenViewController: UIViewController {
         }
         
         // Set first page
-        if let startVC = imagePageItemVCs[safe: startIndex] {
+        if let startVC = imagePageItemVCs[safe: currentIndex] {
             self.imagePageVC.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
-            self.indexLabel.text = "\(self.startIndex + 1)/\(self.images.count)"
+            self.updateIndex()
         }
     }
     
@@ -56,6 +56,32 @@ class ImageFullScreenViewController: UIViewController {
             self.loadPages()
         }
     }
+    
+    // MARK: Actions
+    
+    @IBAction func showImageActions(sender: AnyObject) {
+        let imageActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        // Add save action to save image into album
+        imageActionSheet.addAction(UIAlertAction(title: "Save to Cameral Roll", style: .Default) { (action) in
+            guard let image = self.images[safe: self.currentIndex] else { return }
+            
+            image.saveToLibrary(album: nil, completionHanlder: nil)
+        })
+        
+        // Add cancel action
+        imageActionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            imageActionSheet.dismissViewControllerAnimated(true, completion: nil)
+        })
+        
+        self.presentViewController(imageActionSheet, animated: true, completion: nil)
+    }
+    
+    // MARKL Helper functions
+    private func updateIndex() {
+        self.indexLabel.text = "\(self.currentIndex + 1)/\(self.images.count)"
+    }
+    
 }
 
 // MARK: UIPageViewControllerDataSource
@@ -64,20 +90,20 @@ extension ImageFullScreenViewController: UIPageViewControllerDataSource {
         guard let imagePageItemVC = viewController as? ImagePageItemViewController,
             index = self.imagePageItemVCs.indexOf(imagePageItemVC) else { return nil }
         
-        print("befero \(index)")
-        self.indexLabel.text = "\(index + 1)/\(self.images.count)"
+        self.currentIndex = index
+        self.updateIndex()
         
-        return self.imagePageItemVCs[safe: index - 1]
+        return self.imagePageItemVCs[safe: self.currentIndex - 1]
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         guard let imagePageItemVC = viewController as? ImagePageItemViewController,
             index = self.imagePageItemVCs.indexOf(imagePageItemVC) else { return nil }
         
-        print("after \(index)")
-        self.indexLabel.text = "\(index + 1)/\(self.images.count)"
+        self.currentIndex = index
+        self.updateIndex()
         
-        return self.imagePageItemVCs[safe: index + 1]
+        return self.imagePageItemVCs[safe: self.currentIndex + 1]
     }
     
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {

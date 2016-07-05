@@ -40,7 +40,6 @@ class ImagePageItemViewController: UIViewController {
         if let pageVC = self.parentViewController as? UIPageViewController,
             imageFullScreenVC = pageVC.parentViewController as? ImageFullScreenViewController {
                 imageFullScreenVC.dismissViewControllerAnimated(true, completion: nil)
-                print("imageFullScreenVC")
         }
         else {
             self.dismissViewControllerAnimated(true, completion: nil)

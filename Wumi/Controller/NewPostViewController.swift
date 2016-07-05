@@ -157,7 +157,7 @@ extension NewPostViewController: SelectedThumbnailImageViewDelegate {
             imagePageVC = storyboard!.instantiateViewControllerWithIdentifier("ImageFullScreenViewController") as? ImageFullScreenViewController else { return }
         
         imagePageVC.images = self.composePostView.selectedImages
-        imagePageVC.startIndex = index
+        imagePageVC.currentIndex = index
         
         imagePageVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         self.presentViewController(imagePageVC, animated: true, completion: nil)

@@ -1014,9 +1014,18 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZIy-mz-ii6">
+                                <rect key="frame" x="554" y="50" width="26" height="26"/>
+                                <state key="normal" backgroundImage="More"/>
+                                <connections>
+                                    <action selector="showImageActions:" destination="2NO-kz-0HZ" eventType="touchUpInside" id="XKs-wV-caK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ZIy-mz-ii6" secondAttribute="trailing" constant="20" id="7Zi-Oe-hf5"/>
+                            <constraint firstItem="ZIy-mz-ii6" firstAttribute="top" secondItem="7xB-bR-opZ" secondAttribute="bottom" constant="30" id="8cv-Gv-7Iz"/>
                             <constraint firstItem="dfe-xt-nBv" firstAttribute="top" secondItem="7xB-bR-opZ" secondAttribute="bottom" constant="30" id="DeE-Yi-80g"/>
                             <constraint firstItem="Orx-No-ugg" firstAttribute="top" secondItem="PV0-v2-xsC" secondAttribute="bottom" id="QZP-um-FuG"/>
                             <constraint firstItem="PV0-v2-xsC" firstAttribute="leading" secondItem="5Ko-Ca-Xqn" secondAttribute="leading" id="RFq-uu-sKC"/>
@@ -1753,6 +1762,7 @@
         <image name="Camera" width="22" height="19"/>
         <image name="Logo" width="104" height="104"/>
         <image name="Menu" width="25" height="25"/>
+        <image name="More" width="26" height="26"/>
         <image name="Private_Message" width="23" height="23"/>
         <image name="Star" width="16" height="16"/>
     </resources>
