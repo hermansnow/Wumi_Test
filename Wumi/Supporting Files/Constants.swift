@@ -41,7 +41,6 @@ struct Constants {
         }
         
         struct Image {
-            static let Favorite = UIImage(named: "Favorite")
             static let AnonymousAvatarImage = UIImage(named: "Anonymous")
             static let Check = UIImage(named: "Checkmark")
             static let Uncheck = UIImage(named: "Uncheck")

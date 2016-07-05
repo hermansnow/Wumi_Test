@@ -85,6 +85,7 @@ class Post: AVObject, AVSubclassing {
     // Fetch a post record asynchronously based on record id
     class func fetchInBackground(objectId id: String, block: AVObjectResultBlock!) {
         let query = Post.query()
+        query.includeKey("mediaAttachments")
         query.includeKey("mediaThumbnails")
         
         query.cachePolicy = .NetworkElseCache
@@ -97,7 +98,7 @@ class Post: AVObject, AVSubclassing {
             }
             
             post.decodeAttributedContent()
-            post.loadMediaThumbnailsWithBlock { (success, error) in
+            post.loadMediaAttachmentsWithBlock { (success, error) in
                 guard success && error == nil else { return }
                 
                 block(post, error)
@@ -109,13 +110,20 @@ class Post: AVObject, AVSubclassing {
     override func saveInBackgroundWithBlock(block: AVBooleanResultBlock!) {
         // Set default value
         self.title = self.title ?? "No Title"
-        self.commentCount = 0
+        self.commentCount = self.commentCount ?? 0
             
         // Save attached files
-        self.encodeAttributedContent() // TODO: Please make this function async when turning on the feature
-        self.saveMediaAttachmentsWithBlock { (success, error) in
-            guard success && error == nil else { return }
+        if self.htmlContent == nil {
+            self.encodeAttributedContent() // TODO: Please make this function async when turning on the feature
+        }
+        if self.mediaAttachments.count == 0 {
+            self.saveMediaAttachmentsWithBlock { (success, error) in
+                guard success && error == nil else { return }
             
+                super.saveInBackgroundWithBlock(block)
+            }
+        }
+        else {
             super.saveInBackgroundWithBlock(block)
         }
     }
@@ -186,15 +194,15 @@ class Post: AVObject, AVSubclassing {
     }
     
     // Convert attached AVFiles to local images
-    private func loadMediaThumbnailsWithBlock(block: AVBooleanResultBlock!) {
+    private func loadMediaAttachmentsWithBlock(block: AVBooleanResultBlock!) {
         // Use dispatch_group to save a list of images
         let taskGroup = dispatch_group_create()
         let taskQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         
-        var thumbnails = [UIImage?](count: self.mediaThumbnails.count, repeatedValue: nil)
+        var thumbnails = [UIImage?](count: self.mediaAttachments.count, repeatedValue: nil)
         
-        for index in 0..<self.mediaThumbnails.count {
-            guard let thumbnail = self.mediaThumbnails[safe: index] else { continue }
+        for index in 0..<self.mediaAttachments.count {
+            guard let thumbnail = self.mediaAttachments[safe: index] else { continue }
             
             dispatch_group_async(taskGroup, taskQueue) {
                 guard let attachedThumbnail = AVFile.loadImageFile(thumbnail) else { return }
@@ -211,8 +219,8 @@ class Post: AVObject, AVSubclassing {
                 return
             }
             
-            self.attachedThumbnails.removeAll()
-            self.attachedThumbnails.appendContentsOf(attachedThumbnails)
+            self.attachedImages.removeAll()
+            self.attachedImages.appendContentsOf(attachedThumbnails)
             
             dispatch_async(dispatch_get_main_queue(), { 
                 block(true, nil)

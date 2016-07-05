@@ -153,20 +153,14 @@ extension NewPostViewController: SelectedThumbnailImageViewDelegate {
     }
     
     func showImage(imageView: SelectedThumbnailImageView) {
-        guard let image = imageView.image else { return }
-        	
-        let imageCropper = PIKAImageCropViewController()
+        guard let image = imageView.image, index = self.composePostView.selectedImages.indexOf(image),
+            imagePageVC = storyboard!.instantiateViewControllerWithIdentifier("ImagePageViewController") as? ImagePageViewController else { return }
         
-        imageCropper.image = image
-        imageCropper.cropType = .Rect
-        let cropperWidth = self.view.bounds.width
-        imageCropper.cropRectSize = CGSize(width: cropperWidth, height: cropperWidth / CGFloat(Constants.General.Size.AvatarImage.WidthHeightRatio))
-        imageCropper.backgroundColor = Constants.General.Color.BackgroundColor
-        imageCropper.themeColor = Constants.General.Color.ThemeColor
-        imageCropper.titleColor = Constants.General.Color.TitleColor
-        imageCropper.maskColor = Constants.General.Color.DarkMaskColor
+        imagePageVC.images = self.composePostView.selectedImages
+        imagePageVC.startIndex = index
         
-        self.presentViewController(imageCropper, animated: true, completion: nil)
+        imagePageVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        self.presentViewController(imagePageVC, animated: true, completion: nil)
     }
 }
 

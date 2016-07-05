@@ -218,6 +218,10 @@ static const CGFloat kXHBubbleMessageViewBottomPadding = 8;
 }
 
 - (void)configAvatorWithMessage:(id<XHMessageModel>)message {
+    // set avatar image view to be circle
+    self.avatorButton.imageView.layer.cornerRadius = self.avatorButton.imageView.frame.size.height / 2.0;
+    self.avatorButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    
     if (message.avator) {
         [self.avatorButton setImage:message.avator forState:UIControlStateNormal];
     } else if(message.avatorUrl){

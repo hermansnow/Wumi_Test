@@ -12,8 +12,9 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.avatarImageView.layer.cornerRadius = 22.5;
+    self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height / 2.0;
     self.avatarImageView.clipsToBounds = YES;
+    self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.litteBadgeView.hidden = YES;
     _badgeView = [[JSBadgeView alloc]initWithParentView:self.timestampLabel alignment:JSBadgeViewAlignmentBottomCenter];
     

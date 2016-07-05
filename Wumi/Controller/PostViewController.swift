@@ -24,6 +24,7 @@ class PostViewController: UITableViewController {
     
     var currentUser = User.currentUser()
     var post: Post?
+    var postCell: PostContentCell!
     var postAttributedContent: NSAttributedString?
     var replyComment: Comment? = nil
     var updatedAtDateFormatter = NSDateFormatter()
@@ -141,52 +142,53 @@ class PostViewController: UITableViewController {
     
         
     private func cellForPost(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> PostContentCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PostContentCell", forIndexPath: indexPath) as! PostContentCell
+        self.postCell = tableView.dequeueReusableCellWithIdentifier("PostContentCell", forIndexPath: indexPath) as! PostContentCell
         
-        guard let post = self.post else { return cell }
+        guard let post = self.post else { return postCell }
         
         if let title = post.title {
-            cell.title = NSMutableAttributedString(string: title)
+            self.postCell.title = NSMutableAttributedString(string: title)
         }
         
         if let content = post.content {
-            cell.content = NSMutableAttributedString(string: content)
+            self.postCell.content = NSMutableAttributedString(string: content)
         }
         
         if post.mediaThumbnails.count > 0 {
-            cell.hideImageView = false
-            cell.imagePager.dataSource = self
+            self.postCell.hideImageView = false
+            self.postCell.imagePager.dataSource = self
+            self.postCell.imagePager.delegate = self
         }
         else {
-            cell.hideImageView = true
+            self.postCell.hideImageView = true
         }
         
-        cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
-        cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
+        self.postCell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
+        self.postCell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
-        cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
+        self.postCell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
         
         if let author = post.author {
             author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
                 guard let user = result as? User where error == nil else { return }
             
-                cell.authorView.detailLabel.text = user.name
-                cell.authorView.userObjectId = user.objectId
+                self.postCell.authorView.detailLabel.text = user.name
+                self.postCell.authorView.userObjectId = user.objectId
             
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
                     guard let image = imageResult where imageError == nil else { return }
-                    cell.authorView.avatarImageView.image = image
+                    self.postCell.authorView.avatarImageView.image = image
                 }
             }
         }
         
         self.isSaved = self.currentUser.savedPostsArray.contains(post)
-        cell.saveButton.delegate = self
-        cell.saveButton.selected = self.isSaved
+        self.postCell.saveButton.delegate = self
+        self.postCell.saveButton.selected = self.isSaved
         
-        cell.selectionStyle = .None
+        self.postCell.selectionStyle = .None
         
-        return cell
+        return self.postCell
     }
     
     private func cellForReply(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> CommentTableViewCell {
@@ -303,7 +305,9 @@ class PostViewController: UITableViewController {
                 print("\(error)")
                 return
             }
-            self.loadPost()
+            
+            self.postCell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
+            self.loadComments()
         }
         
         // send push notification to users that saved this post
@@ -474,11 +478,26 @@ extension PostViewController: KIImagePagerDataSource {
     func arrayWithImages(pager: KIImagePager!) -> [AnyObject]! {
         guard let post = self.post else { return [] }
         
-        return  post.attachedThumbnails
+        return  post.attachedImages
     }
     
     func contentModeForImage(image: UInt, inPager pager: KIImagePager!) -> UIViewContentMode {
-        return .ScaleAspectFit
+        return .ScaleAspectFill
+    }
+}
+
+extension PostViewController: KIImagePagerDelegate {
+    func imagePager(imagePager: KIImagePager!, didSelectImageAtIndex index: UInt) {
+        guard let post = self.post,
+            imagePageVC = storyboard!.instantiateViewControllerWithIdentifier("ImagePageViewController") as? ImagePageViewController else { return }
+        
+        imagePageVC.images = post.attachedImages
+        imagePageVC.startIndex = Int(index)
+        
+        imagePageVC.modalTransitionStyle = .CrossDissolve
+        imagePageVC.modalPresentationStyle = .FullScreen
+        
+        self.presentViewController(imagePageVC, animated: true, completion: nil)
     }
 }
 
