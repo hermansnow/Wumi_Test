@@ -14,8 +14,6 @@ class ImageFullScreenViewController: UIViewController {
     var enableSaveImage = false
     lazy var images = [UIImage]()
     private var imagePageItemVCs = [ImagePageItemViewController]()
-    private var alertActios = [UIAlertAction]()
-    private let imageActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
     
     override func loadView() {
         super.loadView()
@@ -67,9 +65,11 @@ class ImageFullScreenViewController: UIViewController {
     // MARK: Actions
     
     @IBAction func showImageActions(sender: AnyObject) {
+        let imageActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
         // Add save action to save image into album
         if enableSaveImage {
-            self.imageActionSheet.addAction(UIAlertAction(title: "Save to Cameral Roll", style: .Default) { (action) in
+            imageActionSheet.addAction(UIAlertAction(title: "Save to Cameral Roll", style: .Default) { (action) in
                 guard let image = self.images[safe: self.currentIndex] else { return }
             
                 image.saveToLibrary(album: nil, completionHanlder: nil)
@@ -77,18 +77,20 @@ class ImageFullScreenViewController: UIViewController {
         }
         
         // Present action sheet if we have any action
-        if self.imageActionSheet.actions.count > 0 {
+        if imageActionSheet.actions.count > 0 {
             // Add cancel action
-            self.imageActionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-                self.imageActionSheet.dismissViewControllerAnimated(true, completion: nil)
+            imageActionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                imageActionSheet.dismissViewControllerAnimated(true, completion: nil)
             })
-            self.presentViewController(self.imageActionSheet, animated: true, completion: nil)
+            self.presentViewController(imageActionSheet, animated: true, completion: nil)
         }
     }
     
     // MARKL Helper functions
     private func updateIndex() {
         guard let fullscreenView = self.view as? ImageFullScreenView else { return }
+        
+        print(self.currentIndex)
         
         fullscreenView.indexLabel.text = "\(self.currentIndex + 1)/\(self.images.count)"
     }
