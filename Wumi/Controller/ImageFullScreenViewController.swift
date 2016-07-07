@@ -11,8 +11,11 @@ import UIKit
 class ImageFullScreenViewController: UIViewController {
     
     var currentIndex = 0
+    var enableSaveImage = false
     lazy var images = [UIImage]()
     private var imagePageItemVCs = [ImagePageItemViewController]()
+    private var alertActios = [UIAlertAction]()
+    private let imageActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
     
     override func loadView() {
         super.loadView()
@@ -33,6 +36,10 @@ class ImageFullScreenViewController: UIViewController {
             fullscreenView.dataSource = self
             
             fullscreenView.actionButton.addTarget(self, action: #selector(self.showImageActions(_:)), forControlEvents: .TouchUpInside)
+            
+            if !enableSaveImage {
+                fullscreenView.actionButton.hidden = true
+            }
             
             self.loadPages()
         }
@@ -60,21 +67,23 @@ class ImageFullScreenViewController: UIViewController {
     // MARK: Actions
     
     @IBAction func showImageActions(sender: AnyObject) {
-        let imageActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        
         // Add save action to save image into album
-        imageActionSheet.addAction(UIAlertAction(title: "Save to Cameral Roll", style: .Default) { (action) in
-            guard let image = self.images[safe: self.currentIndex] else { return }
+        if enableSaveImage {
+            self.imageActionSheet.addAction(UIAlertAction(title: "Save to Cameral Roll", style: .Default) { (action) in
+                guard let image = self.images[safe: self.currentIndex] else { return }
             
-            image.saveToLibrary(album: nil, completionHanlder: nil)
-        })
+                image.saveToLibrary(album: nil, completionHanlder: nil)
+            })
+        }
         
-        // Add cancel action
-        imageActionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            imageActionSheet.dismissViewControllerAnimated(true, completion: nil)
-        })
-        
-        self.presentViewController(imageActionSheet, animated: true, completion: nil)
+        // Present action sheet if we have any action
+        if self.imageActionSheet.actions.count > 0 {
+            // Add cancel action
+            self.imageActionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                self.imageActionSheet.dismissViewControllerAnimated(true, completion: nil)
+            })
+            self.presentViewController(self.imageActionSheet, animated: true, completion: nil)
+        }
     }
     
     // MARKL Helper functions
