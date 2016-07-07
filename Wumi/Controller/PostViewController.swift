@@ -488,9 +488,9 @@ extension PostViewController: KIImagePagerDataSource {
 
 extension PostViewController: KIImagePagerDelegate {
     func imagePager(imagePager: KIImagePager!, didSelectImageAtIndex index: UInt) {
-        guard let post = self.post,
-            imagePageVC = storyboard!.instantiateViewControllerWithIdentifier("ImageFullScreenViewController") as? ImageFullScreenViewController else { return }
-        
+        guard let post = self.post else { return }
+
+        let imagePageVC = ImageFullScreenViewController()
         imagePageVC.images = post.attachedImages
         imagePageVC.currentIndex = Int(index)
         

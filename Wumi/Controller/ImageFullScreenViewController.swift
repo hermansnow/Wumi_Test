@@ -10,50 +10,50 @@ import UIKit
 
 class ImageFullScreenViewController: UIViewController {
     
-    @IBOutlet weak var indexLabel: UILabel!
-    
     var currentIndex = 0
     lazy var images = [UIImage]()
-    private var imagePageVC = UIPageViewController()
     private var imagePageItemVCs = [ImagePageItemViewController]()
+    
+    override func loadView() {
+        super.loadView()
+        
+        if let view = UINib(nibName: "ImageFullScreenView", bundle: NSBundle(forClass: self.classForCoder)).instantiateWithOwner(self, options: nil).first as? UIView {
+            view.frame = self.view.frame
+            self.view = view
+        }
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.indexLabel.textColor = UIColor.whiteColor()
-        self.indexLabel.backgroundColor = UIColor.blackColor()
-        self.indexLabel.textAlignment = .Center
-        
-        self.imagePageVC.view.backgroundColor = UIColor.blackColor()
+        if let fullscreenView = self.view as? ImageFullScreenView {
+            self.addChildViewController(fullscreenView.imagePageVC)
+            fullscreenView.imagePageVC.didMoveToParentViewController(self)
+            fullscreenView.dataSource = self
+            
+            fullscreenView.actionButton.addTarget(self, action: #selector(self.showImageActions(_:)), forControlEvents: .TouchUpInside)
+            
+            self.loadPages()
+        }
     }
     
     private func loadPages() {
         self.imagePageItemVCs.removeAll()
         
         for index in 0..<self.images.count {
-            guard let image = self.images[safe: index],
-                imagePageItemVC = storyboard!.instantiateViewControllerWithIdentifier("ImagePageItemViewController") as? ImagePageItemViewController else { continue }
+            guard let image = self.images[safe: index] else { continue }
+            
+            let imagePageItemVC = ImagePageItemViewController()
             imagePageItemVC.image = image
             self.imagePageItemVCs.append(imagePageItemVC)
         }
         
         // Set first page
-        if let startVC = imagePageItemVCs[safe: currentIndex] {
-            self.imagePageVC.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
+        if let startVC = imagePageItemVCs[safe: currentIndex],
+            fullscreenView = self.view as? ImageFullScreenView {
+            fullscreenView.imagePageVC.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
             self.updateIndex()
-        }
-    }
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let imagePageVC = segue.destinationViewController as? UIPageViewController where segue.identifier == "Show Image Pager" {
-            self.imagePageVC = imagePageVC
-            self.imagePageVC.hidesBottomBarWhenPushed = true
-            self.imagePageVC.dataSource = self
-            
-            self.loadPages()
         }
     }
     
@@ -79,7 +79,9 @@ class ImageFullScreenViewController: UIViewController {
     
     // MARKL Helper functions
     private func updateIndex() {
-        self.indexLabel.text = "\(self.currentIndex + 1)/\(self.images.count)"
+        guard let fullscreenView = self.view as? ImageFullScreenView else { return }
+        
+        fullscreenView.indexLabel.text = "\(self.currentIndex + 1)/\(self.images.count)"
     }
     
 }
@@ -111,9 +113,11 @@ extension ImageFullScreenViewController: UIPageViewControllerDataSource {
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-        guard let orderedVCs = self.imagePageVC.viewControllers as? [ImagePageItemViewController],
+        guard let fullscreenView = self.view as? ImageFullScreenView,
+            orderedVCs = fullscreenView.imagePageVC.viewControllers as? [ImagePageItemViewController],
             firstVC = orderedVCs.first,
             index = self.imagePageItemVCs.indexOf(firstVC) else { return 0 }
+        
         return index
     }
 }

@@ -10,30 +10,42 @@ import UIKit
 
 class ImagePageItemViewController: UIViewController {
     
-    @IBOutlet weak var imageView: UIImageView!
+    private var imageView = UIImageView()
     
     var image: UIImage? {
         didSet {
-            if let imageView = self.imageView {
-                imageView.image = self.image
-            }
+            self.imageView.image = self.image
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set property
         self.view.backgroundColor = UIColor.blackColor()
         
+        // Add subview
+        self.addSubviews()
+        
+        // Set image view property
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.backgroundColor = UIColor.blackColor()
         self.imageView.image = self.image
         
+        // Add gestures
         let tap = UITapGestureRecognizer()
         tap.addTarget(self, action: #selector(tapImage(_:)))
-        
-        // Add gestures
         self.view.addGestureRecognizer(tap)
+    }
+    
+    private func addSubviews() {
+        self.view.addSubview(self.imageView)
+        self.imageView.topAnchor.constraintEqualToAnchor(self.view.topAnchor).active = true
+        self.imageView.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor).active = true
+        self.imageView.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor).active = true
+        self.imageView.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor).active = true
+        self.imageView.translatesAutoresizingMaskIntoConstraints = false
+        
     }
     
     func tapImage(gesture: UIGestureRecognizer) {
