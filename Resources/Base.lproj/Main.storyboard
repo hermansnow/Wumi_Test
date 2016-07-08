@@ -851,11 +851,8 @@
                             <outlet property="delegate" destination="Y0j-Xp-f3W" id="ubd-ao-PA3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="dpL-Tb-o6k">
-                        <barButtonItem key="leftBarButtonItem" image="Menu" id="IjD-2C-28Q"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="dpL-Tb-o6k"/>
                     <connections>
-                        <outlet property="hamburgerMenuButton" destination="IjD-2C-28Q" id="eoP-9q-jPB"/>
                         <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="17z-oZ-H8W"/>
                         <segue destination="dTU-vq-anB" kind="show" identifier="Compose Post" id="chf-O0-Vka"/>
                         <segue destination="F9L-04-0Cc" kind="show" identifier="Show Post" id="bgy-W1-P3I"/>
@@ -863,7 +860,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMh-2A-aoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3536.5" y="-899.5"/>
+            <point key="canvasLocation" x="3520.5" y="-974.5"/>
         </scene>
         <!--Post Content-->
         <scene sceneID="T9i-7H-BOS">
@@ -1669,11 +1666,10 @@
         <image name="Anonymous" width="462" height="462"/>
         <image name="Camera" width="22" height="19"/>
         <image name="Logo" width="104" height="104"/>
-        <image name="Menu" width="25" height="25"/>
         <image name="Private_Message" width="23" height="23"/>
         <image name="Star" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T0p-az-lM5"/>
+        <segue reference="17z-oZ-H8W"/>
     </inferredMetricsTieBreakers>
 </document>

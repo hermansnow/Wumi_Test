@@ -11,10 +11,9 @@ import BTNavigationDropdownMenu
 import SWRevealViewController
 
 class PostTableViewController: UITableViewController {
-
-    @IBOutlet weak var hamburgerMenuButton: UIBarButtonItem!
-    var searchButton = UIBarButtonItem()
-    var composePostButton = UIBarButtonItem()
+    
+    private var searchButton = UIBarButtonItem()
+    private var composePostButton = UIBarButtonItem()
     
     var resultSearchController = UISearchController(searchResultsController: nil)
     
@@ -84,8 +83,9 @@ class PostTableViewController: UITableViewController {
         if let revealViewController = self.revealViewController() {
             revealViewController.rearViewRevealOverdraw = 0
             revealViewController.rearViewRevealWidth = UIScreen.mainScreen().bounds.width
-            self.hamburgerMenuButton.target = revealViewController
-            self.hamburgerMenuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            let button = HamburgerMenuButton()
+            button.delegate = revealViewController
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
 

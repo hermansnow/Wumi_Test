@@ -325,6 +325,7 @@
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF5EF1581D2EDA3300C9B2F2 /* ImageFullScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF5EF1571D2EDA3300C9B2F2 /* ImageFullScreenView.xib */; };
 		DF5EF15D1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */; };
+		DF5EF15F1D30590300C9B2F2 /* HamburgerMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15E1D30590300C9B2F2 /* HamburgerMenuButton.swift */; };
 		DF6A1B331CF2508C00CB6973 /* RichTextPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */; };
 		DF6A1B351CF266CA00CB6973 /* SelectedThumbnailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */; };
 		DF6D56651CB75A1C001E0AFF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D56641CB75A1C001E0AFF /* Protocols.swift */; };
@@ -837,6 +838,7 @@
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF5EF1571D2EDA3300C9B2F2 /* ImageFullScreenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageFullScreenView.xib; sourceTree = "<group>"; };
 		DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenView.swift; path = View/ImageFullScreenView.swift; sourceTree = "<group>"; };
+		DF5EF15E1D30590300C9B2F2 /* HamburgerMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HamburgerMenuButton.swift; path = View/HamburgerMenuButton.swift; sourceTree = "<group>"; };
 		DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RichTextPostView.swift; path = View/RichTextPostView.swift; sourceTree = "<group>"; };
 		DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedThumbnailImageView.swift; path = View/SelectedThumbnailImageView.swift; sourceTree = "<group>"; };
 		DF6D56641CB75A1C001E0AFF /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = "Supporting Files/Protocols.swift"; sourceTree = "<group>"; };
@@ -1881,6 +1883,7 @@
 				DFB861471BEDBDF60075014A /* SystemButton.swift */,
 				DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */,
 				DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */,
+				DF5EF15E1D30590300C9B2F2 /* HamburgerMenuButton.swift */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -2418,6 +2421,7 @@
 				B1ECD7691CCC1F4000CED9C4 /* XHDisplayMediaViewController.m in Sources */,
 				B1ECD7A41CCC1F4000CED9C4 /* XHShareMenuView.m in Sources */,
 				DFA93AC31C90DE3600ECA503 /* ProfileInputTableCell.swift in Sources */,
+				DF5EF15F1D30590300C9B2F2 /* HamburgerMenuButton.swift in Sources */,
 				DF16E0451D25B84700F4C4FC /* ImageFullScreenViewController.swift in Sources */,
 				DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */,
 				B1ECD76A1CCC1F4000CED9C4 /* XHDisplayTextViewController.m in Sources */,
