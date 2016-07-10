@@ -11,7 +11,6 @@ import Foundation
 struct Constants {
     
     struct General {
-        
         struct Color {
             static let TintColor = UIColor.whiteColor()
             static let TitleColor = UIColor.whiteColor()
@@ -58,7 +57,6 @@ struct Constants {
     }
     
     struct SignIn {
-        
         struct Color {
             static let MaskColor = UIColor(white: 1.0, alpha: 0.2)
         }
@@ -110,6 +108,7 @@ struct Constants {
     
     struct Post {
         static let maximumImages = 5 // number of images allows to be attached in a post
+        
         struct Size {
             struct Thumbnail {
                 static let Height = 100
@@ -122,5 +121,11 @@ struct Constants {
         static let LoadUserLimit = 200 // number of user records load in each query
         static let LoadPostLimit = 100 // number of post records load in each query
         static let searchTimeInterval = 0.3 // seconds to start search. UISearchController will only search results if end-users stop inputting with this time interval
+    }
+    
+    struct Notification {
+        struct Image {
+            static let TabBarIcon = UIImage(named: "Notification")
+        }
     }
 } 

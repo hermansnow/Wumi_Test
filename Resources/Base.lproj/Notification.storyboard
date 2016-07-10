@@ -9,15 +9,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="Notification Controller" id="PVI-fZ-yiy" customClass="NotificationTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="110" sectionHeaderHeight="28" sectionFooterHeight="28" id="rJ1-7f-CbY">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="TsH-JW-8tR" customClass="NotificationTableViewCell" customModule="Wumi" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="110"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="110"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TsH-JW-8tR" id="alM-Iq-Mep">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="109.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="381" height="109.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
@@ -34,7 +34,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZGQ-Te-N8r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="331" y="256"/>
+            <point key="canvasLocation" x="11" y="256"/>
         </scene>
         <!--PostContentScene-->
         <scene sceneID="ABi-YP-OWV">
@@ -42,14 +42,15 @@
                 <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="PostContentScene" id="7px-sl-tGB" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WLu-Ir-TBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="818.5" y="282"/>
+            <point key="canvasLocation" x="448.5" y="256"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eln-Zv-lqP">
             <objects>
                 <navigationController id="Gxt-hb-BOe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" selectedImage="Camera" id="pmi-nH-dPc"/>
+                    <tabBarItem key="tabBarItem" title="" id="pmi-nH-dPc"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="P7S-Ag-4wE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -63,7 +64,4 @@
             <point key="canvasLocation" x="-489" y="256"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Camera" width="22" height="19"/>
-    </resources>
 </document>

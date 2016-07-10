@@ -19,7 +19,7 @@ class NotificationTableViewController: UITableViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        self.navigationController!.tabBarItem = UITabBarItem(title: "Notifications", image: nil,  tag: 1)
+        self.navigationController!.tabBarItem = UITabBarItem(title: "Notification", image: Constants.Notification.Image.TabBarIcon,  tag: 1)
         
         PushNotification().loadPushNotifications(currentUser){ (results, error) -> Void in
             guard results.count > 0 && error == nil else { return }

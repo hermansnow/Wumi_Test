@@ -39,7 +39,7 @@ class HamburgerMenuButton: UIButton {
     
     private func setProperty() {
         self.setBackgroundImage(UIImage(named: "Hamburger_Menu"), forState: .Normal)
-        self.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        self.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
     }
     
     private func addTarget() {
