@@ -383,8 +383,6 @@
 		DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */; };
 		DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD2D441BEEF8F800D6FEBC /* Setting.swift */; };
 		DFC754261CBCE7C900C7E111 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC754251CBCE7C900C7E111 /* DataManager.swift */; };
-		DFCCC8DC1CF617F900CA0F8F /* PostContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCCC8DA1CF617F900CA0F8F /* PostContentCell.swift */; };
-		DFCCC8DD1CF617F900CA0F8F /* PostContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFCCC8DB1CF617F900CA0F8F /* PostContentCell.xib */; };
 		DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */; };
 		DFD4A6101BE6CF3C00C8B09E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */; };
 		DFD4A6121BE6CF4200C8B09E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */; };
@@ -901,8 +899,6 @@
 		DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddProfileViewController.swift; path = Controller/AddProfileViewController.swift; sourceTree = "<group>"; };
 		DFBD2D441BEEF8F800D6FEBC /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Setting.swift; path = Model/Setting.swift; sourceTree = "<group>"; };
 		DFC754251CBCE7C900C7E111 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataManager.swift; path = Model/DataManager.swift; sourceTree = "<group>"; };
-		DFCCC8DA1CF617F900CA0F8F /* PostContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContentCell.swift; sourceTree = "<group>"; };
-		DFCCC8DB1CF617F900CA0F8F /* PostContentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostContentCell.xib; sourceTree = "<group>"; };
 		DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -1973,7 +1969,6 @@
 				DF3629561C9B305100D87574 /* ContactTableViewCell.xib */,
 				DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */,
 				DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */,
-				DFCCC8DB1CF617F900CA0F8F /* PostContentCell.xib */,
 				DF5EF1631D3330F500C9B2F2 /* PostContentCell.swift */,
 				DF5EF1641D3330F500C9B2F2 /* PostContentCell.xib */,
 				DFA93ACE1C910DD700ECA503 /* ProfileTableCell.swift */,
@@ -1988,7 +1983,6 @@
 				DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */,
 				DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */,
 				B175B2511CB872B800C95B33 /* CommentTextLabel.swift */,
-				DFCCC8DA1CF617F900CA0F8F /* PostContentCell.swift */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -2215,7 +2209,6 @@
 				B1ECD72F1CCC1F3F00CED9C4 /* SECoreTextView.bundle in Resources */,
 				B1ECD72E1CCC1F3F00CED9C4 /* SearchIcon@2x.png in Resources */,
 				B1ECD6F51CCC1F3F00CED9C4 /* tusiji_2.gif in Resources */,
-				DFCCC8DD1CF617F900CA0F8F /* PostContentCell.xib in Resources */,
 				B1ECD6EB1CCC1F3F00CED9C4 /* tusiji_11_cover@2x.png in Resources */,
 				B1ECD6D51CCC1F3F00CED9C4 /* rabbit_22_cover@2x.png in Resources */,
 				DF5EF1621D33215000C9B2F2 /* Home.storyboard in Resources */,
@@ -2474,7 +2467,6 @@
 				B1ECD6A21CCC1F3F00CED9C4 /* AVIMConversation+Custom.m in Sources */,
 				B1ECD7901CCC1F4000CED9C4 /* XHViewState.m in Sources */,
 				DF173EF21C86A58600018B4A /* Extensions.swift in Sources */,
-				DFCCC8DC1CF617F900CA0F8F /* PostContentCell.swift in Sources */,
 				B1ECD7871CCC1F4000CED9C4 /* SETextGeometry.m in Sources */,
 				B1ECD76B1CCC1F4000CED9C4 /* XHMessageTableViewController.m in Sources */,
 				DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */,
