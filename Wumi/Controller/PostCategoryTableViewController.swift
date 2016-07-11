@@ -83,8 +83,8 @@ class PostCategoryTableViewController: UITableViewController {
             }
         }
         
-        // Navigate back to post table view
-        if let postTVC = self.navigationController?.viewControllers.filter({ $0 is PostTableViewController }).first {
+        // Navigate back to home view controller
+        if let postTVC = self.navigationController?.viewControllers.filter({ $0 is HomeViewController }).first {
             self.navigationController?.popToViewController(postTVC, animated: true)
         }
     }

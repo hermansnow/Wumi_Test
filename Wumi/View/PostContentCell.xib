@@ -84,7 +84,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="trq-Jp-74P" secondAttribute="height" multiplier="1:1" id="Nbj-cv-zUz"/>
                                                 </constraints>
-                                                <state key="normal" title="Button" backgroundImage="Reply"/>
+                                                <state key="normal" backgroundImage="Reply"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Reply" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dle-fB-YqK">
                                                 <rect key="frame" x="33" y="0.0" width="43" height="30"/>
@@ -133,7 +133,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Reply" width="50" height="50"/>
+        <image name="Reply" width="16" height="12"/>
         <image name="Star" width="16" height="16"/>
     </resources>
 </document>

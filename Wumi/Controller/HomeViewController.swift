@@ -10,8 +10,12 @@ import UIKit
 import BTNavigationDropdownMenu
 import SWRevealViewController
 
-class PostTableViewController: UITableViewController {
+class HomeViewController: UIViewController {
     
+    @IBOutlet weak var currentUserBanner: UserBannerView!
+    @IBOutlet weak var postTableView: UITableView!
+    
+    private var refreshControl = UIRefreshControl()
     private var searchButton = UIBarButtonItem()
     private var composePostButton = UIBarButtonItem()
     
@@ -56,7 +60,7 @@ class PostTableViewController: UITableViewController {
         self.extendedLayoutIncludesOpaqueBars = true
         
         // Register nib
-        self.tableView.registerNib(UINib(nibName: "MessageTableViewCell", bundle: nil), forCellReuseIdentifier: "MessageTableViewCell")
+        self.postTableView.registerNib(UINib(nibName: "MessageTableViewCell", bundle: nil), forCellReuseIdentifier: "MessageTableViewCell")
         
         // Initialize navigation bar
         self.searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(showSearchBar(_:)))
@@ -69,9 +73,11 @@ class PostTableViewController: UITableViewController {
                                                              selectedImage: Constants.Post.Image.TabBarSelectedIcon?.imageWithRenderingMode(.AlwaysOriginal))
         
         // Initialize tableview
-        self.tableView.estimatedRowHeight = 180
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.postTableView.delegate = self
+        self.postTableView.dataSource = self
+        self.postTableView.estimatedRowHeight = 180
+        self.postTableView.rowHeight = UITableViewAutomaticDimension
+        self.postTableView.tableFooterView = UIView(frame: CGRectZero)
         
         self.updatedAtDateFormatter.dateFormat = "YYYY-MM-dd hh:mm"
         
@@ -93,15 +99,34 @@ class PostTableViewController: UITableViewController {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
-
+        
+        // Load current user banner
+        self.addCurrentUserBanner()
+        
         // Load posts
         self.currentUser.loadSavedPosts { (results, error) -> Void in
             guard results.count > 0 && error == nil else { return }
             
             // Reload table
-            self.tableView.reloadData()
+            self.postTableView.reloadData()
         }
         self.loadPosts()
+    }
+    
+    private func addCurrentUserBanner() {
+        self.currentUserBanner.backgroundColor = Constants.General.Color.BackgroundColor
+        
+        // load current user data
+        let user = self.currentUser
+        self.currentUserBanner.detailLabel.text = user.name
+        self.currentUserBanner.userObjectId = user.objectId
+        self.currentUser.loadAvatarThumbnail { (imageResult, imageError) -> Void in
+            guard let image = imageResult where imageError == nil else { return }
+            self.currentUserBanner.avatarImageView.image = image
+        }
+        
+        // Add gesture
+        self.currentUserBanner.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.showUserContact(_:))))
     }
     
     private func addSearchController() {
@@ -116,9 +141,8 @@ class PostTableViewController: UITableViewController {
     }
     
     private func addRefreshControl() {
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: #selector(PostTableViewController.loadPosts), forControlEvents: .ValueChanged)
-        self.tableView.addSubview(refreshControl!)
+        self.refreshControl.addTarget(self, action: #selector(HomeViewController.loadPosts), forControlEvents: .ValueChanged)
+        self.postTableView.addSubview(self.refreshControl)
     }
     
     private func addDropdownList() {
@@ -146,7 +170,7 @@ class PostTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let postVC = segue.destinationViewController as? PostViewController where segue.identifier == "Show Post" {
-            guard let cell = sender as? MessageTableViewCell, indexPath = tableView.indexPathForCell(cell), selectedPost = self.displayPosts[safe: indexPath.row] else { return }
+            guard let cell = sender as? MessageTableViewCell, indexPath = self.postTableView.indexPathForCell(cell), selectedPost = self.displayPosts[safe: indexPath.row] else { return }
             postVC.delegate = self
             postVC.post = selectedPost
             self.selectedPostIndexPath = indexPath
@@ -163,17 +187,70 @@ class PostTableViewController: UITableViewController {
         }
     }
     
-    // MARK: Table view data source
+    // MARK: Action
+    func showUserContact(recognizer: UITapGestureRecognizer) {
+        self.performSegueWithIdentifier("Show Contact", sender: recognizer.view)
+    }
+    
+    func showSearchBar(sender: AnyObject) {
+        self.currentUserBanner.hidden = true
+        self.navigationItem.setRightBarButtonItems(nil, animated: true)
+        self.postTableView.tableHeaderView = self.resultSearchController.searchBar
+        self.resultSearchController.searchBar.becomeFirstResponder()
+    }
+    
+    func composePost(sender: AnyObject) {
+        self.performSegueWithIdentifier("Compose Post", sender: self)
+    }
+    
+    // MARK: Help function
+    func loadPosts() {
+        Post.loadPosts(limit: Constants.Query.LoadPostLimit,
+                       type: self.searchType,
+                       searchString: self.searchString,
+                       user: self.currentUser) { (results, error) -> Void in
+                        self.refreshControl.endRefreshing()
+                        
+                        guard let posts = results as? [Post] where error == nil else { return }
+                        
+                        self.displayPosts = posts
+                        self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
+                        
+                        self.postTableView.reloadData()
+        }
+    }
+    
+    func loadMorePosts() {
+        guard let lastPost = self.displayPosts.last else { return }
+        
+        Post.loadPosts(limit: Constants.Query.LoadPostLimit,
+                       type: self.searchType,
+                       cutoffTime: lastPost.updatedAt,
+                       searchString: self.searchString,
+                       user: self.currentUser) { (results, error) -> Void in
+                        self.refreshControl.endRefreshing()
+                        
+                        guard let posts = results as? [Post] where error == nil && posts.count > 0 else { return }
+                        
+                        self.displayPosts.appendContentsOf(posts)
+                        self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
+                        
+                        self.postTableView.reloadData()
+        }
+    }
+}
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+// MARK: Table view data source
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.displayPosts.count
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         guard let post = self.displayPosts[safe: indexPath.row] else { return 0 }
         
         if post.mediaThumbnails.count > 0 {
@@ -184,7 +261,7 @@ class PostTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MessageTableViewCell", forIndexPath: indexPath) as! MessageTableViewCell
         
         guard let post = self.displayPosts[safe: indexPath.row] else { return cell }
@@ -210,17 +287,17 @@ class PostTableViewController: UITableViewController {
         cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         cell.highlightString = self.searchString
-            
+        
         // Fetch author information
         if let author = post.author {
             author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
                 guard let user = result as? User where error == nil else { return }
-            
-                cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostTableViewController.showUserContact(_:))))
-            
+                
+                cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.showUserContact(_:))))
+                
                 cell.authorView.detailLabel.text = user.name
                 cell.authorView.userObjectId = user.objectId
-            
+                
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
                     guard let image = imageResult where imageError == nil else { return }
                     cell.authorView.avatarImageView.image = image
@@ -231,21 +308,22 @@ class PostTableViewController: UITableViewController {
         // Set up buttons
         cell.saveButton.selected = self.currentUser.savedPostsArray.contains( { $0 == post} )
         cell.saveButton.delegate = self
-
+        
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.hidesBottomBarWhenPushed = true
         self.performSegueWithIdentifier("Show Post", sender: tableView.cellForRowAtIndexPath(indexPath))
         self.hidesBottomBarWhenPushed = false
     }
-    
-    // MARK: ScrollView delegete
-    
+}
+
+// MARK: ScrollView delegete
+extension HomeViewController: UIScrollViewDelegate {
     // Load more users when dragging to bottom
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard self.refreshControl != nil && !self.refreshControl!.refreshing && self.hasMoreResults else { return }
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard !self.refreshControl.refreshing && self.hasMoreResults else { return }
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y;
@@ -256,64 +334,14 @@ class PostTableViewController: UITableViewController {
             self.loadMorePosts()
         }
     }
-    
-    // MARK: Action
-    func showUserContact(recognizer: UITapGestureRecognizer) {
-        self.performSegueWithIdentifier("Show Contact", sender: recognizer.view)
-    }
-    
-    func showSearchBar(sender: AnyObject) {
-        self.navigationItem.setRightBarButtonItems(nil, animated: true)
-        self.tableView.tableHeaderView = self.resultSearchController.searchBar
-        self.resultSearchController.searchBar.becomeFirstResponder()
-    }
-    
-    func composePost(sender: AnyObject) {
-        self.performSegueWithIdentifier("Compose Post", sender: self)
-    }
-
-    // MARK: Help function
-    func loadPosts() {
-        Post.loadPosts(limit: Constants.Query.LoadPostLimit,
-                        type: self.searchType,
-                searchString: self.searchString,
-                        user: self.currentUser) { (results, error) -> Void in
-            self.refreshControl?.endRefreshing()
-                
-            guard let posts = results as? [Post] where error == nil else { return }
-                
-            self.displayPosts = posts
-            self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
-                
-            self.tableView.reloadData()
-        }
-    }
-    
-    func loadMorePosts() {
-        guard let lastPost = self.displayPosts.last else { return }
-        
-        Post.loadPosts(limit: Constants.Query.LoadPostLimit,
-                        type: self.searchType,
-                  cutoffTime: lastPost.updatedAt,
-                searchString: self.searchString,
-                        user: self.currentUser) { (results, error) -> Void in
-            self.refreshControl?.endRefreshing()
-            
-            guard let posts = results as? [Post] where error == nil && posts.count > 0 else { return }
-            
-            self.displayPosts.appendContentsOf(posts)
-            self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
-            
-            self.tableView.reloadData()
-        }
-    }
 }
 
-extension PostTableViewController: UISearchBarDelegate, UISearchResultsUpdating {
+extension HomeViewController: UISearchBarDelegate, UISearchResultsUpdating {
     // Action for cancel button
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.currentUserBanner.hidden = false
         self.navigationItem.setRightBarButtonItems([self.composePostButton, self.searchButton], animated: true)
-        self.tableView.tableHeaderView = nil
+        self.postTableView.tableHeaderView = nil
     }
     
     // When end editing, try search results if there is a change in the non-empty search string
@@ -350,7 +378,7 @@ extension PostTableViewController: UISearchBarDelegate, UISearchResultsUpdating 
         }
         else {
             self.filteredPosts.removeAll(keepCapacity: false)
-            tableView.reloadData()
+            self.postTableView.reloadData()
         }
     }
     
@@ -367,18 +395,19 @@ extension PostTableViewController: UISearchBarDelegate, UISearchResultsUpdating 
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             // start a new timer
             self.inputTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.Query.searchTimeInterval,
-                                                             target: self,
-                                                           selector: #selector(PostTableViewController.loadPosts),
-                                                           userInfo: nil,
-                                                            repeats: false)
+                                                                     target: self,
+                                                                     selector: #selector(HomeViewController.loadPosts),
+                                                                     userInfo: nil,
+                                                                     repeats: false)
         }
     }
 }
 
-extension PostTableViewController: FavoriteButtonDelegate {
+extension HomeViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
-        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), post = self.displayPosts[safe: indexPath.row] else { return }
+        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.postTableView)
+        guard let indexPath = self.postTableView.indexPathForRowAtPoint(buttonPosition),
+            post = self.displayPosts[safe: indexPath.row] else { return }
         
         self.currentUser.savePost(post) { (result, error) -> Void in
             guard result && error == nil else { return }
@@ -390,8 +419,9 @@ extension PostTableViewController: FavoriteButtonDelegate {
     }
     
     func removeFavorite(favoriteButton: FavoriteButton) {
-        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), post = self.displayPosts[safe: indexPath.row] else { return }
+        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.postTableView)
+        guard let indexPath = self.postTableView.indexPathForRowAtPoint(buttonPosition),
+            post = self.displayPosts[safe: indexPath.row] else { return }
         
         self.currentUser.unsavePost(post) { (result, error) -> Void in
             guard result && error == nil else { return }
@@ -403,16 +433,16 @@ extension PostTableViewController: FavoriteButtonDelegate {
             // Remove cell if we are on the Saved Search Type which should only show saved posts
             if self.searchType == .Saved {
                 self.displayPosts.removeObject(post)
-                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                self.postTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
         }
     }
 }
 
-extension PostTableViewController: PostViewControllerDelegate {
+extension HomeViewController: PostViewControllerDelegate {
     func finishViewPost(postVC: PostViewController) {
         guard let indexPath = self.selectedPostIndexPath,
-            cell = self.tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell else { return }
+            cell = self.postTableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell else { return }
         
         cell.saveButton.selected = postVC.isSaved
     }

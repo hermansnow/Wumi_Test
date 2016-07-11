@@ -113,6 +113,8 @@ struct Constants {
         struct Image {
             static let TabBarIcon = UIImage(named: "Notification")
             static let TabBarSelectedIcon = UIImage(named: "Home")
+            static let Star = UIImage(named: "Star")
+            static let Reply = UIImage(named: "Reply")
         }
         
         struct Size {
