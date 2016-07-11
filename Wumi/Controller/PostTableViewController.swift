@@ -63,6 +63,11 @@ class PostTableViewController: UITableViewController {
         self.composePostButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: #selector(composePost(_:)))
         self.navigationItem.rightBarButtonItems = [self.composePostButton, self.searchButton]
         
+        // Initialize tab bar
+        self.navigationController!.tabBarItem = UITabBarItem(title: "Home",
+                                                             image: Constants.Post.Image.TabBarIcon?.imageWithRenderingMode(.AlwaysOriginal),
+                                                             selectedImage: Constants.Post.Image.TabBarSelectedIcon?.imageWithRenderingMode(.AlwaysOriginal))
+        
         // Initialize tableview
         self.tableView.estimatedRowHeight = 180
         self.tableView.rowHeight = UITableViewAutomaticDimension

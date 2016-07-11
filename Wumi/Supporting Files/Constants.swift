@@ -40,6 +40,7 @@ struct Constants {
         }
         
         struct Image {
+            static let Logo = UIImage(named: "Logo")
             static let AnonymousAvatarImage = UIImage(named: "Anonymous")
             static let Check = UIImage(named: "Checkmark")
             static let Uncheck = UIImage(named: "Uncheck")
@@ -108,6 +109,11 @@ struct Constants {
     
     struct Post {
         static let maximumImages = 5 // number of images allows to be attached in a post
+        
+        struct Image {
+            static let TabBarIcon = UIImage(named: "Notification")
+            static let TabBarSelectedIcon = UIImage(named: "Home")
+        }
         
         struct Size {
             struct Thumbnail {

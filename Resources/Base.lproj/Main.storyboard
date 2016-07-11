@@ -628,7 +628,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPn-RR-0Ek">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="191"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
                                                 <rect key="frame" x="135" y="44" width="104" height="104"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="OE2-Ai-BLg" secondAttribute="height" multiplier="1:1" id="36G-u2-Qso"/>
@@ -655,14 +655,14 @@
                                         <rect key="frame" x="0.0" y="235" width="375" height="142"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kV-ts-7dC" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36.5" y="0.0" width="302" height="64.5"/>
+                                                <rect key="frame" x="37" y="0.0" width="302" height="65"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gj1-Ez-EN1" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="36.5" y="77.5" width="302" height="64.5"/>
+                                                <rect key="frame" x="37" y="78" width="302" height="65"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
@@ -811,216 +811,10 @@
             </objects>
             <point key="canvasLocation" x="3550.5" y="657.5"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="gX6-PT-vZu">
-            <objects>
-                <navigationController storyboardIdentifier="Post Table Navigation Controller" id="rLT-mV-RoB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="mostViewed" id="c4A-pQ-SvJ"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="om8-RP-gad">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Y0j-Xp-f3W" kind="relationship" relationship="rootViewController" id="66C-L6-N5A"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tPr-Xz-0Zw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2989.5" y="-899.5"/>
-        </scene>
-        <!--Post Table View Controller-->
-        <scene sceneID="hrf-Tr-hK1">
-            <objects>
-                <tableViewController id="Y0j-Xp-f3W" customClass="PostTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aUR-3o-iD0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageTableViewCell" id="GCB-QG-Rhp">
-                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GCB-QG-Rhp" id="ddE-lH-4Yj">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Y0j-Xp-f3W" id="b2G-Pq-GXP"/>
-                            <outlet property="delegate" destination="Y0j-Xp-f3W" id="ubd-ao-PA3"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="dpL-Tb-o6k"/>
-                    <connections>
-                        <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="17z-oZ-H8W"/>
-                        <segue destination="dTU-vq-anB" kind="show" identifier="Compose Post" id="chf-O0-Vka"/>
-                        <segue destination="F9L-04-0Cc" kind="show" identifier="Show Post" id="bgy-W1-P3I"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rMh-2A-aoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3520.5" y="-974.5"/>
-        </scene>
-        <!--Post Content-->
-        <scene sceneID="T9i-7H-BOS">
-            <objects>
-                <tableViewController storyboardIdentifier="PostContentScene" id="F9L-04-0Cc" customClass="PostViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="2YL-pA-UMX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageTableViewCell" id="ZZ4-Oj-7SI" customClass="MessageTableViewCell" customModule="Wumi" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZZ4-Oj-7SI" id="LIZ-vv-GR6">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableViewCell" id="2VX-eK-0rE" customClass="CommentTableViewCell" customModule="Wumi" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2VX-eK-0rE" id="gcU-aG-36I">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="F9L-04-0Cc" id="ZOR-50-BeQ"/>
-                            <outlet property="delegate" destination="F9L-04-0Cc" id="Q1t-vw-Y4t"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Post Content" id="Jng-KG-RHF"/>
-                    <connections>
-                        <outlet property="commentTextView" destination="pvE-NL-rdM" id="ya5-Un-yzc"/>
-                        <outlet property="commentView" destination="r48-xA-cUa" id="OHk-0b-ep1"/>
-                        <outlet property="myUserBannerView" destination="dPJ-B5-4a6" id="XVk-Po-0or"/>
-                        <segue destination="Mkx-Nv-AFl" kind="show" identifier="Show Contact" id="T0p-az-lM5"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gZa-Ap-oLM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="r48-xA-cUa">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="YAy-hS-6z6">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dPJ-B5-4a6" customClass="UserBannerView" customModule="Wumi" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="Ere-R1-Wa1"/>
-                                        <constraint firstAttribute="height" constant="30" id="emV-E0-21b"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="Ere-R1-Wa1"/>
-                                        </mask>
-                                    </variation>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Yv-hp-Tw4">
-                                    <rect key="frame" x="0.0" y="35" width="240" height="93"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvE-NL-rdM" customClass="PostTextView" customModule="Wumi" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="93"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write a comment"/>
-                                            </userDefinedRuntimeAttributes>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="pvE-NL-rdM" firstAttribute="leading" secondItem="0Yv-hp-Tw4" secondAttribute="leading" id="LWU-XK-4oG"/>
-                                        <constraint firstAttribute="bottom" secondItem="pvE-NL-rdM" secondAttribute="bottom" id="OYH-xD-B4K"/>
-                                        <constraint firstItem="pvE-NL-rdM" firstAttribute="top" secondItem="0Yv-hp-Tw4" secondAttribute="top" id="TZq-4v-Gxf"/>
-                                        <constraint firstAttribute="trailing" secondItem="pvE-NL-rdM" secondAttribute="trailing" id="g5B-wN-GUi"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
-                        </stackView>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="YAy-hS-6z6" firstAttribute="leading" secondItem="r48-xA-cUa" secondAttribute="leading" id="QhP-cE-BhN"/>
-                        <constraint firstItem="YAy-hS-6z6" firstAttribute="top" secondItem="r48-xA-cUa" secondAttribute="top" id="aX9-Aa-ajd"/>
-                        <constraint firstAttribute="trailing" secondItem="YAy-hS-6z6" secondAttribute="trailing" id="lk9-PU-OXM"/>
-                        <constraint firstAttribute="bottom" secondItem="YAy-hS-6z6" secondAttribute="bottom" id="t99-3L-IZg"/>
-                    </constraints>
-                </view>
-            </objects>
-            <point key="canvasLocation" x="4180" y="-742"/>
-        </scene>
-        <!--New Post-->
-        <scene sceneID="I8X-wm-mWx">
-            <objects>
-                <viewController title="New Post" id="dTU-vq-anB" customClass="NewPostViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="tpi-zF-g4h"/>
-                        <viewControllerLayoutGuide type="bottom" id="TXi-xH-MO0"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="vDt-mp-R7G">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Post" id="cPh-6A-PGU"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="T7C-hg-5dB" kind="show" identifier="chooseCategory" id="jEt-nY-N36"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="epQ-IH-qjg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4010.5" y="-1699.5"/>
-        </scene>
-        <!--Post Category-->
-        <scene sceneID="o7L-au-XvP">
-            <objects>
-                <tableViewController title="Post Category" id="T7C-hg-5dB" customClass="PostCategoryTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="dDW-o8-1Qg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCategoryCell" textLabel="XYB-E6-dCt" style="IBUITableViewCellStyleDefault" id="3Ct-gd-3XQ">
-                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Ct-gd-3XQ" id="IzW-Rn-oFu">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XYB-E6-dCt">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="T7C-hg-5dB" id="jf0-At-dDA"/>
-                            <outlet property="delegate" destination="T7C-hg-5dB" id="lOx-Fl-lLc"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Post" id="Hie-WI-ApB"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Vhp-NP-bXW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4486.5" y="-1699.5"/>
-        </scene>
-        <!--Contact View Controller-->
+        <!--Contact Content-->
         <scene sceneID="fPh-BF-8Ra">
             <objects>
-                <viewController id="Mkx-Nv-AFl" customClass="ContactViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactContentScene" title="Contact Content" id="Mkx-Nv-AFl" customClass="ContactViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iki-Wj-Bke"/>
                         <viewControllerLayoutGuide type="bottom" id="VVv-ZC-WFM"/>
@@ -1213,7 +1007,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="rLT-mV-RoB" kind="relationship" relationship="viewControllers" id="bSK-K2-uPu"/>
+                        <segue destination="PYK-ZJ-5BR" kind="relationship" relationship="viewControllers" id="Qvs-9B-cs3"/>
                         <segue destination="xnC-N3-ssG" kind="relationship" relationship="viewControllers" id="Vce-yJ-jwS"/>
                         <segue destination="sKb-pl-sVC" kind="relationship" relationship="viewControllers" id="4eK-Mi-OHc"/>
                         <segue destination="GOR-Sl-fq4" kind="relationship" relationship="viewControllers" id="mOD-sO-wDQ"/>
@@ -1624,6 +1418,16 @@
             </objects>
             <point key="canvasLocation" x="5098.5" y="1335.5"/>
         </scene>
+        <!--Home-->
+        <scene sceneID="9zo-yM-MAc">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Home" id="PYK-ZJ-5BR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="6tf-2j-esP"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gA8-yy-SrD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2867" y="-274"/>
+        </scene>
         <!--Inbox-->
         <scene sceneID="TjA-40-x0j">
             <objects>
@@ -1632,7 +1436,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vgH-Ww-t8r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2949" y="92"/>
+            <point key="canvasLocation" x="2866" y="-57"/>
         </scene>
         <!--Notification-->
         <scene sceneID="NpP-xR-8pm">
@@ -1642,7 +1446,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oqB-mV-xPC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2958.5" y="205"/>
+            <point key="canvasLocation" x="2884.5" y="220"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="qK6-ic-c31">
@@ -1669,7 +1473,4 @@
         <image name="Private_Message" width="23" height="23"/>
         <image name="Star" width="16" height="16"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="17z-oZ-H8W"/>
-    </inferredMetricsTieBreakers>
 </document>

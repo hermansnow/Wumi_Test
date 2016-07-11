@@ -39,7 +39,7 @@
         <!--PostContentScene-->
         <scene sceneID="ABi-YP-OWV">
             <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="PostContentScene" id="7px-sl-tGB" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="PostContentScene" id="7px-sl-tGB" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WLu-Ir-TBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="448.5" y="256"/>

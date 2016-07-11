@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Py7-AX-DnR">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="gGc-wi-A6x">
+            <objects>
+                <navigationController storyboardIdentifier="Post Table Navigation Controller" id="Py7-AX-DnR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" id="LQe-Gy-Lyl"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZBl-Qa-0B1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="zv3-HR-iyM">
+                        <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="1db-ZC-CXS" kind="relationship" relationship="rootViewController" id="ptB-A8-lUk"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kR5-Z2-EQE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2792" y="-1028"/>
+        </scene>
+        <!--Post Table View Controller-->
+        <scene sceneID="DAE-we-Zgb">
+            <objects>
+                <tableViewController id="1db-ZC-CXS" customClass="PostTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="oax-cA-W9N">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageTableViewCell" id="UMw-Ux-be1">
+                                <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UMw-Ux-be1" id="Omn-RR-5Qm">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="1db-ZC-CXS" id="MKP-JO-e8Q"/>
+                            <outlet property="delegate" destination="1db-ZC-CXS" id="QOV-kb-9GI"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="yfX-CV-K6r"/>
+                    <connections>
+                        <segue destination="BzL-Uo-bPH" kind="show" identifier="Compose Post" id="o3b-kx-kWJ">
+                            <nil key="action"/>
+                        </segue>
+                        <segue destination="4sw-Op-bCx" kind="show" identifier="Show Post" id="TXB-db-KQO">
+                            <nil key="action"/>
+                        </segue>
+                        <segue destination="AWh-E2-ChP" kind="show" identifier="Show Contact" id="SW6-KA-oYB"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5ka-Di-yc9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3357" y="-1028"/>
+        </scene>
+        <!--Post Content-->
+        <scene sceneID="irt-lH-bWh">
+            <objects>
+                <tableViewController storyboardIdentifier="PostContentScene" id="4sw-Op-bCx" customClass="PostViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yH5-fh-441">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageTableViewCell" id="HTn-i5-nhT" customClass="MessageTableViewCell" customModule="Wumi" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HTn-i5-nhT" id="PG7-Yn-By6">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableViewCell" id="Hgt-XF-y2B" customClass="CommentTableViewCell" customModule="Wumi" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hgt-XF-y2B" id="iAV-wm-kzA">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="4sw-Op-bCx" id="q3s-Sy-3GW"/>
+                            <outlet property="delegate" destination="4sw-Op-bCx" id="xHV-mI-z3T"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Post Content" id="5ht-6i-VJt"/>
+                    <connections>
+                        <outlet property="commentTextView" destination="C1l-BJ-LfY" id="lxN-HU-t42"/>
+                        <outlet property="commentView" destination="Jmd-fk-RHK" id="dyH-A2-Dz6"/>
+                        <outlet property="myUserBannerView" destination="xhQ-QG-RlG" id="uUx-gt-Ynm"/>
+                        <segue destination="AWh-E2-ChP" kind="show" identifier="Show Contact" id="WBS-H5-vNs"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qM8-Jd-UIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Jmd-fk-RHK">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Leu-g5-kcN">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhQ-QG-RlG" customClass="UserBannerView" customModule="Wumi" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="7Ol-kX-1QO"/>
+                                        <constraint firstAttribute="height" constant="30" id="XXE-wK-cWZ"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="XXE-wK-cWZ"/>
+                                        </mask>
+                                    </variation>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qSk-Se-jPX">
+                                    <rect key="frame" x="0.0" y="35" width="240" height="93"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C1l-BJ-LfY" customClass="PostTextView" customModule="Wumi" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="93"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write a comment"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="C1l-BJ-LfY" secondAttribute="bottom" id="6GU-Te-kei"/>
+                                        <constraint firstAttribute="trailing" secondItem="C1l-BJ-LfY" secondAttribute="trailing" id="nEs-8J-z9Q"/>
+                                        <constraint firstItem="C1l-BJ-LfY" firstAttribute="leading" secondItem="qSk-Se-jPX" secondAttribute="leading" id="qNc-Fv-3cw"/>
+                                        <constraint firstItem="C1l-BJ-LfY" firstAttribute="top" secondItem="qSk-Se-jPX" secondAttribute="top" id="rEV-Bo-Cdj"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Leu-g5-kcN" firstAttribute="top" secondItem="Jmd-fk-RHK" secondAttribute="top" id="0MI-KA-1UB"/>
+                        <constraint firstItem="Leu-g5-kcN" firstAttribute="leading" secondItem="Jmd-fk-RHK" secondAttribute="leading" id="6Zn-oQ-azG"/>
+                        <constraint firstAttribute="trailing" secondItem="Leu-g5-kcN" secondAttribute="trailing" id="FJS-6p-DLW"/>
+                        <constraint firstAttribute="bottom" secondItem="Leu-g5-kcN" secondAttribute="bottom" id="HuN-h8-d6a"/>
+                    </constraints>
+                </view>
+            </objects>
+            <point key="canvasLocation" x="3961" y="-353"/>
+        </scene>
+        <!--New Post-->
+        <scene sceneID="QBU-O6-Zuo">
+            <objects>
+                <viewController title="New Post" id="BzL-Uo-bPH" customClass="NewPostViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Q9z-Lv-7FL"/>
+                        <viewControllerLayoutGuide type="bottom" id="DOQ-Yv-c9C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Kmc-jW-sby">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Post" id="TIx-CY-8Iv"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="l25-IK-5Aw" kind="show" identifier="chooseCategory" id="I4L-s3-AGG">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="euo-Qr-vSY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3961" y="-1663"/>
+        </scene>
+        <!--Post Category-->
+        <scene sceneID="SIc-6O-CP4">
+            <objects>
+                <tableViewController title="Post Category" id="l25-IK-5Aw" customClass="PostCategoryTableViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Df8-OW-EGb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCategoryCell" textLabel="qkA-PJ-ASz" style="IBUITableViewCellStyleDefault" id="Uct-nA-0kZ">
+                                <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uct-nA-0kZ" id="UjN-DV-XiH">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qkA-PJ-ASz">
+                                            <rect key="frame" x="15" y="0.0" width="384" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="l25-IK-5Aw" id="N2h-qe-haY"/>
+                            <outlet property="delegate" destination="l25-IK-5Aw" id="kpk-q8-mtI"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Post" id="W50-YF-tev"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pms-5l-J9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4461" y="-1663"/>
+        </scene>
+        <!--ContactContentScene-->
+        <scene sceneID="E1s-IL-QF0">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="ContactContentScene" storyboardName="Main" referencedIdentifier="ContactContentScene" id="AWh-E2-ChP" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jj0-lw-11i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3383" y="182"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="SW6-KA-oYB"/>
+    </inferredMetricsTieBreakers>
+</document>

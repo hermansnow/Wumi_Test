@@ -326,6 +326,7 @@
 		DF5EF1581D2EDA3300C9B2F2 /* ImageFullScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF5EF1571D2EDA3300C9B2F2 /* ImageFullScreenView.xib */; };
 		DF5EF15D1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */; };
 		DF5EF15F1D30590300C9B2F2 /* HamburgerMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15E1D30590300C9B2F2 /* HamburgerMenuButton.swift */; };
+		DF5EF1621D33215000C9B2F2 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF5EF1601D33215000C9B2F2 /* Home.storyboard */; };
 		DF6A1B331CF2508C00CB6973 /* RichTextPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */; };
 		DF6A1B351CF266CA00CB6973 /* SelectedThumbnailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */; };
 		DF6D56651CB75A1C001E0AFF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D56641CB75A1C001E0AFF /* Protocols.swift */; };
@@ -839,6 +840,7 @@
 		DF5EF1571D2EDA3300C9B2F2 /* ImageFullScreenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageFullScreenView.xib; sourceTree = "<group>"; };
 		DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenView.swift; path = View/ImageFullScreenView.swift; sourceTree = "<group>"; };
 		DF5EF15E1D30590300C9B2F2 /* HamburgerMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HamburgerMenuButton.swift; path = View/HamburgerMenuButton.swift; sourceTree = "<group>"; };
+		DF5EF1611D33215000C9B2F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Home.storyboard; sourceTree = SOURCE_ROOT; };
 		DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RichTextPostView.swift; path = View/RichTextPostView.swift; sourceTree = "<group>"; };
 		DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedThumbnailImageView.swift; path = View/SelectedThumbnailImageView.swift; sourceTree = "<group>"; };
 		DF6D56641CB75A1C001E0AFF /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = "Supporting Files/Protocols.swift"; sourceTree = "<group>"; };
@@ -982,9 +984,10 @@
 		81BA81471A49DA1800E65899 /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				02932A9D1CEE6E07001220E8 /* Notification.storyboard */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
+				DF5EF1601D33215000C9B2F2 /* Home.storyboard */,
 				B1ECD7AE1CCC240900CED9C4 /* Inbox.storyboard */,
+				02932A9D1CEE6E07001220E8 /* Notification.storyboard */,
 				DFA93ABB1C8F8ECB00ECA503 /* LaunchScreen.storyboard */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				DF5E3D381BE9457900F44FFF /* Model */,
@@ -2208,6 +2211,7 @@
 				DFCCC8DD1CF617F900CA0F8F /* PostContentCell.xib in Resources */,
 				B1ECD6EB1CCC1F3F00CED9C4 /* tusiji_11_cover@2x.png in Resources */,
 				B1ECD6D51CCC1F3F00CED9C4 /* rabbit_22_cover@2x.png in Resources */,
+				DF5EF1621D33215000C9B2F2 /* Home.storyboard in Resources */,
 				B1ECD6C71CCC1F3F00CED9C4 /* rabbit_16_cover@2x.png in Resources */,
 				B1ECD73C1CCC1F3F00CED9C4 /* sharemore_videovoip@2x.png in Resources */,
 				B1ECD7291CCC1F3F00CED9C4 /* RecordingSignal004@2x.png in Resources */,
@@ -2589,6 +2593,14 @@
 				B1ECD7AF1CCC240900CED9C4 /* Base */,
 			);
 			name = Inbox.storyboard;
+			sourceTree = "<group>";
+		};
+		DF5EF1601D33215000C9B2F2 /* Home.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DF5EF1611D33215000C9B2F2 /* Base */,
+			);
+			name = Home.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

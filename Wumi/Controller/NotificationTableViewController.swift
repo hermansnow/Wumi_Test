@@ -28,9 +28,7 @@ class NotificationTableViewController: UITableViewController {
                 navigationController.tabBarItem.badgeValue = String(results.count)
             }
         }
-
-        
-}
+    }
     
     // MARK: Lifecycle methods
     
@@ -73,7 +71,7 @@ class NotificationTableViewController: UITableViewController {
             }
     }
     
-        // MARK: TableView delegate & data source
+    // MARK: TableView delegate & data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
