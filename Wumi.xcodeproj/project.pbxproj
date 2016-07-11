@@ -327,6 +327,8 @@
 		DF5EF15D1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */; };
 		DF5EF15F1D30590300C9B2F2 /* HamburgerMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15E1D30590300C9B2F2 /* HamburgerMenuButton.swift */; };
 		DF5EF1621D33215000C9B2F2 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF5EF1601D33215000C9B2F2 /* Home.storyboard */; };
+		DF5EF1651D3330F500C9B2F2 /* PostContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF1631D3330F500C9B2F2 /* PostContentCell.swift */; };
+		DF5EF1661D3330F500C9B2F2 /* PostContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF5EF1641D3330F500C9B2F2 /* PostContentCell.xib */; };
 		DF6A1B331CF2508C00CB6973 /* RichTextPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */; };
 		DF6A1B351CF266CA00CB6973 /* SelectedThumbnailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */; };
 		DF6D56651CB75A1C001E0AFF /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D56641CB75A1C001E0AFF /* Protocols.swift */; };
@@ -841,6 +843,8 @@
 		DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenView.swift; path = View/ImageFullScreenView.swift; sourceTree = "<group>"; };
 		DF5EF15E1D30590300C9B2F2 /* HamburgerMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HamburgerMenuButton.swift; path = View/HamburgerMenuButton.swift; sourceTree = "<group>"; };
 		DF5EF1611D33215000C9B2F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Home.storyboard; sourceTree = SOURCE_ROOT; };
+		DF5EF1631D3330F500C9B2F2 /* PostContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostContentCell.swift; path = View/PostContentCell.swift; sourceTree = "<group>"; };
+		DF5EF1641D3330F500C9B2F2 /* PostContentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostContentCell.xib; path = View/PostContentCell.xib; sourceTree = "<group>"; };
 		DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RichTextPostView.swift; path = View/RichTextPostView.swift; sourceTree = "<group>"; };
 		DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedThumbnailImageView.swift; path = View/SelectedThumbnailImageView.swift; sourceTree = "<group>"; };
 		DF6D56641CB75A1C001E0AFF /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = "Supporting Files/Protocols.swift"; sourceTree = "<group>"; };
@@ -1970,6 +1974,8 @@
 				DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */,
 				DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */,
 				DFCCC8DB1CF617F900CA0F8F /* PostContentCell.xib */,
+				DF5EF1631D3330F500C9B2F2 /* PostContentCell.swift */,
+				DF5EF1641D3330F500C9B2F2 /* PostContentCell.xib */,
 				DFA93ACE1C910DD700ECA503 /* ProfileTableCell.swift */,
 				DFA93AC21C90DE3600ECA503 /* ProfileInputTableCell.swift */,
 				DFF712BC1CD7060100EAEFD2 /* ProfileLabelTableCell.swift */,
@@ -2111,6 +2117,7 @@
 				B1ECD6F41CCC1F3F00CED9C4 /* tusiji_1_cover@2x.png in Resources */,
 				DF1BE2641C9F2EA300F934EE /* MessageTableViewCell.xib in Resources */,
 				B1ECD7311CCC1F3F00CED9C4 /* SenderVoiceNodePlaying000@2x.png in Resources */,
+				DF5EF1661D3330F500C9B2F2 /* PostContentCell.xib in Resources */,
 				B1ECD71E1CCC1F3F00CED9C4 /* receive.caf in Resources */,
 				B1ECD6FA1CCC1F3F00CED9C4 /* tusiji_4_cover@2x.png in Resources */,
 				B1ECD7461CCC1F3F00CED9C4 /* weChatBubble_Receiving_Solid@2x.png in Resources */,
@@ -2433,6 +2440,7 @@
 				B1ECD6A41CCC1F3F00CED9C4 /* CDChatManager.m in Sources */,
 				B1ECD75D1CCC1F3F00CED9C4 /* XHFoundationCommon.m in Sources */,
 				B1ECD7781CCC1F4000CED9C4 /* XHEmotion.m in Sources */,
+				DF5EF1651D3330F500C9B2F2 /* PostContentCell.swift in Sources */,
 				B1ECD7961CCC1F4000CED9C4 /* XHBaseTableViewCell.m in Sources */,
 				DFA93ABA1C88FCDB00ECA503 /* ColorGradientView.swift in Sources */,
 				B1ECD7671CCC1F4000CED9C4 /* XHDisplayEmotionViewController.m in Sources */,
