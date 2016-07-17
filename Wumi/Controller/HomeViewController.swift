@@ -12,7 +12,10 @@ import SWRevealViewController
 
 class HomeViewController: UIViewController {
     
-    @IBOutlet weak var currentUserBanner: UserBannerView!
+    @IBOutlet weak var currentUserBanner: UIView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var currentUserAvatarView: AvatarImageView!
     @IBOutlet weak var postTableView: UITableView!
     
     private var refreshControl = UIRefreshControl()
@@ -115,19 +118,30 @@ class HomeViewController: UIViewController {
     }
     
     private func addCurrentUserBanner() {
-        self.currentUserBanner.backgroundColor = Constants.General.Color.BackgroundColor
+        // Set up banner
+        self.currentUserBanner.backgroundColor = Constants.General.Color.LightBackgroundColor
+        self.nameLabel.textColor = Constants.General.Color.TextColor
+        self.nameLabel.font = Constants.Post.Font.ListCurrentUserBanner
+        self.locationLabel.textColor = Constants.Post.Color.ListDetailText
+        self.locationLabel.font = Constants.Post.Font.ListUserBanner
         
         // load current user data
         let user = self.currentUser
-        self.currentUserBanner.detailLabel.text = user.name
-        self.currentUserBanner.userObjectId = user.objectId
+        self.nameLabel.text = user.name
+        let graduationText = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
+        if let nameText = self.nameLabel.text where graduationText.characters.count > 0 {
+                self.nameLabel.text = nameText + "(" + graduationText + ")"
+        }
+        self.locationLabel.text = user.location.description
+        
+        // Load avatar
         self.currentUser.loadAvatarThumbnail { (imageResult, imageError) -> Void in
             guard let image = imageResult where imageError == nil else { return }
-            self.currentUserBanner.avatarImageView.image = image
+            self.currentUserAvatarView.image = image
         }
         
         // Add gesture
-        self.currentUserBanner.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.showUserContact(_:))))
+        self.currentUserBanner.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.editCurrentUserProfile(_:))))
     }
     
     private func addSearchController() {
@@ -172,9 +186,16 @@ class HomeViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let postVC = segue.destinationViewController as? PostViewController where segue.identifier == "Show Post" {
             guard let cell = sender as? PostTableViewCell, indexPath = self.postTableView.indexPathForCell(cell), selectedPost = self.displayPosts[safe: indexPath.row] else { return }
+            
             postVC.delegate = self
             postVC.post = selectedPost
             self.selectedPostIndexPath = indexPath
+        }
+        
+        if let profileVC = segue.destinationViewController as? EditProfileViewController where segue.identifier == "Edit Profile" {
+            guard let view = sender as? UIView where view == self.currentUserBanner else { return }
+            
+            profileVC.hidesBottomBarWhenPushed = true
         }
         
         if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
@@ -189,6 +210,10 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: Action
+    func editCurrentUserProfile(recognizer: UITapGestureRecognizer) {
+        self.performSegueWithIdentifier("Edit Profile", sender: recognizer.view)
+    }
+    
     func showUserContact(recognizer: UITapGestureRecognizer) {
         self.performSegueWithIdentifier("Show Contact", sender: recognizer.view)
     }
@@ -292,15 +317,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
                 guard let user = result as? User where error == nil else { return }
                 
-                cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.showUserContact(_:))))
-                
-                cell.authorView.detailLabel.text = user.name
+                var graduationText = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
+                if graduationText.characters.count > 0 {
+                    graduationText = "(" + graduationText + ")"
+                }
+                cell.authorView.detailLabel.text = (user.name ?? "") + graduationText + ", " + user.location.description
                 cell.authorView.userObjectId = user.objectId
                 
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
                     guard let image = imageResult where imageError == nil else { return }
                     cell.authorView.avatarImageView.image = image
                 }
+                
+                cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.showUserContact(_:))))
             }
         }
         

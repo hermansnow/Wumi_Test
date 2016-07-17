@@ -21,11 +21,11 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tsO-FS-pM0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="558"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="16"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
                                         <rect key="frame" x="0.0" y="16" width="375" height="461"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="izv-Vt-sbK">
@@ -1122,7 +1122,7 @@
         <!--Profile-->
         <scene sceneID="mt2-Wt-jBo">
             <objects>
-                <viewController id="ARu-jj-lLl" customClass="EditProfileViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditProfileScene" id="ARu-jj-lLl" customClass="EditProfileViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ihq-s8-aUv"/>
                         <viewControllerLayoutGuide type="bottom" id="OEY-7t-yz8"/>

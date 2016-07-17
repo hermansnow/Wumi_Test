@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Su0-Ah-6MB">
-                        <rect key="frame" x="16" y="24" width="471" height="20"/>
+                        <rect key="frame" x="0.0" y="24" width="503" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="fSv-O6-O5I"/>
                         </constraints>
@@ -25,24 +25,24 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sjI-JE-1eO" customClass="UserBannerView" customModule="Wumi" customModuleProvider="target">
-                        <rect key="frame" x="16" y="52" width="471" height="16"/>
+                        <rect key="frame" x="0.0" y="52" width="503" height="16"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="822-9p-d80"/>
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="kWJ-Ug-8IM">
-                        <rect key="frame" x="16" y="80" width="471" height="223"/>
+                        <rect key="frame" x="0.0" y="80" width="503" height="223"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vgy-Oi-paX" customClass="PostContentTextView" customModule="Wumi" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="391" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="423" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wAY-sN-iR3">
-                                <rect key="frame" x="391" y="0.0" width="80" height="80"/>
+                                <rect key="frame" x="423" y="0.0" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="wAY-sN-iR3" secondAttribute="height" multiplier="1:1" id="OLn-oj-vs1"/>
                                     <constraint firstAttribute="width" constant="80" id="dhx-GR-VwV"/>
@@ -51,7 +51,7 @@
                         </subviews>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Time stamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mo3-cr-1bc">
-                        <rect key="frame" x="16" y="319" width="471" height="20"/>
+                        <rect key="frame" x="0.0" y="319" width="503" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="eyU-aD-XZe"/>
                         </constraints>
@@ -65,7 +65,7 @@
                         </variation>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="BYe-Up-z6y" userLabel="Button Stack View">
-                        <rect key="frame" x="16" y="355" width="471" height="20"/>
+                        <rect key="frame" x="0.0" y="355" width="503" height="20"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cgl-Qm-Gi0">
                                 <rect key="frame" x="0.0" y="0.0" width="80" height="20"/>
@@ -122,11 +122,11 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eIx-VF-iB7">
-                                <rect key="frame" x="208" y="0.0" width="169" height="20"/>
+                                <rect key="frame" x="208" y="0.0" width="201" height="20"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOu-cl-PCA">
-                                <rect key="frame" x="401" y="0.0" width="70" height="20"/>
+                                <rect key="frame" x="433" y="0.0" width="70" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="MuC-Td-1kZ"/>
                                 </constraints>
@@ -139,7 +139,7 @@
                         </constraints>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PWz-Ol-uTJ" userLabel="Separator View">
-                        <rect key="frame" x="16" y="390.5" width="471" height="1"/>
+                        <rect key="frame" x="0.0" y="390.5" width="503" height="1"/>
                         <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="YwD-mT-7Hb"/>
@@ -147,25 +147,25 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="PWz-Ol-uTJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="8BX-cb-A7N"/>
-                    <constraint firstAttribute="trailing" secondItem="kWJ-Ug-8IM" secondAttribute="trailing" constant="16" id="BMw-rL-FKv"/>
+                    <constraint firstItem="PWz-Ol-uTJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8BX-cb-A7N"/>
+                    <constraint firstAttribute="trailing" secondItem="kWJ-Ug-8IM" secondAttribute="trailing" id="BMw-rL-FKv"/>
                     <constraint firstAttribute="bottom" secondItem="PWz-Ol-uTJ" secondAttribute="bottom" id="Eor-z6-nyW"/>
-                    <constraint firstItem="sjI-JE-1eO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="GUX-nK-69i"/>
+                    <constraint firstItem="sjI-JE-1eO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="GUX-nK-69i"/>
                     <constraint firstItem="Su0-Ah-6MB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="16" id="Nu4-Vk-V75"/>
-                    <constraint firstItem="BYe-Up-z6y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Pfk-6b-TF9"/>
-                    <constraint firstItem="kWJ-Ug-8IM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="QsN-td-8MI"/>
-                    <constraint firstAttribute="trailing" secondItem="BYe-Up-z6y" secondAttribute="trailing" constant="16" id="U6a-dt-0fA"/>
+                    <constraint firstItem="BYe-Up-z6y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Pfk-6b-TF9"/>
+                    <constraint firstItem="kWJ-Ug-8IM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="QsN-td-8MI"/>
+                    <constraint firstAttribute="trailing" secondItem="BYe-Up-z6y" secondAttribute="trailing" id="U6a-dt-0fA"/>
                     <constraint firstItem="Mo3-cr-1bc" firstAttribute="top" secondItem="kWJ-Ug-8IM" secondAttribute="bottom" constant="16" id="X4R-Ts-DZs"/>
                     <constraint firstItem="BYe-Up-z6y" firstAttribute="top" secondItem="Mo3-cr-1bc" secondAttribute="bottom" constant="16" id="Z0A-a1-fWP"/>
                     <constraint firstItem="kWJ-Ug-8IM" firstAttribute="top" secondItem="sjI-JE-1eO" secondAttribute="bottom" constant="12" id="bdq-zQ-HDv"/>
-                    <constraint firstAttribute="trailing" secondItem="PWz-Ol-uTJ" secondAttribute="trailing" constant="16" id="gTU-fj-tce"/>
-                    <constraint firstAttribute="trailing" secondItem="sjI-JE-1eO" secondAttribute="trailing" constant="16" id="hZk-nC-Xhd"/>
+                    <constraint firstAttribute="trailing" secondItem="PWz-Ol-uTJ" secondAttribute="trailing" id="gTU-fj-tce"/>
+                    <constraint firstAttribute="trailing" secondItem="sjI-JE-1eO" secondAttribute="trailing" id="hZk-nC-Xhd"/>
                     <constraint firstItem="sjI-JE-1eO" firstAttribute="top" secondItem="Su0-Ah-6MB" secondAttribute="bottom" constant="8" id="idw-Pd-r7f"/>
                     <constraint firstItem="PWz-Ol-uTJ" firstAttribute="top" secondItem="BYe-Up-z6y" secondAttribute="bottom" constant="16" id="mii-Vy-C8s"/>
-                    <constraint firstItem="Su0-Ah-6MB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="nGy-tT-FgX"/>
-                    <constraint firstItem="Mo3-cr-1bc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="thG-8p-68d"/>
-                    <constraint firstAttribute="trailing" secondItem="Mo3-cr-1bc" secondAttribute="trailing" constant="16" id="vQA-Wn-LiG"/>
-                    <constraint firstAttribute="trailing" secondItem="Su0-Ah-6MB" secondAttribute="trailing" constant="16" id="xbl-cb-1CM"/>
+                    <constraint firstItem="Su0-Ah-6MB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nGy-tT-FgX"/>
+                    <constraint firstItem="Mo3-cr-1bc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="thG-8p-68d"/>
+                    <constraint firstAttribute="trailing" secondItem="Mo3-cr-1bc" secondAttribute="trailing" id="vQA-Wn-LiG"/>
+                    <constraint firstAttribute="trailing" secondItem="Su0-Ah-6MB" secondAttribute="trailing" id="xbl-cb-1CM"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

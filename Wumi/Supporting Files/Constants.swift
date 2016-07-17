@@ -118,6 +118,7 @@ struct Constants {
         }
         
         struct Font {
+            static let ListCurrentUserBanner  = UIFont(name: ".SFUIText-Medium", size: 16)
             static let ListTitle = UIFont(name: ".SFUIText-Regular", size: 16)
             static let ListUserBanner = UIFont(name: ".SFUIText-Regular", size: 14)
             static let ListContent = UIFont(name: ".SFUIText-Light", size: 16)
@@ -127,8 +128,7 @@ struct Constants {
         }
         
         struct  Color {
-            static let ListUserBanner = UIColor(red: 164/255, green: 164/255, blue: 164/255, alpha: 1.0)
-            static let ListTimeStamp = UIColor(red: 164/255, green: 164/255, blue: 164/255, alpha: 1.0)
+            static let ListDetailText = UIColor(red: 164/255, green: 164/255, blue: 164/255, alpha: 1.0)
         }
         
         struct Size {

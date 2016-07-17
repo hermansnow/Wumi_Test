@@ -135,7 +135,7 @@ class PostTableViewCell: UITableViewCell {
         
         // Set up user banner
         self.authorView.detailLabel.font = Constants.Post.Font.ListUserBanner
-        self.authorView.detailLabel.textColor = Constants.Post.Color.ListUserBanner
+        self.authorView.detailLabel.textColor = Constants.Post.Color.ListDetailText
         
         // Set up content text view
         self.showSummary = true
@@ -147,7 +147,7 @@ class PostTableViewCell: UITableViewCell {
         
         // Set up timestamp
         self.timeStampLabel.font = Constants.Post.Font.ListTimeStamp
-        self.timeStampLabel.textColor = Constants.Post.Color.ListTimeStamp
+        self.timeStampLabel.textColor = Constants.Post.Color.ListDetailText
         
         // Set up buttons
         self.saveLabel.font = Constants.Post.Font.ListButton
