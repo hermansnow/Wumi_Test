@@ -10,31 +10,34 @@ import UIKit
 
 class IMUserFactory: NSObject, CDUserDelegate {
     func cacheUserByIds(userIds: Set<NSObject>!, block: AVBooleanResultBlock!) {
-        var query = User.query()
-        var subQueries = [AVQuery]()
-        for id in userIds {
-            let subQuery = User.query()
-            subQuery.whereKey("objectId", equalTo: id)
-            subQueries.append(subQuery)
-        }
-        query = AVQuery.orQueryWithSubqueries(subQueries)
-        
-        query.limit = userIds.count
-        // Cache policy
-        query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 3600 * 24 * 30
-        
-        query.findObjectsInBackgroundWithBlock { (results, error) in
-            if let users = results as? [User] where error == nil {
-                for user in users {
-                    User.cacheUserData(user)
-                }
-                block(true, error)
-            } else {
-                block(false, error)
+        if userIds.count > 0 {
+            var query = User.query()
+            var subQueries = [AVQuery]()
+            for id in userIds {
+                let subQuery = User.query()
+                subQuery.whereKey("objectId", equalTo: id)
+                subQueries.append(subQuery)
             }
+            query = AVQuery.orQueryWithSubqueries(subQueries)
+            
+            query.limit = userIds.count
+            // Cache policy
+            query.cachePolicy = .NetworkElseCache
+            query.maxCacheAge = 3600 * 24 * 30
+            
+            query.findObjectsInBackgroundWithBlock { (results, error) in
+                if let users = results as? [User] where error == nil {
+                    for user in users {
+                        User.cacheUserData(user)
+                    }
+                    block(true, error)
+                } else {
+                    block(false, error)
+                }
+            }
+        } else {
+            block(true, nil)
         }
-
     }
     
     func getUserById(userId: String!) -> CDUserModelDelegate! {

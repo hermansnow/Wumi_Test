@@ -74,8 +74,12 @@ class WMUserTableViewController: UITableViewController {
     func logoutUser() {
         let alert = UIAlertController(title: "Log Out?", message: "Logout will not delete any data. You can still log in with this account. ", preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Log Out", style: .Default) { (UIAlertAction) -> Void in
-            Helper.LogOut()
+            CDChatManager.sharedManager().closeWithCallback( {(succeeded, error) -> Void in
+                if succeeded {
+                    Helper.LogOut()
+                }
             })
+        })
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
