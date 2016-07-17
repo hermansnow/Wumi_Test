@@ -46,9 +46,33 @@ class PushNotification : AVObject, AVSubclassing  {
         self.isPostAuthor = isPostAuthor
     }
     
+    func sendPushForPost(containingVC: UIViewController)
+    {
+        self.saveInBackgroundWithBlock { (success, error) -> Void in
+            if !success {
+                Helper.PopupErrorAlert(containingVC, errorMessage: "\(error)")
+            }
+            else {
+                // Create our Installation query
+                let pushQuery = AVInstallation.query()
+                pushQuery.whereKey("owner", equalTo: self.toUser);
+                let pushMiddleMessage = self.isPostAuthor ? " replied to your post " : " replied to your saved post "
+                
+                let data: [NSObject : AnyObject] = [
+                    "alert" : self.fromUser!.name! + pushMiddleMessage + self.post!.title!,
+                    "badge" : "Increment"
+                ]
+                
+                let push: AVPush = AVPush()
+                //AVPush.setProductionMode(false)
+                push.setQuery(pushQuery)
+                push.setData(data)
+                push.sendPushInBackground()
+            }
+        }
+    }
     
-    
-    func loadPushNotifications(user: User!, block: AVArrayResultBlock!) {
+    class func loadPushNotifications(user: User!, block: AVArrayResultBlock!) {
         
         // Load push notfications
         let query = PushNotification.query()
@@ -71,5 +95,6 @@ class PushNotification : AVObject, AVSubclassing  {
             
         }
     }
+
 
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FormatterKit
 
 class NotificationTableViewController: UITableViewController {
     
@@ -21,7 +22,7 @@ class NotificationTableViewController: UITableViewController {
         
         self.navigationController!.tabBarItem = UITabBarItem(title: "Notification", image: Constants.Notification.Image.TabBarIcon,  tag: 1)
         
-        PushNotification().loadPushNotifications(currentUser){ (results, error) -> Void in
+        PushNotification.loadPushNotifications(currentUser){ (results, error) -> Void in
             guard results.count > 0 && error == nil else { return }
             
             if let navigationController = self.navigationController {
@@ -41,16 +42,16 @@ class NotificationTableViewController: UITableViewController {
         // Initialize tableview
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.tableView.separatorStyle = .SingleLine
-        self.tableView.backgroundColor = Constants.General.Color.BackgroundColor
+        self.tableView.backgroundColor = UIColor.whiteColor()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 50
 
          self.currentUser.pushNotificationsArray.removeAll()
-         self.updatedAtDateFormatter.dateFormat = "YYYY-MM-dd hh:mm"
+        self.updatedAtDateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
          self.navigationController!.tabBarItem.badgeValue = nil
         
         // Load data
-        PushNotification().loadPushNotifications(self.currentUser) { (results, error) -> Void in
+        PushNotification.loadPushNotifications(self.currentUser) { (results, error) -> Void in
             guard results.count > 0 && error == nil else { return }
             
              self.navigationController!.tabBarItem.badgeValue = String(results.count)
@@ -84,10 +85,6 @@ class NotificationTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        let cell = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell", forIndexPath: indexPath) as! NotificationTableViewCell
         
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        cell.backgroundColor = UIColor.clearColor()
-        cell.textLabel?.numberOfLines = 0
-       
         let pushNotification = self.currentUser.pushNotificationsArray[indexPath.row]
        
         User.query().getObjectInBackgroundWithId(pushNotification.fromUser!.objectId){ (result, error) -> Void in
@@ -110,8 +107,16 @@ class NotificationTableViewController: UITableViewController {
                 
             }
         }
-        cell.timeStampLabel.text = self.updatedAtDateFormatter.stringFromDate(pushNotification.createdAt)
-        
+        let intervalSinceNow = pushNotification.createdAt.timeIntervalSinceNow
+        // Display post date when the post is more than one day ago, otherwise display relative date.
+        if (intervalSinceNow < -24*60*60)
+        {
+            cell.timeStampLabel.text = self.updatedAtDateFormatter.stringFromDate(pushNotification.createdAt)
+        }
+        else
+        {
+            cell.timeStampLabel.text = FormatterKit.TTTTimeIntervalFormatter().stringForTimeInterval(intervalSinceNow)
+        }
         
         return cell
     }
@@ -119,6 +124,8 @@ class NotificationTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier("Show Post", sender: tableView.cellForRowAtIndexPath(indexPath))
         
+        //Disable removing push notifications for now.
+        /*
         let pushNotification = self.currentUser.pushNotificationsArray[indexPath.row]
         
         pushNotification.deleteInBackgroundWithBlock { (success, error) -> Void in
@@ -126,7 +133,7 @@ class NotificationTableViewController: UITableViewController {
                 Helper.PopupErrorAlert(self, errorMessage: "\(error)")
             }
             else {
-                PushNotification().loadPushNotifications(self.currentUser) { (results, error) -> Void in
+                PushNotification.loadPushNotifications(self.currentUser) { (results, error) -> Void in
                     guard error == nil else { return }
                     
                     if (results.count > 0)
@@ -144,7 +151,7 @@ class NotificationTableViewController: UITableViewController {
             }
         }
        
-        
+    */
         
     }
     

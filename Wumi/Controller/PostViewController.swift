@@ -315,48 +315,21 @@ class PostViewController: UITableViewController {
         {
             if(!(user == self.currentUser))
             {
-                sendPushForPost(post, toUser:user, isPostAuthor: false)
+                PushNotification(fromUser: self.currentUser, toUser: user, post: post, isPostAuthor: false).sendPushForPost(self)
             }
         }
         
         // send push notification to the author of this post
         guard let toUser = post.author else { return }
         if(toUser == self.currentUser) {return}
-        sendPushForPost(post, toUser: toUser, isPostAuthor: true)
+        PushNotification(fromUser: self.currentUser, toUser: toUser, post: post, isPostAuthor: true).sendPushForPost(self)
     }
     
     func showUserContact(recognizer: UITapGestureRecognizer) {
         self.performSegueWithIdentifier("Show Contact", sender: recognizer.view)
     }
     
-    func sendPushForPost(post: Post, toUser: User, isPostAuthor: Bool)
-    {
-        let pushNotification = PushNotification.init(fromUser: self.currentUser, toUser: toUser, post: post, isPostAuthor: isPostAuthor)
         
-        pushNotification.saveInBackgroundWithBlock { (success, error) -> Void in
-            if !success {
-                Helper.PopupErrorAlert(self, errorMessage: "\(error)")
-            }
-            else {
-                // Create our Installation query
-                let pushQuery = AVInstallation.query()
-                pushQuery.whereKey("owner", equalTo: pushNotification.toUser);
-                let pushMiddleMessage = isPostAuthor ? " replied to your post " : " replied to your saved post "
-                
-                let data: [NSObject : AnyObject] = [
-                    "alert" : self.currentUser.name! + pushMiddleMessage + post.title!,
-                    "badge" : "Increment"
-                ]
-                
-                let push: AVPush = AVPush()
-                AVPush.setProductionMode(false)
-                push.setQuery(pushQuery)
-                push.setData(data)
-                push.sendPushInBackground()
-            }
-        }
-    }
-    
     func showImage(recognizer: UITapGestureRecognizer) {
         guard let textView = recognizer.view as? UITextView else { return }
         

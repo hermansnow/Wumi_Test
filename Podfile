@@ -26,5 +26,7 @@ target 'Wumi' do
     pod 'CTAssetsPickerController' ,'~>3.3.0'
     
     pod 'KIImagePager'
+
+    pod 'FormatterKit'
     
 end

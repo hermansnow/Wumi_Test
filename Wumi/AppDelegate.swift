@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         guard let currentUser = User.currentUser() else { return }
-        PushNotification().loadPushNotifications(currentUser) { (results, error) -> Void in
+        PushNotification.loadPushNotifications(currentUser) { (results, error) -> Void in
             guard results.count > 0 && error == nil else { return }
             
             NSNotificationCenter.defaultCenter().postNotificationName(APNSReceivedNotificationIdentifier, object:nil)
