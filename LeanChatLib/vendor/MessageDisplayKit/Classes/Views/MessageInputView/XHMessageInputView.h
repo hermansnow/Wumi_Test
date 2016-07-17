@@ -126,6 +126,11 @@ typedef NS_ENUM(NSInteger, XHMessageInputViewStyle) {
 @property (nonatomic, assign) BOOL allowsSendFace; // default is YES
 
 /**
+ *  是否显示Send按钮
+ */
+@property (nonatomic, assign) BOOL allowsSendButton; // default is NO
+
+/**
  *  切换文本和语音的按钮
  */
 @property (nonatomic, weak, readonly) UIButton *voiceChangeButton;

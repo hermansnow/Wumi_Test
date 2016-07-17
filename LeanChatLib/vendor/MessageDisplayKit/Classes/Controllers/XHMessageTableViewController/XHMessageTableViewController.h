@@ -214,6 +214,11 @@
 @property (nonatomic, assign) BOOL allowsSendFace; // default is YES
 
 /**
+ *  是否显示Send按钮
+ */
+@property (nonatomic, assign) BOOL allowSendButton; // default is NO
+
+/**
  *  输入框的样式，默认为扁平化
  */
 @property (nonatomic, assign) XHMessageInputViewStyle inputViewStyle;

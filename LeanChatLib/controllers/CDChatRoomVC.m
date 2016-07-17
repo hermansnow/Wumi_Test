@@ -50,11 +50,12 @@ typedef void (^LCIMErrorBlock)(NSString *messageUUID, NSError *error);
 - (instancetype)init {
     self = [super init];
     if (self) {
-        // 配置输入框UI的样式
-        //self.allowsSendVoice = NO;
-        //self.allowsSendFace = NO;
-        //self.allowsSendMultiMedia = NO;
+        // 配置输入框UI的样self.allowsSendVoice = NO;
+        self.allowsSendVoice = NO;
+        self.allowsSendFace = NO;
+        self.allowsSendMultiMedia = NO;
         self.loadingMoreMessage = NO;
+        self.allowSendButton = YES;
         _avimTypedMessage = [NSMutableArray array];
     }
     return self;

@@ -622,6 +622,7 @@ static CGPoint  delayOffset = {0.0};
     inputView.allowsSendFace = self.allowsSendFace;
     inputView.allowsSendVoice = self.allowsSendVoice;
     inputView.allowsSendMultiMedia = self.allowsSendMultiMedia;
+    inputView.allowsSendButton = self.allowSendButton;
     inputView.delegate = self;
     [self.view addSubview:inputView];
     [self.view bringSubviewToFront:inputView];

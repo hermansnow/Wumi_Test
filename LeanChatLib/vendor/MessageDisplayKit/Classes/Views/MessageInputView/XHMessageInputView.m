@@ -29,6 +29,8 @@
 
 @property (nonatomic, weak, readwrite) UIButton *holdDownButton;
 
+@property (nonatomic, weak, readwrite) UIButton *sendButton;
+
 /**
  *  是否取消錄音
  */
@@ -180,6 +182,13 @@
         }
         default:
             break;
+    }
+}
+
+- (void)sendButtonClicked:(UIButton*) sender {
+    if ([self.delegate respondsToSelector:@selector(didSendTextAction:)] &&
+        self.inputTextView.text.length > 0) {
+        [self.delegate didSendTextAction:self.inputTextView.text];
     }
 }
 
@@ -362,6 +371,23 @@
         self.faceSendButton = button;
     }
     
+    if (self.allowsSendButton) {
+        button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, [XHMessageInputView textViewLineHeight] * 1.5, [XHMessageInputView textViewLineHeight])];
+        [button setTitle:@"Send" forState:UIControlStateNormal];
+        [button.titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [button setTitleColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
+        button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+//        [button setImage:[UIImage imageNamed:@"Private_Message_Selected"] forState:UIControlStateSelected];
+        [button addTarget:self action:@selector(sendButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        buttonFrame = button.frame;
+        buttonFrame.origin = CGPointMake(CGRectGetWidth(self.bounds) - CGRectGetWidth(buttonFrame), verticalPadding);
+        button.frame = buttonFrame;
+        [self addSubview:button];
+        allButtonWidth += CGRectGetWidth(buttonFrame) + horizontalPadding * 1.5 ;
+        self.sendButton = button;
+        
+    }
+    
     // 输入框的高度和宽度
     CGFloat width = CGRectGetWidth(self.bounds) - (allButtonWidth ? allButtonWidth : (textViewLeftMargin * 2));
     CGFloat height = [XHMessageInputView textViewLineHeight];
@@ -373,7 +399,7 @@
     textView.returnKeyType = UIReturnKeySend;
     textView.enablesReturnKeyAutomatically = YES; // UITextView内部判断send按钮是否可以用
     
-    textView.placeHolder = @"";
+    textView.placeHolder = @"Send message...";
     textView.delegate = self;
     
     [self addSubview:textView];
@@ -405,8 +431,9 @@
             _inputTextView.layer.borderWidth = 0.65f;
             _inputTextView.layer.cornerRadius = 6.0f;
             self.backgroundColor = [UIColor whiteColor];
-            self.image = [[UIImage imageNamed:@"input-bar-flat"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0f, 0.0f, 0.0f, 0.0f)
-                                                                                 resizingMode:UIImageResizingModeTile];
+//            self.backgroundColor = [UIColor colorWithRed:224/255 green:224/255 blue:224/255 alpha:1];
+//            self.image = [[UIImage imageNamed:@"input-bar-flat"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0f, 0.0f, 0.0f, 0.0f)
+//                                                                                 resizingMode:UIImageResizingModeTile];
             break;
         }
         default:
@@ -446,6 +473,7 @@
     _allowsSendVoice = YES;
     _allowsSendFace = YES;
     _allowsSendMultiMedia = YES;
+    _allowsSendButton = NO;
     
     _messageInputViewStyle = XHMessageInputViewStyleFlat;
 }
