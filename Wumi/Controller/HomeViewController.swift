@@ -321,7 +321,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 if graduationText.characters.count > 0 {
                     graduationText = "(" + graduationText + ")"
                 }
-                cell.authorView.detailLabel.text = (user.name ?? "") + graduationText + ", " + user.location.description
+                cell.authorView.detailLabel.text = (user.name ?? "") + graduationText + (user.location.description.characters.count > 0 ? ", " + user.location.description : "")
                 cell.authorView.userObjectId = user.objectId
                 
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in

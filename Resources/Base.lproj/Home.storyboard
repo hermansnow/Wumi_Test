@@ -196,15 +196,15 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="c9w-Xt-26t">
-                                        <rect key="frame" x="16" y="60" width="382" height="563"/>
+                                        <rect key="frame" x="0.0" y="60" width="414" height="563"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Vhp-M5-vmw" secondAttribute="trailing" id="79s-H7-Tj0"/>
-                                    <constraint firstItem="c9w-Xt-26t" firstAttribute="leading" secondItem="GAf-fV-3PP" secondAttribute="leading" constant="16" id="J7W-27-5Lh"/>
+                                    <constraint firstItem="c9w-Xt-26t" firstAttribute="leading" secondItem="GAf-fV-3PP" secondAttribute="leading" id="J7W-27-5Lh"/>
                                     <constraint firstItem="Vhp-M5-vmw" firstAttribute="leading" secondItem="GAf-fV-3PP" secondAttribute="leading" id="Mzq-ox-ctj"/>
-                                    <constraint firstAttribute="trailing" secondItem="c9w-Xt-26t" secondAttribute="trailing" constant="16" id="eZN-8I-rHZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="c9w-Xt-26t" secondAttribute="trailing" id="eZN-8I-rHZ"/>
                                 </constraints>
                             </stackView>
                         </subviews>
