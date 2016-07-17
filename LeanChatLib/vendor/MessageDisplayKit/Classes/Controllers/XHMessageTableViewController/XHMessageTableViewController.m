@@ -669,6 +669,8 @@ static CGPoint  delayOffset = {0.0};
     // 初始化消息页面布局
     [self initilzer];
     [[XHMessageBubbleView appearance] setFont:[UIFont systemFontOfSize:16.0f]];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+    [self.messageTableView addGestureRecognizer:singleTap];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -1134,6 +1136,18 @@ static CGPoint  delayOffset = {0.0};
                 }
             }
         }
+}
+
+- (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
+{
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+    if (menu.isMenuVisible) {
+        [menu setMenuVisible:NO animated:YES];
+    }
+    
+    if (self.textViewInputViewType != XHInputViewTypeNormal) {
+        [self layoutOtherMenuViewHiden:YES];
+    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

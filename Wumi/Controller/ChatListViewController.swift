@@ -33,7 +33,7 @@ class ChatListViewController: CDChatListVC, CDChatListVCDelegate {
     
     func viewController(viewController: UIViewController!, didSelectConv conv: AVIMConversation!) {
         let vc = ChatRoomViewController(conversation: conv)
-        vc.hidesBottomBarWhenPushed = true
+        vc.hidesBottomBarWhenPushed = false
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

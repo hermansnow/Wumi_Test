@@ -279,6 +279,11 @@ class MessageTableViewController: UITableViewController {
                                     guard let users = results as? [User] where error == nil else { return }
                                     
                                     self.displayUsers = users
+                                    
+                                    if let index = self.displayUsers.indexOf(self.currentUser) {
+                                        self.displayUsers.removeAtIndex(index)
+                                    }
+                                    
                                     self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
                                     self.lastSearchString = self.searchString
                                     
