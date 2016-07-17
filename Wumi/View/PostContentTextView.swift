@@ -36,6 +36,13 @@ class PostContentTextView: UITextView {
     
     private func setProperty() {
         self.scrollEnabled = true
+        self.selectable = true
+        self.editable = false
+        
+        // Remove default margin/padding.
+        self.textContainer.lineFragmentPadding = 0
+        self.textContainerInset = UIEdgeInsetsZero
+        self.textAlignment = .Left
     }
     
     // Override hitTest function to only disable user interaction with this view but not subviews

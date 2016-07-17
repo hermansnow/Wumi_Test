@@ -60,7 +60,7 @@ class HomeViewController: UIViewController {
         self.extendedLayoutIncludesOpaqueBars = true
         
         // Register nib
-        self.postTableView.registerNib(UINib(nibName: "MessageTableViewCell", bundle: nil), forCellReuseIdentifier: "MessageTableViewCell")
+        self.postTableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: nil), forCellReuseIdentifier: "PostTableViewCell")
         
         // Initialize navigation bar
         self.searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(showSearchBar(_:)))
@@ -78,6 +78,7 @@ class HomeViewController: UIViewController {
         self.postTableView.estimatedRowHeight = 180
         self.postTableView.rowHeight = UITableViewAutomaticDimension
         self.postTableView.tableFooterView = UIView(frame: CGRectZero)
+        self.postTableView.separatorStyle = .None
         
         self.updatedAtDateFormatter.dateFormat = "YYYY-MM-dd hh:mm"
         
@@ -170,7 +171,7 @@ class HomeViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let postVC = segue.destinationViewController as? PostViewController where segue.identifier == "Show Post" {
-            guard let cell = sender as? MessageTableViewCell, indexPath = self.postTableView.indexPathForCell(cell), selectedPost = self.displayPosts[safe: indexPath.row] else { return }
+            guard let cell = sender as? PostTableViewCell, indexPath = self.postTableView.indexPathForCell(cell), selectedPost = self.displayPosts[safe: indexPath.row] else { return }
             postVC.delegate = self
             postVC.post = selectedPost
             self.selectedPostIndexPath = indexPath
@@ -250,29 +251,28 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return self.displayPosts.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        guard let post = self.displayPosts[safe: indexPath.row] else { return 0 }
-        
-        if post.mediaThumbnails.count > 0 {
-            return 230
-        }
-        else {
-            return UITableViewAutomaticDimension
-        }
-    }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MessageTableViewCell", forIndexPath: indexPath) as! MessageTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
         
         guard let post = self.displayPosts[safe: indexPath.row] else { return cell }
         
         cell.reset()
-        if let title = post.title {
+        
+        // Highlight searching string
+        cell.highlightedString = self.searchString
+        
+        if let title = post.title where title.characters.count > 0 {
             cell.title = NSMutableAttributedString(string: title)
         }
+        else {
+            cell.title = NSMutableAttributedString(string: "No Title")
+        }
+        
         if let content = post.content {
             cell.content = NSMutableAttributedString(string: content)
         }
+        
+        // Load preview image
         cell.imagePreview.hidden = post.mediaThumbnails.count == 0
         if !cell.imagePreview.hidden {
             post.loadFirstThumbnailWithBlock { (image, error) in
@@ -286,7 +286,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
-        cell.highlightString = self.searchString
         
         // Fetch author information
         if let author = post.author {
@@ -442,7 +441,7 @@ extension HomeViewController: FavoriteButtonDelegate {
 extension HomeViewController: PostViewControllerDelegate {
     func finishViewPost(postVC: PostViewController) {
         guard let indexPath = self.selectedPostIndexPath,
-            cell = self.postTableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell else { return }
+            cell = self.postTableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell else { return }
         
         cell.saveButton.selected = postVC.isSaved
     }

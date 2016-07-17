@@ -21,7 +21,7 @@ class ProfileInputTableCell: ProfileTableCell {
         
         self.inputTextField.borderStyle = .None
         self.inputTextField.font = Constants.General.Font.ProfileTextFont
-        self.inputTextField.textColor = Constants.General.Color.InputTextColor
+        self.inputTextField.textColor = Constants.General.Color.TextColor
         
         self.reset()
     }

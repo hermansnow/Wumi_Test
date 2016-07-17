@@ -34,7 +34,7 @@ class ProfileInputSwitchTableCell: ProfileTableCell {
         
         self.inputTextField.borderStyle = .None
         self.inputTextField.font = Constants.General.Font.ProfileTextFont
-        self.inputTextField.textColor = Constants.General.Color.InputTextColor
+        self.inputTextField.textColor = Constants.General.Color.TextColor
         
         self.statusSwitch.layer.cornerRadius = 16
         self.statusSwitch.onTintColor = Constants.General.Color.ThemeColor

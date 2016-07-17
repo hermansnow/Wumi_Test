@@ -308,8 +308,8 @@
 		DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEB1C86A55F00018B4A /* Constants.swift */; };
 		DF173EF21C86A58600018B4A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EEF1C86A58600018B4A /* Extensions.swift */; };
 		DF173EF31C86A58600018B4A /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173EF01C86A58600018B4A /* Helper.swift */; };
-		DF1BE2631C9F2EA300F934EE /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */; };
-		DF1BE2641C9F2EA300F934EE /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */; };
+		DF1BE2631C9F2EA300F934EE /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1BE2611C9F2EA300F934EE /* PostTableViewCell.swift */; };
+		DF1BE2641C9F2EA300F934EE /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF1BE2621C9F2EA300F934EE /* PostTableViewCell.xib */; };
 		DF1BE2691C9F9C7500F934EE /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1BE2681C9F9C7500F934EE /* Post.swift */; };
 		DF21176A1C927FDD009109EE /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */; };
 		DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */; };
@@ -822,8 +822,8 @@
 		DF173EEF1C86A58600018B4A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Supporting Files/Extensions.swift"; sourceTree = "<group>"; };
 		DF173EF01C86A58600018B4A /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Helper.swift; path = "Supporting Files/Helper.swift"; sourceTree = "<group>"; };
 		DF173EF51C86A73D00018B4A /* Wumi-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Wumi-Bridging-Header.h"; sourceTree = "<group>"; };
-		DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageTableViewCell.swift; path = View/MessageTableViewCell.swift; sourceTree = "<group>"; };
-		DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageTableViewCell.xib; path = View/MessageTableViewCell.xib; sourceTree = "<group>"; };
+		DF1BE2611C9F2EA300F934EE /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostTableViewCell.swift; path = View/PostTableViewCell.swift; sourceTree = "<group>"; };
+		DF1BE2621C9F2EA300F934EE /* PostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostTableViewCell.xib; path = View/PostTableViewCell.xib; sourceTree = "<group>"; };
 		DF1BE2681C9F9C7500F934EE /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Model/Post.swift; sourceTree = "<group>"; };
 		DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCollectionCell.swift; path = View/ProfileCollectionCell.swift; sourceTree = "<group>"; };
 		DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategoryTableViewController.swift; path = Controller/PostCategoryTableViewController.swift; sourceTree = "<group>"; };
@@ -1974,8 +1974,8 @@
 				DF8D51901C9716F5004D808E /* ProfessionSectionHeader.swift */,
 				DF3629561C9B305100D87574 /* ContactTableViewCell.xib */,
 				DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */,
-				DF1BE2621C9F2EA300F934EE /* MessageTableViewCell.xib */,
-				DF1BE2611C9F2EA300F934EE /* MessageTableViewCell.swift */,
+				DF1BE2621C9F2EA300F934EE /* PostTableViewCell.xib */,
+				DF1BE2611C9F2EA300F934EE /* PostTableViewCell.swift */,
 				DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */,
 				DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */,
 				DF5EF1641D3330F500C9B2F2 /* PostContentCell.xib */,
@@ -2109,7 +2109,7 @@
 				B1ECD6FD1CCC1F3F00CED9C4 /* tusiji_6.gif in Resources */,
 				B1ECD6FE1CCC1F3F00CED9C4 /* tusiji_6_cover@2x.png in Resources */,
 				B1ECD6F41CCC1F3F00CED9C4 /* tusiji_1_cover@2x.png in Resources */,
-				DF1BE2641C9F2EA300F934EE /* MessageTableViewCell.xib in Resources */,
+				DF1BE2641C9F2EA300F934EE /* PostTableViewCell.xib in Resources */,
 				B1ECD7311CCC1F3F00CED9C4 /* SenderVoiceNodePlaying000@2x.png in Resources */,
 				DF5EF1661D3330F500C9B2F2 /* PostContentCell.xib in Resources */,
 				B1ECD71E1CCC1F3F00CED9C4 /* receive.caf in Resources */,
@@ -2503,7 +2503,7 @@
 				DF8D51911C9716F5004D808E /* ProfessionSectionHeader.swift in Sources */,
 				B1ECD7631CCC1F4000CED9C4 /* XHBaseNavigationController.m in Sources */,
 				DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */,
-				DF1BE2631C9F2EA300F934EE /* MessageTableViewCell.swift in Sources */,
+				DF1BE2631C9F2EA300F934EE /* PostTableViewCell.swift in Sources */,
 				B1ECD7981CCC1F4000CED9C4 /* XHMessageBubbleView.m in Sources */,
 				B1ECD7681CCC1F4000CED9C4 /* XHDisplayLocationViewController.m in Sources */,
 				B1ECD7771CCC1F4000CED9C4 /* XHContact.m in Sources */,

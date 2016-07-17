@@ -12,6 +12,7 @@ class UserBannerView: UIView {
 
     lazy var avatarImageView: AvatarImageView = AvatarImageView()
     lazy var detailLabel = UILabel()
+    lazy var placeHolder = UIView()
     private lazy var stackView = UIStackView()
     
     var userObjectId: String?
@@ -31,14 +32,13 @@ class UserBannerView: UIView {
     private func setProperty() {
         // Add Margin
         self.stackView.frame = self.bounds
-        self.stackView.layoutMargins = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
-        self.stackView.layoutMarginsRelativeArrangement = true
         
         // Add subviews
         self.addSubview(self.stackView)
         self.stackView.addArrangedSubview(self.avatarImageView)
         self.stackView.addArrangedSubview(self.detailLabel)
-        self.stackView.spacing = 5
+        self.stackView.addArrangedSubview(self.placeHolder)
+        self.stackView.spacing = 8
         NSLayoutConstraint(item: self.avatarImageView,
                       attribute: .Height,
                       relatedBy: .Equal,
@@ -56,5 +56,17 @@ class UserBannerView: UIView {
     func reset() {
         self.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
         self.detailLabel.text = nil
+    }
+    
+    // Override hitTest function to disable user interaction with the placeHolder
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, withEvent: event)
+        
+        if hitView == self.placeHolder {
+            return nil
+        }
+        else {
+            return self
+        }
     }
 }

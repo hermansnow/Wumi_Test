@@ -23,7 +23,7 @@ class ProfileCollectionCell: UICollectionViewCell {
             case .Original:
                 self.cellLabel.backgroundColor = Constants.General.Color.TitleColor
                 self.backgroundColor = Constants.General.Color.TitleColor
-                self.cellLabel.textColor = Constants.General.Color.InputTextColor
+                self.cellLabel.textColor = Constants.General.Color.TextColor
             case .Selected:
                 self.cellLabel.backgroundColor = Constants.General.Color.ThemeColor
                 self.backgroundColor = Constants.General.Color.ThemeColor

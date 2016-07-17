@@ -16,7 +16,7 @@ class ProfessionSectionHeader: UICollectionReusableView {
         super.awakeFromNib()
         
         self.titleLabel.font = Constants.General.Font.DetailFont
-        self.titleLabel.textColor = Constants.General.Color.InputTextColor
+        self.titleLabel.textColor = Constants.General.Color.TextColor
     }
     
 }

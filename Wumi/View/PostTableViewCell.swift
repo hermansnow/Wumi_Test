@@ -1,5 +1,5 @@
 //
-//  MessageTableViewCell.swift
+//  PostTableViewCell.swift
 //  Wumi
 //
 //  Created by Zhe Cheng on 3/20/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MessageTableViewCell: UITableViewCell {
+class PostTableViewCell: UITableViewCell {
 
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet weak var authorView: UserBannerView!
@@ -21,6 +21,7 @@ class MessageTableViewCell: UITableViewCell {
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet private weak var replyLabel: UILabel!
     @IBOutlet weak var repliesButton: UIButton!
+    @IBOutlet weak var separator: UIView!
     
     var showSummary: Bool {
         get {
@@ -45,7 +46,19 @@ class MessageTableViewCell: UITableViewCell {
             return NSMutableAttributedString(attributedString: attributedTitle)
         }
         set {
-            self.titleLabel.attributedText = newValue
+            if let attributeContent = newValue {
+                attributeContent.addAttribute(NSForegroundColorAttributeName,
+                                              value: Constants.General.Color.TextColor,
+                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                attributeContent.addAttribute(NSFontAttributeName,
+                                              value: Constants.Post.Font.ListTitle!,
+                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                self.highlightString(attributeContent)
+                self.titleLabel.attributedText = attributeContent
+            }
+            else {
+                self.titleLabel.attributedText = newValue
+            }
         }
     }
     
@@ -56,9 +69,23 @@ class MessageTableViewCell: UITableViewCell {
             return NSMutableAttributedString(attributedString: attributedContent)
         }
         set {
-            self.contentTextView.attributedText = newValue
+            if let attributeContent = newValue {
+                attributeContent.addAttribute(NSForegroundColorAttributeName,
+                                              value: Constants.General.Color.TextColor,
+                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                attributeContent.addAttribute(NSFontAttributeName,
+                                              value: Constants.Post.Font.ListContent!,
+                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                self.highlightString(attributeContent)
+                self.contentTextView.attributedText = attributeContent
+            }
+            else {
+                self.contentTextView.attributedText = newValue
+            }
         }
     }
+    
+    var highlightedString: String?
     
     var previewImage: UIImage? {
         get {
@@ -81,16 +108,6 @@ class MessageTableViewCell: UITableViewCell {
         }
     }
     
-    var highlightString: String? {
-        didSet {
-            // Check title
-            self.highlightString(&self.title)
-            
-            // Check content
-            self.highlightString(&self.content)
-        }
-    }
-    
     var hideImageView = true {
         didSet {
             self.imagePreview.hidden = self.hideImageView
@@ -110,48 +127,52 @@ class MessageTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.selectionStyle = .None
+        
         // Set up title label
-        self.titleLabel.font = UIFont(name: ".SFUIText-Bold", size: 16)
+        self.titleLabel.font = Constants.Post.Font.ListTitle
+        self.titleLabel.textColor = Constants.General.Color.TextColor
         
         // Set up user banner
-        self.authorView.detailLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
-        self.authorView.detailLabel.textColor = UIColor.lightGrayColor()
-        self.authorView.backgroundColor = Constants.General.Color.BackgroundColor
+        self.authorView.detailLabel.font = Constants.Post.Font.ListUserBanner
+        self.authorView.detailLabel.textColor = Constants.Post.Color.ListUserBanner
         
         // Set up content text view
         self.showSummary = true
-        self.contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 14)
         self.contentTextView.scrollEnabled = false
-        self.contentTextView.editable = false
-        self.contentTextView.selectable = true
         self.contentTextView.dataDetectorTypes = .All
         
         // Set up image view
         self.imagePreview.contentMode = .ScaleAspectFit
         
         // Set up timestamp
-        self.timeStampLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
-        self.timeStampLabel.textColor = UIColor.lightGrayColor()
+        self.timeStampLabel.font = Constants.Post.Font.ListTimeStamp
+        self.timeStampLabel.textColor = Constants.Post.Color.ListTimeStamp
         
         // Set up buttons
-        self.saveLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
+        self.saveLabel.font = Constants.Post.Font.ListButton
         self.saveLabel.textColor = Constants.General.Color.ThemeColor
-        self.replyLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
+        self.replyLabel.font = Constants.Post.Font.ListButton
         self.replyLabel.textColor = Constants.General.Color.ThemeColor
-        self.repliesButton.titleLabel?.font = UIFont(name: ".SFUIText-Medium", size: 14)!
+        self.repliesButton.titleLabel?.font = Constants.Post.Font.ListReply
         self.repliesButton.titleLabel?.textColor = Constants.General.Color.ThemeColor
+        
+        // Set up separator
+        self.separator.backgroundColor = Constants.General.Color.BackgroundColor
     }
     
     func reset() {
         self.title = nil
         self.content = nil
+        self.highlightedString = nil
+        self.imagePreview.image = nil
         self.timeStamp = nil
         self.authorView.reset()
         self.hideImageView = true
     }
     
-    func highlightString(inout attributeString: NSMutableAttributedString?) {
-        guard let keywords = self.highlightString where keywords.characters.count > 0, let attribute = attributeString else { return }
+    func highlightString(attributeString: NSMutableAttributedString?) {
+        guard let keywords = self.highlightedString where keywords.characters.count > 0, let attribute = attributeString else { return }
         
         do {
             let regex = try NSRegularExpression(pattern: keywords, options: .CaseInsensitive)

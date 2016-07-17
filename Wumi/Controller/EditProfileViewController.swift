@@ -70,9 +70,9 @@ class EditProfileViewController: UIViewController {
         
         
         // Set color
-        self.nameLabel.textColor = Constants.General.Color.InputTextColor
-        self.graduationYearLabel.textColor = Constants.General.Color.InputTextColor
-        self.locationLabel.textColor = Constants.General.Color.InputTextColor
+        self.nameLabel.textColor = Constants.General.Color.TextColor
+        self.graduationYearLabel.textColor = Constants.General.Color.TextColor
+        self.locationLabel.textColor = Constants.General.Color.TextColor
         
         // Add delegates
         self.tableView.dataSource = self

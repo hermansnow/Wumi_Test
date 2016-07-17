@@ -14,9 +14,9 @@ struct Constants {
         struct Color {
             static let TintColor = UIColor.whiteColor()
             static let TitleColor = UIColor.whiteColor()
-            static let BackgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
-            static let ThemeColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
-            static let InputTextColor = UIColor(red: 51/255, green: 52/255, blue: 53/255, alpha: 1.0)
+            static let BackgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1.0)
+            static let ThemeColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1.0)
+            static let TextColor = UIColor(red: 51/255, green: 52/255, blue: 53/255, alpha: 1.0)
             static let BorderColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
             static let ErrorColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
             static let LightBackgroundColor = UIColor(red: 240/255, green: 241/255, blue: 242/255, alpha: 1.0)
@@ -115,6 +115,20 @@ struct Constants {
             static let TabBarSelectedIcon = UIImage(named: "Home")
             static let Star = UIImage(named: "Star")
             static let Reply = UIImage(named: "Reply")
+        }
+        
+        struct Font {
+            static let ListTitle = UIFont(name: ".SFUIText-Regular", size: 16)
+            static let ListUserBanner = UIFont(name: ".SFUIText-Regular", size: 14)
+            static let ListContent = UIFont(name: ".SFUIText-Light", size: 16)
+            static let ListTimeStamp = UIFont(name: ".SFUIText-Regular", size: 14)
+            static let ListButton = UIFont(name: ".SFUIText-Medium", size: 14)
+            static let ListReply = UIFont(name: ".SFUIText-Regular", size: 14)
+        }
+        
+        struct  Color {
+            static let ListUserBanner = UIColor(red: 164/255, green: 164/255, blue: 164/255, alpha: 1.0)
+            static let ListTimeStamp = UIColor(red: 164/255, green: 164/255, blue: 164/255, alpha: 1.0)
         }
         
         struct Size {

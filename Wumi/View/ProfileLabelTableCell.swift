@@ -35,7 +35,7 @@ class ProfileLabelTableCell: ProfileTableCell {
         self.titleLabel.textColor = Constants.General.Color.ProfileTitleColor
         self.titleLabel.font = Constants.General.Font.ProfileTitleFont
         
-        self.detailLabel.textColor = Constants.General.Color.InputTextColor
+        self.detailLabel.textColor = Constants.General.Color.TextColor
         self.detailLabel.font = Constants.General.Font.ProfileTextFont
         
         self.actionButtonStack.translatesAutoresizingMaskIntoConstraints = false

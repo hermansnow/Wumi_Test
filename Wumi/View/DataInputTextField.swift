@@ -92,7 +92,7 @@ class DataInputTextField: UIView {
     func setProperty() {
         // Set up textfield
         self.inputTextField.font = Constants.General.Font.InputFont
-        self.inputTextField.textColor = Constants.General.Color.InputTextColor
+        self.inputTextField.textColor = Constants.General.Color.TextColor
         self.inputTextField.clearsOnBeginEditing = false
         self.inputTextField.clearButtonMode = .Never
         self.inputTextField.autocapitalizationType = .None

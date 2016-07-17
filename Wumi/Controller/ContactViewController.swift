@@ -75,9 +75,9 @@ class ContactViewController: UIViewController {
         
         
         // Set color
-        self.nameLabel.textColor = Constants.General.Color.InputTextColor
-        self.graduationYearLabel.textColor = Constants.General.Color.InputTextColor
-        self.locationLabel.textColor = Constants.General.Color.InputTextColor
+        self.nameLabel.textColor = Constants.General.Color.TextColor
+        self.graduationYearLabel.textColor = Constants.General.Color.TextColor
+        self.locationLabel.textColor = Constants.General.Color.TextColor
         self.favoriteLabel.textColor = Constants.General.Color.ThemeColor
         
         // Hide favorite section if open my contact

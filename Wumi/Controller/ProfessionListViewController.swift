@@ -34,7 +34,7 @@ class ProfessionListViewController: UIViewController {
         let details = "you can select up to 3 related professions"
         let description = NSMutableAttributedString(string: "\(title) (\(details))")
         description.addAttributes(
-            [NSForegroundColorAttributeName: Constants.General.Color.InputTextColor,
+            [NSForegroundColorAttributeName: Constants.General.Color.TextColor,
                 NSFontAttributeName: Constants.General.Font.DetailFont!],
             range: NSRange(location: 0, length: title.characters.count))
         description.addAttributes(
