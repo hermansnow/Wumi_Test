@@ -23,9 +23,9 @@ extension NSDate {
         
         // Initialize date formatter
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd hh:mm"
+        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm"
         let timeFormatter = NSDateFormatter()
-        timeFormatter.dateFormat = "hh:mm"
+        timeFormatter.dateFormat = "HH:mm"
         
         // Return time ago string
         if (components.day >= 1) {
