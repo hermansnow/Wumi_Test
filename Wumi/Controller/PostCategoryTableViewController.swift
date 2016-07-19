@@ -22,7 +22,8 @@ class PostCategoryTableViewController: UITableViewController {
         
         // Initialize navigation bar
         self.sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: #selector(sendPost(_:)))
-                 
+        self.navigationItem.rightBarButtonItem = self.sendButton
+        
         // Load categories
         self.loadPostCategories()
     }
