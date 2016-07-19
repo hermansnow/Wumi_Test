@@ -66,7 +66,7 @@ class UserBannerView: UIView {
             return nil
         }
         else {
-            return self
+            return hitView
         }
     }
 }
