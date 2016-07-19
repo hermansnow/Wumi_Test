@@ -127,11 +127,7 @@ class HomeViewController: UIViewController {
         
         // load current user data
         let user = self.currentUser
-        self.nameLabel.text = user.name
-        let graduationText = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
-        if let nameText = self.nameLabel.text where graduationText.characters.count > 0 {
-                self.nameLabel.text = nameText + "(" + graduationText + ")"
-        }
+        self.nameLabel.text = user.nameDescription
         self.locationLabel.text = user.location.description
         
         // Load avatar
@@ -309,7 +305,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        cell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
+        cell.timeStamp = post.updatedAt.timeAgo()
         cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
         // Fetch author information
@@ -317,11 +313,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
                 guard let user = result as? User where error == nil else { return }
                 
-                var graduationText = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
-                if graduationText.characters.count > 0 {
-                    graduationText = "(" + graduationText + ")"
-                }
-                cell.authorView.detailLabel.text = (user.name ?? "") + graduationText + (user.location.description.characters.count > 0 ? ", " + user.location.description : "")
+                cell.authorView.detailLabel.text = user.nameDescription + (user.location.description.characters.count > 0 ? ", " + user.location.description : "")
                 cell.authorView.userObjectId = user.objectId
                 
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in

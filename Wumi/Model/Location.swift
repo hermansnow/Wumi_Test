@@ -24,6 +24,6 @@ struct Location: CustomStringConvertible {
     }
     
     static func show(Country country: String?, State state: String?, City city: String?) -> String {
-        return [country, state, city].flatMap{ $0 }.joinWithSeparator(", ")
+        return [city, state, country].flatMap{ $0 }.joinWithSeparator(", ")
     }
 }

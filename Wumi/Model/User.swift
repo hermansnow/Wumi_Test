@@ -47,7 +47,10 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
             self.state = newValue.state
             self.city = newValue.city
         }
-        
+    }
+    
+    var nameDescription: String {
+        return (self.name ?? "") + (self.graduationYear > 0 ? "(" + String(format: "%02d", self.graduationYear % 100) + ")" : "")
     }
     
     // MARK: Initializer
@@ -178,6 +181,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     }
     
     // MARK: User queries
+    
     func loadUsers(limit limit: Int = 200, type: UserSearchType = .All, searchString: String = "", sinceUser: User? = nil, block: AVArrayResultBlock!) {
         guard var query = User.getQueryFromSearchType(type, forUser: self) else {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
@@ -248,6 +252,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         }
     }
     
+    // Fetch if needed. This function will fetch user data from memory first, then from network if it is null
     override func fetchIfNeededInBackgroundWithBlock(block: AVObjectResultBlock!) {
         if self.isDataAvailable() {
             block(self, nil)
@@ -264,7 +269,8 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         // Try fetch data from
         User.fetchUserInBackground(objectId: self.objectId, block: block)
     }
-
+    
+    // Cache a user data into local memory
     class func cacheUserData(user: User) {
         //BackupUser.saveUser(user)
         
