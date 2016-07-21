@@ -310,12 +310,16 @@ class PostViewController: UITableViewController {
             self.loadComments()
         }
         
-        // send push notification to users that saved this post
-        for user in post.favoriteUsers
-        {
-            if(!(user == self.currentUser))
+        // send push notification to users that saved this post 
+        post.loadFavoriteUsers { (results, error) in
+            guard let users = results as? [User] where error == nil else { return }
+            
+            for user in users
             {
-                PushNotification(fromUser: self.currentUser, toUser: user, post: post, isPostAuthor: false).sendPushForPost(self)
+                if(!(user == self.currentUser))
+                {
+                    PushNotification(fromUser: self.currentUser, toUser: user, post: post, isPostAuthor: false).sendPushForPost(self)
+                }
             }
         }
         
@@ -480,25 +484,23 @@ extension PostViewController: KIImagePagerDelegate {
 extension PostViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
         guard let post = self.post else { return }
+        
         self.currentUser.savePost(post) { (result, error) -> Void in
             guard result && error == nil else { return }
             
             self.isSaved = true
             favoriteButton.selected = self.isSaved
-            post.favoriteUsers.appendUniqueObject(self.currentUser)
-            post.saveInBackground()
         }
     }
     
     func removeFavorite(favoriteButton: FavoriteButton) {
         guard let post = self.post else { return }
+        
         self.currentUser.unsavePost(post) { (result, error) -> Void in
             guard result && error == nil else { return }
             
             self.isSaved = false
             favoriteButton.selected = self.isSaved
-            post.favoriteUsers.removeObject(self.currentUser)
-            post.saveInBackground()
         }
     }
 }

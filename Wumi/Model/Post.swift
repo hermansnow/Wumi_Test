@@ -18,7 +18,6 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var htmlContent: String?
     @NSManaged var commentCount: Int
     @NSManaged var categories: [PostCategory]
-    @NSManaged var favoriteUsers: [User]
     @NSManaged var mediaAttachments: [AVFile]
     @NSManaged var mediaThumbnails: [AVFile]
     
@@ -295,6 +294,17 @@ class Post: AVObject, AVSubclassing {
         catch {
             print("Failed to decode the html content")
         }
+    }
+    
+    // Load all users who saved this post
+    func loadFavoriteUsers(block: AVArrayResultBlock!) {
+        let query = User.query()
+        query.whereKey("savedPosts", equalTo:self)
+        
+        query.cachePolicy = .NetworkElseCache
+        query.maxCacheAge = 3600 * 24 * 30
+        
+        query.findObjectsInBackgroundWithBlock(block)
     }
     
     // Get associated AVQuery object based on search type

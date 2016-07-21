@@ -381,7 +381,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         // Set up buttons
-        cell.saveButton.selected = self.currentUser.savedPostsArray.contains( { $0 == post} )
+        cell.isSaved = self.currentUser.savedPostsArray.contains( { $0 == post} )
         cell.saveButton.delegate = self
         
         return cell
@@ -482,28 +482,26 @@ extension HomeViewController: FavoriteButtonDelegate {
     func addFavorite(favoriteButton: FavoriteButton) {
         let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.postTableView)
         guard let indexPath = self.postTableView.indexPathForRowAtPoint(buttonPosition),
+            cell = self.postTableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell,
             post = self.displayPosts[safe: indexPath.row] else { return }
         
-        self.currentUser.savePost(post) { (result, error) -> Void in
+        self.currentUser.savePost(post) { (result, error) in
             guard result && error == nil else { return }
             
-            favoriteButton.selected = true
-            post.favoriteUsers.appendUniqueObject(self.currentUser)
-            post.saveInBackground()
+            cell.isSaved = true
         }
     }
     
     func removeFavorite(favoriteButton: FavoriteButton) {
         let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.postTableView)
         guard let indexPath = self.postTableView.indexPathForRowAtPoint(buttonPosition),
+            cell = self.postTableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell,
             post = self.displayPosts[safe: indexPath.row] else { return }
         
-        self.currentUser.unsavePost(post) { (result, error) -> Void in
+        self.currentUser.unsavePost(post) { (result, error) in
             guard result && error == nil else { return }
             
-            favoriteButton.selected = false
-            post.favoriteUsers.removeObject(self.currentUser)
-            post.saveInBackground()
+            cell.isSaved = false
             
             // Remove cell if we are on the Saved Search Type which should only show saved posts
             if self.searchType == .Saved {

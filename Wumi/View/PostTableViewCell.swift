@@ -114,6 +114,18 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
+    var isSaved = false {
+        didSet {
+            self.saveButton.selected = self.isSaved
+            if self.isSaved {
+                self.saveLabel.text = "Saved"
+            }
+            else {
+                self.saveLabel.text = "Save"
+            }
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -169,6 +181,7 @@ class PostTableViewCell: UITableViewCell {
         self.timeStamp = nil
         self.authorView.reset()
         self.hideImageView = true
+        self.isSaved = false
     }
     
     func highlightString(attributeString: NSMutableAttributedString?) {
