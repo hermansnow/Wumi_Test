@@ -94,6 +94,9 @@ class HomeViewController: UIViewController {
         // Add Dropdown list
         self.addDropdownList()
         
+        // Add current user banner
+        self.addCurrentUserBanner()
+        
         // Add action for hamburgerMenuButton
         if let revealViewController = self.revealViewController() {
             revealViewController.rearViewRevealOverdraw = 0
@@ -104,8 +107,11 @@ class HomeViewController: UIViewController {
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
         
-        // Load current user banner
-        self.addCurrentUserBanner()
+        // Add Notification observer
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(HomeViewController.checkNewPosts),
+                                                         name: UIApplicationDidBecomeActiveNotification,
+                                                         object: nil)
         
         // Load posts
         self.currentUser.loadSavedPosts { (results, error) -> Void in
@@ -115,6 +121,12 @@ class HomeViewController: UIViewController {
             self.postTableView.reloadData()
         }
         self.loadPosts()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.checkNewPosts()
     }
     
     private func addCurrentUserBanner() {
@@ -226,19 +238,44 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: Help function
+    func checkNewPosts() {
+        guard let navigationController = self.navigationController else { return }
+        
+        if let firstPost = self.displayPosts.first {
+            Post.countNewPosts(self.searchType, cutoffTime: firstPost.updatedAt, user: self.currentUser, block: { (count, error) in
+                guard count > 0 && error == nil else {
+                    navigationController.tabBarItem.badgeValue = nil
+                    return
+                }
+                
+                if count <= 99 {
+                    navigationController.tabBarItem.badgeValue = "\(count)"
+                }
+                else {
+                    navigationController.tabBarItem.badgeValue = ""
+                }
+            })
+        }
+    }
+    
     func loadPosts() {
         Post.loadPosts(limit: Constants.Query.LoadPostLimit,
                        type: self.searchType,
                        searchString: self.searchString,
                        user: self.currentUser) { (results, error) -> Void in
                         self.refreshControl.endRefreshing()
-                        
+                    
                         guard let posts = results as? [Post] where error == nil else { return }
-                        
+                    
                         self.displayPosts = posts
                         self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
-                        
+                    
                         self.postTableView.reloadData()
+                        
+                        // Reset new post badge since we just loaded latest posts
+                        if let navigationController = self.navigationController where self.searchString.characters.count == 0 {
+                            navigationController.tabBarItem.badgeValue = nil
+                        }
         }
     }
     
@@ -251,12 +288,12 @@ class HomeViewController: UIViewController {
                        searchString: self.searchString,
                        user: self.currentUser) { (results, error) -> Void in
                         self.refreshControl.endRefreshing()
-                        
+                    
                         guard let posts = results as? [Post] where error == nil && posts.count > 0 else { return }
-                        
+                    
                         self.displayPosts.appendContentsOf(posts)
                         self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
-                        
+                    
                         self.postTableView.reloadData()
         }
     }

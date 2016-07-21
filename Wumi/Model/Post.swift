@@ -49,6 +49,24 @@ class Post: AVObject, AVSubclassing {
     }
     
     // MARK: Queries
+    class func countNewPosts(type: PostSearchType = .All, cutoffTime: NSDate? = nil, user: User? = nil, block: AVIntegerResultBlock!) {
+        guard let query = Post.getQueryFromSearchType(type, forUser: user) else {
+            block(0, NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
+            return
+        }
+        
+        let index = "updatedAt" // Sort based on last update time
+        
+        // Load posts earlier than a cut-off timestamp
+        if let cutoffTime = cutoffTime {
+            query.whereKey(index, greaterThan: cutoffTime)
+        }
+        
+        query.orderByDescending(index)
+        query.cachePolicy = .NetworkOnly
+        
+        query.countObjectsInBackgroundWithBlock(block)
+    }
     
     // Search post based on several filters
     class func loadPosts(limit limit: Int = 10, type: PostSearchType = .All, cutoffTime: NSDate? = nil, searchString: String = "", user: User? = nil, block: AVArrayResultBlock!) {
