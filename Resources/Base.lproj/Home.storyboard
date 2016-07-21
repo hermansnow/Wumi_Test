@@ -8,7 +8,7 @@
         <!--Navigation Controller-->
         <scene sceneID="gGc-wi-A6x">
             <objects>
-                <navigationController storyboardIdentifier="Post Table Navigation Controller" id="Py7-AX-DnR" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Home Navigation Controller" id="Py7-AX-DnR" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" id="LQe-Gy-Lyl"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>

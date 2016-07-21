@@ -71,9 +71,11 @@ class HomeViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = [self.composePostButton, self.searchButton]
         
         // Initialize tab bar
-        self.navigationController!.tabBarItem = UITabBarItem(title: "Home",
-                                                             image: Constants.Post.Image.TabBarIcon?.imageWithRenderingMode(.AlwaysOriginal),
-                                                             selectedImage: Constants.Post.Image.TabBarSelectedIcon?.imageWithRenderingMode(.AlwaysOriginal))
+        if let navigationController = self.navigationController {
+            navigationController.tabBarItem = UITabBarItem(title: "Home",
+                                                           image: Constants.Post.Image.TabBarIcon?.imageWithRenderingMode(.AlwaysOriginal),
+                                                           selectedImage: Constants.Post.Image.TabBarSelectedIcon?.imageWithRenderingMode(.AlwaysOriginal))
+        }
         
         // Initialize tableview
         self.postTableView.delegate = self
@@ -112,6 +114,10 @@ class HomeViewController: UIViewController {
                                                          selector: #selector(HomeViewController.checkNewPosts),
                                                          name: UIApplicationDidBecomeActiveNotification,
                                                          object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(HomeViewController.homeTabClicked(_:)),
+                                                         name: Constants.General.TabBarItemDidClickSelf,
+                                                         object: nil)
         
         // Load posts
         self.currentUser.loadSavedPosts { (results, error) -> Void in
@@ -121,6 +127,11 @@ class HomeViewController: UIViewController {
             self.postTableView.reloadData()
         }
         self.loadPosts()
+    }
+    
+    deinit {
+        // Remove notification observer
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -218,6 +229,7 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: Action
+    
     func editCurrentUserProfile(recognizer: UITapGestureRecognizer) {
         self.performSegueWithIdentifier("Edit Profile", sender: recognizer.view)
     }
@@ -237,7 +249,13 @@ class HomeViewController: UIViewController {
         self.performSegueWithIdentifier("Compose Post", sender: self)
     }
     
+    func homeTabClicked(sender: AnyObject) {
+        self.postTableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl.frame.size.height), animated:true)
+        self.loadPosts()
+    }
+    
     // MARK: Help function
+    
     func checkNewPosts() {
         guard let navigationController = self.navigationController else { return }
         
