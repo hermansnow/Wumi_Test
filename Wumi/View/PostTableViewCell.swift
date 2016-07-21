@@ -18,7 +18,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet private weak var timeStampLabel: UILabel!
     @IBOutlet weak var saveButton: FavoriteButton!
     @IBOutlet private weak var saveLabel: UILabel!
-    @IBOutlet weak var replyButton: UIButton!
+    @IBOutlet weak var replyButton: ReplyButton!
     @IBOutlet private weak var replyLabel: UILabel!
     @IBOutlet weak var repliesButton: UIButton!
     @IBOutlet weak var separator: UIView!

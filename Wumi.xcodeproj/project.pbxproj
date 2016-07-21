@@ -314,6 +314,7 @@
 		DF0180731D3DF75100935A60 /* Extension+UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180721D3DF75100935A60 /* Extension+UITextField.swift */; };
 		DF0180751D3DF77F00935A60 /* Extension+NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180741D3DF77F00935A60 /* Extension+NSObject.swift */; };
 		DF0180781D3DF91E00935A60 /* Extension+NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180771D3DF91E00935A60 /* Extension+NSDate.swift */; };
+		DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180791D413C5E00935A60 /* ReplyButton.swift */; };
 		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
 		DF16E03F1D1D02DC00F4C4FC /* ImagePageItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */; };
 		DF16E0451D25B84700F4C4FC /* ImageFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */; };
@@ -836,6 +837,7 @@
 		DF0180741D3DF77F00935A60 /* Extension+NSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+NSObject.swift"; path = "Supporting Files/Extensions/Extension+NSObject.swift"; sourceTree = "<group>"; };
 		DF0180761D3DF81100935A60 /* Wumi-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Wumi-Bridging-Header.h"; sourceTree = "<group>"; };
 		DF0180771D3DF91E00935A60 /* Extension+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+NSDate.swift"; path = "Supporting Files/Extensions/Extension+NSDate.swift"; sourceTree = "<group>"; };
+		DF0180791D413C5E00935A60 /* ReplyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyButton.swift; path = View/ReplyButton.swift; sourceTree = "<group>"; };
 		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePageItemViewController.swift; path = Controller/ImagePageItemViewController.swift; sourceTree = "<group>"; };
 		DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenViewController.swift; path = Controller/ImageFullScreenViewController.swift; sourceTree = "<group>"; };
@@ -1911,6 +1913,7 @@
 			isa = PBXGroup;
 			children = (
 				DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */,
+				DF0180791D413C5E00935A60 /* ReplyButton.swift */,
 				DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */,
 				DF4F53311CD59444009F3D2E /* PhoneButton.swift */,
 				DFF712BA1CD6D57F00EAEFD2 /* PhotoButton.swift */,
@@ -2430,6 +2433,7 @@
 				B1ECD7641CCC1F4000CED9C4 /* XHBaseTableViewController.m in Sources */,
 				B1ECD78D1CCC1F4000CED9C4 /* SETextSelectionView.m in Sources */,
 				B1ECD6A81CCC1F3F00CED9C4 /* CDMessageHelper.m in Sources */,
+				DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,

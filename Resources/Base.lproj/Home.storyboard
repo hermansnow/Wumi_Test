@@ -224,9 +224,9 @@
                         <outlet property="nameLabel" destination="OHA-1L-b3B" id="LuV-fj-j71"/>
                         <outlet property="postTableView" destination="c9w-Xt-26t" id="HT0-nS-P57"/>
                         <segue destination="BzL-Uo-bPH" kind="show" identifier="Compose Post" id="yq1-h7-uLC"/>
-                        <segue destination="4sw-Op-bCx" kind="show" identifier="Show Post" id="VF8-6z-roV"/>
                         <segue destination="AWh-E2-ChP" kind="show" identifier="Show Contact" id="WbD-ao-OOU"/>
                         <segue destination="mSl-Wh-8LE" kind="show" identifier="Edit Profile" id="HJk-D9-p7A"/>
+                        <segue destination="4sw-Op-bCx" kind="show" identifier="Show Post" id="ByM-cW-MkH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eN2-Id-XlL" userLabel="First Responder" sceneMemberID="firstResponder"/>

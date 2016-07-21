@@ -31,6 +31,7 @@ class PostViewController: UITableViewController {
     lazy var comments = [Comment]()
     
     var isSaved: Bool = false
+    var launchReply: Bool = false
     
     // MARK: Lifecycle methods
     
@@ -86,6 +87,15 @@ class PostViewController: UITableViewController {
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Launch reply if needed
+        if self.launchReply {
+            self.replyPost(self)
+        }
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {

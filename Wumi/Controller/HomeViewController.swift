@@ -204,11 +204,24 @@ class HomeViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let postVC = segue.destinationViewController as? PostViewController where segue.identifier == "Show Post" {
-            guard let cell = sender as? PostTableViewCell, indexPath = self.postTableView.indexPathForCell(cell), selectedPost = self.displayPosts[safe: indexPath.row] else { return }
-            
             postVC.delegate = self
-            postVC.post = selectedPost
-            self.selectedPostIndexPath = indexPath
+            postVC.hidesBottomBarWhenPushed = true
+            
+            if let cell = sender as? PostTableViewCell,
+                indexPath = self.postTableView.indexPathForCell(cell),
+                selectedPost = self.displayPosts[safe: indexPath.row] {
+                    postVC.post = selectedPost
+                    self.selectedPostIndexPath = indexPath
+            }
+            if let button = sender as? ReplyButton {
+                let buttonPosition = button.convertPoint(CGPointZero, toView: self.postTableView)
+                if let indexPath = self.postTableView.indexPathForRowAtPoint(buttonPosition),
+                    selectedPost = self.displayPosts[safe: indexPath.row] {
+                        postVC.post = selectedPost
+                        self.selectedPostIndexPath = indexPath
+                        postVC.launchReply = true
+                }
+            }
         }
         
         if let profileVC = segue.destinationViewController as? EditProfileViewController where segue.identifier == "Edit Profile" {
@@ -383,14 +396,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         // Set up buttons
         cell.isSaved = self.currentUser.savedPostsArray.contains( { $0 == post} )
         cell.saveButton.delegate = self
+        cell.replyButton.delegate = self
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.hidesBottomBarWhenPushed = true
         self.performSegueWithIdentifier("Show Post", sender: tableView.cellForRowAtIndexPath(indexPath))
-        self.hidesBottomBarWhenPushed = false
     }
 }
 
@@ -509,6 +521,12 @@ extension HomeViewController: FavoriteButtonDelegate {
                 self.postTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
         }
+    }
+}
+
+extension HomeViewController: ReplyButtonDelegate {
+    func reply(replyButton: ReplyButton) {
+        self.performSegueWithIdentifier("Show Post", sender: replyButton)
     }
 }
 
