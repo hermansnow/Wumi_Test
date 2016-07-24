@@ -647,8 +647,8 @@ static CGPoint  delayOffset = {0.0};
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     // 取消输入框
     [self.messageInputView.inputTextView resignFirstResponder];
     [self setEditing:NO animated:YES];
