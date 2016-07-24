@@ -39,16 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupAVOSCloudSetting()
         
         CDChatManager.sharedManager().userDelegate = IMUserFactory()
-        if let user = User.currentUser() {
-            CDChatManager.sharedManager().openWithClientId(user.email, callback: { (result: Bool, error: NSError!) -> Void in
-                if (error == nil) {
-                    // Set initial view controller
-                    self.setupLaunchViewController()
-                }
-            })
-        } else {
-            self.setupLaunchViewController()
-        }
+
+        self.setupLaunchViewController()
         
         AVOSCloud.registerForRemoteNotification()
         
@@ -129,10 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     self.window?.rootViewController = storyboard.instantiateInitialViewController()
                 }
             })
-//            user.fetchInBackgroundWithBlock(nil)
-//            window?.rootViewController = storyboard.instantiateInitialViewController()
-        }
-        else {
+        } else {
             let loginNavigation = storyboard.instantiateViewControllerWithIdentifier("Sign In Navigation Controller")
             window?.rootViewController = loginNavigation
         }
