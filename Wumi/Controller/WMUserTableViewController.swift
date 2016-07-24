@@ -18,7 +18,7 @@ class WMUserTableViewController: UITableViewController {
     var user = User.currentUser()!
     
     var sections: [[Setting]] =
-        [[Setting(identifier: "User Profile", type: .DisplayOnly, value: nil)],
+        [[Setting(identifier: "User Profile", type: Setting.SettingType.Disclosure, value: nil)],
         [Setting(identifier:"Log Out", type: .Button, value: nil)]]
     
     var hasEnterMenu = false
@@ -35,16 +35,16 @@ class WMUserTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         // Show current user's profile
-        userDisplayName.text = user.name
-        userEmail.text = user.email
-        self.user.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
-            if imageError == nil && avatarImage != nil {
-                self.userProfileImageView.image = avatarImage
-            }
-            else {
-                print("\(imageError)")
-            }
-        }
+//        userDisplayName.text = user.name
+//        userEmail.text = user.email
+//        self.user.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
+//            if imageError == nil && avatarImage != nil {
+//                self.userProfileImageView.image = avatarImage
+//            }
+//            else {
+//                print("\(imageError)")
+//            }
+//        }
     }
 
     // MARK: tableview delegates
