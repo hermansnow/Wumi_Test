@@ -250,6 +250,11 @@ class MessageTableViewController: UITableViewController {
             } else {
                 let chatRoomVC = ChatRoomViewController(conversation: conv)
                 self.navigationController?.pushViewController(chatRoomVC, animated: true)
+                if let prevIndexPath = self.selectedUserIndexPath {
+                    let prevCheckButton = self.tableView.cellForRowAtIndexPath(prevIndexPath)!.accessoryView as! UIButton
+                    prevCheckButton.selected = false
+                    self.selectedUserIndexPath = nil
+                }
             }
         })
     }
