@@ -13,8 +13,7 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var authorView: UserBannerView!
     @IBOutlet weak var contentLabel: CommentTextLabel!
     @IBOutlet weak var timeStampLabel: UILabel!
-    
-    
+    @IBOutlet weak var separator: UIView!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -23,26 +22,27 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     func setProperty() {
-        self.layer.borderColor = Constants.General.Color.BackgroundColor.CGColor
-        self.layer.backgroundColor = Constants.General.Color.BackgroundColor.CGColor
+        self.layer.borderColor = Constants.General.Color.LightBackgroundColor.CGColor
+        self.layer.backgroundColor = Constants.General.Color.LightBackgroundColor.CGColor
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        
         // Set up user banner
-        self.authorView.detailLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
-        self.authorView.detailLabel.textColor = UIColor.lightGrayColor()
-        self.authorView.backgroundColor = Constants.General.Color.BackgroundColor
+        self.authorView.detailLabel.font = Constants.Post.Font.ListUserBanner
+        self.authorView.detailLabel.textColor = Constants.Post.Color.ListDetailText
+        self.authorView.backgroundColor = Constants.General.Color.LightBackgroundColor
         
         // Set up content label
-        self.contentLabel.font = UIFont(name: ".SFUIText-Regular", size: 14)
         self.contentLabel.numberOfLines = 0
         
         // Set up timestamp
-        self.timeStampLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
-        self.timeStampLabel.textColor = UIColor.lightGrayColor()
+        self.timeStampLabel.font = Constants.Post.Font.ListTimeStamp
+        self.timeStampLabel.textColor = Constants.Post.Color.ListDetailText
+        
+        // Set up separator
+        self.separator.backgroundColor = Constants.General.Color.BackgroundColor
     }
     
 }

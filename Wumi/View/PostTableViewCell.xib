@@ -54,6 +54,7 @@
                         <rect key="frame" x="16" y="319" width="471" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="eyU-aD-XZe"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="hNs-O4-F2c"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

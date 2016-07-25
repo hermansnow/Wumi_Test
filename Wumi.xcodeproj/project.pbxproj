@@ -315,6 +315,8 @@
 		DF0180751D3DF77F00935A60 /* Extension+NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180741D3DF77F00935A60 /* Extension+NSObject.swift */; };
 		DF0180781D3DF91E00935A60 /* Extension+NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180771D3DF91E00935A60 /* Extension+NSDate.swift */; };
 		DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180791D413C5E00935A60 /* ReplyButton.swift */; };
+		DF01807C1D459E4A00935A60 /* ReplyTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF01807B1D459E4A00935A60 /* ReplyTextView.xib */; };
+		DF01807E1D459E6100935A60 /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01807D1D459E6100935A60 /* ReplyTextView.swift */; };
 		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
 		DF16E03F1D1D02DC00F4C4FC /* ImagePageItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */; };
 		DF16E0451D25B84700F4C4FC /* ImageFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */; };
@@ -838,6 +840,8 @@
 		DF0180761D3DF81100935A60 /* Wumi-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Wumi-Bridging-Header.h"; sourceTree = "<group>"; };
 		DF0180771D3DF91E00935A60 /* Extension+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+NSDate.swift"; path = "Supporting Files/Extensions/Extension+NSDate.swift"; sourceTree = "<group>"; };
 		DF0180791D413C5E00935A60 /* ReplyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyButton.swift; path = View/ReplyButton.swift; sourceTree = "<group>"; };
+		DF01807B1D459E4A00935A60 /* ReplyTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReplyTextView.xib; path = View/ReplyTextView.xib; sourceTree = "<group>"; };
+		DF01807D1D459E6100935A60 /* ReplyTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyTextView.swift; path = View/ReplyTextView.swift; sourceTree = "<group>"; };
 		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePageItemViewController.swift; path = Controller/ImagePageItemViewController.swift; sourceTree = "<group>"; };
 		DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenViewController.swift; path = Controller/ImageFullScreenViewController.swift; sourceTree = "<group>"; };
@@ -1967,14 +1971,10 @@
 				DF4F53301CD30F8C009F3D2E /* Buttons */,
 				DFA93AC11C90DDC000ECA503 /* CustomCell */,
 				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
-				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
 				DFA077441C92A79A00E3382E /* SettingSwitch.swift */,
+				B175B2511CB872B800C95B33 /* CommentTextLabel.swift */,
+				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
 				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
-				DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */,
-				DFB612941CA2637600B3271B /* UserBannerView.swift */,
-				DFD90A141CAB87A1003A3B46 /* ComposePostView.swift */,
-				DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */,
-				DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */,
 				DFB612A01CA6158F00B3271B /* PostTextView.swift */,
 				DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */,
 			);
@@ -1984,8 +1984,15 @@
 		DF5EF15B1D2EDC0300C9B2F2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */,
+				DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */,
+				DFD90A141CAB87A1003A3B46 /* ComposePostView.swift */,
+				DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */,
+				DFB612941CA2637600B3271B /* UserBannerView.swift */,
 				DF01805D1D3DF54500935A60 /* ImageFullScreenView.xib */,
 				DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */,
+				DF01807B1D459E4A00935A60 /* ReplyTextView.xib */,
+				DF01807D1D459E6100935A60 /* ReplyTextView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2011,13 +2018,12 @@
 				DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */,
 				DF1BE2621C9F2EA300F934EE /* PostTableViewCell.xib */,
 				DF1BE2611C9F2EA300F934EE /* PostTableViewCell.swift */,
-				DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */,
-				DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */,
 				DF5EF1641D3330F500C9B2F2 /* PostContentCell.xib */,
 				DF5EF1631D3330F500C9B2F2 /* PostContentCell.swift */,
+				DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */,
+				DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */,
 				DFA93ACE1C910DD700ECA503 /* ProfileTableCell.swift */,
 				DFA93AD01C91127800ECA503 /* ProfileCollectionLabel.swift */,
-				B175B2511CB872B800C95B33 /* CommentTextLabel.swift */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -2171,6 +2177,7 @@
 				B1ECD6B61CCC1F3F00CED9C4 /* defaultSettings.plist in Resources */,
 				B1ECD6D91CCC1F3F00CED9C4 /* rabbit_4.gif in Resources */,
 				B1ECD71D1CCC1F3F00CED9C4 /* placeholderImage@2x.png in Resources */,
+				DF01807C1D459E4A00935A60 /* ReplyTextView.xib in Resources */,
 				B1ECD71F1CCC1F3F00CED9C4 /* ReceiverVoiceNodePlaying000@2x.png in Resources */,
 				B1ECD6BC1CCC1F3F00CED9C4 /* rabbit_11.gif in Resources */,
 				B1ECD7271CCC1F3F00CED9C4 /* RecordingSignal002@2x.png in Resources */,
@@ -2456,6 +2463,7 @@
 				B1ECD7B51CCC2A8200CED9C4 /* ChatListViewController.swift in Sources */,
 				B1ECD6A11CCC1F3F00CED9C4 /* CDChatRoomVC.m in Sources */,
 				DFA93AD11C91127800ECA503 /* ProfileCollectionLabel.swift in Sources */,
+				DF01807E1D459E6100935A60 /* ReplyTextView.swift in Sources */,
 				B1ECD76F1CCC1F4000CED9C4 /* XHOperationNetworkKit.m in Sources */,
 				DFC754261CBCE7C900C7E111 /* DataManager.swift in Sources */,
 				B1ECD7971CCC1F4000CED9C4 /* XHBubblePhotoImageView.m in Sources */,

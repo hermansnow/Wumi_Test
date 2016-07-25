@@ -18,7 +18,7 @@ class PostContentCell: UITableViewCell {
     @IBOutlet weak var timeStampLabel: UILabel!
     @IBOutlet weak var saveButton: FavoriteButton!
     @IBOutlet private weak var saveLabel: UILabel!
-    @IBOutlet weak var replyButton: UIButton!
+    @IBOutlet weak var replyButton: ReplyButton!
     @IBOutlet private weak var replyLabel: UILabel!
     @IBOutlet weak var repliesButton: UIButton!
     
@@ -31,7 +31,18 @@ class PostContentCell: UITableViewCell {
             return NSMutableAttributedString(attributedString: attributedTitle)
         }
         set {
-            self.titleLabel.attributedText = newValue
+            if let attributeContent = newValue {
+                attributeContent.addAttribute(NSForegroundColorAttributeName,
+                                              value: Constants.General.Color.TextColor,
+                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                attributeContent.addAttribute(NSFontAttributeName,
+                                              value: Constants.Post.Font.ListTitle!,
+                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                self.titleLabel.attributedText = attributeContent
+            }
+            else {
+                self.titleLabel.attributedText = newValue
+            }
         }
     }
     
@@ -42,7 +53,18 @@ class PostContentCell: UITableViewCell {
             return NSMutableAttributedString(attributedString: attributedContent)
         }
         set {
-            self.contentTextView.attributedText = newValue
+            if let attributeContent = newValue {
+                attributeContent.addAttribute(NSForegroundColorAttributeName,
+                                              value: Constants.General.Color.TextColor,
+                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                attributeContent.addAttribute(NSFontAttributeName,
+                                              value: Constants.Post.Font.ListContent!,
+                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                self.contentTextView.attributedText = attributeContent
+            }
+            else {
+                self.contentTextView.attributedText = newValue
+            }
         }
     }
     
@@ -58,6 +80,18 @@ class PostContentCell: UITableViewCell {
     var hideImageView = true {
         didSet {
             self.imagePager.hidden = self.hideImageView
+        }
+    }
+    
+    var isSaved = false {
+        didSet {
+            self.saveButton.selected = self.isSaved
+            if self.isSaved {
+                self.saveLabel.text = "Saved"
+            }
+            else {
+                self.saveLabel.text = "Save"
+            }
         }
     }
     
@@ -80,32 +114,29 @@ class PostContentCell: UITableViewCell {
         self.imagePager.tintColor = Constants.General.Color.ThemeColor
         
         // Set up title label
-        self.titleLabel.font = UIFont(name: ".SFUIText-Bold", size: 16)
+        self.titleLabel.font = Constants.Post.Font.ListTitle
+        self.titleLabel.textColor = Constants.General.Color.TextColor
         
         // Set up user banner
-        self.authorView.detailLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
-        self.authorView.detailLabel.textColor = UIColor.lightGrayColor()
-        self.authorView.backgroundColor = Constants.General.Color.BackgroundColor
+        self.authorView.detailLabel.font = Constants.Post.Font.ListUserBanner
+        self.authorView.detailLabel.textColor = Constants.Post.Color.ListDetailText
         
         // Set up content label
-        self.contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 14)
         self.contentTextView.scrollEnabled = false
-        self.contentTextView.editable = false
-        self.contentTextView.selectable = true
         self.contentTextView.dataDetectorTypes = .All
         self.contentTextView.textContainer.maximumNumberOfLines = 0
         self.contentTextView.selfUserInteractionEnabled = true
         
         // Set up timestamp
-        self.timeStampLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
-        self.timeStampLabel.textColor = UIColor.lightGrayColor()
+        self.timeStampLabel.font = Constants.Post.Font.ListTimeStamp
+        self.timeStampLabel.textColor = Constants.Post.Color.ListDetailText
         
         // Set up buttons
-        self.saveLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
+        self.saveLabel.font = Constants.Post.Font.ListButton
         self.saveLabel.textColor = Constants.General.Color.ThemeColor
-        self.replyLabel.font = UIFont(name: ".SFUIText-Medium", size: 14)
+        self.replyLabel.font = Constants.Post.Font.ListButton
         self.replyLabel.textColor = Constants.General.Color.ThemeColor
-        self.repliesButton.titleLabel?.font = UIFont(name: ".SFUIText-Medium", size: 14)!
+        self.repliesButton.titleLabel?.font = Constants.Post.Font.ListReply
         self.repliesButton.titleLabel?.textColor = Constants.General.Color.ThemeColor
     }
     

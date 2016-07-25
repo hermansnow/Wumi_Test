@@ -11,10 +11,7 @@ import KIImagePager
 
 class PostViewController: UITableViewController {
     
-    @IBOutlet weak var myUserBannerView: UserBannerView!
-    @IBOutlet weak var commentTextView: PostTextView!
-    @IBOutlet weak var commentView: UIView!
-    
+    var replyView: ReplyTextView!
     lazy var replyButton = UIBarButtonItem()
     lazy var cancelButton = UIBarButtonItem()
     lazy var sendButton = UIBarButtonItem()
@@ -27,7 +24,6 @@ class PostViewController: UITableViewController {
     var postCell: PostContentCell!
     var postAttributedContent: NSAttributedString?
     var replyComment: Comment? = nil
-    var updatedAtDateFormatter = NSDateFormatter()
     lazy var comments = [Comment]()
     
     var isSaved: Bool = false
@@ -55,9 +51,7 @@ class PostViewController: UITableViewController {
         // Initialize tableview
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
-        self.maskView.frame = self.view.frame
-        self.maskView.backgroundColor = UIColor(white: 0.0, alpha: 0.78)
+        self.tableView.separatorStyle = .None
         
         // Initialize navigation bar
         self.replyButton = UIBarButtonItem(title: "Reply", style: .Done, target: self, action: #selector(replyPost(_:)))
@@ -66,20 +60,11 @@ class PostViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
         self.navigationItem.rightBarButtonItem = self.replyButton
         
-        // Initialize comment subview
-        self.commentView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 160)
-        self.commentTextView.characterLimit = 300  // Limitation for lenght of comment
-        self.currentUser.loadAvatarThumbnail() { (result, error) -> Void in
-            guard error == nil else { return }
-            self.myUserBannerView.avatarImageView.image = result
-        }
-        self.myUserBannerView.detailLabel.text = self.currentUser.name
-        self.myUserBannerView.backgroundColor = Constants.General.Color.BackgroundColor
-        
-        self.updatedAtDateFormatter.dateFormat = "YYYY-MM-dd hh:mm"
-        
         // Add Refresh Control
         self.addRefreshControl()
+        
+        // Add reply view
+        self.addReplyView()
         
         // Load the post
         self.loadPost()
@@ -96,6 +81,7 @@ class PostViewController: UITableViewController {
         if self.launchReply {
             self.replyPost(self)
         }
+        self.launchReply = false
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
@@ -109,6 +95,25 @@ class PostViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(PostViewController.loadPost), forControlEvents: .ValueChanged)
         self.tableView.addSubview(refreshControl!)
+    }
+    
+    private func addReplyView() {
+        guard let view = NSBundle.mainBundle().loadNibNamed("ReplyTextView", owner: self, options: nil).first as? ReplyTextView else { return }
+        
+        view.frame = CGRect(x: 0, y: self.view.frame.height - 170, width: self.view.frame.width, height: 170)
+        self.replyView = view
+        
+        // Load current user's data
+        self.currentUser.loadAvatarThumbnail() { (result, error) -> Void in
+            guard error == nil else { return }
+            self.replyView.myAvatarView.image = result
+        }
+        
+        // Initialize mask view
+        self.maskView.frame = self.view.frame
+        self.maskView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
+        self.maskView.userInteractionEnabled = true
+        self.maskView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.cancelReply(_:))))
     }
     
     // MARK: Navigation
@@ -156,8 +161,11 @@ class PostViewController: UITableViewController {
         
         guard let post = self.post else { return postCell }
         
-        if let title = post.title {
+        if let title = post.title where title.characters.count > 0 {
             self.postCell.title = NSMutableAttributedString(string: title)
+        }
+        else {
+            self.postCell.title = NSMutableAttributedString(string: "No Title")
         }
         
         if let content = post.content {
@@ -173,7 +181,7 @@ class PostViewController: UITableViewController {
             self.postCell.hideImageView = true
         }
         
-        self.postCell.timeStamp = "Last updated at: " + self.updatedAtDateFormatter.stringFromDate(post.updatedAt)
+        self.postCell.timeStamp = post.updatedAt.timeAgo()
         self.postCell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
         self.postCell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
@@ -181,8 +189,8 @@ class PostViewController: UITableViewController {
         if let author = post.author {
             author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
                 guard let user = result as? User where error == nil else { return }
-            
-                self.postCell.authorView.detailLabel.text = user.name
+                
+                self.postCell.authorView.detailLabel.text = user.nameDescription + (user.location.description.characters.count > 0 ? ", " + user.location.description : "")
                 self.postCell.authorView.userObjectId = user.objectId
             
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
@@ -192,9 +200,9 @@ class PostViewController: UITableViewController {
             }
         }
         
-        self.isSaved = self.currentUser.savedPostsArray.contains(post)
+        self.postCell.isSaved = self.currentUser.savedPostsArray.contains(post)
         self.postCell.saveButton.delegate = self
-        self.postCell.saveButton.selected = self.isSaved
+        self.postCell.replyButton.delegate = self
         
         self.postCell.selectionStyle = .None
         
@@ -213,7 +221,7 @@ class PostViewController: UITableViewController {
             cell.contentLabel.text = comment.content
         }
         
-        cell.timeStampLabel.text = self.updatedAtDateFormatter.stringFromDate(comment.createdAt)
+        cell.timeStampLabel.text = comment.createdAt.timeAgo()
         
         cell.contentLabel.parentCell = cell
         cell.contentLabel.userInteractionEnabled = true
@@ -257,15 +265,14 @@ class PostViewController: UITableViewController {
     
     // MARK: Actions
     func replyPost(sender: AnyObject) {
-        UIApplication.sharedApplication().delegate?.window!!.addSubview(self.commentView)
-        self.commentTextView.becomeFirstResponder()
+        UIApplication.sharedApplication().delegate?.window!!.addSubview(self.replyView)
+        self.replyView.commentTextView.becomeFirstResponder()
         
         self.navigationItem.leftBarButtonItem = self.cancelButton
         self.navigationItem.rightBarButtonItem = self.sendButton
         
-        self.commentTextView.text = ""
+        self.replyView.reset()
         self.replyComment = nil
-        self.commentTextView.placeholder = ""
     }
     
     func replyComment(recognizer: UITapGestureRecognizer) {
@@ -274,43 +281,41 @@ class PostViewController: UITableViewController {
         guard let commentCell = contentLabel.parentCell, indexPath = tableView.indexPathForCell(commentCell),
             selectedComment = self.comments[safe: indexPath.row] else { return }
         
-        self.commentTextView.text = ""
+        self.replyView.reset()
         self.replyComment = selectedComment
         if let name = selectedComment.author?.name {
-            self.commentTextView.placeholder = "Reply to: \(name)"
-        } else {
-            self.commentTextView.placeholder = ""
+            self.replyView.commentTextView.placeholder = "Reply to: \(name)"
         }
         
-        UIApplication.sharedApplication().delegate?.window!!.addSubview(self.commentView)
-        self.commentTextView.becomeFirstResponder()
+        UIApplication.sharedApplication().delegate?.window!!.addSubview(self.replyView)
+        self.replyView.commentTextView.becomeFirstResponder()
         self.navigationItem.leftBarButtonItem = self.cancelButton
         self.navigationItem.rightBarButtonItem = self.sendButton
     }
     
     func cancelReply(sender: AnyObject) {
-        self.commentView.removeFromSuperview()
+        self.replyView.commentTextView.resignFirstResponder()
         
         self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
         self.navigationItem.rightBarButtonItem = self.replyButton
     }
     
     func sendReply(sender: AnyObject) {
-        guard self.commentTextView.text.characters.count > 0 else {
+        guard self.replyView.commentTextView.text.characters.count > 0 else {
             Helper.PopupErrorAlert(self, errorMessage: "Cannot send blank comment") { (action) -> Void in
-                self.commentTextView.becomeFirstResponder()
+                self.replyView.commentTextView.becomeFirstResponder()
             }
             return
         }
         
-        self.commentView.removeFromSuperview()
+        self.replyView.removeFromSuperview()
         
         self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
         self.navigationItem.rightBarButtonItem = self.replyButton
         
         guard let post = self.post else { return }
         
-        Comment.sendNewCommentForPost(post, author: self.currentUser, content: self.commentTextView.text, replyComment: replyComment) { (success, error) -> Void in
+        Comment.sendNewCommentForPost(post, author: self.currentUser, content: self.replyView.commentTextView.text, replyComment: replyComment) { (success, error) -> Void in
             guard success && error == nil else {
                 print("\(error)")
                 return
@@ -391,21 +396,19 @@ class PostViewController: UITableViewController {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
             keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() else { return }
         
-        if let commentTextView = UIResponder.currentFirstResponder() as? PostTextView where commentTextView == self.commentTextView {
+        if let commentTextView = UIResponder.currentFirstResponder() as? PostTextView where commentTextView == self.replyView.commentTextView {
             var visibleRect = UIApplication.sharedApplication().delegate?.window!!.frame
             visibleRect!.size.height -= keyboardRect.size.height
-            self.commentView.frame.origin.y = visibleRect!.size.height - self.commentView.frame.size.height
+            self.replyView.frame.origin.y = visibleRect!.size.height - self.replyView.frame.size.height
             self.view.addSubview(maskView)
-            self.tableView.userInteractionEnabled = false
         }
     }
     
     // Hide comment view when dismissing the keyboard
     func keyboardWillHiden(notification: NSNotification) {
-        if let commentTextView = UIResponder.currentFirstResponder() as? PostTextView where commentTextView == self.commentTextView {
-            self.commentView.frame.origin.y = (UIApplication.sharedApplication().delegate?.window!!.frame.height)!
+        if let commentTextView = UIResponder.currentFirstResponder() as? PostTextView where commentTextView == self.replyView.commentTextView {
+            self.replyView.frame.origin.y = (UIApplication.sharedApplication().delegate?.window!!.frame.height)!
             self.maskView.removeFromSuperview()
-            self.tableView.userInteractionEnabled = true
         }
     }
     
@@ -498,8 +501,8 @@ extension PostViewController: FavoriteButtonDelegate {
         self.currentUser.savePost(post) { (result, error) -> Void in
             guard result && error == nil else { return }
             
+            self.postCell.isSaved = true
             self.isSaved = true
-            favoriteButton.selected = self.isSaved
         }
     }
     
@@ -509,9 +512,17 @@ extension PostViewController: FavoriteButtonDelegate {
         self.currentUser.unsavePost(post) { (result, error) -> Void in
             guard result && error == nil else { return }
             
+            self.postCell.isSaved = false
             self.isSaved = false
-            favoriteButton.selected = self.isSaved
         }
+    }
+}
+
+// MARK: ReplyButtonDelegate
+
+extension PostViewController: ReplyButtonDelegate {
+    func reply(replyButton: ReplyButton) {
+        self.replyPost(self)
     }
 }
 

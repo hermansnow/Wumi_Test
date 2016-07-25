@@ -29,7 +29,6 @@ class HomeViewController: UIViewController {
     lazy var posts = [Post]()
     lazy var filteredPosts = [Post]()
     
-    var updatedAtDateFormatter = NSDateFormatter()
     var inputTimer: NSTimer?
     var searchString: String = "" // String of next search
     var lastSearchString: String? // String of last search
@@ -84,8 +83,6 @@ class HomeViewController: UIViewController {
         self.postTableView.rowHeight = UITableViewAutomaticDimension
         self.postTableView.tableFooterView = UIView(frame: CGRectZero)
         self.postTableView.separatorStyle = .None
-        
-        self.updatedAtDateFormatter.dateFormat = "YYYY-MM-dd hh:mm"
         
         // Add Search Control
         self.addSearchController()
@@ -535,6 +532,6 @@ extension HomeViewController: PostViewControllerDelegate {
         guard let indexPath = self.selectedPostIndexPath,
             cell = self.postTableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell else { return }
         
-        cell.saveButton.selected = postVC.isSaved
+        cell.isSaved = postVC.isSaved
     }
 }

@@ -29,19 +29,7 @@ class CommentTextLabel: UILabel {
     }
     
     func setProperty() {
-        
+        self.textColor = Constants.General.Color.TextColor
+        self.font = Constants.Post.Font.ListTitle
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
-    
-    /*
-     // Only override drawRect: if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func drawRect(rect: CGRect) {
-     // Drawing code
-     }
-     */
 }

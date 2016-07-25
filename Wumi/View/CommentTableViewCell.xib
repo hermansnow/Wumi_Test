@@ -13,44 +13,66 @@
                 <rect key="frame" x="0.0" y="0.0" width="435" height="222.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Vvh-LA-Iqr">
-                        <rect key="frame" x="20" y="10" width="395" height="202.5"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Vvh-LA-Iqr">
+                        <rect key="frame" x="16" y="12" width="403" height="211"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wdq-je-vGt" customClass="UserBannerView" customModule="Wumi" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="395" height="40"/>
+                                <rect key="frame" x="0.0" y="0.0" width="403" height="16"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="Xiq-kO-PAn"/>
+                                    <constraint firstAttribute="height" constant="16" id="Xiq-kO-PAn"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPE-LH-Xbw" customClass="CommentTextLabel" customModule="Wumi" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="43" width="395" height="136"/>
+                                <rect key="frame" x="0.0" y="22" width="403" height="164"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VK5-b4-fdk">
-                                <rect key="frame" x="0.0" y="182" width="395" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VK5-b4-fdk">
+                                <rect key="frame" x="0.0" y="198" width="403" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xwu-60-nDP">
+                                <rect key="frame" x="0.0" y="210" width="403" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="TV0-aJ-l81"/>
+                                </constraints>
+                            </view>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="mPE-LH-Xbw" firstAttribute="leading" secondItem="Vvh-LA-Iqr" secondAttribute="leading" id="Bb0-9p-6cx"/>
+                            <constraint firstItem="Wdq-je-vGt" firstAttribute="leading" secondItem="Vvh-LA-Iqr" secondAttribute="leading" id="DwH-3H-PZn"/>
+                            <constraint firstItem="Wdq-je-vGt" firstAttribute="top" secondItem="Vvh-LA-Iqr" secondAttribute="top" id="O9l-F1-mp7"/>
+                            <constraint firstAttribute="trailing" secondItem="Wdq-je-vGt" secondAttribute="trailing" id="S2z-ol-Z1x"/>
+                            <constraint firstItem="VK5-b4-fdk" firstAttribute="top" secondItem="mPE-LH-Xbw" secondAttribute="bottom" constant="12" id="Ufm-cx-L0F"/>
+                            <constraint firstAttribute="trailing" secondItem="mPE-LH-Xbw" secondAttribute="trailing" id="XcI-lS-ibU"/>
+                            <constraint firstAttribute="trailing" secondItem="xwu-60-nDP" secondAttribute="trailing" id="fzO-VQ-R4v"/>
+                            <constraint firstItem="xwu-60-nDP" firstAttribute="leading" secondItem="Vvh-LA-Iqr" secondAttribute="leading" id="hDn-Og-Ibi"/>
+                            <constraint firstItem="VK5-b4-fdk" firstAttribute="leading" secondItem="Vvh-LA-Iqr" secondAttribute="leading" id="oce-iu-YLu"/>
+                            <constraint firstItem="xwu-60-nDP" firstAttribute="top" secondItem="VK5-b4-fdk" secondAttribute="bottom" constant="12" id="sE1-1w-Wne"/>
+                            <constraint firstAttribute="trailing" secondItem="VK5-b4-fdk" secondAttribute="trailing" id="u4r-vg-rlS"/>
+                            <constraint firstItem="mPE-LH-Xbw" firstAttribute="top" secondItem="Wdq-je-vGt" secondAttribute="bottom" constant="6" id="y9z-4i-XHv"/>
+                        </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Vvh-LA-Iqr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="EeQ-10-GhI"/>
-                    <constraint firstItem="Vvh-LA-Iqr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="mC9-az-Ktn"/>
-                    <constraint firstAttribute="trailing" secondItem="Vvh-LA-Iqr" secondAttribute="trailing" constant="20" id="raw-gz-I3U"/>
-                    <constraint firstAttribute="bottom" secondItem="Vvh-LA-Iqr" secondAttribute="bottom" constant="10" id="wCV-zi-zOx"/>
+                    <constraint firstItem="Vvh-LA-Iqr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="EeQ-10-GhI"/>
+                    <constraint firstItem="Vvh-LA-Iqr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="mC9-az-Ktn"/>
+                    <constraint firstAttribute="trailing" secondItem="Vvh-LA-Iqr" secondAttribute="trailing" constant="16" id="raw-gz-I3U"/>
+                    <constraint firstAttribute="bottom" secondItem="Vvh-LA-Iqr" secondAttribute="bottom" id="wCV-zi-zOx"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="authorView" destination="Wdq-je-vGt" id="Lr1-0L-CWV"/>
                 <outlet property="contentLabel" destination="mPE-LH-Xbw" id="78o-1a-LAP"/>
+                <outlet property="separator" destination="xwu-60-nDP" id="xiF-gw-rlN"/>
                 <outlet property="timeStampLabel" destination="VK5-b4-fdk" id="gdF-jJ-z2W"/>
             </connections>
-            <point key="canvasLocation" x="285.5" y="404.5"/>
+            <point key="canvasLocation" x="27.5" y="407.5"/>
         </tableViewCell>
     </objects>
 </document>

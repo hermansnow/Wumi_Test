@@ -61,9 +61,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Post Content" id="5ht-6i-VJt"/>
                     <connections>
-                        <outlet property="commentTextView" destination="C1l-BJ-LfY" id="lxN-HU-t42"/>
-                        <outlet property="commentView" destination="Jmd-fk-RHK" id="dyH-A2-Dz6"/>
-                        <outlet property="myUserBannerView" destination="xhQ-QG-RlG" id="uUx-gt-Ynm"/>
+                        <outlet property="replyView" destination="Jmd-fk-RHK" id="2pi-cS-94g"/>
                         <segue destination="AWh-E2-ChP" kind="show" identifier="Show Contact" id="WBS-H5-vNs"/>
                     </connections>
                 </tableViewController>
@@ -71,52 +69,7 @@
                 <view contentMode="scaleToFill" id="Jmd-fk-RHK">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Leu-g5-kcN">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhQ-QG-RlG" customClass="UserBannerView" customModule="Wumi" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="7Ol-kX-1QO"/>
-                                        <constraint firstAttribute="height" constant="30" id="XXE-wK-cWZ"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="XXE-wK-cWZ"/>
-                                        </mask>
-                                    </variation>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qSk-Se-jPX">
-                                    <rect key="frame" x="0.0" y="35" width="240" height="93"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C1l-BJ-LfY" customClass="PostTextView" customModule="Wumi" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="93"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write a comment"/>
-                                            </userDefinedRuntimeAttributes>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="C1l-BJ-LfY" secondAttribute="bottom" id="6GU-Te-kei"/>
-                                        <constraint firstAttribute="trailing" secondItem="C1l-BJ-LfY" secondAttribute="trailing" id="nEs-8J-z9Q"/>
-                                        <constraint firstItem="C1l-BJ-LfY" firstAttribute="leading" secondItem="qSk-Se-jPX" secondAttribute="leading" id="qNc-Fv-3cw"/>
-                                        <constraint firstItem="C1l-BJ-LfY" firstAttribute="top" secondItem="qSk-Se-jPX" secondAttribute="top" id="rEV-Bo-Cdj"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
-                        </stackView>
-                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="Leu-g5-kcN" firstAttribute="top" secondItem="Jmd-fk-RHK" secondAttribute="top" id="0MI-KA-1UB"/>
-                        <constraint firstItem="Leu-g5-kcN" firstAttribute="leading" secondItem="Jmd-fk-RHK" secondAttribute="leading" id="6Zn-oQ-azG"/>
-                        <constraint firstAttribute="trailing" secondItem="Leu-g5-kcN" secondAttribute="trailing" id="FJS-6p-DLW"/>
-                        <constraint firstAttribute="bottom" secondItem="Leu-g5-kcN" secondAttribute="bottom" id="HuN-h8-d6a"/>
-                    </constraints>
                 </view>
             </objects>
             <point key="canvasLocation" x="3961" y="-617.5"/>
@@ -310,6 +263,6 @@
         <image name="Forward" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WbD-ao-OOU"/>
+        <segue reference="WBS-H5-vNs"/>
     </inferredMetricsTieBreakers>
 </document>
