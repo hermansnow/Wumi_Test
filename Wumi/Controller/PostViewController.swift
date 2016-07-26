@@ -51,6 +51,7 @@ class PostViewController: UITableViewController {
         // Initialize tableview
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.backgroundColor = Constants.General.Color.LightBackgroundColor
         self.tableView.separatorStyle = .None
         
         // Initialize navigation bar
@@ -94,7 +95,6 @@ class PostViewController: UITableViewController {
     private func addRefreshControl() {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(PostViewController.loadPost), forControlEvents: .ValueChanged)
-        self.tableView.addSubview(refreshControl!)
     }
     
     private func addReplyView() {
@@ -144,6 +144,41 @@ class PostViewController: UITableViewController {
         }
     }
     
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch section {
+        case 0:
+            return nil
+        case 1:
+            // Show header for empty data
+            if self.comments.count == 0 {
+                let emptyView = EmptyCommentView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: 60))
+                return emptyView
+            }
+            else {
+                return nil
+            }
+        default:
+            return nil
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            return 0
+        case 1:
+            // Show header for empty data
+            if self.comments.count == 0 {
+                return 60
+            }
+            else {
+                return 0
+            }
+        default:
+            return 0
+        }
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
@@ -155,7 +190,6 @@ class PostViewController: UITableViewController {
         }
     }
     
-        
     private func cellForPost(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> PostContentCell {
         self.postCell = tableView.dequeueReusableCellWithIdentifier("PostContentCell", forIndexPath: indexPath) as! PostContentCell
         
@@ -176,6 +210,7 @@ class PostViewController: UITableViewController {
             self.postCell.hideImageView = false
             self.postCell.imagePager.dataSource = self
             self.postCell.imagePager.delegate = self
+            self.postCell.imagePager.reloadData()
         }
         else {
             self.postCell.hideImageView = true
@@ -423,6 +458,11 @@ class PostViewController: UITableViewController {
             
             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
             self.loadComments()
+            
+            // End the refreshing
+            if let refreshControl = self.refreshControl {
+                refreshControl.endRefreshing()
+            }
         }
 
     }

@@ -317,6 +317,8 @@
 		DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180791D413C5E00935A60 /* ReplyButton.swift */; };
 		DF01807C1D459E4A00935A60 /* ReplyTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF01807B1D459E4A00935A60 /* ReplyTextView.xib */; };
 		DF01807E1D459E6100935A60 /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01807D1D459E6100935A60 /* ReplyTextView.swift */; };
+		DF0180801D47307000935A60 /* EmptyCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01807F1D47307000935A60 /* EmptyCommentView.swift */; };
+		DF0180821D473C9A00935A60 /* EmptyPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180811D473C9A00935A60 /* EmptyPostView.swift */; };
 		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
 		DF16E03F1D1D02DC00F4C4FC /* ImagePageItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */; };
 		DF16E0451D25B84700F4C4FC /* ImageFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */; };
@@ -842,6 +844,8 @@
 		DF0180791D413C5E00935A60 /* ReplyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyButton.swift; path = View/ReplyButton.swift; sourceTree = "<group>"; };
 		DF01807B1D459E4A00935A60 /* ReplyTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReplyTextView.xib; path = View/ReplyTextView.xib; sourceTree = "<group>"; };
 		DF01807D1D459E6100935A60 /* ReplyTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyTextView.swift; path = View/ReplyTextView.swift; sourceTree = "<group>"; };
+		DF01807F1D47307000935A60 /* EmptyCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyCommentView.swift; path = View/EmptyCommentView.swift; sourceTree = "<group>"; };
+		DF0180811D473C9A00935A60 /* EmptyPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyPostView.swift; path = View/EmptyPostView.swift; sourceTree = "<group>"; };
 		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePageItemViewController.swift; path = Controller/ImagePageItemViewController.swift; sourceTree = "<group>"; };
 		DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenViewController.swift; path = Controller/ImageFullScreenViewController.swift; sourceTree = "<group>"; };
@@ -1987,6 +1991,8 @@
 				DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */,
 				DFA93AB91C88FCDB00ECA503 /* ColorGradientView.swift */,
 				DFD90A141CAB87A1003A3B46 /* ComposePostView.swift */,
+				DF0180811D473C9A00935A60 /* EmptyPostView.swift */,
+				DF01807F1D47307000935A60 /* EmptyCommentView.swift */,
 				DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */,
 				DFB612941CA2637600B3271B /* UserBannerView.swift */,
 				DF01805D1D3DF54500935A60 /* ImageFullScreenView.xib */,
@@ -2431,6 +2437,7 @@
 				B1ECD74F1CCC1F3F00CED9C4 /* NSString+XHDiskSizeTransfrom.m in Sources */,
 				B1ECD7621CCC1F3F00CED9C4 /* XHVoiceRecordHelper.m in Sources */,
 				DF16E03F1D1D02DC00F4C4FC /* ImagePageItemViewController.swift in Sources */,
+				DF0180821D473C9A00935A60 /* EmptyPostView.swift in Sources */,
 				B1ECD77D1CCC1F4000CED9C4 /* FLAnimatedImage.m in Sources */,
 				DFB861481BEDBDF60075014A /* SystemButton.swift in Sources */,
 				DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */,
@@ -2447,6 +2454,7 @@
 				DF0180651D3DF5AA00935A60 /* Extension+Set.swift in Sources */,
 				DF0180601D3DF58300935A60 /* Extension+AVFile.swift in Sources */,
 				DF4F53341CD5A967009F3D2E /* PrivateMessageButton.swift in Sources */,
+				DF0180801D47307000935A60 /* EmptyCommentView.swift in Sources */,
 				DF173EF31C86A58600018B4A /* Helper.swift in Sources */,
 				B12705AC1CE847D000BC21A7 /* ConversationCell.m in Sources */,
 				02932AA61CEE6ECC001220E8 /* NotificationTableViewCell.swift in Sources */,

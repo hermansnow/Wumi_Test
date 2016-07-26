@@ -334,6 +334,23 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Show empty view if there is no post for displaying
+        if self.displayPosts.count == 0 {
+            let emptyView = EmptyPostView(frame: CGRect(x: 0, y: 0, width: self.postTableView.frame.size.width, height: self.postTableView.frame.size.height))
+            // Set message
+            if self.searchString.characters.count == 0 {
+                if self.resultSearchController.searchBar.isFirstResponder() {
+                    emptyView.text = ""
+                }
+                else {
+                    emptyView.text = "Wumi has no post data"
+                }
+            }
+            else {
+                emptyView.text = "Sorry, no post was found with your searching words: \"\(self.searchString)\""
+            }
+            self.postTableView.backgroundView = emptyView
+        }
         return self.displayPosts.count
     }
     

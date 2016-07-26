@@ -103,6 +103,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set status bar
         setStatusBarBackgroundColor(Constants.General.Color.ThemeColor)
+        
+        // Set refresh controller
+        UIRefreshControl.appearance().tintColor = Constants.General.Color.ThemeColor
     }
     
     // Customize the status bar
