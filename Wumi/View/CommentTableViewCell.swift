@@ -21,7 +21,7 @@ class CommentTableViewCell: UITableViewCell {
         self.setProperty()
     }
     
-    func setProperty() {
+    private func setProperty() {
         self.layer.borderColor = Constants.General.Color.LightBackgroundColor.CGColor
         self.layer.backgroundColor = Constants.General.Color.LightBackgroundColor.CGColor
     }
@@ -45,4 +45,9 @@ class CommentTableViewCell: UITableViewCell {
         self.separator.backgroundColor = Constants.General.Color.BackgroundColor
     }
     
+    func reset() {
+        self.authorView.reset()
+        self.contentLabel.text = nil
+        self.timeStampLabel.text = nil
+    }
 }

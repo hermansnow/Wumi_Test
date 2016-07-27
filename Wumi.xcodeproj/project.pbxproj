@@ -319,6 +319,7 @@
 		DF01807E1D459E6100935A60 /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01807D1D459E6100935A60 /* ReplyTextView.swift */; };
 		DF0180801D47307000935A60 /* EmptyCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01807F1D47307000935A60 /* EmptyCommentView.swift */; };
 		DF0180821D473C9A00935A60 /* EmptyPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180811D473C9A00935A60 /* EmptyPostView.swift */; };
+		DF0180841D4882BF00935A60 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180831D4882BF00935A60 /* LoadingIndicatorView.swift */; };
 		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
 		DF16E03F1D1D02DC00F4C4FC /* ImagePageItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */; };
 		DF16E0451D25B84700F4C4FC /* ImageFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */; };
@@ -846,6 +847,7 @@
 		DF01807D1D459E6100935A60 /* ReplyTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyTextView.swift; path = View/ReplyTextView.swift; sourceTree = "<group>"; };
 		DF01807F1D47307000935A60 /* EmptyCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyCommentView.swift; path = View/EmptyCommentView.swift; sourceTree = "<group>"; };
 		DF0180811D473C9A00935A60 /* EmptyPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyPostView.swift; path = View/EmptyPostView.swift; sourceTree = "<group>"; };
+		DF0180831D4882BF00935A60 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingIndicatorView.swift; path = View/LoadingIndicatorView.swift; sourceTree = "<group>"; };
 		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePageItemViewController.swift; path = Controller/ImagePageItemViewController.swift; sourceTree = "<group>"; };
 		DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenViewController.swift; path = Controller/ImageFullScreenViewController.swift; sourceTree = "<group>"; };
@@ -1981,6 +1983,7 @@
 				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
 				DFB612A01CA6158F00B3271B /* PostTextView.swift */,
 				DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */,
+				DF0180831D4882BF00935A60 /* LoadingIndicatorView.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -2448,6 +2451,7 @@
 				B1ECD78D1CCC1F4000CED9C4 /* SETextSelectionView.m in Sources */,
 				B1ECD6A81CCC1F3F00CED9C4 /* CDMessageHelper.m in Sources */,
 				DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */,
+				DF0180841D4882BF00935A60 /* LoadingIndicatorView.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,

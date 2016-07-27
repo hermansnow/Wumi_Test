@@ -12,10 +12,12 @@ import KIImagePager
 class PostViewController: UITableViewController {
     
     var replyView: ReplyTextView!
-    lazy var replyButton = UIBarButtonItem()
-    lazy var cancelButton = UIBarButtonItem()
-    lazy var sendButton = UIBarButtonItem()
-    lazy var maskView = UIView()
+    private lazy var replyButton = UIBarButtonItem()
+    private lazy var cancelButton = UIBarButtonItem()
+    private lazy var sendButton = UIBarButtonItem()
+    private lazy var maskView = UIView()
+    private lazy var loadingView = LoadingIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    private lazy var emptyView = EmptyCommentView(frame: CGRect(x: 0, y: 0, width: 100, height: 20)) // Show header for empty data
     
     var delegate: PostViewControllerDelegate?
     
@@ -24,7 +26,7 @@ class PostViewController: UITableViewController {
     var postCell: PostContentCell!
     var postAttributedContent: NSAttributedString?
     var replyComment: Comment? = nil
-    lazy var comments = [Comment]()
+    lazy var comments: [Comment]? = nil
     
     var isSaved: Bool = false
     var launchReply: Bool = false
@@ -138,7 +140,7 @@ class PostViewController: UITableViewController {
         case 0:
             return 1
         case 1:
-            return self.comments.count
+            return self.comments != nil ? self.comments!.count : 0
         default:
             return 0
         }
@@ -149,10 +151,15 @@ class PostViewController: UITableViewController {
         case 0:
             return nil
         case 1:
-            // Show header for empty data
-            if self.comments.count == 0 {
-                let emptyView = EmptyCommentView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: 60))
-                return emptyView
+            if self.comments == nil && self.loadingView.animating {
+                self.loadingView.frame.origin = CGPoint(x: self.tableView.frame.size.width / 2 - 10, y: 20) // Show loading view
+                let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: 60))
+                headerView.addSubview(self.loadingView)
+                return headerView
+            }
+            else if self.comments != nil && self.comments!.count == 0 {
+                self.emptyView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: 60) // Show empty view
+                return self.emptyView
             }
             else {
                 return nil
@@ -167,8 +174,10 @@ class PostViewController: UITableViewController {
         case 0:
             return 0
         case 1:
-            // Show header for empty data
-            if self.comments.count == 0 {
+            if self.comments == nil && self.loadingView.animating {
+                return 60
+            }
+            else if self.comments != nil && self.comments!.count == 0 {
                 return 60
             }
             else {
@@ -193,7 +202,9 @@ class PostViewController: UITableViewController {
     private func cellForPost(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> PostContentCell {
         self.postCell = tableView.dequeueReusableCellWithIdentifier("PostContentCell", forIndexPath: indexPath) as! PostContentCell
         
-        guard let post = self.post else { return postCell }
+        self.postCell.reset()
+        
+        guard let post = self.post else { return self.postCell }
         
         if let title = post.title where title.characters.count > 0 {
             self.postCell.title = NSMutableAttributedString(string: title)
@@ -247,7 +258,9 @@ class PostViewController: UITableViewController {
     private func cellForReply(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> CommentTableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentTableViewCell", forIndexPath: indexPath) as! CommentTableViewCell
         
-        guard let comment = self.comments[safe: indexPath.row] else { return cell }
+        cell.reset()
+        
+        guard let comments = self.comments, comment = comments[safe: indexPath.row] else { return cell }
         
         if let replyToUser = comment.reply?.author?.name {
             let content = comment.content!
@@ -313,8 +326,10 @@ class PostViewController: UITableViewController {
     func replyComment(recognizer: UITapGestureRecognizer) {
         
         guard let contentLabel = recognizer.view as? CommentTextLabel else { return }
-        guard let commentCell = contentLabel.parentCell, indexPath = tableView.indexPathForCell(commentCell),
-            selectedComment = self.comments[safe: indexPath.row] else { return }
+        guard let commentCell = contentLabel.parentCell,
+            indexPath = tableView.indexPathForCell(commentCell),
+            comments = self.comments,
+            selectedComment = comments[safe: indexPath.row] else { return }
         
         self.replyView.reset()
         self.replyComment = selectedComment
@@ -455,8 +470,9 @@ class PostViewController: UITableViewController {
             guard let post = result as? Post where error == nil else { return }
             
             self.post = post
-            
             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
+            
+            // Load comments
             self.loadComments()
             
             // End the refreshing
@@ -470,12 +486,25 @@ class PostViewController: UITableViewController {
     func loadComments() {
         guard let post = self.post else { return }
         
+        self.comments = nil
+        self.loadingView.startAnimation()
+        UIView.performWithoutAnimation { () -> Void in
+            self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
+        }
+        
         Comment.loadRepliesForPost(post) { (results, error) -> Void in
             self.refreshControl?.endRefreshing()
             
-            guard let comments = results as? [Comment] where comments.count > 0 else { return }
+            guard let comments = results as? [Comment] else {
+                self.comments = [Comment]()
+                self.loadingView.stopAnimation()
+                return
+            }
             
             self.comments = comments
+            
+            // Stop loading view
+            self.loadingView.stopAnimation()
             
             // Disable animation for displaying comment list
             UIView.performWithoutAnimation { () -> Void in
@@ -487,12 +516,18 @@ class PostViewController: UITableViewController {
     func loadMoreComments() {
         guard let post = self.post else { return }
         
-        Comment.loadRepliesForPost(post, skip: self.comments.count) { (results, error) -> Void in
+        let currentCount = self.comments != nil ? self.comments!.count : 0
+        Comment.loadRepliesForPost(post, skip: currentCount) { (results, error) -> Void in
             self.refreshControl?.endRefreshing()
             
             guard let comments = results as? [Comment] where comments.count > 0 else { return }
             
-            self.comments.appendContentsOf(comments)
+            if self.comments != nil {
+                self.comments!.appendContentsOf(comments)
+            }
+            else {
+                self.comments = comments
+            }
             
             // Disable animation for displaying comment list
             UIView.performWithoutAnimation { () -> Void in

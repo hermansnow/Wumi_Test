@@ -142,7 +142,17 @@ class PostContentCell: UITableViewCell {
     
     // MARK: Help functions
     
-    func setProperty() {
+    private func setProperty() {
         self.layer.borderColor = Constants.General.Color.BackgroundColor.CGColor
     }
+    
+    func reset() {
+        self.content = nil
+        self.timeStamp = nil
+        self.authorView.reset()
+        self.hideImageView = true
+        self.isSaved = false
+    }
+    
+    
 }

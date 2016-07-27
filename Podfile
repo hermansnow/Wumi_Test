@@ -29,4 +29,6 @@ target 'Wumi' do
 
     pod 'FormatterKit'
     
+    pod 'NVActivityIndicatorView'
+    
 end
