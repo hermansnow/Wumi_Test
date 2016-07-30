@@ -219,8 +219,6 @@ class PostViewController: UITableViewController {
         
         if post.mediaThumbnails.count > 0 {
             self.postCell.hideImageView = false
-            self.postCell.imagePager.dataSource = self
-            self.postCell.imagePager.delegate = self
             self.postCell.imagePager.reloadData()
         }
         else {
@@ -247,10 +245,10 @@ class PostViewController: UITableViewController {
         }
         
         self.postCell.isSaved = self.currentUser.savedPostsArray.contains(post)
-        self.postCell.saveButton.delegate = self
-        self.postCell.replyButton.delegate = self
         
         self.postCell.selectionStyle = .None
+        
+        self.postCell.delegate = self
         
         return self.postCell
     }
@@ -398,49 +396,6 @@ class PostViewController: UITableViewController {
         self.performSegueWithIdentifier("Show Contact", sender: recognizer.view)
     }
     
-        
-    func showImage(recognizer: UITapGestureRecognizer) {
-        guard let textView = recognizer.view as? UITextView else { return }
-        
-        // Location of the tap in text-container coordinates
-        let layoutManager = textView.layoutManager
-        var location = recognizer.locationInView(textView)
-        location.x -= textView.textContainerInset.left
-        location.y -= textView.textContainerInset.top
-        
-        // Find the character that's been tapped on
-        let characterIndex = layoutManager.characterIndexForPoint(location,
-                                                                  inTextContainer: textView.textContainer,
-                                                                  fractionOfDistanceBetweenInsertionPoints: nil)
-        if (characterIndex < textView.textStorage.length) {
-            if let attachment = textView.attributedText.attribute(NSAttachmentAttributeName, atIndex: characterIndex, effectiveRange: nil) as? NSTextAttachment{
-                var image: UIImage?
-                if attachment.image != nil {
-                    image = attachment.image
-                }
-                else {
-                    image = attachment.imageForBounds(attachment.bounds,
-                                                      textContainer: nil,
-                                                      characterIndex: characterIndex)
-                }
-                if image != nil {
-                    let imageCropper = PIKAImageCropViewController()
-                    
-                    imageCropper.image = image
-                    imageCropper.cropType = .Rect
-                    let cropperWidth = self.view.bounds.width
-                    imageCropper.cropRectSize = CGSize(width: cropperWidth, height: cropperWidth / CGFloat(Constants.General.Size.AvatarImage.WidthHeightRatio))
-                    imageCropper.backgroundColor = Constants.General.Color.BackgroundColor
-                    imageCropper.themeColor = Constants.General.Color.ThemeColor
-                    imageCropper.titleColor = Constants.General.Color.TitleColor
-                    imageCropper.maskColor = Constants.General.Color.DarkMaskColor
-                    
-                    self.presentViewController(imageCropper, animated: true, completion: nil)
-                }
-            }
-        }
-    }
-    
     // Pop up comment view when showing the keyboard
     func keyboardWillShown(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
@@ -564,6 +519,18 @@ extension PostViewController: KIImagePagerDelegate {
         imagePageVC.modalPresentationStyle = .FullScreen
         
         self.presentViewController(imagePageVC, animated: true, completion: nil)
+    }
+}
+
+// MARK: UITextView delegate
+extension PostViewController: UITextViewDelegate {
+    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+        let webVC = WebFullScreenViewController()
+        webVC.url = URL
+        
+        self.navigationController?.pushViewController(webVC, animated: true)
+        
+        return false
     }
 }
 

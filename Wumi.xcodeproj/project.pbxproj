@@ -320,6 +320,9 @@
 		DF0180801D47307000935A60 /* EmptyCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01807F1D47307000935A60 /* EmptyCommentView.swift */; };
 		DF0180821D473C9A00935A60 /* EmptyPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180811D473C9A00935A60 /* EmptyPostView.swift */; };
 		DF0180841D4882BF00935A60 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180831D4882BF00935A60 /* LoadingIndicatorView.swift */; };
+		DF0180861D4C894900935A60 /* WebFullScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF0180851D4C894900935A60 /* WebFullScreenView.xib */; };
+		DF0180881D4C896700935A60 /* WebFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180871D4C896700935A60 /* WebFullScreenView.swift */; };
+		DF01808A1D4C8E2B00935A60 /* WebFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180891D4C8E2B00935A60 /* WebFullScreenViewController.swift */; };
 		DF159E191C80231C00DB65FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF159E181C80231C00DB65FF /* Images.xcassets */; };
 		DF16E03F1D1D02DC00F4C4FC /* ImagePageItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */; };
 		DF16E0451D25B84700F4C4FC /* ImageFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */; };
@@ -848,6 +851,9 @@
 		DF01807F1D47307000935A60 /* EmptyCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyCommentView.swift; path = View/EmptyCommentView.swift; sourceTree = "<group>"; };
 		DF0180811D473C9A00935A60 /* EmptyPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyPostView.swift; path = View/EmptyPostView.swift; sourceTree = "<group>"; };
 		DF0180831D4882BF00935A60 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingIndicatorView.swift; path = View/LoadingIndicatorView.swift; sourceTree = "<group>"; };
+		DF0180851D4C894900935A60 /* WebFullScreenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebFullScreenView.xib; path = View/WebFullScreenView.xib; sourceTree = "<group>"; };
+		DF0180871D4C896700935A60 /* WebFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebFullScreenView.swift; path = View/WebFullScreenView.swift; sourceTree = "<group>"; };
+		DF0180891D4C8E2B00935A60 /* WebFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebFullScreenViewController.swift; path = View/WebFullScreenViewController.swift; sourceTree = "<group>"; };
 		DF159E181C80231C00DB65FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePageItemViewController.swift; path = Controller/ImagePageItemViewController.swift; sourceTree = "<group>"; };
 		DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenViewController.swift; path = Controller/ImageFullScreenViewController.swift; sourceTree = "<group>"; };
@@ -1895,6 +1901,7 @@
 				DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */,
 				DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */,
 				DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */,
+				DF0180891D4C8E2B00935A60 /* WebFullScreenViewController.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -2002,6 +2009,8 @@
 				DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */,
 				DF01807B1D459E4A00935A60 /* ReplyTextView.xib */,
 				DF01807D1D459E6100935A60 /* ReplyTextView.swift */,
+				DF0180851D4C894900935A60 /* WebFullScreenView.xib */,
+				DF0180871D4C896700935A60 /* WebFullScreenView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2296,6 +2305,7 @@
 				B1ECD7211CCC1F3F00CED9C4 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
 				B1ECD6C11CCC1F3F00CED9C4 /* rabbit_13_cover@2x.png in Resources */,
 				B1ECD7401CCC1F3F00CED9C4 /* voice@2x.png in Resources */,
+				DF0180861D4C894900935A60 /* WebFullScreenView.xib in Resources */,
 				B1ECD7131CCC1F3F00CED9C4 /* loudReceive.caf in Resources */,
 				B1ECD6DC1CCC1F3F00CED9C4 /* rabbit_5_cover@2x.png in Resources */,
 				B1ECD6B81CCC1F3F00CED9C4 /* rabbit_0_cover@2x.png in Resources */,
@@ -2532,6 +2542,7 @@
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
 				B1ECD7831CCC1F4000CED9C4 /* SELinkText.m in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */,
+				DF01808A1D4C8E2B00935A60 /* WebFullScreenViewController.swift in Sources */,
 				DFB0DC731C99CB87006BCD07 /* ProfileRow.swift in Sources */,
 				B1997AF61CACDADC0086F8F4 /* CityListTableViewController.swift in Sources */,
 				B1ECD76C1CCC1F4000CED9C4 /* XHCacheManager.m in Sources */,
@@ -2608,6 +2619,7 @@
 				B1ECD7BD1CCC2B2B00CED9C4 /* IMUserFactory.swift in Sources */,
 				DF0180751D3DF77F00935A60 /* Extension+NSObject.swift in Sources */,
 				DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */,
+				DF0180881D4C896700935A60 /* WebFullScreenView.swift in Sources */,
 				B1ECD7711CCC1F4000CED9C4 /* XHMessageBubbleFactory.m in Sources */,
 				B1ECD7811CCC1F4000CED9C4 /* SEConstants.m in Sources */,
 				B1ECD7821CCC1F4000CED9C4 /* SELineLayout.m in Sources */,

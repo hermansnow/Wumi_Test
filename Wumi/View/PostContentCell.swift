@@ -95,6 +95,16 @@ class PostContentCell: UITableViewCell {
         }
     }
     
+    var delegate: protocol<UITextViewDelegate, KIImagePagerDelegate, KIImagePagerDataSource, FavoriteButtonDelegate, ReplyButtonDelegate>? {
+        didSet {
+            self.contentTextView.delegate = self.delegate
+            self.imagePager.dataSource = self.delegate
+            self.imagePager.delegate = self.delegate
+            self.saveButton.delegate = self.delegate
+            self.replyButton.delegate = self.delegate
+        }
+    }
+    
     // MARK: Initializers
     
     required init?(coder aDecoder: NSCoder) {
@@ -153,6 +163,4 @@ class PostContentCell: UITableViewCell {
         self.hideImageView = true
         self.isSaved = false
     }
-    
-    
 }
