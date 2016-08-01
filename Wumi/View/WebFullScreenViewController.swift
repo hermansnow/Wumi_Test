@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 class WebFullScreenViewController: UIViewController {
 
@@ -19,18 +20,25 @@ class WebFullScreenViewController: UIViewController {
     override func loadView() {
         super.loadView()
         
-        if let view = UINib(nibName: "WebFullScreenView", bundle: NSBundle(forClass: self.classForCoder)).instantiateWithOwner(self, options: nil).first as? UIView {
-            view.frame = self.view.frame
-            self.view = view
-        }
+        let configuration = WKWebViewConfiguration()
+        configuration.allowsAirPlayForMediaPlayback = true
+        configuration.allowsInlineMediaPlayback = true
+        configuration.allowsPictureInPictureMediaPlayback = true
+        configuration.requiresUserActionForMediaPlayback = true
+        let webView = WKWebView(frame: self.view.frame, configuration: configuration)
+        webView.allowsLinkPreview = true
+        webView.allowsBackForwardNavigationGestures = true
+        
+        self.view = webView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let fullscreenView = self.view as? WebFullScreenView else { return }
-        
-        fullscreenView.delegate = self
+        if let fullscreenView = self.view as? WKWebView {
+            fullscreenView.navigationDelegate = self
+            fullscreenView.UIDelegate = self
+        }
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "More"), style: .Plain, target: self, action: #selector(WebFullScreenViewController.displayShareSheet(_:)))
         
@@ -40,17 +48,16 @@ class WebFullScreenViewController: UIViewController {
     // MARK: Help functions
     
     private func loadUrl() {
-        guard let url = self.url, fullscreenView = self.view as? WebFullScreenView else { return }
+        guard let url = self.url else { return }
         
-        let request = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.UseProtocolCachePolicy, timeoutInterval: NSTimeInterval(300))
-        
-        fullscreenView.webView.loadRequest(request)
+        if let fullscreenView = self.view as? WKWebView {
+            let request = NSURLRequest(URL: url)
+            fullscreenView.loadRequest(request)
+        }
     }
     
     private func updateBackButton() {
-        guard let fullscreenView = self.view as? WebFullScreenView else { return }
-        
-        if fullscreenView.webView.canGoBack {
+        if let fullscreenView = self.view as? WKWebView where fullscreenView.canGoBack {
             if self.navigationItem.hidesBackButton == false {
                 self.navigationItem.hidesBackButton = true
                 let backButton = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: #selector(WebFullScreenViewController.backPage(_:)))
@@ -67,10 +74,8 @@ class WebFullScreenViewController: UIViewController {
     // MARK: Actions
     
     func backPage(sender: AnyObject?) {
-        guard let fullscreenView = self.view as? WebFullScreenView else { return }
-        
-        if fullscreenView.webView.canGoBack {
-            fullscreenView.webView.goBack()
+        if let fullscreenView = self.view as? WKWebView where fullscreenView.canGoBack {
+            fullscreenView.goBack()
         }
     }
     
@@ -91,15 +96,10 @@ class WebFullScreenViewController: UIViewController {
     }
 }
 
-extension WebFullScreenViewController: UIWebViewDelegate {
-    func webViewDidStartLoad(webView: UIWebView) {
-        // Update navigation bar items
-        self.updateBackButton()
-    }
-    
-    func webViewDidFinishLoad(webView: UIWebView) {
-        guard let fullscreenView = self.view as? WebFullScreenView else { return }
-        
+// MARK: WKNavigation delegate
+
+extension WebFullScreenViewController:  WKNavigationDelegate {
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
         // Update web view controller's navigation bar title with page title
         if let navigationController = self.navigationController, topItem = navigationController.navigationBar.topItem {
             let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 120, height: 30))
@@ -109,11 +109,78 @@ extension WebFullScreenViewController: UIWebViewDelegate {
             titleLabel.textColor = Constants.General.Color.TintColor
             titleLabel.adjustsFontSizeToFitWidth = false
             titleLabel.lineBreakMode = .ByTruncatingTail
-            titleLabel.text = fullscreenView.webView.stringByEvaluatingJavaScriptFromString("document.title")
+            titleLabel.text = webView.title
             topItem.titleView = titleLabel
         }
         
         // Update navigation bar items
         self.updateBackButton()
+    }
+    
+    func webView(webView: WKWebView, didFailNavigation navigation: WKNavigation!, withError error: NSError) {
+        // Try open if with URL
+        if let url = error.userInfo[NSURLErrorFailingURLErrorKey] as? NSURL where UIApplication.sharedApplication().canOpenURL(url) {
+            UIApplication.sharedApplication().openURL(url)
+            if webView.canGoBack {
+                webView.goBack()
+            }
+        }
+        // Otherwise, show error
+        else {
+            if let path = NSBundle.mainBundle().pathForResource("error", ofType: "html") {
+                do {
+                    let html = try String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+                    webView.loadHTMLString(html, baseURL: nil)
+                }
+                catch {
+                    return
+                }
+            }
+        }
+    }
+    
+    func webView(webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: NSError) {
+        if error.code == -999 { return } // TODO: Not sure about this error code
+        
+        // Try open if with URL
+        if let url = error.userInfo[NSURLErrorFailingURLErrorKey] as? NSURL where UIApplication.sharedApplication().canOpenURL(url) {
+            UIApplication.sharedApplication().openURL(url)
+            if webView.canGoBack {
+                webView.goBack()
+            }
+        }
+        // Otherwise, show error
+        if let path = NSBundle.mainBundle().pathForResource("error", ofType: "html") {
+            do {
+                let html = try String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+                webView.loadHTMLString(html, baseURL: nil)
+            }
+            catch {
+                return
+            }
+        }
+    }
+    
+    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        guard let url = navigationAction.request.URL else { return }
+        
+        if url.willOpen() {
+            decisionHandler(.Cancel)
+            return
+        }
+        
+        decisionHandler(.Allow)
+    }
+}
+
+// MARK: WKUI delegate
+
+extension WebFullScreenViewController: WKUIDelegate {
+    func webView(webView: WKWebView, createWebViewWithConfiguration configuration: WKWebViewConfiguration, forNavigationAction navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        // Handle target=_blank links by opening them in the same view
+        if navigationAction.targetFrame == nil {
+            webView.loadRequest(navigationAction.request)
+        }
+        return nil
     }
 }

@@ -9,12 +9,24 @@
 import Foundation
 
 extension String {
+    func isMatch(regex: String, options: NSRegularExpressionOptions) -> Bool {
+        do {
+            let exp = try NSRegularExpression(pattern: regex, options: options)
+            return exp.numberOfMatchesInString(self, options: [], range: NSMakeRange(0, self.characters.count)) > 0
+        }
+        catch {
+            print("Failed in creating NSRegularExpression")
+            return false
+        }
+    }
+    
     // Check whether string contains Chinese characters
     func containChinese() -> Bool {
         do {
             let regex = try NSRegularExpression(pattern: "\\p{script=Han}", options: .AnchorsMatchLines)
             return regex.numberOfMatchesInString(self, options: [], range: NSRange(location: 0, length: self.characters.count)) > 0
-        } catch {
+        }
+        catch {
             print("Failed in creating NSRegularExpression for Han")
             return false
         }

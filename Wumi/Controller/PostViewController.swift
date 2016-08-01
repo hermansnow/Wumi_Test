@@ -525,11 +525,17 @@ extension PostViewController: KIImagePagerDelegate {
 // MARK: UITextView delegate
 extension PostViewController: UITextViewDelegate {
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-        let webVC = WebFullScreenViewController()
-        webVC.url = URL
+        // Launch application if it can be handled by any app installed
+        if URL.willOpen() {
+            UIApplication.sharedApplication().openURL(URL)
+        }
+        // Otherwise, request it in web viewer
+        else {
+            let webVC = WebFullScreenViewController()
+            webVC.url = URL
         
-        self.navigationController?.pushViewController(webVC, animated: true)
-        
+            self.navigationController?.pushViewController(webVC, animated: true)
+        }
         return false
     }
 }

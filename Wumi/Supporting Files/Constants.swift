@@ -12,7 +12,8 @@ struct Constants {
     
     struct General {
         static let TabBarItemDidClickSelf = "TabBarItemDidClickSelf"
-        
+        static let SchemeWhiteList = ["about"]
+
         struct Color {
             static let TintColor = UIColor.whiteColor()
             static let TitleColor = UIColor.whiteColor()
