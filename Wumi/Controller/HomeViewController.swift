@@ -287,12 +287,14 @@ class HomeViewController: UIViewController {
     }
     
     func loadPosts() {
+        self.refreshControl.beginRefreshing()
+        
         Post.loadPosts(limit: Constants.Query.LoadPostLimit,
                        type: self.searchType,
                        searchString: self.searchString,
                        user: self.currentUser) { (results, error) -> Void in
                         self.refreshControl.endRefreshing()
-                    
+                        
                         guard let posts = results as? [Post] where error == nil else { return }
                     
                         self.displayPosts = posts
@@ -340,6 +342,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             // Set message
             if self.searchString.characters.count == 0 {
                 if self.resultSearchController.searchBar.isFirstResponder() {
+                    emptyView.text = ""
+                }
+                else if self.refreshControl.refreshing {
                     emptyView.text = ""
                 }
                 else {
