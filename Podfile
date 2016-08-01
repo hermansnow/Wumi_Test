@@ -31,4 +31,7 @@ target 'Wumi' do
     
     pod 'NVActivityIndicatorView'
     
+    pod 'ReachabilitySwift'
+    
+    pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
 end

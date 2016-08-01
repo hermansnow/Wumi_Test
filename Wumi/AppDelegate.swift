@@ -8,6 +8,7 @@
 */
 
 import AVOSCloud
+import ReachabilitySwift
 import CoreData
 
 // If you want to use any of the UI components, uncomment this line
@@ -22,6 +23,7 @@ let APNSReceivedNotificationIdentifier = "APNSReceivedNotification"
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var reachability: Reachability?
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -32,11 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Register classes
         self.registerClass()
         
-        // Set up appearance
+        // Set up appearanceı∫∫
         self.setupAppearance()
         
         // Set up AVOSCloud
         self.setupAVOSCloudSetting()
+        
+        // Set up reachability
+        self.setupReachability()
         
         CDChatManager.sharedManager().userDelegate = IMUserFactory()
 
@@ -138,6 +143,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // China Setting
         //AVOSCloud.setServiceRegion(.CN)
         //AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
+    }
+    
+    // Set up reachability
+    private func setupReachability() {
+        do {
+            self.reachability = try Reachability.reachabilityForInternetConnection()
+        }
+        catch {
+            print("Unable to create Reachability")
+            return
+        }
+        do{
+            if let reachability = self.reachability {
+                try reachability.startNotifier()
+            }
+        }
+        catch{
+            print("could not start reachability notifier")
+        }
     }
     
     // MARK: - Core Data stack

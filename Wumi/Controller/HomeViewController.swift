@@ -9,6 +9,8 @@
 import UIKit
 import BTNavigationDropdownMenu
 import SWRevealViewController
+import ReachabilitySwift
+import TSMessages
 
 class HomeViewController: UIViewController {
     
@@ -115,6 +117,10 @@ class HomeViewController: UIViewController {
                                                          selector: #selector(HomeViewController.homeTabClicked(_:)),
                                                          name: Constants.General.TabBarItemDidClickSelf,
                                                          object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(HomeViewController.reachabilityChanged(_:)),
+                                                         name: ReachabilityChangedNotification,
+                                                         object: nil)
         
         // Load posts
         self.currentUser.loadSavedPosts { (results, error) -> Void in
@@ -133,6 +139,22 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate, reachability = delegate.reachability {
+            if !reachability.isReachable() {
+                TSMessage.showNotificationInViewController(self,
+                                                           title: "Network error",
+                                                           subtitle: "Couldn't connect to the server. Check your network connection.",
+                                                           image: nil,
+                                                           type: .Error,
+                                                           duration: NSTimeInterval(TSMessageNotificationDuration.Endless.rawValue),
+                                                           callback: nil,
+                                                           buttonTitle: nil,
+                                                           buttonCallback: nil,
+                                                           atPosition: TSMessageNotificationPosition.Top,
+                                                           canBeDismissedByUser: true)
+            }
+        }
         
         self.checkNewPosts()
     }
@@ -263,6 +285,28 @@ class HomeViewController: UIViewController {
         self.postTableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl.frame.size.height), animated:true)
         self.loadPosts()
     }
+    
+    func reachabilityChanged(note: NSNotification) {
+        guard let reachability = note.object as? Reachability else { return }
+        
+        if !reachability.isReachable() {
+            TSMessage.showNotificationInViewController(self,
+                                                       title: "Network error",
+                                                       subtitle: "Couldn't connect to the server. Check your network connection.",
+                                                       image: nil,
+                                                       type: .Error,
+                                                       duration: NSTimeInterval(TSMessageNotificationDuration.Endless.rawValue),
+                                                       callback: nil,
+                                                       buttonTitle: nil,
+                                                       buttonCallback: nil,
+                                                       atPosition: TSMessageNotificationPosition.Top,
+                                                       canBeDismissedByUser: true)
+        }
+        else {
+            TSMessage.dismissActiveNotification()
+        }
+    }
+    
     
     // MARK: Help function
     
