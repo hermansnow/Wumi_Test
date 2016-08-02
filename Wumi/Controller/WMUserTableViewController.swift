@@ -18,7 +18,11 @@ class WMUserTableViewController: UITableViewController {
     var user = User.currentUser()!
     
     var sections: [[Setting]] =
-        [[Setting(identifier: "User Profile", type: Setting.SettingType.Disclosure, value: nil)],
+        [[Setting(identifier: "User Profile", type: Setting.SettingType.Disclosure, value: nil),
+            Setting(identifier: "Email Settings", type: Setting.SettingType.Disclosure, value: nil),
+            Setting(identifier: "Mobile Notifications", type: Setting.SettingType.Disclosure, value: nil),
+            Setting(identifier: "Invite others", type: Setting.SettingType.Disclosure, value: nil),
+            Setting(identifier: "Cache Setting", type: Setting.SettingType.Disclosure, value: nil)],
         [Setting(identifier:"Log Out", type: .Button, value: nil)]]
     
     var hasEnterMenu = false
@@ -64,6 +68,8 @@ class WMUserTableViewController: UITableViewController {
         case "User Profile":
             self.revealViewController().setFrontViewPosition(FrontViewPosition.Right, animated: true)
             self.performSegueWithIdentifier("Edit Profile", sender: self)
+        case "Cache Setting":
+            self.performSegueWithIdentifier("Cache Setting", sender: self)
         case "Log Out":
             self.logoutUser()
         default:

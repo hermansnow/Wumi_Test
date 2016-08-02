@@ -24,6 +24,7 @@
 		B12705AC1CE847D000BC21A7 /* ConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B12705AA1CE847D000BC21A7 /* ConversationCell.m */; };
 		B12705AD1CE847D000BC21A7 /* ConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12705AB1CE847D000BC21A7 /* ConversationCell.xib */; };
 		B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15824021C82C40F00D314B3 /* ContactTableViewController.swift */; };
+		B16535261D5024DF00B0DA0E /* CacheSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16535251D5024DF00B0DA0E /* CacheSettingViewController.swift */; };
 		B175B2521CB872B800C95B33 /* CommentTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175B2511CB872B800C95B33 /* CommentTextLabel.swift */; };
 		B1997AF61CACDADC0086F8F4 /* CityListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */; };
 		B1C922A31CACF68400335A60 /* cities.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1C922A21CACF68400335A60 /* cities.plist */; };
@@ -433,6 +434,7 @@
 		B12705AA1CE847D000BC21A7 /* ConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationCell.m; path = view/ConversationCell.m; sourceTree = "<group>"; };
 		B12705AB1CE847D000BC21A7 /* ConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConversationCell.xib; path = view/ConversationCell.xib; sourceTree = "<group>"; };
 		B15824021C82C40F00D314B3 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewController.swift; path = Controller/ContactTableViewController.swift; sourceTree = "<group>"; };
+		B16535251D5024DF00B0DA0E /* CacheSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheSettingViewController.swift; path = Controller/CacheSettingViewController.swift; sourceTree = "<group>"; };
 		B175B2511CB872B800C95B33 /* CommentTextLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTextLabel.swift; path = View/CommentTextLabel.swift; sourceTree = "<group>"; };
 		B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityListTableViewController.swift; path = Controller/CityListTableViewController.swift; sourceTree = "<group>"; };
 		B1C922A21CACF68400335A60 /* cities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cities.plist; sourceTree = "<group>"; };
@@ -2064,6 +2066,7 @@
 				DF7E3B4C1C923C0A000E8741 /* ProfessionListViewController.swift */,
 				B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */,
 				B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */,
+				B16535251D5024DF00B0DA0E /* CacheSettingViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2480,6 +2483,7 @@
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
 				B1ECD7A91CCC1F4000CED9C4 /* NSString+Emojize.m in Sources */,
 				DFA93AC51C90E04000ECA503 /* EditProfileViewController.swift in Sources */,
+				B16535261D5024DF00B0DA0E /* CacheSettingViewController.swift in Sources */,
 				B1ECD7861CCC1F4000CED9C4 /* SETextEditingCaret.m in Sources */,
 				DF6A1B351CF266CA00CB6973 /* SelectedThumbnailImageView.swift in Sources */,
 				B1ECD7B51CCC2A8200CED9C4 /* ChatListViewController.swift in Sources */,
