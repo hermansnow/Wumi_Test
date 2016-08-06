@@ -72,7 +72,12 @@ class WMUserTableViewController: UITableViewController {
         if MFMailComposeViewController.canSendMail() {
             let mailComposeVC = MFMailComposeViewController()
             mailComposeVC.mailComposeDelegate = self
-            mailComposeVC.setMessageBody("Come to use Wumi App!\n My Invitation code is 12345!", isHTML: false)
+            
+            let inviteCode = InvitationCode()
+            inviteCode.userName = user.name
+            inviteCode.generateNewCode()
+            
+            mailComposeVC.setMessageBody("Come to use Wumi App!\n My Invitation code is \(inviteCode.invitationCode!)!", isHTML: false)
             
             self.presentViewController(mailComposeVC, animated: true, completion: nil)
         }
