@@ -8,6 +8,7 @@
 
 import UIKit
 import SWRevealViewController
+import MessageUI
 
 class WMUserTableViewController: UITableViewController {
     
@@ -21,7 +22,7 @@ class WMUserTableViewController: UITableViewController {
         [[Setting(identifier: "User Profile", type: Setting.SettingType.Disclosure, value: nil),
             Setting(identifier: "Email Settings", type: Setting.SettingType.Disclosure, value: nil),
             Setting(identifier: "Mobile Notifications", type: Setting.SettingType.Disclosure, value: nil),
-            Setting(identifier: "Invite others", type: Setting.SettingType.Disclosure, value: nil),
+            Setting(identifier: "Invite Others", type: Setting.SettingType.Disclosure, value: nil),
             Setting(identifier: "Cache Setting", type: Setting.SettingType.Disclosure, value: nil)],
         [Setting(identifier:"Log Out", type: .Button, value: nil)]]
     
@@ -37,18 +38,6 @@ class WMUserTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Show current user's profile
-//        userDisplayName.text = user.name
-//        userEmail.text = user.email
-//        self.user.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
-//            if imageError == nil && avatarImage != nil {
-//                self.userProfileImageView.image = avatarImage
-//            }
-//            else {
-//                print("\(imageError)")
-//            }
-//        }
     }
 
     // MARK: tableview delegates
@@ -68,12 +57,27 @@ class WMUserTableViewController: UITableViewController {
         case "User Profile":
             self.revealViewController().setFrontViewPosition(FrontViewPosition.Right, animated: true)
             self.performSegueWithIdentifier("Edit Profile", sender: self)
+        case "Invite Others":
+            sendInviteEmail()
         case "Cache Setting":
             self.performSegueWithIdentifier("Cache Setting", sender: self)
         case "Log Out":
             self.logoutUser()
         default:
             break
+        }
+    }
+    
+    func sendInviteEmail() {
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposeVC = MFMailComposeViewController()
+            mailComposeVC.mailComposeDelegate = self
+            mailComposeVC.setMessageBody("Come to use Wumi App!\n My Invitation code is 12345!", isHTML: false)
+            
+            self.presentViewController(mailComposeVC, animated: true, completion: nil)
+        }
+        else {
+            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
         }
     }
     
@@ -107,5 +111,34 @@ class WMUserTableViewController: UITableViewController {
         return self.sections[indexPath.section][indexPath.row]
     }
     
+    // MARK: Helper functions
+    func generateInviteCode() {
+        
+    }
     
+}
+
+extension WMUserTableViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        switch (result) {
+        case MFMailComposeResultSent:
+            Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is sent successfully")
+        case MFMailComposeResultSaved:
+            Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is saved in draft folder")
+        case MFMailComposeResultCancelled:
+            Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is cancelled")
+        case MFMailComposeResultFailed:
+            if error != nil {
+                Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
+            }
+            else {
+                Helper.PopupErrorAlert(self, errorMessage: "Send failed")
+            }
+        default:
+            break
+        }
+        
+        // Dimiss the main compose view controller
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
 }
