@@ -11,6 +11,9 @@ import UIKit
 class CacheSettingViewController: UIViewController {
 
     @IBOutlet weak var cacheSizeLabel: UILabel!
+    @IBOutlet weak var largeCacheSize: UILabel!
+    
+    let largeFileSize = 30
     
     // MARK: lifecycle methods
     override func viewDidLoad() {
@@ -23,6 +26,7 @@ class CacheSettingViewController: UIViewController {
         super.viewWillAppear(animated)
         
         updateCurrentCacheSize()
+        updateLargeCacheSize()
     }
 
     // MARK: actions
@@ -41,8 +45,24 @@ class CacheSettingViewController: UIViewController {
         } catch let error as NSError {
             print(error.localizedDescription)
         }
-        
         updateCurrentCacheSize()
+        updateLargeCacheSize()
+    }
+    
+    @IBAction func clearLargeFiles(sender: AnyObject) {
+        let list = getLargeFileList(largeFileSize)
+        let fm = NSFileManager.defaultManager()
+        do {
+            for path in list
+            {
+                try fm.removeItemAtPath(path)
+                print("delete file: \(path)")
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        updateCurrentCacheSize()
+        updateLargeCacheSize()
     }
     
     override func didReceiveMemoryWarning() {
@@ -69,16 +89,30 @@ class CacheSettingViewController: UIViewController {
             return 0
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    private func updateLargeCacheSize() {
+        let list = getLargeFileList(largeFileSize)
+        let fm = NSFileManager.defaultManager()
+        var totalSize = 0
+        do {
+        for filePath in list {
+            let attr = try fm.attributesOfItemAtPath(filePath)
+            let fileSize = attr[NSFileSize] as! NSNumber
+            totalSize += Int(fileSize)
+        }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        let mbSize = Double(totalSize) / (1024 * 1024)
+        largeCacheSize.text = String.init(format: "%4.2f MB", mbSize)
     }
-    */
+    
+    func getLargeFileList(fileSize: Int) -> [String] {
+        let cachePaths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
+        let cacheDirectory = cachePaths[0]
+        let list = NSFileManager.defaultManager().listFileAtPath(cacheDirectory, largerThan: fileSize)
+        return list
+    }
 
 }
 
@@ -164,4 +198,34 @@ extension NSFileManager {
         // We finally got it.
         return accumulatedSize
     }
+    
+    func listFileAtPath(path: String, largerThan size: Int) -> [String] {
+        print("-----------Listing all files found------------")
+        var list = [String]()
+        do {
+            let cachePaths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
+            let cacheDirectory = NSURL.init(string: cachePaths[0])
+            let fm = NSFileManager.defaultManager()
+            let enumerator = fm.enumeratorAtPath(path)
+            var count = 0
+            
+            while let element = enumerator?.nextObject() as? String {
+                let absolutePath = cacheDirectory?.URLByAppendingPathComponent(element).absoluteString
+                let attr = try fm.attributesOfItemAtPath(absolutePath!)
+                let fileSize = attr[NSFileSize] as! NSNumber
+                let kbSize = fileSize.doubleValue / 1024
+                if kbSize > 30 {
+                    list.append(absolutePath!)
+                    print("File \(count): \(element) size: \(kbSize) KB")
+                }
+                count += 1
+//                print("File \(count): \(element) size: \(kbSize) KB")
+            }
+        } catch {
+            print("error finding contents of directory")
+            return [String]()
+        }
+        return list
+    }
+    
 }
