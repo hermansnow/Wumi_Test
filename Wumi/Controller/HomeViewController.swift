@@ -434,6 +434,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier("Show Post", sender: tableView.cellForRowAtIndexPath(indexPath))
+        
+        self.postTableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }
 

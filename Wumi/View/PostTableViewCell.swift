@@ -139,8 +139,6 @@ class PostTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.selectionStyle = .None
-        
         // Set up title label
         self.titleLabel.font = Constants.Post.Font.ListTitle
         self.titleLabel.textColor = Constants.General.Color.TextColor
