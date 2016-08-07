@@ -7,12 +7,14 @@
 //
 import UIKit
 import Foundation
+import ReachabilitySwift
 
 struct Constants {
     
     struct General {
         static let TabBarItemDidClickSelf = "TabBarItemDidClickSelf"
         static let SchemeWhiteList = ["about"]
+        static let ReachabilityChangedNotification = ReachabilitySwift.ReachabilityChangedNotification
 
         struct Color {
             static let TintColor = UIColor.whiteColor()

@@ -78,7 +78,7 @@ class EditProfileViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        // Setup keyboard Listener
+        // Add Notification observer
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(keyboardWillShown(_:)),
                                                          name: UIKeyboardWillShowNotification,
@@ -87,6 +87,10 @@ class EditProfileViewController: UIViewController {
                                                          selector: #selector(keyboardWillHiden(_:)),
                                                          name: UIKeyboardWillHideNotification,
                                                          object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.reachabilityChanged(_:)),
+                                                         name: Constants.General.ReachabilityChangedNotification,
+                                                         object: nil)
 
         // Fetch user data. We will refetch current user to guarantee to show latest data
         self.displayUserData()
@@ -94,6 +98,18 @@ class EditProfileViewController: UIViewController {
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.checkReachability()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.dismissReachabilityError()
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

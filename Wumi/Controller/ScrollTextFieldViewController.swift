@@ -22,7 +22,7 @@ class ScrollTextFieldViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissInputView))
         self.formScrollView.addGestureRecognizer(tap)
         
-        // Setup keyboard Listener
+        // Add Notification observer
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                selector: #selector(keyboardWillShown(_:)),
                                                    name: UIKeyboardWillShowNotification,
@@ -31,10 +31,26 @@ class ScrollTextFieldViewController: UIViewController {
                                                selector: #selector(keyboardWillHiden(_:)),
                                                    name: UIKeyboardWillHideNotification,
                                                  object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.reachabilityChanged(_:)),
+                                                         name: Constants.General.ReachabilityChangedNotification,
+                                                         object: nil)
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.checkReachability()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.dismissReachabilityError()
     }
     
     // MARK: Actions

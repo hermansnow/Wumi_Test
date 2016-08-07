@@ -23,8 +23,8 @@ class Helper {
     
     // Logout current user
     static func LogOut () {
-        User.logOut()
         RedirectToSignIn()
+        User.logOut()
     }
     
     // Popup an UIAlertController for error message

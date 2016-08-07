@@ -21,11 +21,35 @@ class InvitationCodeViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         self.invitationCodeTextField.delegate = self
+        
+        // Add Notification observer
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.reachabilityChanged(_:)),
+                                                         name: Constants.General.ReachabilityChangedNotification,
+                                                         object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.checkReachability()
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
         // Set iniatial first responder
         invitationCodeTextField.inputTextField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.dismissReachabilityError()
     }
     
     // All codes based on display frames should be called here after layouting subviews

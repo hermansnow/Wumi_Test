@@ -33,15 +33,19 @@ class NewPostViewController: UIViewController {
         self.nextButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: #selector(next(_:)))
         self.navigationItem.rightBarButtonItem = self.nextButton
         
-        // Setup keyboard Listener
+        // Setup norification observer
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: #selector(keyboardWillShown(_:)),
-            name: UIKeyboardWillShowNotification,
-            object: nil)
+                                                         selector: #selector(keyboardWillShown(_:)),
+                                                         name: UIKeyboardWillShowNotification,
+                                                         object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: #selector(keyboardWillHiden(_:)),
-            name: UIKeyboardWillHideNotification,
-            object: nil)
+                                                         selector: #selector(keyboardWillHiden(_:)),
+                                                         name: UIKeyboardWillHideNotification,
+                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.reachabilityChanged(_:)),
+                                                         name: Constants.General.ReachabilityChangedNotification,
+                                                         object: nil)
         
         // Add Constraints
         self.composePostView.topAnchor.constraintEqualToAnchor(self.view.topAnchor).active = true
@@ -64,7 +68,20 @@ class NewPostViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.checkReachability()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.dismissReachabilityError()
+    }
+    
     // MARK: Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let postCategoryTableViewController = segue.destinationViewController as? PostCategoryTableViewController where segue.identifier == "chooseCategory" {
             let post = Post()

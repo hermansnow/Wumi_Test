@@ -48,19 +48,37 @@ class SigninViewController: UIViewController {
         self.forgotPasswordButton.setTitle(Constants.SignIn.String.forgotPasswordLink, forState: .Normal)
         self.forgotPasswordButton.addTarget(self, action: #selector(forgotPassword), forControlEvents: .TouchUpInside)
         
+        // Add Notification observer
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.reachabilityChanged(_:)),
+                                                         name: Constants.General.ReachabilityChangedNotification,
+                                                         object: nil)
+        
         // Add delegates
         self.usernameTextField.delegate = self
         self.passwordTextField.delegate = self
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.checkReachability()
         
         // Fill in the username field if current user exists
         if let user = User.currentUser() {
             self.usernameTextField.text = user.username
             self.passwordTextField.becomeFirstResponder()
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.dismissReachabilityError()
     }
     
     // All codes based on display frames should be called here after auto-layouting subviews

@@ -8,6 +8,7 @@
 
 import UIKit
 import KIImagePager
+import TSMessages
 
 class PostViewController: UITableViewController {
     
@@ -40,15 +41,19 @@ class PostViewController: UITableViewController {
         self.tableView.registerNib(UINib(nibName: "PostContentCell", bundle: nil), forCellReuseIdentifier: "PostContentCell")
         self.tableView.registerNib(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: "CommentTableViewCell")
         
-        // Setup keyboard Listener
+        // Add notification observer
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: #selector(PostViewController.keyboardWillShown(_:)),
-            name: UIKeyboardWillShowNotification,
-            object: nil)
+                                                         selector: #selector(PostViewController.keyboardWillShown(_:)),
+                                                         name: UIKeyboardWillShowNotification,
+                                                         object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: #selector(PostViewController.keyboardWillHiden(_:)),
-            name: UIKeyboardWillHideNotification,
-            object: nil)
+                                                         selector: #selector(PostViewController.keyboardWillHiden(_:)),
+                                                         name: UIKeyboardWillHideNotification,
+                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.reachabilityChanged(_:)),
+                                                         name: Constants.General.ReachabilityChangedNotification,
+                                                         object: nil)
         
         // Initialize tableview
         self.tableView.estimatedRowHeight = 100
@@ -77,6 +82,12 @@ class PostViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.checkReachability()
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -85,6 +96,12 @@ class PostViewController: UITableViewController {
             self.replyPost(self)
         }
         self.launchReply = false
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.dismissReachabilityError()
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
