@@ -22,19 +22,26 @@ class HomeViewController: UIViewController {
     private var refreshControl = UIRefreshControl()
     private var searchButton = UIBarButtonItem()
     private var composePostButton = UIBarButtonItem()
+    private var menuView: BTNavigationDropdownMenu?
     
     var resultSearchController = UISearchController(searchResultsController: nil)
     
     var currentUser = User.currentUser()
     
-    lazy var posts = [Post]()
-    lazy var filteredPosts = [Post]()
+    // Post arrays
+    private lazy var posts = [Post]()
+    private lazy var filteredPosts = [Post]()
     
-    var inputTimer: NSTimer?
-    var searchString: String = "" // String of next search
-    var lastSearchString: String? // String of last search
-    var searchType: PostSearchType = .All
-    var hasMoreResults: Bool = false
+    // Search data
+    private var searchString: String = "" // String of next search
+    private var lastSearchString: String? // String of last search
+    private var previousType: PostSearchType = .All
+    private var searchType: PostSearchType = .All
+    var category: PostCategory?
+    
+    private var inputTimer: NSTimer?
+    private var hasMoreResults: Bool = false
+    var needResearch: Bool = false
     var selectedPostIndexPath: NSIndexPath?
     
     // Computed properties
@@ -141,6 +148,18 @@ class HomeViewController: UIViewController {
         
         self.checkReachability()
         self.checkNewPosts()
+        
+        if needResearch {
+            self.loadPosts()
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Reset search type if there is no filter
+        if self.searchType == .Filter && self.category == nil {
+            self.searchType = self.previousType
+            self.addDropdownList(updateOnly: false)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -188,24 +207,34 @@ class HomeViewController: UIViewController {
         self.postTableView.addSubview(self.refreshControl)
     }
     
-    private func addDropdownList() {
+    private func addDropdownList(updateOnly update: Bool = false) {
         // Initial a dropdown list with options
-        let optionTitles = ["All Activity", "Saved"]
-        let optionSearchTypes: [PostSearchType] = [.All, .Saved]
+        let optionTitles = ["All Activity", "Saved", "Custom Filter"]
+        let optionSearchTypes: [PostSearchType] = [.All, .Saved, .Filter]
         
         // Initial title
         guard let index = optionSearchTypes.indexOf(self.searchType), title = optionTitles[safe: index] else { return }
-        let menuView = BTNavigationDropdownMenu(navigationController: self.navigationController, title: title, items: optionTitles)
+        self.menuView = BTNavigationDropdownMenu(navigationController: self.navigationController, title: title, items: optionTitles)
         
-        // Add the dropdown list to the navigation bar
-        self.navigationItem.titleView = menuView
+        if !update {
+            // Add the dropdown list to the navigation bar
+            self.navigationItem.titleView = self.menuView
         
-        // Set action closure
-        menuView.didSelectItemAtIndexHandler = {(indexPath: Int) -> () in
-            guard let searchType = optionSearchTypes[safe: indexPath] else { return }
+            // Set action closure
+            self.menuView!.didSelectItemAtIndexHandler = {(indexPath: Int) -> () in
+                guard let searchType = optionSearchTypes[safe: indexPath] else { return }
+                
+                self.previousType = self.searchType
+                self.searchType = searchType
             
-            self.searchType = searchType
-            self.loadPosts()
+                switch searchType {
+                case .All,
+                     .Saved:
+                    self.loadPosts()
+                case .Filter:
+                    self.performSegueWithIdentifier("Filter Post", sender: self)
+                }
+            }
         }
     }
     
@@ -304,7 +333,8 @@ class HomeViewController: UIViewController {
         Post.loadPosts(limit: Constants.Query.LoadPostLimit,
                        type: self.searchType,
                        searchString: self.searchString,
-                       user: self.currentUser) { (results, error) -> Void in
+                       user: self.currentUser,
+                       category: self.category) { (results, error) -> Void in
                         self.refreshControl.endRefreshing()
                         
                         guard let posts = results as? [Post] where error == nil else { return }
@@ -328,7 +358,8 @@ class HomeViewController: UIViewController {
                        type: self.searchType,
                        cutoffTime: lastPost.updatedAt,
                        searchString: self.searchString,
-                       user: self.currentUser) { (results, error) -> Void in
+                       user: self.currentUser,
+                       category: self.category) { (results, error) -> Void in
                         self.refreshControl.endRefreshing()
                     
                         guard let posts = results as? [Post] where error == nil && posts.count > 0 else { return }
@@ -423,6 +454,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.showUserContact(_:))))
             }
         }
+        
+        // Set up tags
+        cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
+        cell.tagCollection.hidden = post.categories.count == 0
         
         // Set up buttons
         cell.isSaved = self.currentUser.savedPostsArray.contains( { $0 == post} )
@@ -520,6 +555,46 @@ extension HomeViewController: UISearchBarDelegate, UISearchResultsUpdating {
                                                                      userInfo: nil,
                                                                      repeats: false)
         }
+    }
+}
+
+
+// MARK: UICollectionView delegates
+
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let post = self.displayPosts[safe: collectionView.tag] else { return 0 }
+        
+        return post.categories.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath) as? ProfileCollectionCell,
+            post = self.displayPosts[safe: collectionView.tag],
+            tag = post.categories[safe: indexPath.row] else {
+                return ProfileCollectionCell()
+        }
+        
+        cell.cellLabel.text = tag.name
+        
+        // Use "selected" style for all tags
+        cell.style = .Selected
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        guard let post = self.displayPosts[safe: collectionView.tag], tag = post.categories[safe: indexPath.row] , text = tag.name else { return CGSizeZero }
+        
+        return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont!).width + 16, height: 20)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 8
     }
 }
 

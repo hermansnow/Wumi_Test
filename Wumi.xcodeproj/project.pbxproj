@@ -340,6 +340,7 @@
 		DF4F532F1CD30F7E009F3D2E /* EmailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */; };
 		DF4F53321CD59444009F3D2E /* PhoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F53311CD59444009F3D2E /* PhoneButton.swift */; };
 		DF4F53341CD5A967009F3D2E /* PrivateMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */; };
+		DF5AECA61D58744900FB4B84 /* PostFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF5EF15D1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */; };
@@ -872,6 +873,7 @@
 		DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmailButton.swift; path = View/EmailButton.swift; sourceTree = "<group>"; };
 		DF4F53311CD59444009F3D2E /* PhoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhoneButton.swift; path = View/PhoneButton.swift; sourceTree = "<group>"; };
 		DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivateMessageButton.swift; path = View/PrivateMessageButton.swift; sourceTree = "<group>"; };
+		DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostFilterViewController.swift; path = Controller/PostFilterViewController.swift; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenView.swift; path = View/ImageFullScreenView.swift; sourceTree = "<group>"; };
@@ -1914,9 +1916,10 @@
 			isa = PBXGroup;
 			children = (
 				DF5EF1671D33359100C9B2F2 /* HomeViewController.swift */,
-				DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */,
-				DFB612A21CA61B7800B3271B /* PostViewController.swift */,
 				DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */,
+				DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */,
+				DFB612A21CA61B7800B3271B /* PostViewController.swift */,
+				DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */,
 			);
 			name = Post;
 			sourceTree = "<group>";
@@ -2510,6 +2513,7 @@
 				B1ECD7961CCC1F4000CED9C4 /* XHBaseTableViewCell.m in Sources */,
 				DF5EF1681D33359100C9B2F2 /* HomeViewController.swift in Sources */,
 				DFA93ABA1C88FCDB00ECA503 /* ColorGradientView.swift in Sources */,
+				DF5AECA61D58744900FB4B84 /* PostFilterViewController.swift in Sources */,
 				B1ECD7671CCC1F4000CED9C4 /* XHDisplayEmotionViewController.m in Sources */,
 				DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */,
 				B1ECD7601CCC1F3F00CED9C4 /* XHPhotographyHelper.m in Sources */,

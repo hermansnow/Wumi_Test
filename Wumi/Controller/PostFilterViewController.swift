@@ -1,28 +1,26 @@
 //
-//  PostCategoryTableViewController.swift
+//  PostFilterViewController.swift
 //  Wumi
 //
-//  Created by Zhe Cheng on 3/29/16.
+//  Created by Zhe Cheng on 8/8/16.
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
 import UIKit
 
-class PostCategoryTableViewController: UITableViewController {
+class PostFilterViewController: UITableViewController {
     
-    lazy var sendButton = UIBarButtonItem()
+    lazy var searchButton = UIBarButtonItem()
     
-    var post = Post()
-    lazy var currentUser = User.currentUser()
     lazy var categories = [PostCategory]()
-    lazy var selectedCategories = [PostCategory]()
+    var selectedButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Initialize navigation bar
-        self.sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: #selector(sendPost(_:)))
-        self.navigationItem.rightBarButtonItem = self.sendButton
+        self.searchButton = UIBarButtonItem(title: "Search", style: .Done, target: self, action: #selector(searchPost(_:)))
+        self.navigationItem.rightBarButtonItem = self.searchButton
         
         // Load categories
         self.loadPostCategories()
@@ -38,11 +36,30 @@ class PostCategoryTableViewController: UITableViewController {
         return self.categories.count
     }
     
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Category"
+        default:
+            return ""
+        }
+    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostCategoryCell", forIndexPath: indexPath)
         
-        guard let category = self.categories[safe: indexPath.row] else { return cell }
+        switch indexPath.section {
+        case 0:
+            self.categoryCell(cell, forRowAtIndexPath: indexPath)
+        default:
+            break
+        }
+        
+        return cell
+    }
+    
+    private func categoryCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        guard let category = self.categories[safe: indexPath.row] else { return }
         
         cell.textLabel!.text = category.name
         
@@ -54,42 +71,32 @@ class PostCategoryTableViewController: UITableViewController {
         cell.accessoryView = checkButton
         
         cell.selectionStyle = .None
-        
-        return cell
     }
     
     // MARK: Action
     
     func selectCategory(sender: UIButton) {
-        guard let category = self.categories[safe: sender.tag] else { return }
-        
-        if sender.selected {
-            self.selectedCategories.removeObject(category)
-            sender.selected = false
-        }
-        else {
-            self.selectedCategories.append(category)
+        if !sender.selected {
+            if let button = self.selectedButton {
+                button.selected = false
+            }
+            self.selectedButton = sender
             sender.selected = true
         }
     }
     
-    func sendPost(sender: AnyObject) {
-        post.author = self.currentUser
-        post.categories = self.selectedCategories
-        
-        post.saveInBackgroundWithBlock { (success, error) in
-            guard success && error == nil else {
-                print("\(error)")
-                return
-            }
-        }
-        
+    func searchPost(sender: AnyObject) {
         // Navigate back to home view controller
-        if let postTVC = self.navigationController?.viewControllers.filter({ $0 is HomeViewController }).first {
-            self.navigationController?.popToViewController(postTVC, animated: true)
-        }
+        guard let homeVC = self.navigationController?.viewControllers.filter({ $0 is HomeViewController }).first as? HomeViewController,
+            button = self.selectedButton,
+            category = self.categories[safe: button.tag] else { return }
+        
+        homeVC.category = category
+        homeVC.needResearch = true
+            
+        self.navigationController?.popToViewController(homeVC, animated: true)
     }
-
+    
     // MARK: Help function
     private func loadPostCategories() {
         PostCategory.loadCategories { (results, error) -> Void in
@@ -100,4 +107,5 @@ class PostCategoryTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
+
 }

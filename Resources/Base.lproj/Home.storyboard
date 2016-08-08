@@ -72,7 +72,35 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="3961" y="-617.5"/>
+            <point key="canvasLocation" x="3759" y="-176"/>
+        </scene>
+        <!--Post Filter View Controller-->
+        <scene sceneID="CmP-7S-TQC">
+            <objects>
+                <tableViewController id="sM3-gh-sbQ" customClass="PostFilterViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="PYJ-2C-zuu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCategoryCell" id="BEj-QX-vjk">
+                                <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BEj-QX-vjk" id="eXD-zv-969">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="sM3-gh-sbQ" id="gMK-t5-y9G"/>
+                            <outlet property="delegate" destination="sM3-gh-sbQ" id="eLW-bu-FuX"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ymv-Qe-APP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3759" y="-1090"/>
         </scene>
         <!--EditProfileScene-->
         <scene sceneID="F8z-3G-CFS">
@@ -80,7 +108,7 @@
                 <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="EditProfileScene" id="mSl-Wh-8LE" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ed6-ju-qSY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3428.5" y="-1626"/>
+            <point key="canvasLocation" x="3448.5" y="-2420"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="KrD-DL-qqm">
@@ -180,11 +208,12 @@
                         <segue destination="AWh-E2-ChP" kind="show" identifier="Show Contact" id="WbD-ao-OOU"/>
                         <segue destination="mSl-Wh-8LE" kind="show" identifier="Edit Profile" id="HJk-D9-p7A"/>
                         <segue destination="4sw-Op-bCx" kind="show" identifier="Show Post" id="ByM-cW-MkH"/>
+                        <segue destination="sM3-gh-sbQ" kind="show" identifier="Filter Post" id="JIT-2C-rqk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eN2-Id-XlL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3040" y="-1090"/>
+            <point key="canvasLocation" x="3030" y="-1090"/>
         </scene>
         <!--New Post-->
         <scene sceneID="QBU-O6-Zuo">
@@ -210,7 +239,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="euo-Qr-vSY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3961" y="-1663"/>
+            <point key="canvasLocation" x="3759" y="-1933"/>
         </scene>
         <!--Post Category-->
         <scene sceneID="SIc-6O-CP4">
@@ -248,7 +277,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pms-5l-J9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4461" y="-1663"/>
+            <point key="canvasLocation" x="4363" y="-1933"/>
         </scene>
         <!--ContactContentScene-->
         <scene sceneID="E1s-IL-QF0">
@@ -256,7 +285,7 @@
                 <viewControllerPlaceholder storyboardIdentifier="ContactContentScene" storyboardName="Main" referencedIdentifier="ContactContentScene" id="AWh-E2-ChP" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jj0-lw-11i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3067" y="-80"/>
+            <point key="canvasLocation" x="3055" y="354"/>
         </scene>
     </scenes>
     <resources>
