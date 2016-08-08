@@ -1,18 +1,18 @@
 //
-//  PostContentTextView.swift
+//  CommentTextView.swift
 //  Wumi
 //
-//  Created by Zhe Cheng on 5/11/16.
+//  Created by JunpengLuo on 4/8/16.
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
 import UIKit
 
-class PostContentTextView: UITextView {
-    
+class CommentTextView: UITextView {
+
     // MARK: Properties
     
-    var selfUserInteractionEnabled: Bool = true // control user interaction of view itself but not subviews
+    weak var parentCell: CommentTableViewCell!
     
     // MARK: Initializers
     
@@ -34,27 +34,17 @@ class PostContentTextView: UITextView {
     
     // MARK: Help functions
     
-    private func setProperty() {
+    func setProperty() {
         self.scrollEnabled = false
         self.selectable = true
         self.editable = false
         self.dataDetectorTypes = .All
+        self.userInteractionEnabled = true
+        self.textContainer.maximumNumberOfLines = 0
         
         // Remove default margin/padding.
         self.textContainer.lineFragmentPadding = 0
         self.textContainerInset = UIEdgeInsetsZero
         self.textAlignment = .Left
-    }
-    
-    // Override hitTest function to only disable user interaction with this view but not subviews
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        let hitView = super.hitTest(point, withEvent: event)
-        
-        if hitView == self && self.selfUserInteractionEnabled == false {
-            return nil
-        }
-        else {
-            return hitView
-        }
     }
 }

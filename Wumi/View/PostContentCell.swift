@@ -132,8 +132,6 @@ class PostContentCell: UITableViewCell {
         self.authorView.detailLabel.textColor = Constants.Post.Color.ListDetailText
         
         // Set up content label
-        self.contentTextView.scrollEnabled = false
-        self.contentTextView.dataDetectorTypes = .All
         self.contentTextView.textContainer.maximumNumberOfLines = 0
         self.contentTextView.selfUserInteractionEnabled = true
         

@@ -273,22 +273,22 @@ class PostViewController: UITableViewController {
     private func cellForReply(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> CommentTableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentTableViewCell", forIndexPath: indexPath) as! CommentTableViewCell
         
-        cell.reset()
+        //cell.reset()
         
         guard let comments = self.comments, comment = comments[safe: indexPath.row] else { return cell }
         
-        if let replyToUser = comment.reply?.author?.name {
-            let content = comment.content!
-            cell.contentLabel.text = "Reply to \(replyToUser): \(content)"
-        } else {
-            cell.contentLabel.text = comment.content
+        if let content = comment.content {
+            if let reply = comment.reply, replyToUser = reply.author {
+                cell.content = NSMutableAttributedString(string: "Reply to \(replyToUser.name): \(content)")
+            }
+            else {
+                cell.content = NSMutableAttributedString(string: content)
+            }
         }
+        cell.contentTextView.parentCell = cell
+        cell.contentTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.replyComment(_:))))
         
-        cell.timeStampLabel.text = comment.createdAt.timeAgo()
-        
-        cell.contentLabel.parentCell = cell
-        cell.contentLabel.userInteractionEnabled = true
-        cell.contentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.replyComment(_:))))
+        cell.timeStamp = comment.createdAt.timeAgo()
         
         cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
         
@@ -306,6 +306,8 @@ class PostViewController: UITableViewController {
         }
         
         cell.selectionStyle = .None
+        
+        cell.delegate = self
         
         return cell
     }
@@ -340,7 +342,7 @@ class PostViewController: UITableViewController {
     
     func replyComment(recognizer: UITapGestureRecognizer) {
         
-        guard let contentLabel = recognizer.view as? CommentTextLabel else { return }
+        guard let contentLabel = recognizer.view as? CommentTextView else { return }
         guard let commentCell = contentLabel.parentCell,
             indexPath = tableView.indexPathForCell(commentCell),
             comments = self.comments,

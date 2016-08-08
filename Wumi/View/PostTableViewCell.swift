@@ -149,8 +149,6 @@ class PostTableViewCell: UITableViewCell {
         
         // Set up content text view
         self.showSummary = true
-        self.contentTextView.scrollEnabled = false
-        self.contentTextView.dataDetectorTypes = .All
         
         // Set up image view
         self.imagePreview.contentMode = .ScaleAspectFit

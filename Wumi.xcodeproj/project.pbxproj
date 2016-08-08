@@ -25,7 +25,7 @@
 		B12705AD1CE847D000BC21A7 /* ConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12705AB1CE847D000BC21A7 /* ConversationCell.xib */; };
 		B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15824021C82C40F00D314B3 /* ContactTableViewController.swift */; };
 		B16535261D5024DF00B0DA0E /* CacheSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16535251D5024DF00B0DA0E /* CacheSettingViewController.swift */; };
-		B175B2521CB872B800C95B33 /* CommentTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175B2511CB872B800C95B33 /* CommentTextLabel.swift */; };
+		B175B2521CB872B800C95B33 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175B2511CB872B800C95B33 /* CommentTextView.swift */; };
 		B1997AF61CACDADC0086F8F4 /* CityListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */; };
 		B1C922A31CACF68400335A60 /* cities.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1C922A21CACF68400335A60 /* cities.plist */; };
 		B1ECD4B61CCC1E6600CED9C4 /* AVOSCloudIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1ECD4B51CCC1E6600CED9C4 /* AVOSCloudIM.framework */; };
@@ -435,7 +435,7 @@
 		B12705AB1CE847D000BC21A7 /* ConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConversationCell.xib; path = view/ConversationCell.xib; sourceTree = "<group>"; };
 		B15824021C82C40F00D314B3 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewController.swift; path = Controller/ContactTableViewController.swift; sourceTree = "<group>"; };
 		B16535251D5024DF00B0DA0E /* CacheSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheSettingViewController.swift; path = Controller/CacheSettingViewController.swift; sourceTree = "<group>"; };
-		B175B2511CB872B800C95B33 /* CommentTextLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTextLabel.swift; path = View/CommentTextLabel.swift; sourceTree = "<group>"; };
+		B175B2511CB872B800C95B33 /* CommentTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTextView.swift; path = View/CommentTextView.swift; sourceTree = "<group>"; };
 		B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityListTableViewController.swift; path = Controller/CityListTableViewController.swift; sourceTree = "<group>"; };
 		B1C922A21CACF68400335A60 /* cities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cities.plist; sourceTree = "<group>"; };
 		B1ECD4B51CCC1E6600CED9C4 /* AVOSCloudIM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloudIM.framework; sourceTree = "<group>"; };
@@ -1989,7 +1989,7 @@
 				DFA93AC11C90DDC000ECA503 /* CustomCell */,
 				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
 				DFA077441C92A79A00E3382E /* SettingSwitch.swift */,
-				B175B2511CB872B800C95B33 /* CommentTextLabel.swift */,
+				B175B2511CB872B800C95B33 /* CommentTextView.swift */,
 				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
 				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
 				DFB612A01CA6158F00B3271B /* PostTextView.swift */,
@@ -2562,7 +2562,7 @@
 				B1ECD76D1CCC1F4000CED9C4 /* XHFileAttribute.m in Sources */,
 				DF7E3B4D1C923C0A000E8741 /* ProfessionListViewController.swift in Sources */,
 				B1ECD7581CCC1F3F00CED9C4 /* UIScrollView+XHkeyboardControl.m in Sources */,
-				B175B2521CB872B800C95B33 /* CommentTextLabel.swift in Sources */,
+				B175B2521CB872B800C95B33 /* CommentTextView.swift in Sources */,
 				DF7E3B4B1C92324D000E8741 /* Profession.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
 				DF0180711D3DF72300935A60 /* Extension+UIResponder.swift in Sources */,
