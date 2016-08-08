@@ -59,8 +59,7 @@ class PushNotification : AVObject, AVSubclassing  {
                 let pushMiddleMessage = self.isPostAuthor ? " replied to your post " : " replied to your saved post "
                 
                 let data: [NSObject : AnyObject] = [
-                    "alert" : self.fromUser!.name! + pushMiddleMessage + self.post!.title!,
-                    "badge" : "Increment"
+                    "alert" : self.fromUser!.name! + pushMiddleMessage + self.post!.title!
                 ]
                 
                 let push: AVPush = AVPush()
