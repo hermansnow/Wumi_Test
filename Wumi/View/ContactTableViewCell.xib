@@ -26,16 +26,16 @@
                         <rect key="frame" x="64" y="32" width="716" height="40"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="pCl-p8-tcp">
-                                <rect key="frame" x="0.0" y="19" width="567" height="2"/>
+                                <rect key="frame" x="0.0" y="19" width="556" height="2"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0j6-a9-yoe">
-                                        <rect key="frame" x="0.0" y="0.0" width="567" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="556" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20392156862745098" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smb-ZU-Hgl">
-                                        <rect key="frame" x="0.0" y="2" width="567" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="2" width="556" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20392156862745098" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -43,10 +43,10 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1YY-NA-pdu" customClass="FavoriteButton" customModule="Wumi" customModuleProvider="target">
-                                <rect key="frame" x="575" y="13.5" width="13" height="13"/>
+                                <rect key="frame" x="564" y="8" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="1YY-NA-pdu" secondAttribute="height" multiplier="1:1" id="AXk-RC-npg"/>
-                                    <constraint firstAttribute="height" constant="13" id="e23-aS-ZnE"/>
+                                    <constraint firstAttribute="height" constant="24" id="e23-aS-ZnE"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="Star"/>
                             </button>

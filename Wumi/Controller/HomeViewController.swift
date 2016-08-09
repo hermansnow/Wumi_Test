@@ -165,6 +165,7 @@ class HomeViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
+        self.dismissInputView()
         self.dismissReachabilityError()
     }
     
@@ -290,10 +291,9 @@ class HomeViewController: UIViewController {
     }
     
     func showSearchBar(sender: AnyObject) {
-        self.currentUserBanner.hidden = true
         self.navigationItem.setRightBarButtonItems(nil, animated: true)
+        self.resultSearchController.searchBar.showsCancelButton = false
         self.postTableView.tableHeaderView = self.resultSearchController.searchBar
-        self.resultSearchController.searchBar.becomeFirstResponder()
     }
     
     func composePost(sender: AnyObject) {

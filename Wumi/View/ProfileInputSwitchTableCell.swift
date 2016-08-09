@@ -39,7 +39,7 @@ class ProfileInputSwitchTableCell: ProfileTableCell {
         self.statusSwitch.layer.cornerRadius = 16
         self.statusSwitch.onTintColor = Constants.General.Color.ThemeColor
         self.statusSwitch.backgroundColor = Constants.General.Color.BackgroundColor
-        self.statusSwitch.transform = CGAffineTransformMakeScale(42.0 / 51.0, 22.0 / 31.0)
+        self.statusSwitch.transform = CGAffineTransformMakeScale(24.0 / 31.0, 24.0 / 31.0)
         
         self.reset()
     }
