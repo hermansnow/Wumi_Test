@@ -10,9 +10,13 @@ import UIKit
 
 class InvitationCodeViewController: UIViewController {
     
+    @IBOutlet weak var logoView: UIView!
+    @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var invitationCodeTextField: DataInputTextField!
+    @IBOutlet weak var cancelButton: SystemButton!
 
     var invitationCode = InvitationCode()
+    private lazy var maskLayer = CAShapeLayer() // Mask layer for logo
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +24,24 @@ class InvitationCodeViewController: UIViewController {
         // Hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
+        // Set layout and colors
+        self.logoView.layer.insertSublayer(self.maskLayer, below: self.logoImageView.layer)
+        self.logoView.backgroundColor = Constants.General.Color.ThemeColor
+        self.maskLayer.fillColor = Constants.SignIn.Color.MaskColor.CGColor
+        
+        // Add logo shadow
+        self.logoImageView.layer.shadowColor = Constants.General.Color.ThemeColor.CGColor
+        self.logoImageView.layer.shadowOffset = Constants.SignIn.Size.ShadowOffset
+        self.logoImageView.layer.shadowOpacity = Constants.SignIn.Value.shadowOpacity
+        self.logoImageView.layer.shadowRadius = Constants.SignIn.Value.shadowRadius
+        
+        // Set text fields
+        self.invitationCodeTextField.inputTextField.tag = 1
+        
+        // Set cancel button
+        self.cancelButton.recommanded = false
+        
+        // Add delegates
         self.invitationCodeTextField.delegate = self
     }
     
@@ -31,6 +53,14 @@ class InvitationCodeViewController: UIViewController {
     // All codes based on display frames should be called here after layouting subviews
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        // Redraw mask layer
+        let maskHeight = self.logoView.bounds.height * Constants.SignIn.Proportion.MaskHeightWithParentView
+        let maskWidth = maskHeight * Constants.SignIn.Proportion.MaskWidthWithHeight
+        self.maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskWidth, height: maskHeight),
+                                           cornerRadius: maskWidth / 2).CGPath
+        self.maskLayer.position = CGPoint(x: (self.logoView.bounds.width - maskWidth) / 2,
+                                          y: (self.logoView.bounds.height - maskHeight) / 2)
         
         // Redraw DataInput Text Field
         invitationCodeTextField.drawUnderlineBorder()
