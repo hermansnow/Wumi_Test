@@ -18,7 +18,7 @@ class ChatListViewController: CDChatListVC, CDChatListVCDelegate {
         
         self.chatListDelegate = self
         
-        let addItem = UIBarButtonItem.init(title: "Compose", style: .Plain, target: self, action: #selector(ChatListViewController.addButtonClicked))
+        let addItem = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: #selector(ChatListViewController.addButtonClicked))
         self.navigationItem.rightBarButtonItem = addItem
   
     }
