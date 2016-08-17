@@ -51,7 +51,7 @@ static CGFloat kLZHorizontalLittleSpacing = 5;
         _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_statusImageView.frame) + kLZHorizontalLittleSpacing, 0, self.frame.size.width - CGRectGetMaxX(_statusImageView.frame) - kLZHorizontalSpacing - kLZHorizontalLittleSpacing, kLZStatusViewHight)];
         _statusLabel.font = [UIFont systemFontOfSize:15.0];
         _statusLabel.textColor = [UIColor grayColor];
-        _statusLabel.text = @"会话断开，请检查网络";
+        _statusLabel.text = @"Network connection lost.";
     }
     return _statusLabel;
 }

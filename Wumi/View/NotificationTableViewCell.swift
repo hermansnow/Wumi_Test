@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import HexColors
 
 class NotificationTableViewCell: UITableViewCell {
     
@@ -21,6 +22,11 @@ class NotificationTableViewCell: UITableViewCell {
         self.timeStampLabel.text = nil
         self.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         self.backgroundColor = UIColor.clearColor()
+        self.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16)
+        self.contentLabel.textColor = UIColor.init(hexString: "#333435")
+        self.contentLabel.font = UIFont(name: ".SFUIText-Light", size: 16)
+        self.timeStampLabel.textColor = UIColor.init(hexString: "#A2A2A2")
+        self.timeStampLabel.font = UIFont(name: ".SFUIText-Regular", size: 14)
     }
     
 }

@@ -20,102 +20,143 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tsO-FS-pM0">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="558"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="556"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-5S-Eal">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="16"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMn-bf-4Bj">
-                                        <rect key="frame" x="0.0" y="16" width="375" height="461"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nHB-Ny-i26" userLabel="Logo View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="192"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="izv-Vt-sbK">
-                                                <rect key="frame" x="67" y="20" width="240" height="60"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="pDI-HU-cez">
+                                                <rect key="frame" x="135.5" y="44" width="103" height="103.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="pDI-HU-cez" secondAttribute="height" multiplier="1:1" id="19e-aP-gFI"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="pDI-HU-cez" firstAttribute="centerY" secondItem="nHB-Ny-i26" secondAttribute="centerY" id="BqU-1D-oLI"/>
+                                            <constraint firstItem="pDI-HU-cez" firstAttribute="centerX" secondItem="nHB-Ny-i26" secondAttribute="centerX" id="IuZ-ts-OIT"/>
+                                            <constraint firstAttribute="width" secondItem="nHB-Ny-i26" secondAttribute="height" multiplier="47:22" id="pX6-Qr-tod"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="pX6-Qr-tod"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hk7-Br-BgE">
+                                        <rect key="frame" x="0.0" y="192" width="375" height="44"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ITG-xi-72h">
+                                        <rect key="frame" x="0.0" y="236" width="375" height="206"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7Zq-Jb-Dj4">
+                                                <rect key="frame" x="36" y="0.0" width="302" height="206"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please verify the invitation code:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wG-Z6-9kJ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="240" height="0.0"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sr6-Uh-f0v" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="11" width="240" height="49"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </view>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="whF-mk-ksX">
+                                                        <rect key="frame" x="0.0" y="0.0" width="302" height="206"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eIl-v6-J02" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="302" height="206"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a0l-V7-gxp">
+                                                                        <rect key="frame" x="0.0" y="8" width="302" height="50"/>
+                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    </view>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Invitation Code"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="240" id="Tgo-Gk-1qd"/>
+                                                        </constraints>
+                                                        <variation key="default">
+                                                            <mask key="constraints">
+                                                                <exclude reference="Tgo-Gk-1qd"/>
+                                                            </mask>
+                                                        </variation>
+                                                    </stackView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="60" id="25b-lq-IeR"/>
-                                                    <constraint firstAttribute="width" constant="240" id="S4T-vz-LIu"/>
-                                                    <constraint firstItem="Sr6-Uh-f0v" firstAttribute="top" secondItem="izv-Vt-sbK" secondAttribute="top" constant="11" id="VPo-0F-fIO"/>
+                                                    <constraint firstItem="whF-mk-ksX" firstAttribute="width" secondItem="7Zq-Jb-Dj4" secondAttribute="width" id="HxA-Mf-ohd"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="izv-Vt-sbK" firstAttribute="centerX" secondItem="vMn-bf-4Bj" secondAttribute="centerX" id="0Xe-Wp-A8L"/>
-                                            <constraint firstItem="izv-Vt-sbK" firstAttribute="top" secondItem="vMn-bf-4Bj" secondAttribute="top" constant="20" id="j5J-Eo-5El"/>
+                                            <constraint firstItem="7Zq-Jb-Dj4" firstAttribute="leading" secondItem="ITG-xi-72h" secondAttribute="leading" id="8qF-yZ-5JT"/>
+                                            <constraint firstItem="7Zq-Jb-Dj4" firstAttribute="width" secondItem="ITG-xi-72h" secondAttribute="width" multiplier="290:360" id="CsZ-58-a8T"/>
+                                            <constraint firstAttribute="bottom" secondItem="7Zq-Jb-Dj4" secondAttribute="bottom" id="EQK-Z6-VfY"/>
+                                            <constraint firstItem="7Zq-Jb-Dj4" firstAttribute="centerY" secondItem="ITG-xi-72h" secondAttribute="centerY" id="UhM-oa-RND"/>
+                                            <constraint firstAttribute="trailing" secondItem="7Zq-Jb-Dj4" secondAttribute="trailing" id="XUF-fi-yqk"/>
+                                            <constraint firstItem="7Zq-Jb-Dj4" firstAttribute="top" secondItem="ITG-xi-72h" secondAttribute="top" id="kUb-Fy-AVk"/>
+                                            <constraint firstItem="7Zq-Jb-Dj4" firstAttribute="centerX" secondItem="ITG-xi-72h" secondAttribute="centerX" id="wRW-Dg-v8w"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="XUF-fi-yqk"/>
+                                                <exclude reference="8qF-yZ-5JT"/>
+                                            </mask>
+                                        </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="riH-Yh-hdi">
-                                        <rect key="frame" x="0.0" y="477" width="375" height="81"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XyK-fp-xuy">
+                                        <rect key="frame" x="0.0" y="442" width="375" height="114"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ku7-bO-Xln">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="61"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="bVe-lL-cTf">
+                                                <rect key="frame" x="37" y="42" width="302" height="44"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNh-Tw-8TD" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
-                                                        <rect key="frame" x="138" y="0.0" width="100" height="30"/>
-                                                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="100" id="KkW-Sx-BIp"/>
-                                                            <constraint firstAttribute="height" constant="30" id="frm-Ld-LBy"/>
-                                                        </constraints>
-                                                        <state key="normal" title="Verify">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CgU-tj-uMB" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="131" height="44"/>
+                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <state key="normal" title="Cancel">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="verifyCode:" destination="JHq-b6-pjD" eventType="touchUpInside" id="gV2-Vn-sbr"/>
+                                                            <action selector="ReturnSignIn:" destination="JHq-b6-pjD" eventType="touchUpInside" id="ibo-I2-Xpp"/>
+                                                            <action selector="cancel:" destination="GQw-5c-dGe" eventType="touchUpInside" id="FAt-4C-C18"/>
                                                         </connections>
                                                     </button>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BKO-le-fla">
-                                                        <rect key="frame" x="103" y="35" width="171" height="26"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" misplaced="YES" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5S-hD-5T7">
-                                                                <rect key="frame" x="0.0" y="0.0" width="135" height="26"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBX-bx-J5D">
-                                                                <rect key="frame" x="135" y="0.0" width="36" height="26"/>
-                                                                <accessibility key="accessibilityConfiguration">
-                                                                    <accessibilityTraits key="traits" link="YES"/>
-                                                                </accessibility>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                                <state key="normal" title="Sign in"/>
-                                                                <connections>
-                                                                    <action selector="ReturnSignIn:" destination="JHq-b6-pjD" eventType="touchUpInside" id="bxz-EV-l2P"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                    </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KfM-1c-yif" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="171" y="0.0" width="131" height="44"/>
+                                                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" title="Verify">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="signUpUser:" destination="GQw-5c-dGe" eventType="touchUpInside" id="MH6-1a-ref"/>
+                                                            <action selector="verifyCode:" destination="JHq-b6-pjD" eventType="touchUpInside" id="bDg-ey-a6k"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="G8N-7b-bsf"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="Ku7-bO-Xln" firstAttribute="top" secondItem="riH-Yh-hdi" secondAttribute="top" id="FGf-0d-0mb"/>
-                                            <constraint firstAttribute="trailing" secondItem="Ku7-bO-Xln" secondAttribute="trailing" id="FOv-AD-DtB"/>
-                                            <constraint firstAttribute="bottom" secondItem="Ku7-bO-Xln" secondAttribute="bottom" constant="20" id="MJ4-Jc-StA"/>
-                                            <constraint firstItem="Ku7-bO-Xln" firstAttribute="leading" secondItem="riH-Yh-hdi" secondAttribute="leading" id="eK8-kj-1TE"/>
+                                            <constraint firstAttribute="height" constant="114" id="QtZ-Vb-VD7"/>
+                                            <constraint firstItem="bVe-lL-cTf" firstAttribute="centerX" secondItem="XyK-fp-xuy" secondAttribute="centerX" id="TUK-9S-c1A"/>
+                                            <constraint firstItem="bVe-lL-cTf" firstAttribute="centerX" secondItem="XyK-fp-xuy" secondAttribute="centerX" id="Yiw-gx-i7u"/>
+                                            <constraint firstAttribute="bottom" secondItem="bVe-lL-cTf" secondAttribute="bottom" constant="28" id="sTn-9q-COR"/>
+                                            <constraint firstItem="bVe-lL-cTf" firstAttribute="width" secondItem="XyK-fp-xuy" secondAttribute="width" multiplier="290:360" id="wSB-aZ-7Um"/>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="Hk7-Br-BgE" firstAttribute="height" secondItem="tsO-FS-pM0" secondAttribute="height" multiplier="50:640" id="6oZ-Q0-1wS"/>
+                                    <constraint firstItem="nHB-Ny-i26" firstAttribute="height" secondItem="tsO-FS-pM0" secondAttribute="height" multiplier="220:640" id="rfh-Wo-3ye"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="tsO-FS-pM0" secondAttribute="bottom" constant="1" id="aAp-8S-Yxk"/>
+                            <constraint firstAttribute="bottom" secondItem="tsO-FS-pM0" secondAttribute="bottom" constant="3" id="aAp-8S-Yxk"/>
                             <constraint firstAttribute="trailing" secondItem="tsO-FS-pM0" secondAttribute="trailing" id="ahi-vH-Em8"/>
                             <constraint firstItem="tsO-FS-pM0" firstAttribute="top" secondItem="Sp1-Ej-zDv" secondAttribute="bottom" id="bPI-ng-gK2"/>
                             <constraint firstItem="tsO-FS-pM0" firstAttribute="leading" secondItem="NcS-qe-PKa" secondAttribute="leading" id="tvL-da-bhv"/>
@@ -126,7 +167,10 @@
                     <navigationItem key="navigationItem" title="Invitation Code" id="ceG-Bj-MUJ"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="invitationCodeTextField" destination="Sr6-Uh-f0v" id="LDt-pb-WAk"/>
+                        <outlet property="cancelButton" destination="CgU-tj-uMB" id="22v-Ms-pSE"/>
+                        <outlet property="invitationCodeTextField" destination="eIl-v6-J02" id="xeC-Yg-Bq7"/>
+                        <outlet property="logoImageView" destination="pDI-HU-cez" id="Ae4-S6-95O"/>
+                        <outlet property="logoView" destination="nHB-Ny-i26" id="7UP-5o-s69"/>
                         <segue destination="GQw-5c-dGe" kind="show" identifier="Show New Account Form" id="LnE-nh-zfK"/>
                     </connections>
                 </viewController>

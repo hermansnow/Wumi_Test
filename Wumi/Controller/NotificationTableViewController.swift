@@ -8,6 +8,7 @@
 
 import UIKit
 import FormatterKit
+import HexColors
 
 class NotificationTableViewController: UITableViewController {
     
@@ -42,6 +43,7 @@ class NotificationTableViewController: UITableViewController {
         // Initialize tableview
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.tableView.separatorStyle = .SingleLine
+        self.tableView.separatorColor = UIColor.init(hexString: "#D5D5D5")
         self.tableView.backgroundColor = UIColor.whiteColor()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 50
