@@ -29,6 +29,7 @@ struct Constants {
             static let MaskColor = UIColor(white: 1.0, alpha: 0.9)
             static let LightMaskColor = UIColor(white: 1.0, alpha: 0.6)
             static let DarkMaskColor = UIColor(white: 0.0, alpha: 0.6)
+            static let ProgressColor = UIColor(hexString: "#00bfff")
         }
         
         struct Font {

@@ -11,6 +11,10 @@ import WebKit
 
 class WebFullScreenViewController: UIViewController {
 
+    private var progressBar = UIProgressView()
+    private var progressTimer = NSTimer()
+    private var isFinished: Bool = false
+    
     var url: NSURL? {
         didSet {
             self.loadUrl()
@@ -42,7 +46,17 @@ class WebFullScreenViewController: UIViewController {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "More"), style: .Plain, target: self, action: #selector(WebFullScreenViewController.displayShareSheet(_:)))
         
+        self.addProgressBar()
+        
         self.loadUrl()
+    }
+    
+    private func addProgressBar() {
+        self.progressBar = UIProgressView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 50))
+        self.progressBar.progress = 0.0
+        self.progressBar.tintColor = Constants.General.Color.ProgressColor
+        
+        self.view.addSubview(self.progressBar)
     }
     
     // MARK: Help functions
@@ -99,6 +113,39 @@ class WebFullScreenViewController: UIViewController {
 // MARK: WKNavigation delegate
 
 extension WebFullScreenViewController:  WKNavigationDelegate {
+    func webView(webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        self.progressBar.progress = 0.0
+        self.isFinished = false
+        self.progressTimer = NSTimer.scheduledTimerWithTimeInterval(1.0/60,
+                                                                    target: self,
+                                                                    selector: #selector(self.progressTimerCallBack),
+                                                                    userInfo: nil,
+                                                                    repeats: true)
+    }
+    
+    func webView(webView: WKWebView, didCommitNavigation navigation: WKNavigation!) {
+        self.isFinished = true
+    }
+    
+    // Update progress bar. The progress bar will stay at 95% if the web is still in loading after 0.9 second.
+    func progressTimerCallBack() {
+        if isFinished {
+            if self.progressBar.progress >= 1 {
+                self.progressBar.hidden = true
+                self.progressTimer.invalidate()
+            }
+            else {
+                self.progressBar.progress += 0.1
+            }
+        }
+        else {
+            self.progressBar.progress += 0.05
+            if self.progressBar.progress >= 0.95 {
+                self.progressBar.progress = 0.95
+            }
+        }
+    }
+    
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
         // Update web view controller's navigation bar title with page title
         if let navigationController = self.navigationController, topItem = navigationController.navigationBar.topItem {

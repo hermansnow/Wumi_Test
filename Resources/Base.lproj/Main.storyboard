@@ -25,8 +25,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nHB-Ny-i26" userLabel="Logo View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="192"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="pDI-HU-cez">
-                                                <rect key="frame" x="135.5" y="44" width="103" height="103.5"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="pDI-HU-cez">
+                                                <rect key="frame" x="135" y="43.5" width="104" height="104.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="pDI-HU-cez" secondAttribute="height" multiplier="1:1" id="19e-aP-gFI"/>
                                                 </constraints>
@@ -48,20 +48,20 @@
                                         <rect key="frame" x="0.0" y="192" width="375" height="44"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ITG-xi-72h">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITG-xi-72h">
                                         <rect key="frame" x="0.0" y="236" width="375" height="206"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7Zq-Jb-Dj4">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7Zq-Jb-Dj4">
                                                 <rect key="frame" x="36" y="0.0" width="302" height="206"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="whF-mk-ksX">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="whF-mk-ksX">
                                                         <rect key="frame" x="0.0" y="0.0" width="302" height="206"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eIl-v6-J02" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eIl-v6-J02" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="302" height="206"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a0l-V7-gxp">
-                                                                        <rect key="frame" x="0.0" y="8" width="302" height="50"/>
+                                                                        <rect key="frame" x="-91" y="4" width="37" height="74"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </view>
                                                                 </subviews>
@@ -98,8 +98,8 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="XUF-fi-yqk"/>
                                                 <exclude reference="8qF-yZ-5JT"/>
+                                                <exclude reference="XUF-fi-yqk"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -723,7 +723,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPn-RR-0Ek">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="191"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="OE2-Ai-BLg">
                                                 <rect key="frame" x="135" y="44" width="104" height="104"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="OE2-Ai-BLg" secondAttribute="height" multiplier="1:1" id="36G-u2-Qso"/>
@@ -750,14 +750,14 @@
                                         <rect key="frame" x="0.0" y="235" width="375" height="142"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kV-ts-7dC" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="37" y="0.0" width="302" height="65"/>
+                                                <rect key="frame" x="36.5" y="0.0" width="302" height="64.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gj1-Ez-EN1" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
-                                                <rect key="frame" x="37" y="78" width="302" height="65"/>
+                                                <rect key="frame" x="36.5" y="77.5" width="302" height="64.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
@@ -1555,8 +1555,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Current Cache Size: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUw-zS-yWb">
-                                <rect key="frame" x="20" y="72" width="157" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Cache Size: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUw-zS-yWb">
+                                <rect key="frame" x="16" y="72" width="157" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Q47-PJ-B03"/>
                                     <constraint firstAttribute="width" constant="157" id="wSm-eZ-6AV"/>
@@ -1565,8 +1565,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Calculating..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Nh-I4-4HX">
-                                <rect key="frame" x="232" y="72" width="123" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calculating..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Nh-I4-4HX">
+                                <rect key="frame" x="236" y="72" width="123" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="aR1-Kg-oYe"/>
                                     <constraint firstAttribute="width" constant="123" id="kgd-XG-Kcw"/>
@@ -1586,8 +1586,8 @@
                                     <action selector="clearCache:" destination="0BQ-Lj-wga" eventType="touchUpInside" id="RIm-zu-6fx"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Large Cache Size: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OSg-2V-NW4">
-                                <rect key="frame" x="20" y="110" width="157" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large Cache Size: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OSg-2V-NW4">
+                                <rect key="frame" x="16" y="110" width="157" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Dem-si-snJ"/>
                                     <constraint firstAttribute="width" constant="157" id="Xzb-3P-i02"/>
@@ -1596,8 +1596,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Calculating..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pb3-6R-FRo">
-                                <rect key="frame" x="232" y="110" width="123" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calculating..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pb3-6R-FRo">
+                                <rect key="frame" x="236" y="110" width="123" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="al7-1R-TAH"/>
                                     <constraint firstAttribute="width" constant="123" id="juh-cQ-81a"/>
