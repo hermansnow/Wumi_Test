@@ -31,23 +31,21 @@ class PostTableViewCell: UITableViewCell {
         set {
             if newValue {
                 self.contentTextView.textContainer.maximumNumberOfLines = 3
-                self.contentTextView.selfUserInteractionEnabled = false
             }
             else {
                 self.contentTextView.textContainer.maximumNumberOfLines = 0
-                self.contentTextView.selfUserInteractionEnabled = true
             }
         }
     }
     
-    var title: NSMutableAttributedString? {
+    var title: String? {
         get {
-            guard let attributedTitle = self.titleLabel.attributedText else { return nil }
-            
-            return NSMutableAttributedString(attributedString: attributedTitle)
+            return self.titleLabel.text
         }
         set {
-            if let attributeContent = newValue {
+            if let title = newValue {
+                let attributeContent = NSMutableAttributedString(string: title)
+                
                 attributeContent.addAttribute(NSForegroundColorAttributeName,
                                               value: Constants.General.Color.TextColor,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
@@ -58,30 +56,33 @@ class PostTableViewCell: UITableViewCell {
                 self.titleLabel.attributedText = attributeContent
             }
             else {
-                self.titleLabel.attributedText = newValue
+                self.titleLabel.attributedText = nil
             }
         }
     }
     
-    var content: NSMutableAttributedString? {
+    var content: String? {
         get {
-            guard let attributedContent = self.contentTextView.attributedText else { return nil }
-        
-            return NSMutableAttributedString(attributedString: attributedContent)
+            return self.contentTextView.text
         }
         set {
-            if let attributeContent = newValue {
+            if let content = newValue {
+                let attributeContent = NSMutableAttributedString(string: content)
+                
                 attributeContent.addAttribute(NSForegroundColorAttributeName,
                                               value: Constants.General.Color.TextColor,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
                 attributeContent.addAttribute(NSFontAttributeName,
                                               value: Constants.Post.Font.ListContent!,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                
                 self.highlightString(attributeContent)
+                
                 self.contentTextView.attributedText = attributeContent
+                self.contentTextView.replaceLink()
             }
             else {
-                self.contentTextView.attributedText = newValue
+                self.contentTextView.attributedText = nil
             }
         }
     }
@@ -150,6 +151,9 @@ class PostTableViewCell: UITableViewCell {
         
         // Set up content text view
         self.showSummary = true
+        self.contentTextView.selfUserInteractionEnabled = false
+        self.contentTextView.dataDetectorTypes = .None
+        self.contentTextView.linkTextAttributes = [NSForegroundColorAttributeName: Constants.General.Color.TextColor]
         
         // Set up image view
         self.imagePreview.contentMode = .ScaleAspectFit
@@ -193,7 +197,7 @@ class PostTableViewCell: UITableViewCell {
         self.tagCollection.reloadData()
     }
     
-    func highlightString(attributeString: NSMutableAttributedString?) {
+    private func highlightString(attributeString: NSMutableAttributedString?) {
         guard let keywords = self.highlightedString where keywords.characters.count > 0, let attribute = attributeString else { return }
         
         do {

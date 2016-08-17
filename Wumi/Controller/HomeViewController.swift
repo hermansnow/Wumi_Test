@@ -413,15 +413,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.highlightedString = self.searchString
         
         if let title = post.title where title.characters.count > 0 {
-            cell.title = NSMutableAttributedString(string: title)
+            cell.title = title
         }
         else {
-            cell.title = NSMutableAttributedString(string: "No Title")
+            cell.title = "No Title"
         }
         
-        if let content = post.content {
-            cell.content = NSMutableAttributedString(string: content)
-        }
+        cell.content = post.content
         
         // Load preview image
         cell.imagePreview.hidden = post.mediaThumbnails.count == 0

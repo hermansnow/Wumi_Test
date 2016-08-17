@@ -224,15 +224,13 @@ class PostViewController: UITableViewController {
         guard let post = self.post else { return self.postCell }
         
         if let title = post.title where title.characters.count > 0 {
-            self.postCell.title = NSMutableAttributedString(string: title)
+            self.postCell.title = title
         }
         else {
-            self.postCell.title = NSMutableAttributedString(string: "No Title")
+            self.postCell.title = "No Title"
         }
         
-        if let content = post.content {
-            self.postCell.content = NSMutableAttributedString(string: content)
-        }
+        self.postCell.content = post.content
         
         if post.mediaThumbnails.count > 0 {
             self.postCell.hideImageView = false
@@ -278,11 +276,11 @@ class PostViewController: UITableViewController {
         guard let comments = self.comments, comment = comments[safe: indexPath.row] else { return cell }
         
         if let content = comment.content {
-            if let reply = comment.reply, replyToUser = reply.author {
-                cell.content = NSMutableAttributedString(string: "Reply to \(replyToUser.name): \(content)")
+            if let reply = comment.reply, replyToUser = reply.author, name = replyToUser.name {
+                cell.content = "Reply to \(name): \(content)"
             }
             else {
-                cell.content = NSMutableAttributedString(string: content)
+                cell.content = content
             }
         }
         cell.contentTextView.parentCell = cell
@@ -545,7 +543,7 @@ extension PostViewController: KIImagePagerDelegate {
 extension PostViewController: UITextViewDelegate {
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
         // Launch application if it can be handled by any app installed
-        if URL.willOpen() {
+        if URL.willOpenInApp() {
             UIApplication.sharedApplication().openURL(URL)
         }
         // Otherwise, request it in web viewer

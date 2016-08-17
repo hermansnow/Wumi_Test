@@ -24,14 +24,14 @@ class PostContentCell: UITableViewCell {
     
     // MARK: Properties
     
-    var title: NSMutableAttributedString? {
+    var title: String? {
         get {
-            guard let attributedTitle = self.titleLabel.attributedText else { return nil }
-            
-            return NSMutableAttributedString(attributedString: attributedTitle)
+            return self.titleLabel.text
         }
         set {
-            if let attributeContent = newValue {
+            if let title = newValue {
+                let attributeContent = NSMutableAttributedString(string: title)
+                
                 attributeContent.addAttribute(NSForegroundColorAttributeName,
                                               value: Constants.General.Color.TextColor,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
@@ -41,19 +41,19 @@ class PostContentCell: UITableViewCell {
                 self.titleLabel.attributedText = attributeContent
             }
             else {
-                self.titleLabel.attributedText = newValue
+                self.titleLabel.attributedText = nil
             }
         }
     }
     
-    var content: NSMutableAttributedString? {
+    var content: String? {
         get {
-            guard let attributedContent = self.contentTextView.attributedText else { return nil }
-            
-            return NSMutableAttributedString(attributedString: attributedContent)
+            return self.contentTextView.text
         }
         set {
-            if let attributeContent = newValue {
+            if let content = newValue {
+                let attributeContent = NSMutableAttributedString(string: content)
+                
                 attributeContent.addAttribute(NSForegroundColorAttributeName,
                                               value: Constants.General.Color.TextColor,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
@@ -61,9 +61,11 @@ class PostContentCell: UITableViewCell {
                                               value: Constants.Post.Font.ListContent!,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
                 self.contentTextView.attributedText = attributeContent
+                
+                self.contentTextView.replaceLink()
             }
             else {
-                self.contentTextView.attributedText = newValue
+                self.contentTextView.attributedText = nil
             }
         }
     }

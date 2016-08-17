@@ -341,6 +341,7 @@
 		DF4F53321CD59444009F3D2E /* PhoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F53311CD59444009F3D2E /* PhoneButton.swift */; };
 		DF4F53341CD5A967009F3D2E /* PrivateMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */; };
 		DF5AECA61D58744900FB4B84 /* PostFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */; };
+		DF5AECA81D6434E800FB4B84 /* Extension+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5AECA71D6434E800FB4B84 /* Extension+UITextView.swift */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF5EF15D1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */; };
@@ -874,6 +875,7 @@
 		DF4F53311CD59444009F3D2E /* PhoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhoneButton.swift; path = View/PhoneButton.swift; sourceTree = "<group>"; };
 		DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivateMessageButton.swift; path = View/PrivateMessageButton.swift; sourceTree = "<group>"; };
 		DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostFilterViewController.swift; path = Controller/PostFilterViewController.swift; sourceTree = "<group>"; };
+		DF5AECA71D6434E800FB4B84 /* Extension+UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+UITextView.swift"; path = "Supporting Files/Extensions/Extension+UITextView.swift"; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenView.swift; path = View/ImageFullScreenView.swift; sourceTree = "<group>"; };
@@ -1882,6 +1884,7 @@
 				DF01806C1D3DF6C200935A60 /* Extension+UIImageView.swift */,
 				DF0180701D3DF72300935A60 /* Extension+UIResponder.swift */,
 				DF0180721D3DF75100935A60 /* Extension+UITextField.swift */,
+				DF5AECA71D6434E800FB4B84 /* Extension+UITextView.swift */,
 				DF01806E1D3DF6F300935A60 /* Extension+UIViewController.swift */,
 			);
 			name = Extensions;
@@ -2467,6 +2470,7 @@
 				B1ECD78D1CCC1F4000CED9C4 /* SETextSelectionView.m in Sources */,
 				B1ECD6A81CCC1F3F00CED9C4 /* CDMessageHelper.m in Sources */,
 				DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */,
+				DF5AECA81D6434E800FB4B84 /* Extension+UITextView.swift in Sources */,
 				DF0180841D4882BF00935A60 /* LoadingIndicatorView.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */,

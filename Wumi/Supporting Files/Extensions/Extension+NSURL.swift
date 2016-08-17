@@ -10,11 +10,8 @@ import Foundation
 
 extension NSURL {
     
-    func willOpen() -> Bool {
+    func willOpenInApp() -> Bool {
         let urlString = self.absoluteString
-        
-        print(self)
-        print(self.scheme)
         
         // iTunes: App Store link: [itunes.apple.com]
         if urlString.isMatch("\\/\\/itunes\\.apple\\.com\\/", options: [.CaseInsensitive]) && UIApplication.sharedApplication().canOpenURL(self) {
