@@ -435,14 +435,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.content = post.content
         
-        // Load preview image
-        cell.imagePreview.hidden = post.mediaThumbnails.count == 0
+        // Load preview image from attachment media
+        cell.imagePreview.hidden = post.mediaThumbnails.count == 0 && cell.previewImage == nil
         if !cell.imagePreview.hidden {
             post.loadFirstThumbnailWithBlock { (image, error) in
-                guard error == nil else {
-                    print(error.localizedDescription)
-                    return
-                }
+                guard error == nil else { return }
+                
                 cell.previewImage = image.scaleToHeight(100)
             }
         }

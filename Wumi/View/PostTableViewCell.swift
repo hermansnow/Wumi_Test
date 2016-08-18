@@ -79,6 +79,7 @@ class PostTableViewCell: UITableViewCell {
                 self.highlightString(attributeContent)
                 
                 self.contentTextView.attributedText = attributeContent
+                self.previewImage = self.contentTextView.linkImages.first // Add the first Open Graphic metadata image as the preview image
                 self.contentTextView.replaceLink()
             }
             else {

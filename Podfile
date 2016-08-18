@@ -34,4 +34,6 @@ target 'Wumi' do
     pod 'ReachabilitySwift'
     
     pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
+    
+    pod 'Ji', '~> 1.2.0'
 end

@@ -25,11 +25,11 @@ extension UITextView {
             let urlImageString = NSMutableAttributedString(attributedString: NSAttributedString(attachment: textAttachment))
             
             // Add link description based on url
-            if url.willOpenInApp() {
-                urlImageString.appendAttributedString(NSAttributedString(string: " App Link"))
+            if let app = url.willOpenInApp() {
+                urlImageString.appendAttributedString(NSAttributedString(string: " \(app)"))
             }
             else {
-                urlImageString.appendAttributedString(NSAttributedString(string: " Web Link"))
+                urlImageString.appendAttributedString(NSAttributedString(string: " \(url.ogImage ?? url.absoluteURL)"))
             }
             
             // Replace the url string with short string (icon with a description)
@@ -41,5 +41,21 @@ extension UITextView {
             attributeString.replaceCharactersInRange(linkResult.range, withAttributedString: urlImageString)
         }
         self.attributedText = attributeString
+    }
+    
+    // Preview images from links in the text view
+    var linkImages: [UIImage] {
+        var images = [UIImage]()
+        guard let detector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue) else { return images }
+        
+        let results = detector.matchesInString(self.text, options: [], range: NSMakeRange(0, self.text.characters.count))
+        
+        for linkResult in results.reverse() {
+            guard linkResult.resultType == NSTextCheckingType.Link, let url = linkResult.URL, image = url.ogImage else { continue }
+            
+            images.append(image)
+        }
+        
+        return images
     }
 }
