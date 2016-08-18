@@ -13,6 +13,7 @@ struct Constants {
     
     struct General {
         static let TabBarItemDidClickSelf = "TabBarItemDidClickSelf"
+        static let CustomURLIdentifier = "CustomURLIdentifier"
         static let SchemeWhiteList = ["about"]
         static let ReachabilityChangedNotification = ReachabilitySwift.ReachabilityChangedNotification
 

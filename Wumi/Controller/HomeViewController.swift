@@ -127,6 +127,10 @@ class HomeViewController: UIViewController {
                                                          selector: #selector(self.reachabilityChanged(_:)),
                                                          name: Constants.General.ReachabilityChangedNotification,
                                                          object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.showPost(_:)),
+                                                         name: Constants.General.CustomURLIdentifier,
+                                                         object: nil)
         
         // Load posts
         self.currentUser.loadSavedPosts { (results, error) -> Void in
@@ -252,6 +256,12 @@ class HomeViewController: UIViewController {
                     postVC.post = selectedPost
                     self.selectedPostIndexPath = indexPath
             }
+            if let notification = sender as? NSNotification,
+                postId = notification.object as? String {
+                    let post = Post()
+                    post.objectId = postId
+                    postVC.post = post
+            }
             if let button = sender as? ReplyButton {
                 let buttonPosition = button.convertPoint(CGPointZero, toView: self.postTableView)
                 if let indexPath = self.postTableView.indexPathForRowAtPoint(buttonPosition),
@@ -303,6 +313,10 @@ class HomeViewController: UIViewController {
     func homeTabClicked(sender: AnyObject) {
         self.postTableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl.frame.size.height), animated:true)
         self.loadPosts()
+    }
+    
+    func showPost(sender: AnyObject) {
+        self.performSegueWithIdentifier("Show Post", sender: sender)
     }
     
     // MARK: Help function

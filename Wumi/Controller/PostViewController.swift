@@ -240,7 +240,10 @@ class PostViewController: UITableViewController {
             self.postCell.hideImageView = true
         }
         
-        self.postCell.timeStamp = post.updatedAt.timeAgo()
+        if post.updatedAt != nil {
+            self.postCell.timeStamp = post.updatedAt.timeAgo()
+        }
+        
         self.postCell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
         self.postCell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
@@ -452,7 +455,6 @@ class PostViewController: UITableViewController {
                 refreshControl.endRefreshing()
             }
         }
-
     }
     
     func loadComments() {

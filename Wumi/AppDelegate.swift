@@ -73,10 +73,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
     }
+    
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         guard let currentInstallation = AVInstallation.currentInstallation() else {return}
         currentInstallation.setDeviceTokenFromData(deviceToken)
         currentInstallation.saveInBackground()
+    }
+    
+    // Handle custom scheme and URL
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        if let query = url.query {
+            let components = query.componentsSeparatedByString("&")
+            
+            for component in components {
+                let pair = component.componentsSeparatedByString("=")
+                guard let command = pair.first, value = pair[safe: 1] else { continue }
+                
+                if command.lowercaseString == "p" {
+                    NSNotificationCenter.defaultCenter().postNotificationName(Constants.General.CustomURLIdentifier, object:value)
+                }
+            }
+        }
+        
+        return true
     }
     
     // Register classes
@@ -131,7 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         } else {
             let loginNavigation = storyboard.instantiateViewControllerWithIdentifier("Sign In Navigation Controller")
-            window?.rootViewController = loginNavigation
+            self.window?.rootViewController = loginNavigation
         }
     }
     
