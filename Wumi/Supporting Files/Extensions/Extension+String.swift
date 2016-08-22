@@ -32,6 +32,24 @@ extension String {
         }
     }
     
+    // Check whether has web link
+    func hasWebLink() -> Bool {
+        guard let detector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue) else {
+            return false
+        }
+        
+        let results = detector.matchesInString(self, options: [], range: NSMakeRange(0, self.characters.count))
+        
+        for linkResult in results.reverse() {
+            guard linkResult.resultType == NSTextCheckingType.Link, let url = linkResult.URL else { continue }
+            
+            if url.willOpenInApp() == nil && (url.scheme.lowercaseString == "http" || url.scheme.lowercaseString == "https")  {
+                return true
+            }
+        }
+        return false
+    }
+    
     // Return Chinese pinyin lowcase string
     func toChinesePinyin() -> String {
         // Try parse the name as Mandarin Chinese

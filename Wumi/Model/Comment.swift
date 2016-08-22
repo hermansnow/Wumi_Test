@@ -17,6 +17,9 @@ class Comment: AVObject, AVSubclassing {
     @NSManaged var post: Post!
     @NSManaged var reply: Comment?
     
+    // Local properties, will not be stored into server
+    var attributedContent: NSMutableAttributedString?
+    
     // MARK: Initializer and subclassing functions
     
     // Must have this init for subclassing AVObject
@@ -69,6 +72,18 @@ class Comment: AVObject, AVSubclassing {
             post.fetchWhenSave = true
             post.incrementKey("commentCount")
             post.saveInBackgroundWithBlock(block)
+        }
+    }
+    
+    func loadExternalUrlContentWithBlock(block: (found: Bool) -> Void) {
+        guard let content = self.content else {
+            block(found: false)
+            return
+        }
+        
+        self.attributedContent = NSMutableAttributedString(string: content)
+        self.attributedContent?.replaceLink { (found, url) in
+            block(found: found)
         }
     }
 }

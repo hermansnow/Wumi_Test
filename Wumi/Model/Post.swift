@@ -22,9 +22,10 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var mediaThumbnails: [AVFile]
     
     // Local properties, will not be stored into server
-    var attributedContent: NSAttributedString?
+    var attributedContent: NSMutableAttributedString?
     var attachedImages = [UIImage]()
     var attachedThumbnails = [UIImage]()
+    var externalPreviewImageUrl: NSURL?
     
     // MARK: Initializer and subclassing functions
     
@@ -122,11 +123,17 @@ class Post: AVObject, AVSubclassing {
             }
             
             post.decodeAttributedContent()
-            post.loadMediaAttachmentsWithBlock { (success, error) in
-                guard success && error == nil else { return }
-                
-                block(post, error)
-            }
+            
+            post.loadExternalUrlContentWithBlock({ (found) in
+                post.loadMediaAttachmentsWithBlock { (success, error) in
+                    guard success && error == nil else {
+                        block(nil, error)
+                        return
+                    }
+                    
+                    block(post, error)
+                }
+            })
         }
     }
     
@@ -204,13 +211,28 @@ class Post: AVObject, AVSubclassing {
         }
     }
     
+    func loadExternalUrlContentWithBlock(block: (found: Bool) -> Void) {
+        guard let content = self.content else {
+            block(found: false)
+            return
+        }
+        
+        self.attributedContent = NSMutableAttributedString(string: content)
+        self.attributedContent?.replaceLink { (found, url) in
+            self.externalPreviewImageUrl = url
+            block(found: found)
+        }
+    }
+    
     func loadFirstThumbnailWithBlock(block: AVImageResultBlock) {
-        guard self.attachedThumbnails.count == 0 else {
+        // Return first image if we have any stored in local object
+        if self.attachedThumbnails.count > 0 {
             block(self.attachedThumbnails.first, nil)
             return 
         }
+        
         guard let firstImageFile = self.mediaThumbnails[safe: 0] else {
-            block(nil, NSError(domain: "wumi.com", code: 0, userInfo: [:]))
+            block(nil, nil)
             return
         }
         

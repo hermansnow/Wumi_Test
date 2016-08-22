@@ -230,7 +230,7 @@ class PostViewController: UITableViewController {
             self.postCell.title = "No Title"
         }
         
-        self.postCell.content = post.content
+        self.postCell.content = post.attributedContent
         
         if post.mediaThumbnails.count > 0 {
             self.postCell.hideImageView = false
@@ -278,14 +278,37 @@ class PostViewController: UITableViewController {
         
         guard let comments = self.comments, comment = comments[safe: indexPath.row] else { return cell }
         
-        if let content = comment.content {
-            if let reply = comment.reply, replyToUser = reply.author, name = replyToUser.name {
-                cell.content = "Reply to \(name): \(content)"
-            }
-            else {
-                cell.content = content
+        if comment.attributedContent == nil {
+            comment.loadExternalUrlContentWithBlock { (foundUrl) in
+                guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? CommentTableViewCell else { return }
+                
+                if !foundUrl {
+                    if let attributedContent = comment.attributedContent, reply = comment.reply, replyToUser = reply.author, name = replyToUser.name {
+                        let mutableContent = NSMutableAttributedString(string: "Reply to \(name): ")
+                        mutableContent.appendAttributedString(attributedContent)
+                        cell.content = mutableContent
+                    }
+                    else {
+                        cell.content = comment.attributedContent
+                    }
+                    return
+                }
+                else {
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                }
             }
         }
+        else {
+            if let attributedContent = comment.attributedContent, reply = comment.reply, replyToUser = reply.author, name = replyToUser.name {
+                let mutableContent = NSMutableAttributedString(string: "Reply to \(name): ")
+                mutableContent.appendAttributedString(attributedContent)
+                cell.content = mutableContent
+            }
+            else {
+                cell.content = comment.attributedContent
+            }
+        }
+        
         cell.contentTextView.parentCell = cell
         cell.contentTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.replyComment(_:))))
         

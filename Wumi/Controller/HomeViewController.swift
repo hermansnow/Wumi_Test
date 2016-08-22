@@ -10,6 +10,7 @@ import UIKit
 import BTNavigationDropdownMenu
 import SWRevealViewController
 import TSMessages
+import SDWebImage
 
 class HomeViewController: UIViewController {
     
@@ -433,16 +434,37 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.title = "No Title"
         }
         
-        cell.content = post.content
+        cell.hideImageView = post.attachedThumbnails.count == 0 && post.mediaThumbnails.count == 0
+        
+        // Fetch content
+        if post.attributedContent == nil {
+            post.loadExternalUrlContentWithBlock { (foundUrl) in
+                guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell else { return }
+                
+                if !foundUrl {
+                    cell.content = post.attributedContent
+                    return
+                }
+                else {
+                    self.postTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                }
+            }
+        }
+        else {
+            cell.hideImageView = cell.hideImageView && post.externalPreviewImageUrl == nil
+            cell.content = post.attributedContent
+        }
         
         // Load preview image from attachment media
-        cell.imagePreview.hidden = post.mediaThumbnails.count == 0 && cell.previewImage == nil
-        if !cell.imagePreview.hidden {
-            post.loadFirstThumbnailWithBlock { (image, error) in
-                guard error == nil else { return }
-                
+        if post.attachedThumbnails.count > 0 || post.mediaThumbnails.count > 0 {
+            post.loadFirstThumbnailWithBlock { (result, error) in
+                guard let image = result, cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell where error == nil else { return }
+            
                 cell.previewImage = image.scaleToHeight(100)
             }
+        }
+        else if let url = post.externalPreviewImageUrl{
+            cell.imagePreview.sd_setImageWithURL(url, placeholderImage: Constants.General.Image.Logo)
         }
         
         cell.timeStamp = post.updatedAt.timeAgo()

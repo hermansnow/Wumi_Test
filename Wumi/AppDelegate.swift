@@ -145,10 +145,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             CDChatManager.sharedManager().openWithClientId(user.objectId, callback: { (result: Bool, error: NSError!) -> Void in
                 if (error == nil) {
                     user.fetchInBackgroundWithBlock(nil)
-                    self.window?.rootViewController = storyboard.instantiateInitialViewController()
                 }
             })
-        } else {
+            self.window?.rootViewController = storyboard.instantiateInitialViewController()
+        }
+        else {
             let loginNavigation = storyboard.instantiateViewControllerWithIdentifier("Sign In Navigation Controller")
             self.window?.rootViewController = loginNavigation
         }

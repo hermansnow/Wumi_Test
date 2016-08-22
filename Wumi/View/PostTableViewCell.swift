@@ -52,7 +52,7 @@ class PostTableViewCell: UITableViewCell {
                 attributeContent.addAttribute(NSFontAttributeName,
                                               value: Constants.Post.Font.ListTitle!,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
-                self.highlightString(attributeContent)
+                attributeContent.highlightString(self.highlightedString)
                 self.titleLabel.attributedText = attributeContent
             }
             else {
@@ -61,26 +61,23 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    var content: String? {
+    var content: NSAttributedString? {
         get {
-            return self.contentTextView.text
+            return self.contentTextView.attributedText
         }
         set {
             if let content = newValue {
-                let attributeContent = NSMutableAttributedString(string: content)
-                
+                let attributeContent = NSMutableAttributedString(attributedString: content)
+                    
                 attributeContent.addAttribute(NSForegroundColorAttributeName,
                                               value: Constants.General.Color.TextColor,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
                 attributeContent.addAttribute(NSFontAttributeName,
                                               value: Constants.Post.Font.ListContent!,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
-                
-                self.highlightString(attributeContent)
-                
+                    
+                attributeContent.highlightString(self.highlightedString)
                 self.contentTextView.attributedText = attributeContent
-                self.previewImage = self.contentTextView.linkImages.first // Add the first Open Graphic metadata image as the preview image
-                self.contentTextView.replaceLink()
             }
             else {
                 self.contentTextView.attributedText = nil
@@ -90,15 +87,24 @@ class PostTableViewCell: UITableViewCell {
     
     var highlightedString: String?
     
+    var previewImageUrl: NSURL? {
+        didSet {
+            guard let url = self.previewImageUrl, data = NSData(contentsOfURL: url) else {
+                self.previewImage = nil
+                return
+            }
+            
+            self.previewImage = UIImage(data: data)
+        }
+    }
+    
     var previewImage: UIImage? {
         get {
             return self.imagePreview.image
         }
         set {
             self.imagePreview.image = newValue
-            if newValue == nil {
-                self.hideImageView = true
-            }
+            self.hideImageView = newValue == nil
         }
     }
     
@@ -196,19 +202,5 @@ class PostTableViewCell: UITableViewCell {
         self.tagCollection.tag = indexPath.row
         
         self.tagCollection.reloadData()
-    }
-    
-    private func highlightString(attributeString: NSMutableAttributedString?) {
-        guard let keywords = self.highlightedString where keywords.characters.count > 0, let attribute = attributeString else { return }
-        
-        do {
-            let regex = try NSRegularExpression(pattern: keywords, options: .CaseInsensitive)
-            
-            for match in regex.matchesInString(attribute.string, options: [], range: NSRange(location: 0, length: attribute.string.utf16.count)) as [NSTextCheckingResult] {
-                attribute.addAttribute(NSForegroundColorAttributeName, value: Constants.General.Color.ThemeColor, range: match.range)
-            }
-        } catch {
-            print("Failed in creating NSRegularExpression for string matching")
-        }
     }
 }

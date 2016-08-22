@@ -342,6 +342,7 @@
 		DF4F53341CD5A967009F3D2E /* PrivateMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */; };
 		DF5AECA61D58744900FB4B84 /* PostFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */; };
 		DF5AECA81D6434E800FB4B84 /* Extension+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5AECA71D6434E800FB4B84 /* Extension+UITextView.swift */; };
+		DF5AECAB1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5AECAA1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF5EF15D1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */; };
@@ -876,6 +877,7 @@
 		DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivateMessageButton.swift; path = View/PrivateMessageButton.swift; sourceTree = "<group>"; };
 		DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostFilterViewController.swift; path = Controller/PostFilterViewController.swift; sourceTree = "<group>"; };
 		DF5AECA71D6434E800FB4B84 /* Extension+UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+UITextView.swift"; path = "Supporting Files/Extensions/Extension+UITextView.swift"; sourceTree = "<group>"; };
+		DF5AECAA1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+NSAttributedString.swift"; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenView.swift; path = View/ImageFullScreenView.swift; sourceTree = "<group>"; };
@@ -1875,6 +1877,7 @@
 			children = (
 				DF0180611D3DF5AA00935A60 /* Extension+Array.swift */,
 				DF01805F1D3DF58300935A60 /* Extension+AVFile.swift */,
+				DF5AECAA1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift */,
 				DF0180771D3DF91E00935A60 /* Extension+NSDate.swift */,
 				DF0180741D3DF77F00935A60 /* Extension+NSObject.swift */,
 				DF01808D1D4DEF3A00935A60 /* Extension+NSURL.swift */,
@@ -2511,6 +2514,7 @@
 				DF16E0451D25B84700F4C4FC /* ImageFullScreenViewController.swift in Sources */,
 				DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */,
 				B1ECD76A1CCC1F4000CED9C4 /* XHDisplayTextViewController.m in Sources */,
+				DF5AECAB1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift in Sources */,
 				DFA74C211BF8215900609E83 /* MainTabBarController.swift in Sources */,
 				DF0180691D3DF65600935A60 /* Extension+String.swift in Sources */,
 				B1ECD6A41CCC1F3F00CED9C4 /* CDChatManager.m in Sources */,

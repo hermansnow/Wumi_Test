@@ -11,10 +11,18 @@ import Ji
 
 extension NSURL {
     
+    // Fetch page information based on URL
+    func fetchPageInfo(completion: ((title: String?, previewImageURL: NSURL?) -> Void)) {
+        guard let doc = Ji(htmlURL: self) else {
+            completion(title: nil, previewImageURL: nil)
+            return
+        }
+            
+        completion(title: self.getTitle(doc), previewImageURL: self.getOGImageUrl(doc))
+    }
+    
     // Open Graph title metadata
-    var ogTitle: String? {
-        guard let jiDoc = Ji(htmlURL: self) else { return nil }
-        
+    private func getTitle(jiDoc: Ji) -> String? {
         if let nodes = jiDoc.xPath("//head/meta[@property='og:title']"),
             ogTitleNode = nodes.first,
             content = ogTitleNode.attributes["content"] where content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
@@ -31,15 +39,13 @@ extension NSURL {
     }
     
     // Open Graph image metadata
-    var ogImage: UIImage? {
+    private func getOGImageUrl(jiDoc: Ji) -> NSURL? {
         guard let jiDoc = Ji(htmlURL: self) else { return nil }
         
         if let nodes = jiDoc.xPath("//head/meta[@property='og:image']"),
             ogTitleNode = nodes.first,
-            imageUrl = ogTitleNode.attributes["content"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0,
-            let url = NSURL(string: imageUrl),
-            data = NSData(contentsOfURL: url) {
-                return UIImage(data: data)
+            imageUrl = ogTitleNode.attributes["content"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
+                return  NSURL(string: imageUrl)
         }
         else {
             return nil
@@ -59,7 +65,7 @@ extension NSURL {
             return "Apple Map"
         }
         // Protocol/URL-Scheme without http(s)
-        else if self.scheme.caseInsensitiveCompare("http") != .OrderedSame && self.scheme.caseInsensitiveCompare("https") != .OrderedSame &&
+        else if self.scheme.lowercaseString != "http" && self.scheme.lowercaseString != "https" &&
             !Constants.General.SchemeWhiteList.contains(self.scheme) && UIApplication.sharedApplication().canOpenURL(self) {
                 return self.scheme
         }
