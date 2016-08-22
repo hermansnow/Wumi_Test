@@ -28,7 +28,7 @@ extension NSMutableAttributedString {
     }
     
     // Replace URL link with a short title
-    func replaceLink(completionHandler: (linkFound: Bool, previewImageUrl: NSURL?) -> Void) {
+    func replaceLink(requirePreviewImage requirePreviewImage: Bool, completionHandler: (linkFound: Bool, previewImageUrl: NSURL?) -> Void) {
         guard let detector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue) else { return }
         
         let results = detector.matchesInString(self.string, options: [], range: NSMakeRange(0, self.string.characters.count))
@@ -51,7 +51,7 @@ extension NSMutableAttributedString {
                     urlImageString.appendAttributedString(NSAttributedString(string: " \(app)"))
                 }
                 else {
-                    url.fetchPageInfo { (title, previewImageURL) in                        
+                    url.fetchPageInfo(requirePreviewImage) { (title, previewImageURL) in
                         urlImageString.appendAttributedString(NSAttributedString(string: " \(title ?? url.absoluteURL)"))
                     
                         // Store preview images

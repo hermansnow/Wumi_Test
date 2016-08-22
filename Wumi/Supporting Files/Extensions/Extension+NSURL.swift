@@ -12,15 +12,20 @@ import Ji
 extension NSURL {
     
     // Fetch page information based on URL
-    func fetchPageInfo(completion: ((title: String?, previewImageURL: NSURL?) -> Void)) {
+    func fetchPageInfo(requirePreviewImage: Bool, completion: ((title: String?, previewImageURL: NSURL?) -> Void)) {
         
         
         guard let doc = Ji(htmlURL: self) else {
             completion(title: nil, previewImageURL: nil)
             return
         }
-            
-        completion(title: self.getTitle(doc), previewImageURL: self.getImageUrl(doc))
+        
+        if requirePreviewImage {
+            completion(title: self.getTitle(doc), previewImageURL: self.getImageUrl(doc))
+        }
+        else {
+            completion(title: self.getTitle(doc), previewImageURL: nil)
+        }
     }
     
     // Title metadata

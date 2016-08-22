@@ -124,7 +124,7 @@ class Post: AVObject, AVSubclassing {
             
             post.decodeAttributedContent()
             
-            post.loadExternalUrlContentWithBlock({ (found) in
+            post.loadExternalUrlContentWithBlock(requirePreviewImage: false) { (found) in
                 post.loadMediaAttachmentsWithBlock { (success, error) in
                     guard success && error == nil else {
                         block(nil, error)
@@ -133,7 +133,7 @@ class Post: AVObject, AVSubclassing {
                     
                     block(post, error)
                 }
-            })
+            }
         }
     }
     
@@ -211,14 +211,14 @@ class Post: AVObject, AVSubclassing {
         }
     }
     
-    func loadExternalUrlContentWithBlock(block: (found: Bool) -> Void) {
+    func loadExternalUrlContentWithBlock(requirePreviewImage requirePreviewImage: Bool, block: (found: Bool) -> Void) {
         guard let content = self.content else {
             block(found: false)
             return
         }
         
         self.attributedContent = NSMutableAttributedString(string: content)
-        self.attributedContent?.replaceLink { (found, url) in
+        self.attributedContent?.replaceLink(requirePreviewImage: requirePreviewImage) { (found, url) in
             self.externalPreviewImageUrl = url
             block(found: found)
         }

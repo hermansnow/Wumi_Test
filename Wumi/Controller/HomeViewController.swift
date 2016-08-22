@@ -438,7 +438,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         // Fetch content
         if post.attributedContent == nil {
-            post.loadExternalUrlContentWithBlock { (foundUrl) in
+            post.loadExternalUrlContentWithBlock(requirePreviewImage: true) { (foundUrl) in
                 guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell else { return }
                 
                 if !foundUrl {
