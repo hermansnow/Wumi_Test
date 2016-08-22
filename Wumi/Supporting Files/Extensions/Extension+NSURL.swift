@@ -13,21 +13,25 @@ extension NSURL {
     
     // Fetch page information based on URL
     func fetchPageInfo(completion: ((title: String?, previewImageURL: NSURL?) -> Void)) {
+        
+        
         guard let doc = Ji(htmlURL: self) else {
             completion(title: nil, previewImageURL: nil)
             return
         }
             
-        completion(title: self.getTitle(doc), previewImageURL: self.getOGImageUrl(doc))
+        completion(title: self.getTitle(doc), previewImageURL: self.getImageUrl(doc))
     }
     
-    // Open Graph title metadata
+    // Title metadata
     private func getTitle(jiDoc: Ji) -> String? {
+        // Try get title from og:title meta tag
         if let nodes = jiDoc.xPath("//head/meta[@property='og:title']"),
             ogTitleNode = nodes.first,
             content = ogTitleNode.attributes["content"] where content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
                 return content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         }
+        // Try get title from general title tag
         else if let nodes = jiDoc.xPath("//head/title"),
             titleNode = nodes.first,
             content = titleNode.content where content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
@@ -38,14 +42,53 @@ extension NSURL {
         }
     }
     
-    // Open Graph image metadata
-    private func getOGImageUrl(jiDoc: Ji) -> NSURL? {
-        guard let jiDoc = Ji(htmlURL: self) else { return nil }
-        
+    // Image metadata
+    private func getImageUrl(jiDoc: Ji) -> NSURL? {
+        // Try get image from open graph metadata
         if let nodes = jiDoc.xPath("//head/meta[@property='og:image']"),
-            ogTitleNode = nodes.first,
-            imageUrl = ogTitleNode.attributes["content"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
+            ogImageNode = nodes.first,
+            imageUrl = ogImageNode.attributes["content"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
                 return  NSURL(string: imageUrl)
+        }
+        // Try get first image large than 300 * 300
+        else if let nodes = jiDoc.xPath("//img") {
+            var url: String?
+            for imageNode in nodes {
+                guard let width = imageNode.attributes["width"] where Int(width) > 100,
+                    let height = imageNode.attributes["height"] where Int(height) > 100 else { continue }
+                
+                if let imageUrl = imageNode.attributes["href"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
+                    print(imageUrl)
+                    url = imageUrl
+                }
+                if let imageSrc = imageNode.attributes["src"] where imageSrc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
+                    guard let host = self.host else { continue }
+                    
+                    if imageSrc.hasPrefix("/") {
+                        url = self.scheme + ":" + host + imageSrc
+                    }
+                    if imageSrc.hasPrefix("//") {
+                        url = self.scheme + ":" + imageSrc
+                    }
+                    else {
+                        guard let path = self.path,
+                            subPath = path.componentsSeparatedByString("/").first else { continue }
+                        url = self.scheme + ":" + host + "/" + subPath + "/" + imageSrc
+                    }
+                }
+                
+                if url != nil {
+                    print(url)
+                    break
+                }
+            }
+            
+            if url != nil {
+                return NSURL(string: url!)
+            }
+            else {
+                return nil
+            }
         }
         else {
             return nil
