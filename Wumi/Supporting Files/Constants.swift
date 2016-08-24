@@ -114,6 +114,14 @@ struct Constants {
         }
     }
     
+    struct InvitationCode {
+        struct String {
+            struct ErrorMessages {
+                static let incorrenctInvitationCode = "Incorrenct invitation code"
+            }
+        }
+    }
+    
     struct Post {
         static let maximumImages = 5 // number of images allows to be attached in a post
         
