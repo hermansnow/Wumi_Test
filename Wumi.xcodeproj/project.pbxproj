@@ -878,6 +878,7 @@
 		DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostFilterViewController.swift; path = Controller/PostFilterViewController.swift; sourceTree = "<group>"; };
 		DF5AECA71D6434E800FB4B84 /* Extension+UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+UITextView.swift"; path = "Supporting Files/Extensions/Extension+UITextView.swift"; sourceTree = "<group>"; };
 		DF5AECAA1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+NSAttributedString.swift"; sourceTree = "<group>"; };
+		DF5AECAC1D6B9D4D00FB4B84 /* Wumi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Wumi.entitlements; path = Wumi/Wumi.entitlements; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
 		DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageFullScreenView.swift; path = View/ImageFullScreenView.swift; sourceTree = "<group>"; };
@@ -1007,6 +1008,7 @@
 		81BA813C1A49DA1800E65899 = {
 			isa = PBXGroup;
 			children = (
+				DF5AECAC1D6B9D4D00FB4B84 /* Wumi.entitlements */,
 				81BA81471A49DA1800E65899 /* Project */,
 				DF159E141C7FF74700DB65FF /* Supporting Files */,
 				814C3AC51B69877600E307BB /* Resources */,
@@ -2144,7 +2146,7 @@
 								enabled = 1;
 							};
 							com.apple.SafariKeychain = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -2787,6 +2789,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Wumi/Wumi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2841,6 +2844,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Wumi/Wumi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (

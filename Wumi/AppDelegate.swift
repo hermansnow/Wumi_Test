@@ -83,19 +83,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Handle custom scheme and URL
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
         if let query = url.query {
-            let components = query.componentsSeparatedByString("&")
-            
-            for component in components {
-                let pair = component.componentsSeparatedByString("=")
-                guard let command = pair.first, value = pair[safe: 1] else { continue }
-                
-                if command.lowercaseString == "p" {
-                    NSNotificationCenter.defaultCenter().postNotificationName(Constants.General.CustomURLIdentifier, object:value)
-                }
-            }
+            handleUrlQuery(query)
         }
         
         return true
+    }
+    
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+            let url = userActivity.webpageURL,
+            query = url.query else { return false }
+        
+        if handleUrlQuery(query) {
+            return true
+        }
+        
+        let webpageUrl = NSURL(string: "https://wumi.herokuapp.com/")!
+        application.openURL(webpageUrl)
+        
+        return false
+    }
+    
+    private func handleUrlQuery(query: String) -> Bool {
+        let components = query.componentsSeparatedByString("&")
+        
+        for component in components {
+            let pair = component.componentsSeparatedByString("=")
+            guard let command = pair.first, value = pair[safe: 1] else { continue }
+            
+            if command.lowercaseString == "p" {
+                NSNotificationCenter.defaultCenter().postNotificationName(Constants.General.CustomURLIdentifier, object:value)
+                
+                return true
+            }
+        }
+        
+        return false
+
     }
     
     // Register classes

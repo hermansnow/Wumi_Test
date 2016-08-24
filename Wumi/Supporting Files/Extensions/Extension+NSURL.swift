@@ -83,7 +83,6 @@ extension NSURL {
                 }
                 
                 if url != nil {
-                    print(url)
                     break
                 }
             }

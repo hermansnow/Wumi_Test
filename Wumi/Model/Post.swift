@@ -107,6 +107,15 @@ class Post: AVObject, AVSubclassing {
         query.findObjectsInBackgroundWithBlock(block)
     }
     
+    class func findPost(objectId id: String) -> Bool {
+        let query = Post.query()
+        
+        query.whereKey("objectId", equalTo: id)
+        
+        return query.countObjects() > 0
+        
+    }
+    
     // Fetch a post record asynchronously based on record id
     class func fetchInBackground(objectId id: String, block: AVObjectResultBlock!) {
         let query = Post.query()

@@ -116,6 +116,7 @@ extension WebFullScreenViewController:  WKNavigationDelegate {
     func webView(webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         self.progressBar.progress = 0.0
         self.isFinished = false
+        self.progressBar.hidden = false
         self.progressTimer = NSTimer.scheduledTimerWithTimeInterval(1.0/60,
                                                                     target: self,
                                                                     selector: #selector(self.progressTimerCallBack),

@@ -317,7 +317,9 @@ class HomeViewController: UIViewController {
     }
     
     func showPost(sender: AnyObject) {
-        self.performSegueWithIdentifier("Show Post", sender: sender)
+        if let notification = sender as? NSNotification, postId = notification.object as? String where Post.findPost(objectId: postId) {
+            self.performSegueWithIdentifier("Show Post", sender: sender)
+        }
     }
     
     // MARK: Help function
