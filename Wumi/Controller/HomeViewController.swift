@@ -436,7 +436,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.title = "No Title"
         }
         
-        cell.hideImageView = post.attachedThumbnails.count == 0 && post.mediaThumbnails.count == 0
+        cell.hideImageView = post.attachedThumbnails.count == 0 && post.mediaThumbnails.count == 0 && !post.hasPreviewImage
         
         // Fetch content
         if post.attributedContent == nil {
@@ -453,7 +453,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         else {
-            cell.hideImageView = cell.hideImageView && post.externalPreviewImageUrl == nil
             cell.content = post.attributedContent
         }
         
@@ -466,6 +465,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         else if let url = post.externalPreviewImageUrl{
+            print(url)
             cell.imagePreview.sd_setImageWithURL(url, placeholderImage: Constants.General.Image.Logo)
         }
         

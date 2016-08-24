@@ -51,7 +51,7 @@ extension NSMutableAttributedString {
                     urlImageString.appendAttributedString(NSAttributedString(string: " \(app)"))
                 }
                 else {
-                    url.fetchPageInfo(requirePreviewImage) { (title, previewImageURL) in
+                    url.fetchPageInfo(requirePreviewImage: requirePreviewImage) { (title, previewImageURL) in
                         urlImageString.appendAttributedString(NSAttributedString(string: " \(title ?? url.absoluteURL)"))
                     
                         // Store preview images
@@ -76,6 +76,5 @@ extension NSMutableAttributedString {
                 completionHandler(linkFound: results.count > 0, previewImageUrl: urls.first)
             }
         }
-
     }
 }

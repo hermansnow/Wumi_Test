@@ -33,21 +33,38 @@ extension String {
     }
     
     // Check whether has web link
-    func hasWebLink() -> Bool {
+    func parseWebUrl(completionHandler: (hasPreviewImage: Bool) -> Void) {
         guard let detector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue) else {
-            return false
+            completionHandler(hasPreviewImage: false)
+            return
         }
         
         let results = detector.matchesInString(self, options: [], range: NSMakeRange(0, self.characters.count))
         
+        var urls = [NSURL]()
+        let taskGroup = dispatch_group_create()
+        let taskQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        
         for linkResult in results.reverse() {
             guard linkResult.resultType == NSTextCheckingType.Link, let url = linkResult.URL else { continue }
             
-            if url.willOpenInApp() == nil && (url.scheme.lowercaseString == "http" || url.scheme.lowercaseString == "https")  {
-                return true
+            dispatch_group_async(taskGroup, taskQueue) {
+                // Add link description based on url
+                if url.willOpenInApp() == nil {
+                    url.fetchPageInfo() { (title, previewImageURL) in
+                        if previewImageURL != nil {
+                            urls.append(previewImageURL!)
+                        }
+                    }
+                }
             }
         }
-        return false
+        
+        dispatch_group_notify(taskGroup, taskQueue) {
+            dispatch_async(dispatch_get_main_queue()) {
+                completionHandler(hasPreviewImage: urls.count > 0)
+            }
+        }
     }
     
     // Return Chinese pinyin lowcase string

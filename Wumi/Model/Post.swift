@@ -20,6 +20,7 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var categories: [PostCategory]
     @NSManaged var mediaAttachments: [AVFile]
     @NSManaged var mediaThumbnails: [AVFile]
+    @NSManaged var hasPreviewImage: Bool
     
     // Local properties, will not be stored into server
     var attributedContent: NSMutableAttributedString?
@@ -151,20 +152,24 @@ class Post: AVObject, AVSubclassing {
         // Set default value
         self.title = self.title ?? "No Title"
         self.commentCount = self.commentCount ?? 0
-            
-        // Save attached files
-        if self.htmlContent == nil {
-            self.encodeAttributedContent() // TODO: Please make this function async when turning on the feature
-        }
-        if self.mediaAttachments.count == 0 {
-            self.saveMediaAttachmentsWithBlock { (success, error) in
-                guard success && error == nil else { return }
-            
-                super.saveInBackgroundWithBlock(block)
-            }
-        }
-        else {
-            super.saveInBackgroundWithBlock(block)
+        
+        // Parse URLS
+        if let content = self.content {
+            content.parseWebUrl({ (hasPreviewImage) in
+                self.hasPreviewImage = hasPreviewImage
+                
+                // Save attached files
+                if self.mediaAttachments.count == 0 {
+                    self.saveMediaAttachmentsWithBlock { (success, error) in
+                        guard success && error == nil else { return }
+                        
+                        super.saveInBackgroundWithBlock(block)
+                    }
+                }
+                else {
+                    super.saveInBackgroundWithBlock(block)
+                }
+            })
         }
     }
     

@@ -12,7 +12,7 @@ import Ji
 extension NSURL {
     
     // Fetch page information based on URL
-    func fetchPageInfo(requirePreviewImage: Bool, completion: ((title: String?, previewImageURL: NSURL?) -> Void)) {
+    func fetchPageInfo(requirePreviewImage requirePreviewImage: Bool =  true, completion: ((title: String?, previewImageURL: NSURL?) -> Void)) {
         
         
         guard let doc = Ji(htmlURL: self) else {
@@ -59,8 +59,8 @@ extension NSURL {
         else if let nodes = jiDoc.xPath("//img") {
             var url: String?
             for imageNode in nodes {
-                guard let width = imageNode.attributes["width"] where Int(width) > 100,
-                    let height = imageNode.attributes["height"] where Int(height) > 100 else { continue }
+                guard let width = imageNode.attributes["width"] where Int(width) > 300,
+                    let height = imageNode.attributes["height"] where Int(height) > 300 else { continue }
                 
                 if let imageUrl = imageNode.attributes["href"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
                     print(imageUrl)
@@ -69,10 +69,13 @@ extension NSURL {
                 if let imageSrc = imageNode.attributes["src"] where imageSrc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
                     guard let host = self.host else { continue }
                     
-                    if imageSrc.hasPrefix("/") {
+                    if imageSrc.hasPrefix("http://") || imageSrc.hasPrefix("https://") {
+                        url = imageSrc
+                    }
+                    else if imageSrc.hasPrefix("/") {
                         url = self.scheme + ":" + host + imageSrc
                     }
-                    if imageSrc.hasPrefix("//") {
+                    else if imageSrc.hasPrefix("//") {
                         url = self.scheme + ":" + imageSrc
                     }
                     else {
