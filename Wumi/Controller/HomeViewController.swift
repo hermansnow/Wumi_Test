@@ -20,12 +20,13 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var currentUserAvatarView: AvatarImageView!
     @IBOutlet weak var postTableView: UITableView!
     
+    // Navigation bar items
     private var refreshControl = UIRefreshControl()
     private var searchButton = UIBarButtonItem()
     private var composePostButton = UIBarButtonItem()
     private var menuView: BTNavigationDropdownMenu?
     
-    var resultSearchController = UISearchController(searchResultsController: nil)
+    var resultSearchController = UISearchController()
     
     var currentUser = User.currentUser()
     
@@ -34,6 +35,7 @@ class HomeViewController: UIViewController {
     private lazy var filteredPosts = [Post]()
     
     // Search data
+    private var isSearchMode: Bool = false
     private var searchString: String = "" // String of next search
     private var lastSearchString: String? // String of last search
     private var previousType: PostSearchType = .All
@@ -68,7 +70,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.extendedLayoutIncludesOpaqueBars = true
+        self.extendedLayoutIncludesOpaqueBars = false
+        self.edgesForExtendedLayout = .None
+        self.definesPresentationContext = false
         
         // Register nib
         self.postTableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: nil), forCellReuseIdentifier: "PostTableViewCell")
@@ -85,14 +89,6 @@ class HomeViewController: UIViewController {
                                                            selectedImage: Constants.Post.Image.TabBarSelectedIcon?.imageWithRenderingMode(.AlwaysOriginal))
         }
         
-        // Initialize tableview
-        self.postTableView.delegate = self
-        self.postTableView.dataSource = self
-        self.postTableView.estimatedRowHeight = 180
-        self.postTableView.rowHeight = UITableViewAutomaticDimension
-        self.postTableView.tableFooterView = UIView(frame: CGRectZero)
-        self.postTableView.separatorStyle = .None
-        
         // Add Search Control
         self.addSearchController()
         
@@ -104,6 +100,15 @@ class HomeViewController: UIViewController {
         
         // Add current user banner
         self.addCurrentUserBanner()
+        
+        // Initialize tableview
+        self.postTableView.delegate = self
+        self.postTableView.dataSource = self
+        self.postTableView.estimatedRowHeight = 180
+        self.postTableView.rowHeight = UITableViewAutomaticDimension
+        self.postTableView.tableFooterView = UIView(frame: CGRectZero)
+        self.postTableView.separatorStyle = .None
+        self.postTableView.contentInset = UIEdgeInsets(top: self.currentUserBanner.frame.size.height, left: 0, bottom: 0, right: 0)
         
         // Add action for hamburgerMenuButton
         if let revealViewController = self.revealViewController() {
@@ -195,17 +200,27 @@ class HomeViewController: UIViewController {
         
         // Add gesture
         self.currentUserBanner.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.editCurrentUserProfile(_:))))
+        
+        //
+        self.view.addSubview(self.currentUserBanner)
+        self.currentUserBanner.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor, constant: 0.0).active = true
+        self.currentUserBanner.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor, constant: 0.0).active = true
+        
+        self.showCurrentUserBanner()
     }
     
     private func addSearchController() {
+        self.resultSearchController = UISearchController(searchResultsController: nil)
         self.resultSearchController.searchResultsUpdater = self
         self.resultSearchController.dimsBackgroundDuringPresentation = false
         self.resultSearchController.hidesNavigationBarDuringPresentation = false
         self.resultSearchController.searchBar.showsCancelButton = true
-        self.resultSearchController.searchBar.autocapitalizationType = .None;
+        self.resultSearchController.searchBar.autocapitalizationType = .None
+        self.resultSearchController.searchBar.sizeToFit()
         self.resultSearchController.searchBar.tintColor = Constants.General.Color.TitleColor
         self.resultSearchController.searchBar.delegate = self
-        self.definesPresentationContext = true
+        self.resultSearchController.searchBar.showsCancelButton = false
+        self.resultSearchController.automaticallyAdjustsScrollViewInsets = false
     }
     
     private func addRefreshControl() {
@@ -302,9 +317,16 @@ class HomeViewController: UIViewController {
     }
     
     func showSearchBar(sender: AnyObject) {
-        self.navigationItem.setRightBarButtonItems(nil, animated: true)
-        self.resultSearchController.searchBar.showsCancelButton = false
-        self.postTableView.tableHeaderView = self.resultSearchController.searchBar
+        self.isSearchMode = true
+        
+        self.postTableView.tableHeaderView = self.resultSearchController.searchBar // Add search bar to table header
+        self.navigationItem.rightBarButtonItems?.removeObject(self.searchButton) // Hide right search navigation items
+        
+        // Hide current user banner
+        self.showCurrentUserBanner()
+        self.postTableView.contentInset = UIEdgeInsetsZero
+        
+        self.postTableView.setContentOffset(CGPoint.zero, animated: true) // scroll table back to top to show the search bar
     }
     
     func composePost(sender: AnyObject) {
@@ -323,6 +345,21 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: Help function
+    
+    // Determine the alpha of current user banner based on table content offset and status of search bar:
+    private func showCurrentUserBanner () {
+        // Hide user banner if search is active
+        if self.isSearchMode {
+            self.currentUserBanner.alpha = 0.0
+            return
+        }
+        
+        let bannerHeight = self.currentUserBanner.frame.size.height
+        let offset = self.postTableView.contentOffset
+        
+        // Change the alpha of current user banner based on percentage of overlap between banner and table content
+        self.currentUserBanner.alpha = -offset.y / bannerHeight
+    }
     
     func checkNewPosts() {
         guard let navigationController = self.navigationController else { return }
@@ -401,7 +438,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             let emptyView = EmptyPostView(frame: CGRect(x: 0, y: 0, width: self.postTableView.frame.size.width, height: self.postTableView.frame.size.height))
             // Set message
             if self.searchString.characters.count == 0 {
-                if self.resultSearchController.searchBar.isFirstResponder() {
+                if self.resultSearchController.active {
                     emptyView.text = ""
                 }
                 else if self.refreshControl.refreshing {
@@ -465,7 +502,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         else if let url = post.externalPreviewImageUrl{
-            print(url)
             cell.imagePreview.sd_setImageWithURL(url, placeholderImage: Constants.General.Image.Logo)
         }
         
@@ -488,10 +524,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.showUserContact(_:))))
             }
         }
-        
-        // Set up tags
-        cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
-        cell.tagCollection.hidden = post.categories.count == 0
         
         // Set up buttons
         cell.isSaved = self.currentUser.savedPostsArray.contains( { $0 == post} )
@@ -523,14 +555,25 @@ extension HomeViewController: UIScrollViewDelegate {
             self.loadMorePosts()
         }
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.showCurrentUserBanner() // Update current user banner
+    }
 }
 
 extension HomeViewController: UISearchBarDelegate, UISearchResultsUpdating {
     // Action for cancel button
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.currentUserBanner.hidden = false
-        self.navigationItem.setRightBarButtonItems([self.composePostButton, self.searchButton], animated: true)
-        self.postTableView.tableHeaderView = nil
+        self.isSearchMode = false
+        
+        self.navigationItem.rightBarButtonItems?.append(self.searchButton) // Add right search navigation items back
+        self.postTableView.tableHeaderView = nil // Remove search bar from table header
+        
+        // Show user banner if possible
+        self.showCurrentUserBanner()
+        self.postTableView.contentInset = UIEdgeInsets(top: self.currentUserBanner.frame.size.height, left: 0, bottom: 0, right: 0)
+        
+        self.postTableView.setContentOffset(CGPoint(x: 0, y: -self.currentUserBanner.frame.size.height), animated: true)
     }
     
     // When end editing, try search results if there is a change in the non-empty search string
@@ -589,46 +632,6 @@ extension HomeViewController: UISearchBarDelegate, UISearchResultsUpdating {
                                                                      userInfo: nil,
                                                                      repeats: false)
         }
-    }
-}
-
-
-// MARK: UICollectionView delegates
-
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let post = self.displayPosts[safe: collectionView.tag] else { return 0 }
-        
-        return post.categories.count
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath) as? ProfileCollectionCell,
-            post = self.displayPosts[safe: collectionView.tag],
-            tag = post.categories[safe: indexPath.row] else {
-                return ProfileCollectionCell()
-        }
-        
-        cell.cellLabel.text = tag.name
-        
-        // Use "selected" style for all tags
-        cell.style = .Selected
-        
-        return cell
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        guard let post = self.displayPosts[safe: collectionView.tag], tag = post.categories[safe: indexPath.row] , text = tag.name else { return CGSizeZero }
-        
-        return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont!).width + 16, height: 20)
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 8
     }
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -34,9 +34,9 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="kWJ-Ug-8IM">
-                                <rect key="frame" x="0.0" y="56" width="508" height="129"/>
+                                <rect key="frame" x="0.0" y="56" width="508" height="157"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vgy-Oi-paX" customClass="PostContentTextView" customModule="Wumi" customModuleProvider="target">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vgy-Oi-paX" customClass="PostContentTextView" customModule="Wumi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="428" height="0.0"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -52,18 +52,6 @@
                                     </imageView>
                                 </subviews>
                             </stackView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UG6-rN-u54">
-                                <rect key="frame" x="0.0" y="193" width="508" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="D33-sa-eAZ"/>
-                                </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3Ya-X9-98G">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                            </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Time stamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mo3-cr-1bc">
                                 <rect key="frame" x="0.0" y="229" width="508" height="16"/>
                                 <constraints>
@@ -165,36 +153,23 @@
                             <constraint firstAttribute="bottom" secondItem="PWz-Ol-uTJ" secondAttribute="bottom" id="0Ma-JB-TbQ"/>
                             <constraint firstItem="Mo3-cr-1bc" firstAttribute="leading" secondItem="5Yq-LT-SlQ" secondAttribute="leading" id="0ah-bP-2ed"/>
                             <constraint firstAttribute="trailing" secondItem="Su0-Ah-6MB" secondAttribute="trailing" id="1Z7-MJ-EQ5"/>
-                            <constraint firstItem="BYe-Up-z6y" firstAttribute="top" secondItem="UG6-rN-u54" secondAttribute="bottom" constant="16" id="2pu-Z9-xQb"/>
-                            <constraint firstItem="Mo3-cr-1bc" firstAttribute="top" secondItem="UG6-rN-u54" secondAttribute="bottom" constant="16" id="4Pb-20-TPc"/>
-                            <constraint firstAttribute="trailing" secondItem="UG6-rN-u54" secondAttribute="trailing" id="62t-hf-yBg"/>
                             <constraint firstItem="sjI-JE-1eO" firstAttribute="leading" secondItem="5Yq-LT-SlQ" secondAttribute="leading" id="AVj-yr-22q"/>
                             <constraint firstItem="Su0-Ah-6MB" firstAttribute="leading" secondItem="5Yq-LT-SlQ" secondAttribute="leading" id="BVf-H4-np2"/>
-                            <constraint firstItem="Mo3-cr-1bc" firstAttribute="top" secondItem="kWJ-Ug-8IM" secondAttribute="bottom" constant="16" id="Cj0-wG-a0c"/>
                             <constraint firstItem="sjI-JE-1eO" firstAttribute="top" secondItem="Su0-Ah-6MB" secondAttribute="bottom" constant="8" id="D24-Qv-98C"/>
                             <constraint firstItem="BYe-Up-z6y" firstAttribute="leading" secondItem="5Yq-LT-SlQ" secondAttribute="leading" id="F5R-FR-Muy"/>
                             <constraint firstItem="PWz-Ol-uTJ" firstAttribute="leading" secondItem="5Yq-LT-SlQ" secondAttribute="leading" id="M5T-f0-cKx"/>
+                            <constraint firstItem="Mo3-cr-1bc" firstAttribute="top" secondItem="kWJ-Ug-8IM" secondAttribute="bottom" constant="16" id="MM4-PV-usb"/>
                             <constraint firstAttribute="trailing" secondItem="Mo3-cr-1bc" secondAttribute="trailing" id="PHG-xM-Chr"/>
                             <constraint firstItem="BYe-Up-z6y" firstAttribute="top" secondItem="Mo3-cr-1bc" secondAttribute="bottom" constant="16" id="Q1b-TT-KM8"/>
                             <constraint firstAttribute="trailing" secondItem="kWJ-Ug-8IM" secondAttribute="trailing" id="YKH-iR-SlN"/>
                             <constraint firstItem="PWz-Ol-uTJ" firstAttribute="top" secondItem="BYe-Up-z6y" secondAttribute="bottom" constant="16" id="bmr-lp-Iz3"/>
                             <constraint firstAttribute="trailing" secondItem="PWz-Ol-uTJ" secondAttribute="trailing" id="g6A-eB-vac"/>
                             <constraint firstAttribute="trailing" secondItem="sjI-JE-1eO" secondAttribute="trailing" id="gTh-LT-TU2"/>
-                            <constraint firstItem="UG6-rN-u54" firstAttribute="leading" secondItem="5Yq-LT-SlQ" secondAttribute="leading" id="i8Z-eg-u92"/>
                             <constraint firstItem="Su0-Ah-6MB" firstAttribute="top" secondItem="5Yq-LT-SlQ" secondAttribute="top" id="jAd-hN-Raa"/>
                             <constraint firstAttribute="trailing" secondItem="BYe-Up-z6y" secondAttribute="trailing" id="jmx-HC-6Mw"/>
-                            <constraint firstItem="UG6-rN-u54" firstAttribute="top" secondItem="Mo3-cr-1bc" secondAttribute="bottom" constant="16" id="q16-fo-Wcv"/>
                             <constraint firstItem="kWJ-Ug-8IM" firstAttribute="top" secondItem="sjI-JE-1eO" secondAttribute="bottom" constant="12" id="s2Y-fA-rUe"/>
-                            <constraint firstItem="UG6-rN-u54" firstAttribute="top" secondItem="kWJ-Ug-8IM" secondAttribute="bottom" constant="8" id="wWR-oa-jc2"/>
                             <constraint firstItem="kWJ-Ug-8IM" firstAttribute="leading" secondItem="5Yq-LT-SlQ" secondAttribute="leading" id="wdD-PF-hBd"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="q16-fo-Wcv"/>
-                                <exclude reference="Cj0-wG-a0c"/>
-                                <exclude reference="2pu-Z9-xQb"/>
-                            </mask>
-                        </variation>
                     </stackView>
                 </subviews>
                 <constraints>
@@ -215,7 +190,6 @@
                 <outlet property="saveButton" destination="zUG-aa-JUc" id="zTh-2T-dq1"/>
                 <outlet property="saveLabel" destination="3yX-ov-Oc4" id="ZWE-D5-EZe"/>
                 <outlet property="separator" destination="PWz-Ol-uTJ" id="9W2-qe-lHl"/>
-                <outlet property="tagCollection" destination="UG6-rN-u54" id="KOV-Zb-YZ7"/>
                 <outlet property="timeStampLabel" destination="Mo3-cr-1bc" id="Y6j-Tm-XVi"/>
                 <outlet property="titleLabel" destination="Su0-Ah-6MB" id="Eay-Cu-BGn"/>
             </connections>

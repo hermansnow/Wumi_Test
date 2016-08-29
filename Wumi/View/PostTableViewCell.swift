@@ -16,7 +16,6 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var contentTextView: PostContentTextView!
     @IBOutlet weak var imagePreview: UIImageView!
     @IBOutlet private weak var timeStampLabel: UILabel!
-    @IBOutlet weak var tagCollection: UICollectionView!
     @IBOutlet weak var saveButton: FavoriteButton!
     @IBOutlet private weak var saveLabel: UILabel!
     @IBOutlet weak var replyButton: ReplyButton!
@@ -158,9 +157,8 @@ class PostTableViewCell: UITableViewCell {
         
         // Set up content text view
         self.showSummary = true
-        self.contentTextView.selfUserInteractionEnabled = false
-        self.contentTextView.dataDetectorTypes = .None
-        self.contentTextView.linkTextAttributes = [NSForegroundColorAttributeName: Constants.General.Color.TextColor]
+        self.contentTextView.selfUserInteractionEnabled = true
+        self.contentTextView.disableTextSelection = true
         
         // Set up image view
         self.imagePreview.contentMode = .ScaleAspectFit
@@ -168,10 +166,6 @@ class PostTableViewCell: UITableViewCell {
         // Set up timestamp
         self.timeStampLabel.font = Constants.Post.Font.ListTimeStamp
         self.timeStampLabel.textColor = Constants.Post.Color.ListDetailText
-        
-        // Set up tag collection
-        self.tagCollection.registerNib(UINib(nibName: "ProfileCollectionCell", bundle: nil), forCellWithReuseIdentifier: "ProfileCollectionCell")
-        self.tagCollection.backgroundColor = UIColor.whiteColor()
         
         // Set up buttons
         self.saveLabel.font = Constants.Post.Font.ListButton
@@ -194,13 +188,5 @@ class PostTableViewCell: UITableViewCell {
         self.authorView.reset()
         self.hideImageView = true
         self.isSaved = false
-    }
-    
-    func setCollectionViewDataSourceDelegate <T: protocol<UICollectionViewDataSource, UICollectionViewDelegate>> (dataSourceDelegate: T, ForIndexPath indexPath: NSIndexPath) {
-        self.tagCollection.dataSource = dataSourceDelegate;
-        self.tagCollection.delegate = dataSourceDelegate;
-        self.tagCollection.tag = indexPath.row
-        
-        self.tagCollection.reloadData()
     }
 }

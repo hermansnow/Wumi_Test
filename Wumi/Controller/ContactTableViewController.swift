@@ -119,7 +119,7 @@ class ContactTableViewController: UITableViewController {
         self.resultSearchController.hidesNavigationBarDuringPresentation = false
         self.resultSearchController.searchBar.sizeToFit()
         self.resultSearchController.searchBar.autocapitalizationType = .None;
-        self.resultSearchController.searchBar.tintColor = Constants.General.Color.ThemeColor
+        self.resultSearchController.searchBar.tintColor = Constants.General.Color.TitleColor
         self.resultSearchController.searchBar.barTintColor = Constants.General.Color.BackgroundColor
         self.definesPresentationContext = true
         

@@ -13,6 +13,7 @@ class PostContentTextView: UITextView {
     // MARK: Properties
     
     var selfUserInteractionEnabled: Bool = true // control user interaction of view itself but not subviews
+    var disableTextSelection: Bool = false // control text selection
     
     // MARK: Initializers
     
@@ -56,5 +57,9 @@ class PostContentTextView: UITextView {
         else {
             return hitView
         }
+    }
+    
+    override func canBecomeFirstResponder() -> Bool {
+        return !self.disableTextSelection
     }
 }

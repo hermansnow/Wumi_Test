@@ -63,7 +63,6 @@ extension NSURL {
                     let height = imageNode.attributes["height"] where Int(height) > 300 else { continue }
                 
                 if let imageUrl = imageNode.attributes["href"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
-                    print(imageUrl)
                     url = imageUrl
                 }
                 if let imageSrc = imageNode.attributes["src"] where imageSrc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
