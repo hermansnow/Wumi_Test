@@ -293,21 +293,17 @@ static const CGFloat kXHBubbleMessageViewBottomPadding = 8;
         return;
     
     UIMenuItem *copy = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"copy", @"MessageDisplayKitString", @"复制文本消息") action:@selector(copied:)];
-    UIMenuItem *transpond = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"transpond", @"MessageDisplayKitString", @"转发") action:@selector(transpond:)];
-    UIMenuItem *favorites = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"favorites", @"MessageDisplayKitString", @"收藏") action:@selector(favorites:)];
-    UIMenuItem *more = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"more", @"MessageDisplayKitString", @"更多") action:@selector(more:)];
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
     switch (self.messageBubbleView.message.messageMediaType) {
         case XHBubbleMessageMediaTypeText:
         case XHBubbleMessageMediaTypePhoto:
         case XHBubbleMessageMediaTypeLocalPosition:
-            [menu setMenuItems:[NSArray arrayWithObjects:copy, transpond, favorites, more, nil]];
+            [menu setMenuItems:[NSArray arrayWithObjects:copy, nil]];
             break;
         case XHBubbleMessageMediaTypeEmotion:
         case XHBubbleMessageMediaTypeVideo:
         case XHBubbleMessageMediaTypeVoice:
-            [menu setMenuItems:[NSArray arrayWithObjects:transpond, favorites, more, nil]];
             break;
     }
     
