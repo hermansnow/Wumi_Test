@@ -32,8 +32,7 @@ class ImageFullScreenViewController: UIViewController {
             self.addChildViewController(fullscreenView.imagePageVC)
             fullscreenView.imagePageVC.didMoveToParentViewController(self)
             fullscreenView.dataSource = self
-            
-            fullscreenView.actionButton.addTarget(self, action: #selector(self.showImageActions(_:)), forControlEvents: .TouchUpInside)
+            fullscreenView.delegate = self
             
             if !enableSaveImage {
                 fullscreenView.actionButton.hidden = true
@@ -62,35 +61,9 @@ class ImageFullScreenViewController: UIViewController {
         }
     }
     
-    // MARK: Actions
-    
-    @IBAction func showImageActions(sender: AnyObject) {
-        let imageActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        
-        // Add save action to save image into album
-        if enableSaveImage {
-            imageActionSheet.addAction(UIAlertAction(title: "Save to Cameral Roll", style: .Default) { (action) in
-                guard let image = self.images[safe: self.currentIndex] else { return }
-            
-                image.saveToLibrary(album: nil, completionHanlder: nil)
-            })
-        }
-        
-        // Present action sheet if we have any action
-        if imageActionSheet.actions.count > 0 {
-            // Add cancel action
-            imageActionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-                imageActionSheet.dismissViewControllerAnimated(true, completion: nil)
-            })
-            self.presentViewController(imageActionSheet, animated: true, completion: nil)
-        }
-    }
-    
     // MARKL Helper functions
     private func updateIndex() {
         guard let fullscreenView = self.view as? ImageFullScreenView else { return }
-        
-        print(self.currentIndex)
         
         fullscreenView.indexLabel.text = "\(self.currentIndex + 1)/\(self.images.count)"
     }
@@ -98,6 +71,7 @@ class ImageFullScreenViewController: UIViewController {
 }
 
 // MARK: UIPageViewControllerDataSource
+
 extension ImageFullScreenViewController: UIPageViewControllerDataSource {
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         guard let imagePageItemVC = viewController as? ImagePageItemViewController,
@@ -130,5 +104,31 @@ extension ImageFullScreenViewController: UIPageViewControllerDataSource {
             index = self.imagePageItemVCs.indexOf(firstVC) else { return 0 }
         
         return index
+    }
+}
+
+// MARK: MoreButton delegate
+
+extension ImageFullScreenViewController: MoreButtonDelegate {
+    func showMoreActions(moreButton: MoreButton) {
+        let imageActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        // Add save action to save image into album
+        if enableSaveImage {
+            imageActionSheet.addAction(UIAlertAction(title: "Save to Cameral Roll", style: .Default) { (action) in
+                guard let image = self.images[safe: self.currentIndex] else { return }
+                
+                image.saveToLibrary(album: nil, completionHanlder: nil)
+                })
+        }
+        
+        // Present action sheet if we have any action
+        if imageActionSheet.actions.count > 0 {
+            // Add cancel action
+            imageActionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                imageActionSheet.dismissViewControllerAnimated(true, completion: nil)
+                })
+            self.presentViewController(imageActionSheet, animated: true, completion: nil)
+        }
     }
 }

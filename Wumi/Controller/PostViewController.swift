@@ -565,6 +565,7 @@ extension PostViewController: KIImagePagerDelegate {
 }
 
 // MARK: UITextView delegate
+
 extension PostViewController: UITextViewDelegate {
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
         // Launch application if it can be handled by any app installed
@@ -579,6 +580,47 @@ extension PostViewController: UITextViewDelegate {
             self.navigationController?.pushViewController(webVC, animated: true)
         }
         return false
+    }
+}
+
+// MARK: MoreButton delegate
+
+extension PostViewController: MoreButtonDelegate {
+    func showMoreActions(moreButton: MoreButton) {
+        let moreActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        // Add share action to share post
+        moreActionSheet.addAction(UIAlertAction(title: "Share", style: .Default) { (action) in
+            let activityViewController = UIActivityViewController(activityItems: [], applicationActivities: nil)
+            self.presentViewController(activityViewController, animated: true, completion: nil)
+        })
+        
+        // Add delete action to delete current user's post
+        if let post = self.post where post.author ==  self.currentUser {
+            moreActionSheet.addAction(UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+                post.deleteInBackgroundWithBlock({ (success, error) in
+                    guard success && error == nil else {
+                        print("\(error)")
+                        return
+                    }
+                    
+                    if let delegate = self.delegate {
+                        delegate.deletePost(self)
+                    }
+                })
+                
+                // Navigate back to home view controller
+                if let postTVC = self.navigationController?.viewControllers.filter({ $0 is HomeViewController }).first {
+                    self.navigationController?.popToViewController(postTVC, animated: true)
+                }
+            })
+        }
+        
+        moreActionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            moreActionSheet.dismissViewControllerAnimated(true, completion: nil)
+        })
+            
+        self.presentViewController(moreActionSheet, animated: true, completion: nil)
     }
 }
 
@@ -628,5 +670,7 @@ extension PostViewController: ContactViewControllerDelegate {
 
 protocol PostViewControllerDelegate {
     func finishViewPost(postVC: PostViewController)
+    
+    func deletePost(postVC: PostViewController)
 }
 

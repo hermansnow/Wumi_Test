@@ -392,7 +392,9 @@ extension ContactTableViewController: EmailButtonDelegate {
 extension ContactTableViewController: PhoneButtonDelegate {
     func callPhone(phoneButton: PhoneButton) {
         let buttonPosition = phoneButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row], phoneNumber = user.phoneNumber else { return }
+        
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition),
+            user = self.displayUsers[safe: indexPath.row], phoneNumber = user.phoneNumber else { return }
         
         Helper.PopupConfirmationBox(self, boxTitle: nil, message: "Call \(phoneNumber)?", cancelBlock: nil) { (action) -> Void in
             if let url = NSURL(string: "tel:\(phoneNumber)") where UIApplication.sharedApplication().canOpenURL(url) {
@@ -409,9 +411,10 @@ extension ContactTableViewController: PhoneButtonDelegate {
 
 extension ContactTableViewController: PrivateMessageButtonDelegate {
     func sendMessage(privateMessageButton: PrivateMessageButton) {
-        // TODO: launch private message
         let buttonPosition = privateMessageButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row] else { return }
+        
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition),
+            user = self.displayUsers[safe: indexPath.row] else { return }
         
         CDChatManager.sharedManager().fetchConversationWithOtherId(user.objectId, callback: { (conv: AVIMConversation!, error: NSError!) -> Void in
             if (error != nil) {
@@ -423,6 +426,19 @@ extension ContactTableViewController: PrivateMessageButtonDelegate {
             }
         })
 
+    }
+}
+
+// MARK: More action button delegate
+
+extension ContactTableViewController: MoreButtonDelegate {
+    func showMoreActions(moreButton: MoreButton) {
+        let buttonPosition = moreButton.convertPoint(CGPointZero, toView: self.tableView)
+        
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition),
+            cell = self.tableView.cellForRowAtIndexPath(indexPath) as? ContactTableViewCell else { return }
+        
+        cell.showAdditionalActions(!moreButton.selected, withAnimation: true)
     }
 }
 

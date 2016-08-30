@@ -79,7 +79,7 @@
                                     <constraint firstAttribute="height" constant="24" id="HXn-We-owC"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cau-MB-GIo">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cau-MB-GIo" customClass="MoreButton" customModule="Wumi" customModuleProvider="target">
                                 <rect key="frame" x="692" y="8" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="4qG-cS-mdO"/>

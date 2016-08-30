@@ -335,6 +335,7 @@
 		DF21176A1C927FDD009109EE /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */; };
 		DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */; };
 		DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF3629561C9B305100D87574 /* ContactTableViewCell.xib */; };
+		DF4314191D755DF8002E21D5 /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4314181D755DF8002E21D5 /* MoreButton.swift */; };
 		DF4F532C1CCD9076009F3D2E /* PIKAImageCropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */; };
 		DF4F532D1CCD9076009F3D2E /* PIKAImageCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */; };
 		DF4F532F1CD30F7E009F3D2E /* EmailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */; };
@@ -870,6 +871,7 @@
 		DF2117691C927FDD009109EE /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCollectionCell.swift; path = View/ProfileCollectionCell.swift; sourceTree = "<group>"; };
 		DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategoryTableViewController.swift; path = Controller/PostCategoryTableViewController.swift; sourceTree = "<group>"; };
 		DF3629561C9B305100D87574 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactTableViewCell.xib; path = View/ContactTableViewCell.xib; sourceTree = "<group>"; };
+		DF4314181D755DF8002E21D5 /* MoreButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoreButton.swift; path = View/MoreButton.swift; sourceTree = "<group>"; };
 		DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PIKAImageCropView.xib; path = Controller/PIKA/PIKAImageCropView.xib; sourceTree = "<group>"; };
 		DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PIKAImageCropViewController.swift; path = Controller/PIKA/PIKAImageCropViewController.swift; sourceTree = "<group>"; };
 		DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmailButton.swift; path = View/EmailButton.swift; sourceTree = "<group>"; };
@@ -1950,6 +1952,7 @@
 				DF4F53311CD59444009F3D2E /* PhoneButton.swift */,
 				DFF712BA1CD6D57F00EAEFD2 /* PhotoButton.swift */,
 				DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */,
+				DF4314181D755DF8002E21D5 /* MoreButton.swift */,
 				DFB861471BEDBDF60075014A /* SystemButton.swift */,
 				DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */,
 				DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */,
@@ -2535,6 +2538,7 @@
 				B1ECD7541CCC1F3F00CED9C4 /* UIImage+RoundedCorner.m in Sources */,
 				B1ECD75A1CCC1F3F00CED9C4 /* UIView+XHRemoteImage.m in Sources */,
 				B1ECD79F1CCC1F4000CED9C4 /* XHVoiceRecordHUD.m in Sources */,
+				DF4314191D755DF8002E21D5 /* MoreButton.swift in Sources */,
 				DF0180781D3DF91E00935A60 /* Extension+NSDate.swift in Sources */,
 				B1ECD7911CCC1F4000CED9C4 /* XHZoomingImageView.m in Sources */,
 				B1ECD6A61CCC1F3F00CED9C4 /* CDEmotionUtils.m in Sources */,

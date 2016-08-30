@@ -16,6 +16,7 @@ class PostContentCell: UITableViewCell {
     @IBOutlet weak var authorView: UserBannerView!
     @IBOutlet weak var contentTextView: PostContentTextView!
     @IBOutlet weak var timeStampLabel: UILabel!
+    @IBOutlet weak var moreButton: MoreButton!
     @IBOutlet weak var saveButton: FavoriteButton!
     @IBOutlet private weak var saveLabel: UILabel!
     @IBOutlet weak var replyButton: ReplyButton!
@@ -95,13 +96,14 @@ class PostContentCell: UITableViewCell {
         }
     }
     
-    var delegate: protocol<UITextViewDelegate, KIImagePagerDelegate, KIImagePagerDataSource, FavoriteButtonDelegate, ReplyButtonDelegate>? {
+    var delegate: protocol<UITextViewDelegate, KIImagePagerDelegate, KIImagePagerDataSource, FavoriteButtonDelegate, ReplyButtonDelegate, MoreButtonDelegate>? {
         didSet {
             self.contentTextView.delegate = self.delegate
             self.imagePager.dataSource = self.delegate
             self.imagePager.delegate = self.delegate
             self.saveButton.delegate = self.delegate
             self.replyButton.delegate = self.delegate
+            self.moreButton.delegate = self.delegate
         }
     }
     

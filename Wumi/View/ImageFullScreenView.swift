@@ -10,13 +10,20 @@ import UIKit
 
 class ImageFullScreenView: UIView {
 
-    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var actionButton: MoreButton!
     @IBOutlet weak var indexLabel: UILabel!
+    
     var imagePageVC = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
     
     var dataSource: UIPageViewControllerDataSource? {
         didSet {
             self.imagePageVC.dataSource = self.dataSource
+        }
+    }
+    
+    var delegate: protocol<MoreButtonDelegate>? {
+        didSet {
+            self.actionButton.delegate = self.delegate
         }
     }
     

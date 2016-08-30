@@ -192,7 +192,6 @@ class MessageTableViewController: UITableViewController {
         cell.locationLabel.text = "\(user.location)"
         
         // Load favorite status with login user
-        cell.delegate = self
         cell.favoriteButton.selected = self.currentUser.favoriteUsersArray.contains( { $0 == user } )
         
         cell.additionalButton.enabled = false
@@ -377,108 +376,6 @@ extension MessageTableViewController: UISearchBarDelegate, UISearchControllerDel
                                                                      userInfo: nil,
                                                                      repeats: false)
         }
-    }
-}
-
-// MARK: Favorite button delegate
-
-extension MessageTableViewController: FavoriteButtonDelegate {
-    func addFavorite(favoriteButton: FavoriteButton) {
-        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition) else { return }
-        
-        guard let user = self.displayUsers[safe: indexPath.row] else { return }
-        
-        self.currentUser.addFavoriteUser(user) { (result, error) -> Void in
-            guard result && error == nil else { return }
-            
-            favoriteButton.selected = true
-        }
-    }
-    
-    func removeFavorite(favoriteButton: FavoriteButton) {
-        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row] else { return }
-        
-        self.currentUser.removeFavoriteUser(user) { (result, error) -> Void in
-            guard result && error == nil else { return }
-            
-            favoriteButton.selected = false
-            
-            // Remove cell if we are on the Favorite Search Type whcih should only show favorite users
-            if self.searchType == .Favorites {
-                self.displayUsers.removeObject(user)
-                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            }
-        }
-    }
-    
-    func didChangeSelected(favoriteButton: FavoriteButton, selected: Bool) {
-        let buttonPosition = favoriteButton.convertPoint(CGPointZero, toView: self.tableView)
-        if let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), cell = self.tableView.cellForRowAtIndexPath(indexPath) as? ContactTableViewCell where cell.additionalButton.selected {
-            favoriteButton.alpha = 1.0
-        }
-        else {
-            favoriteButton.alpha = selected ? 1.0: 0.0
-        }
-    }
-}
-
-// MARK: Email button delegate
-
-extension MessageTableViewController: EmailButtonDelegate {
-    func sendEmail(emailButton: EmailButton) {
-        let buttonPosition = emailButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row], email = user.email else { return }
-        
-        if MFMailComposeViewController.canSendMail() {
-            let mailComposeVC = MFMailComposeViewController()
-            mailComposeVC.mailComposeDelegate = self
-            mailComposeVC.setToRecipients([email])
-            presentViewController(mailComposeVC, animated: true, completion: nil)
-        }
-        else {
-            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
-        }
-    }
-}
-
-// MARK: Phone button delegate
-
-extension MessageTableViewController: PhoneButtonDelegate {
-    func callPhone(phoneButton: PhoneButton) {
-        let buttonPosition = phoneButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row], phoneNumber = user.phoneNumber else { return }
-        
-        Helper.PopupConfirmationBox(self, boxTitle: nil, message: "Call \(phoneNumber)?", cancelBlock: nil) { (action) -> Void in
-            if let url = NSURL(string: "tel:\(phoneNumber)") where UIApplication.sharedApplication().canOpenURL(url) {
-                UIApplication.sharedApplication().openURL(url)
-            }
-            else {
-                Helper.PopupErrorAlert(self, errorMessage: "Failed to call \(phoneNumber)")
-            }
-        }
-    }
-}
-
-// MARK: Private message button delegate
-
-extension MessageTableViewController: PrivateMessageButtonDelegate {
-    func sendMessage(privateMessageButton: PrivateMessageButton) {
-        // TODO: launch private message
-        let buttonPosition = privateMessageButton.convertPoint(CGPointZero, toView: self.tableView)
-        guard let indexPath = self.tableView.indexPathForRowAtPoint(buttonPosition), user = self.displayUsers[safe: indexPath.row] else { return }
-        
-        CDChatManager.sharedManager().fetchConversationWithOtherId(user.objectId, callback: { (conv: AVIMConversation!, error: NSError!) -> Void in
-            if (error != nil) {
-                print("error: \(error)")
-            } else {
-                let chatRoomVC = ChatRoomViewController(conversation: conv)
-                chatRoomVC.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(chatRoomVC, animated: true)
-            }
-        })
-        
     }
 }
 

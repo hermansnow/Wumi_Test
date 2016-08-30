@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -37,21 +37,37 @@
                                     <constraint firstAttribute="height" id="WeA-7h-Cej"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkx-7a-OEW">
-                                <rect key="frame" x="16" y="293" width="617" height="0.0"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6Z1-d3-8vf">
+                                <rect key="frame" x="16" y="293" width="617" height="20"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkx-7a-OEW">
+                                        <rect key="frame" x="0.0" y="10" width="593" height="0.0"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7qP-9C-BJk" customClass="MoreButton" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="601" y="2" width="16" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="7qP-9C-BJk" secondAttribute="height" multiplier="1:1" id="X1g-Ix-Mxm"/>
+                                            <constraint firstAttribute="height" constant="16" id="vbl-Jv-8se"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="More"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="vM8-Ej-0Ux"/>
+                                </constraints>
+                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="et2-1l-eza" customClass="UserBannerView" customModule="Wumi" customModuleProvider="target">
-                                <rect key="frame" x="16" y="299" width="617" height="16"/>
+                                <rect key="frame" x="16" y="319" width="617" height="16"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="V1t-Gt-Mta"/>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="u6u-XA-xhw" customClass="PostContentTextView" customModule="Wumi" customModuleProvider="target">
-                                <rect key="frame" x="16" y="327" width="617" height="73"/>
+                                <rect key="frame" x="16" y="347" width="617" height="53"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -141,22 +157,22 @@
                             <constraint firstItem="u6u-XA-xhw" firstAttribute="top" secondItem="et2-1l-eza" secondAttribute="bottom" constant="12" id="0eE-FT-UHt"/>
                             <constraint firstItem="G7m-zj-CJT" firstAttribute="leading" secondItem="4yZ-UL-4id" secondAttribute="leading" constant="16" id="3IX-ZI-3Fm"/>
                             <constraint firstItem="et2-1l-eza" firstAttribute="leading" secondItem="4yZ-UL-4id" secondAttribute="leading" constant="16" id="4Mu-gl-9pz"/>
-                            <constraint firstItem="et2-1l-eza" firstAttribute="top" secondItem="jkx-7a-OEW" secondAttribute="bottom" constant="6" id="5aC-vg-iLi"/>
-                            <constraint firstItem="jkx-7a-OEW" firstAttribute="top" secondItem="77F-LB-8qW" secondAttribute="bottom" constant="16" id="Bhc-AS-Zpo"/>
                             <constraint firstItem="sgY-Z8-q71" firstAttribute="top" secondItem="4yZ-UL-4id" secondAttribute="top" id="DPn-P2-9zN"/>
                             <constraint firstItem="u6u-XA-xhw" firstAttribute="leading" secondItem="4yZ-UL-4id" secondAttribute="leading" constant="16" id="HAK-UB-J6k"/>
                             <constraint firstItem="cKk-hw-g8b" firstAttribute="top" secondItem="u6u-XA-xhw" secondAttribute="bottom" constant="12" id="L4X-na-iDI"/>
+                            <constraint firstAttribute="trailing" secondItem="6Z1-d3-8vf" secondAttribute="trailing" constant="16" id="NIx-7a-QAk"/>
+                            <constraint firstItem="6Z1-d3-8vf" firstAttribute="leading" secondItem="4yZ-UL-4id" secondAttribute="leading" constant="16" id="OCt-6d-foy"/>
                             <constraint firstAttribute="bottom" secondItem="G7m-zj-CJT" secondAttribute="bottom" id="QT9-Nh-gSc"/>
                             <constraint firstAttribute="trailing" secondItem="cKk-hw-g8b" secondAttribute="trailing" constant="16" id="RDr-Qb-4nG"/>
-                            <constraint firstItem="jkx-7a-OEW" firstAttribute="leading" secondItem="4yZ-UL-4id" secondAttribute="leading" constant="16" id="St3-yH-ZkL"/>
                             <constraint firstAttribute="trailing" secondItem="sgY-Z8-q71" secondAttribute="trailing" id="YhY-iR-5Xn"/>
                             <constraint firstItem="sgY-Z8-q71" firstAttribute="leading" secondItem="4yZ-UL-4id" secondAttribute="leading" id="d7Q-K8-wwU"/>
                             <constraint firstAttribute="trailing" secondItem="77F-LB-8qW" secondAttribute="trailing" id="iqH-2J-STi"/>
+                            <constraint firstItem="et2-1l-eza" firstAttribute="top" secondItem="6Z1-d3-8vf" secondAttribute="bottom" constant="6" id="jQL-Jo-kVX"/>
                             <constraint firstItem="G7m-zj-CJT" firstAttribute="top" secondItem="cKk-hw-g8b" secondAttribute="bottom" constant="12" id="oQH-hI-HDx"/>
                             <constraint firstItem="cKk-hw-g8b" firstAttribute="leading" secondItem="4yZ-UL-4id" secondAttribute="leading" constant="16" id="ovi-dH-8cL"/>
+                            <constraint firstItem="6Z1-d3-8vf" firstAttribute="top" secondItem="77F-LB-8qW" secondAttribute="bottom" constant="16" id="pM4-6C-HY9"/>
                             <constraint firstAttribute="trailing" secondItem="et2-1l-eza" secondAttribute="trailing" constant="16" id="vGu-fm-12d"/>
                             <constraint firstAttribute="trailing" secondItem="G7m-zj-CJT" secondAttribute="trailing" constant="16" id="vQR-hv-9T0"/>
-                            <constraint firstAttribute="trailing" secondItem="jkx-7a-OEW" secondAttribute="trailing" constant="16" id="wvc-Of-UKW"/>
                             <constraint firstAttribute="trailing" secondItem="u6u-XA-xhw" secondAttribute="trailing" constant="16" id="xWK-f2-k3F"/>
                             <constraint firstItem="77F-LB-8qW" firstAttribute="leading" secondItem="4yZ-UL-4id" secondAttribute="leading" id="xjp-RH-T8U"/>
                             <constraint firstItem="77F-LB-8qW" firstAttribute="top" secondItem="sgY-Z8-q71" secondAttribute="bottom" id="zFW-nz-toG"/>
@@ -174,6 +190,7 @@
                 <outlet property="authorView" destination="et2-1l-eza" id="Y1N-Md-XK5"/>
                 <outlet property="contentTextView" destination="u6u-XA-xhw" id="Cz3-jU-3cr"/>
                 <outlet property="imagePager" destination="sgY-Z8-q71" id="rpX-Hf-W1I"/>
+                <outlet property="moreButton" destination="7qP-9C-BJk" id="lRh-be-HgJ"/>
                 <outlet property="repliesButton" destination="pFk-9i-A0o" id="beS-no-qCW"/>
                 <outlet property="replyButton" destination="mdS-la-KDD" id="jr5-RW-8nY"/>
                 <outlet property="replyLabel" destination="n8X-HN-xMz" id="xTT-So-6is"/>
@@ -186,6 +203,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="More" width="26" height="26"/>
         <image name="Reply" width="16" height="12"/>
         <image name="Star" width="16" height="16"/>
     </resources>

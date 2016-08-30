@@ -682,4 +682,13 @@ extension HomeViewController: PostViewControllerDelegate {
         
         cell.isSaved = postVC.isSaved
     }
+    
+    func deletePost(postVC: PostViewController) {
+        guard let indexPath = self.selectedPostIndexPath else { return }
+        
+        print(indexPath)
+        
+        self.displayPosts.removeAtIndex(indexPath.row)
+        self.postTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+    }
 }

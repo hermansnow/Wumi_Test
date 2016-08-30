@@ -14,7 +14,7 @@ class ContactTableViewCell: UITableViewCell {
     @IBOutlet weak var contentStackView: UIStackView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var additionalButton: UIButton!
+    @IBOutlet weak var additionalButton: MoreButton!
     @IBOutlet weak var additionalMenuButtonStack: UIStackView!
     @IBOutlet weak var emailButton: EmailButton!
     @IBOutlet weak var phoneButton: PhoneButton!
@@ -28,12 +28,13 @@ class ContactTableViewCell: UITableViewCell {
     
     private var additionalMenuButtons = [UIButton]()
     
-    var delegate: protocol<FavoriteButtonDelegate, EmailButtonDelegate, PhoneButtonDelegate, PrivateMessageButtonDelegate>? {
+    var delegate: protocol<FavoriteButtonDelegate, EmailButtonDelegate, PhoneButtonDelegate, PrivateMessageButtonDelegate, MoreButtonDelegate>? {
         didSet {
             self.favoriteButton.delegate = self.delegate
             self.emailButton.delegate = self.delegate
             self.phoneButton.delegate = self.delegate
             self.privateMessageButton.delegate = self.delegate
+            self.additionalButton.delegate = self.delegate
         }
     }
     
@@ -56,24 +57,9 @@ class ContactTableViewCell: UITableViewCell {
         
         self.additionalMenuButtons = [self.privateMessageButton, self.emailButton, self.phoneButton]
         
-        self.setButtonImages()
-        
-        self.addGesture()
-        
         self.drawBorder()
         
         self.reset()
-    }
-    
-    private func setButtonImages() {
-        // Additional Menu button
-        self.additionalButton.setBackgroundImage(UIImage(named: "More"), forState: .Normal)
-        self.additionalButton.setBackgroundImage(UIImage(named: "More_Selected"), forState: .Selected)
-
-    }
-    
-    private func addGesture() {
-        self.additionalButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.manageAdditionalActions(_:))))
     }
     
     private func drawBorder() {
@@ -89,7 +75,7 @@ class ContactTableViewCell: UITableViewCell {
         self.layer.masksToBounds = true
     }
     
-    func showAdditonalActions(showAdditonalActions: Bool, withAnimation animation: Bool) {
+    func showAdditionalActions(showAdditonalActions: Bool, withAnimation animation: Bool) {
         let animationDuration = 0.5
         
         // Compose additional menu buttons
@@ -177,7 +163,7 @@ class ContactTableViewCell: UITableViewCell {
         self.privateMessageButton.enabled = true
         self.emailButton.enabled = true
         self.favoriteButton.enabled = true
-        self.showAdditonalActions(false, withAnimation: false)
+        self.showAdditionalActions(false, withAnimation: false)
     }
     
     override func drawRect(rect: CGRect) {
@@ -196,9 +182,5 @@ class ContactTableViewCell: UITableViewCell {
         else {
             return hitView
         }
-    }
-    
-    func manageAdditionalActions(sender: UITapGestureRecognizer) {
-        self.showAdditonalActions(!self.additionalButton.selected, withAnimation: true)
     }
 }
