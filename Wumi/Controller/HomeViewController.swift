@@ -11,6 +11,7 @@ import BTNavigationDropdownMenu
 import SWRevealViewController
 import TSMessages
 import SDWebImage
+import TTTAttributedLabel
 
 class HomeViewController: UIViewController {
     
@@ -19,12 +20,18 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var currentUserAvatarView: AvatarImageView!
     @IBOutlet weak var postTableView: UITableView!
+    @IBOutlet var newPostNotificationView: UIView!
+    @IBOutlet weak var newPostLabel: UILabel!
     
     // Navigation bar items
     private var refreshControl = UIRefreshControl()
     private var searchButton = UIBarButtonItem()
     private var composePostButton = UIBarButtonItem()
     private var menuView: BTNavigationDropdownMenu?
+    
+    // Constaints
+    private var tableTop: NSLayoutConstraint?
+    private var userBannerBottom: NSLayoutConstraint?
     
     var resultSearchController = UISearchController()
     
@@ -101,11 +108,14 @@ class HomeViewController: UIViewController {
         // Add current user banner
         self.addCurrentUserBanner()
         
+        // Add new post notification view
+        self.addNewPostNotificationView()
+        
         // Initialize tableview
         self.postTableView.delegate = self
         self.postTableView.dataSource = self
-        self.postTableView.estimatedRowHeight = 180
-        self.postTableView.rowHeight = UITableViewAutomaticDimension
+        //self.postTableView.estimatedRowHeight = 180
+        //self.postTableView.rowHeight = UITableViewAutomaticDimension
         self.postTableView.tableFooterView = UIView(frame: CGRectZero)
         self.postTableView.separatorStyle = .None
         self.postTableView.contentInset = UIEdgeInsets(top: self.currentUserBanner.frame.size.height, left: 0, bottom: 0, right: 0)
@@ -201,11 +211,6 @@ class HomeViewController: UIViewController {
         // Add gesture
         self.currentUserBanner.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.editCurrentUserProfile(_:))))
         
-        //
-        self.view.addSubview(self.currentUserBanner)
-        self.currentUserBanner.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor, constant: 0.0).active = true
-        self.currentUserBanner.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor, constant: 0.0).active = true
-        
         self.showCurrentUserBanner()
     }
     
@@ -257,6 +262,35 @@ class HomeViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    private func addNewPostNotificationView() {
+        self.newPostNotificationView.backgroundColor = Constants.General.Color.ThemeColor
+        self.newPostLabel.textColor = UIColor.whiteColor()
+        self.newPostLabel.font = Constants.Post.Font.ListCurrentUserBanner
+        self.newPostNotificationView.layer.cornerRadius = self.newPostNotificationView.frame.size.height / 2
+        
+        if let labelWidth = self.newPostLabel.text?.widthWithConstrainedHeight(20, font: self.newPostLabel.font) {
+            let width = labelWidth + 24 + 12
+            self.newPostNotificationView.frame.size = CGSize(width: width, height: self.newPostNotificationView.frame.size.height)
+        }
+        
+        self.newPostNotificationView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.homeTabClicked(_:))))
+        
+        self.newPostNotificationView.hidden = true // Hide as default
+        
+        self.view.addSubview(self.newPostNotificationView)
+        self.tableTop = self.newPostNotificationView.topAnchor.constraintEqualToAnchor(self.postTableView.topAnchor, constant: 16)
+        self.userBannerBottom = self.newPostNotificationView.topAnchor.constraintEqualToAnchor(self.currentUserBanner.bottomAnchor, constant: 16)
+        NSLayoutConstraint(item: self.newPostNotificationView,
+                           attribute: .CenterX,
+                           relatedBy: .Equal,
+                           toItem: self.postTableView,
+                           attribute: .CenterX,
+                           multiplier: 1.0,
+                           constant: 0).active = true
+        
+        self.checkNewPosts()
     }
     
     // MARK: Navigation
@@ -334,7 +368,7 @@ class HomeViewController: UIViewController {
     }
     
     func homeTabClicked(sender: AnyObject) {
-        self.postTableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl.frame.size.height), animated:true)
+        self.postTableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl.frame.size.height - self.currentUserBanner.frame.size.height), animated:true)
         self.loadPosts()
     }
     
@@ -358,30 +392,56 @@ class HomeViewController: UIViewController {
         let offset = self.postTableView.contentOffset
         
         // Change the alpha of current user banner based on percentage of overlap between banner and table content
+        let previousAlpha = self.currentUserBanner.alpha
         self.currentUserBanner.alpha = -offset.y / bannerHeight
+        
+        // Update new post notification constraint
+        if previousAlpha > 0 && self.currentUserBanner.alpha <= 0.0 {
+            self.updateNewPostNotificationLayout()
+        }
+        else if previousAlpha <= 0.0 && self.currentUserBanner.alpha > 0 {
+            self.updateNewPostNotificationLayout()
+        }
+    }
+    
+    private func updateNewPostNotificationLayout() {
+        if self.currentUserBanner.alpha <= 0.0 {
+            self.tableTop?.active = true
+            self.userBannerBottom?.active = false
+        }
+        else {
+            self.tableTop?.active = false
+            self.userBannerBottom?.active = true
+        }
+        
+        self.view.layoutIfNeeded()
     }
     
     func checkNewPosts() {
-        guard let navigationController = self.navigationController else { return }
+        guard self.resultSearchController.active == false else { return }
         
         if let firstPost = self.displayPosts.first {
             Post.countNewPosts(self.searchType, cutoffTime: firstPost.updatedAt, user: self.currentUser, block: { (count, error) in
                 guard count > 0 && error == nil else {
-                    navigationController.tabBarItem.badgeValue = nil
+                    self.view.sendSubviewToBack(self.newPostNotificationView)
+                    self.newPostNotificationView.hidden = true
                     return
                 }
                 
-                if count <= 99 {
-                    navigationController.tabBarItem.badgeValue = "\(count)"
-                }
-                else {
-                    navigationController.tabBarItem.badgeValue = ""
-                }
+                self.view.bringSubviewToFront(self.newPostNotificationView)
+                self.newPostNotificationView.hidden = false
+                
+                self.updateNewPostNotificationLayout()
             })
         }
     }
     
     func loadPosts() {
+        // Hide new post notification
+        self.view.sendSubviewToBack(self.newPostNotificationView)
+        self.newPostNotificationView.hidden = true
+        
+        // Start refreshing
         self.refreshControl.beginRefreshing()
         
         Post.loadPosts(limit: Constants.Query.LoadPostLimit,
@@ -389,19 +449,19 @@ class HomeViewController: UIViewController {
                        searchString: self.searchString,
                        user: self.currentUser,
                        category: self.category) { (results, error) -> Void in
-                        self.refreshControl.endRefreshing()
-                        
-                        guard let posts = results as? [Post] where error == nil else { return }
+                        guard let posts = results as? [Post] where error == nil else {
+                            self.refreshControl.endRefreshing()
+                            return
+                        }
                     
                         self.displayPosts = posts
                         self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
                     
                         self.postTableView.reloadData()
                         
-                        // Reset new post badge since we just loaded latest posts
-                        if let navigationController = self.navigationController where self.searchString.characters.count == 0 {
-                            navigationController.tabBarItem.badgeValue = nil
-                        }
+                        self.refreshControl.endRefreshing()
+                        
+                        self.checkNewPosts()
         }
     }
     
@@ -422,6 +482,8 @@ class HomeViewController: UIViewController {
                         self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
                     
                         self.postTableView.reloadData()
+                        
+                        self.checkNewPosts()
         }
     }
 }
@@ -454,6 +516,25 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             self.postTableView.backgroundView = emptyView
         }
         return self.displayPosts.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        guard let post = self.displayPosts[safe: indexPath.row] else { return 0}
+        
+        var textHeight: CGFloat = 0.0
+        if let content = post.content {
+            let attributeString = PostTableViewCell.attributedText(NSAttributedString(string: content))
+        
+            textHeight = TTTAttributedLabel.sizeThatFitsAttributedString(attributeString,
+                                                                         withConstraints: CGSize(width: tableView.contentSize.width, height: 400),
+                                                                         limitedToNumberOfLines: 3).height
+        }
+        
+        if post.attachedThumbnails.count > 0 || post.mediaThumbnails.count > 0 || post.hasPreviewImage {
+            textHeight = textHeight > PostTableViewCell.fixedImagePreviewHeight() ? textHeight : PostTableViewCell.fixedImagePreviewHeight()
+        }
+        
+        return PostTableViewCell.fixedHeight() + textHeight
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -529,6 +610,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.isSaved = self.currentUser.savedPostsArray.contains( { $0 == post} )
         cell.saveButton.delegate = self
         cell.replyButton.delegate = self
+        
+        cell.delegate = self
         
         return cell
     }
@@ -672,6 +755,23 @@ extension HomeViewController: FavoriteButtonDelegate {
 extension HomeViewController: ReplyButtonDelegate {
     func reply(replyButton: ReplyButton) {
         self.performSegueWithIdentifier("Show Post", sender: replyButton)
+    }
+}
+
+extension HomeViewController: TTTAttributedLabelDelegate {
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        print("Click")
+        // Launch application if it can be handled by any app installed
+        if url.willOpenInApp() != nil {
+            UIApplication.sharedApplication().openURL(url)
+        }
+            // Otherwise, request it in web viewer
+        else {
+            let webVC = WebFullScreenViewController()
+            webVC.url = url
+            
+            self.navigationController?.pushViewController(webVC, animated: true)
+        }
     }
 }
 

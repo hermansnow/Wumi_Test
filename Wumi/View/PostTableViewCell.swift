@@ -7,15 +7,17 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 class PostTableViewCell: UITableViewCell {
 
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet weak var authorView: UserBannerView!
     @IBOutlet private weak var contentStackView: UIStackView!
-    @IBOutlet weak var contentTextView: PostContentTextView!
+    @IBOutlet weak var contentTextView: TTTAttributedLabel!
     @IBOutlet weak var imagePreview: UIImageView!
     @IBOutlet private weak var timeStampLabel: UILabel!
+    @IBOutlet weak var buttonStack: UIStackView!
     @IBOutlet weak var saveButton: FavoriteButton!
     @IBOutlet private weak var saveLabel: UILabel!
     @IBOutlet weak var replyButton: ReplyButton!
@@ -23,16 +25,22 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var repliesButton: UIButton!
     @IBOutlet weak var separator: UIView!
     
+    var delegate: protocol<TTTAttributedLabelDelegate>? {
+        didSet {
+            self.contentTextView.delegate = self.delegate
+        }
+    }
+    
     var showSummary: Bool {
         get {
-            return self.contentTextView.textContainer.maximumNumberOfLines > 0
+            return self.contentTextView.numberOfLines > 0
         }
         set {
             if newValue {
-                self.contentTextView.textContainer.maximumNumberOfLines = 3
+                self.contentTextView.numberOfLines = 3
             }
             else {
-                self.contentTextView.textContainer.maximumNumberOfLines = 0
+                self.contentTextView.numberOfLines = 0
             }
         }
     }
@@ -66,20 +74,13 @@ class PostTableViewCell: UITableViewCell {
         }
         set {
             if let content = newValue {
-                let attributeContent = NSMutableAttributedString(attributedString: content)
-                    
-                attributeContent.addAttribute(NSForegroundColorAttributeName,
-                                              value: Constants.General.Color.TextColor,
-                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
-                attributeContent.addAttribute(NSFontAttributeName,
-                                              value: Constants.Post.Font.ListContent!,
-                                              range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+                let attributeContent = PostTableViewCell.attributedText(content)
                     
                 attributeContent.highlightString(self.highlightedString)
-                self.contentTextView.attributedText = attributeContent
+                self.contentTextView.setText(attributeContent)
             }
             else {
-                self.contentTextView.attributedText = nil
+                self.contentTextView.setText(nil)
             }
         }
     }
@@ -157,8 +158,11 @@ class PostTableViewCell: UITableViewCell {
         
         // Set up content text view
         self.showSummary = true
-        self.contentTextView.selfUserInteractionEnabled = true
-        self.contentTextView.disableTextSelection = true
+        self.contentTextView.userInteractionEnabled = true
+        self.contentTextView.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+        self.contentTextView.linkAttributes = [ NSForegroundColorAttributeName: Constants.General.Color.ThemeColor,
+                                                NSFontAttributeName: Constants.Post.Font.ListContent!]
+        self.contentTextView.lineBreakMode = .ByWordWrapping
         
         // Set up image view
         self.imagePreview.contentMode = .ScaleAspectFit
@@ -188,5 +192,27 @@ class PostTableViewCell: UITableViewCell {
         self.authorView.reset()
         self.hideImageView = true
         self.isSaved = false
+    }
+    
+    class func fixedHeight() -> CGFloat {
+        // Top margin + title label height + space + author view height + space + space + time stamp height + space + button stack height + space + separater height + bottom margin
+        return 16 + 20 + 8 + 16 + 12 + 16 + 16 + 16 + 20 + 16 + 1 + 16
+    }
+    
+    class func fixedImagePreviewHeight() -> CGFloat {
+        return 80
+    }
+    
+    class func attributedText(content: NSAttributedString) -> NSMutableAttributedString {
+        let attributeContent = NSMutableAttributedString(attributedString: content)
+        
+        attributeContent.addAttribute(NSForegroundColorAttributeName,
+                                      value: Constants.General.Color.TextColor,
+                                      range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+        attributeContent.addAttribute(NSFontAttributeName,
+                                      value: Constants.Post.Font.ListContent!,
+                                      range: NSRange(location: 0, length: attributeContent.string.utf16.count))
+        
+        return attributeContent
     }
 }

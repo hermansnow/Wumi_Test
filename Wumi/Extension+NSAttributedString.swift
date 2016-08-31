@@ -34,6 +34,7 @@ extension NSMutableAttributedString {
         let results = detector.matchesInString(self.string, options: [], range: NSMakeRange(0, self.string.characters.count))
         
         var urls = [NSURL]()
+        var urlReplaceDict = [NSTextCheckingResult: NSAttributedString]()
         let taskGroup = dispatch_group_create()
         let taskQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         
@@ -41,18 +42,15 @@ extension NSMutableAttributedString {
             guard linkResult.resultType == NSTextCheckingType.Link, let url = linkResult.URL else { continue }
             
             dispatch_group_async(taskGroup, taskQueue) {
-                // Add link icon
-                let textAttachment = NSTextAttachment()
-                textAttachment.image = UIImage(named: "Link")?.scaleToHeight((Constants.Post.Font.ListContent?.capHeight)!)
-                let urlImageString = NSMutableAttributedString(attributedString: NSAttributedString(attachment: textAttachment))
+                let urlString = NSMutableAttributedString()
                     
                 // Add link description based on url
                 if let app = url.willOpenInApp() {
-                    urlImageString.appendAttributedString(NSAttributedString(string: " \(app)"))
+                    urlString.appendAttributedString(NSAttributedString(string: " \(app)"))
                 }
                 else {
                     url.fetchPageInfo(requirePreviewImage: requirePreviewImage) { (title, previewImageURL) in
-                        urlImageString.appendAttributedString(NSAttributedString(string: " \(title ?? url.absoluteURL)"))
+                        urlString.appendAttributedString(NSAttributedString(string: " \(title ?? url.absoluteURL)"))
                     
                         // Store preview images
                         if let imageURL = previewImageURL {
@@ -62,16 +60,22 @@ extension NSMutableAttributedString {
                 }
                 
                 // Replace the url string with short string (icon with a description)
-                let range = NSRange(location: 0, length: urlImageString.length)
-                urlImageString.removeAttribute(NSFontAttributeName, range: range)
-                urlImageString.addAttribute(NSFontAttributeName, value: Constants.Post.Font.ListContent!, range: range)
-                urlImageString.addAttribute(NSLinkAttributeName, value: url, range: range)
+                let range = NSRange(location: 0, length: urlString.length)
+                urlString.removeAttribute(NSFontAttributeName, range: range)
+                urlString.addAttribute(NSFontAttributeName, value: Constants.Post.Font.ListContent!, range: range)
+                urlString.addAttribute(NSLinkAttributeName, value: url, range: range)
                 
-                self.replaceCharactersInRange(linkResult.range, withAttributedString: urlImageString)
+                urlReplaceDict[linkResult] = urlString
             }
         }
         
         dispatch_group_notify(taskGroup, taskQueue) {
+            for linkResult in results.reverse() {
+                guard let urlString = urlReplaceDict[linkResult] else { continue }
+                
+                self.replaceCharactersInRange(linkResult.range, withAttributedString: urlString)
+            }
+            
             dispatch_async(dispatch_get_main_queue()) {
                 completionHandler(linkFound: results.count > 0, previewImageUrl: urls.first)
             }

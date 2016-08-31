@@ -20,7 +20,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Su0-Ah-6MB">
                                 <rect key="frame" x="0.0" y="0.0" width="508" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="fSv-O6-O5I"/>
+                                    <constraint firstAttribute="height" constant="20" id="fSv-O6-O5I"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -36,13 +36,12 @@
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="kWJ-Ug-8IM">
                                 <rect key="frame" x="0.0" y="56" width="508" height="157"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vgy-Oi-paX" customClass="PostContentTextView" customModule="Wumi" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j3V-qY-f7f" customClass="TTTAttributedLabel">
                                         <rect key="frame" x="0.0" y="0.0" width="428" height="0.0"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                                    </textView>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wAY-sN-iR3">
                                         <rect key="frame" x="428" y="0.0" width="80" height="80"/>
                                         <constraints>
@@ -181,8 +180,9 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="authorView" destination="sjI-JE-1eO" id="TrA-aB-oiN"/>
+                <outlet property="buttonStack" destination="BYe-Up-z6y" id="sHL-Tk-oDn"/>
                 <outlet property="contentStackView" destination="kWJ-Ug-8IM" id="2q8-jN-ZsU"/>
-                <outlet property="contentTextView" destination="vgy-Oi-paX" id="7NG-KX-VSq"/>
+                <outlet property="contentTextView" destination="j3V-qY-f7f" id="Goa-hZ-lma"/>
                 <outlet property="imagePreview" destination="wAY-sN-iR3" id="kNP-87-I31"/>
                 <outlet property="repliesButton" destination="hOu-cl-PCA" id="WVb-YD-rRC"/>
                 <outlet property="replyButton" destination="Hv1-rJ-PDe" id="Q8T-hk-wAy"/>
@@ -193,7 +193,7 @@
                 <outlet property="timeStampLabel" destination="Mo3-cr-1bc" id="Y6j-Tm-XVi"/>
                 <outlet property="titleLabel" destination="Su0-Ah-6MB" id="Eay-Cu-BGn"/>
             </connections>
-            <point key="canvasLocation" x="-1450" y="413"/>
+            <point key="canvasLocation" x="-1644" y="358"/>
         </tableViewCell>
     </objects>
     <resources>

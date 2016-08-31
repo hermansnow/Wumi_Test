@@ -36,4 +36,6 @@ target 'Wumi' do
     pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
     
     pod 'Ji', '~> 1.2.0'
+    
+    pod 'TTTAttributedLabel'
 end
