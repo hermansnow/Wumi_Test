@@ -20,7 +20,6 @@ class ChatListViewController: CDChatListVC, CDChatListVCDelegate {
         
         let addItem = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: #selector(ChatListViewController.addButtonClicked))
         self.navigationItem.rightBarButtonItem = addItem
-  
     }
     
     func addButtonClicked() {
@@ -38,9 +37,9 @@ class ChatListViewController: CDChatListVC, CDChatListVCDelegate {
     
     func setBadgeWithTotalUnreadCount(totalUnreadCount: Int) {
         if (totalUnreadCount > 0) {
-            self.tabBarItem.badgeValue = "\(totalUnreadCount)"
+            self.navigationController?.tabBarItem.badgeValue = "\(totalUnreadCount)"
         } else {
-            self.tabBarItem.badgeValue = nil
+            self.navigationController?.tabBarItem.badgeValue = nil
         }
     }
 }
