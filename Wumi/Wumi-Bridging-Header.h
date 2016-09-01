@@ -4,3 +4,4 @@
 #import <AVOSCloud/AVOSCloud.h>
 #import <AVOSCloudIM/AVOSCloudIM.h>
 #import "LeanChatLib.h"
+#import "WeiboSDK.h"

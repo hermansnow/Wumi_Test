@@ -587,11 +587,13 @@ extension PostViewController: UITextViewDelegate {
 
 extension PostViewController: MoreButtonDelegate {
     func showMoreActions(moreButton: MoreButton) {
+        guard let post = self.post else { return }
+        
         let moreActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         // Add share action to share post
         moreActionSheet.addAction(UIAlertAction(title: "Share", style: .Default) { (action) in
-            let activityViewController = UIActivityViewController(activityItems: [], applicationActivities: nil)
+            let activityViewController = UIActivityViewController(activityItems: [post], applicationActivities: [WeiboActivity()])
             self.presentViewController(activityViewController, animated: true, completion: nil)
         })
         

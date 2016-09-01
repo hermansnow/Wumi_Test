@@ -336,6 +336,9 @@
 		DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */; };
 		DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF3629561C9B305100D87574 /* ContactTableViewCell.xib */; };
 		DF4314191D755DF8002E21D5 /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4314181D755DF8002E21D5 /* MoreButton.swift */; };
+		DF43141B1D777356002E21D5 /* WeiboService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43141A1D777356002E21D5 /* WeiboService.swift */; };
+		DF43141D1D77C1E4002E21D5 /* ShareActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43141C1D77C1E4002E21D5 /* ShareActivity.swift */; };
+		DF4314201D77C2B3002E21D5 /* WeiboActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43141F1D77C2B3002E21D5 /* WeiboActivity.swift */; };
 		DF4F532C1CCD9076009F3D2E /* PIKAImageCropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */; };
 		DF4F532D1CCD9076009F3D2E /* PIKAImageCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */; };
 		DF4F532F1CD30F7E009F3D2E /* EmailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */; };
@@ -872,6 +875,9 @@
 		DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategoryTableViewController.swift; path = Controller/PostCategoryTableViewController.swift; sourceTree = "<group>"; };
 		DF3629561C9B305100D87574 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactTableViewCell.xib; path = View/ContactTableViewCell.xib; sourceTree = "<group>"; };
 		DF4314181D755DF8002E21D5 /* MoreButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoreButton.swift; path = View/MoreButton.swift; sourceTree = "<group>"; };
+		DF43141A1D777356002E21D5 /* WeiboService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeiboService.swift; sourceTree = "<group>"; };
+		DF43141C1D77C1E4002E21D5 /* ShareActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareActivity.swift; path = View/ShareActivity.swift; sourceTree = "<group>"; };
+		DF43141F1D77C2B3002E21D5 /* WeiboActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeiboActivity.swift; path = View/WeiboActivity.swift; sourceTree = "<group>"; };
 		DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PIKAImageCropView.xib; path = Controller/PIKA/PIKAImageCropView.xib; sourceTree = "<group>"; };
 		DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PIKAImageCropViewController.swift; path = Controller/PIKA/PIKAImageCropViewController.swift; sourceTree = "<group>"; };
 		DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmailButton.swift; path = View/EmailButton.swift; sourceTree = "<group>"; };
@@ -1934,6 +1940,15 @@
 			name = Post;
 			sourceTree = "<group>";
 		};
+		DF43141E1D77C285002E21D5 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				DF43141C1D77C1E4002E21D5 /* ShareActivity.swift */,
+				DF43141F1D77C2B3002E21D5 /* WeiboActivity.swift */,
+			);
+			name = Activity;
+			sourceTree = "<group>";
+		};
 		DF4F53291CCD9067009F3D2E /* PIKA */ = {
 			isa = PBXGroup;
 			children = (
@@ -1977,6 +1992,7 @@
 				DFBD2D441BEEF8F800D6FEBC /* Setting.swift */,
 				B1ECD7BE1CCC2B3200CED9C4 /* IMUser.swift */,
 				B1ECD7BC1CCC2B2B00CED9C4 /* IMUserFactory.swift */,
+				DF43141A1D777356002E21D5 /* WeiboService.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1999,6 +2015,7 @@
 		DF5EF1591D2EDBAC00C9B2F2 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				DF43141E1D77C285002E21D5 /* Activity */,
 				DF4F53301CD30F8C009F3D2E /* Buttons */,
 				DFA93AC11C90DDC000ECA503 /* CustomCell */,
 				DFB7CC061BEA893C00BEACB7 /* GraduationYearPickerView.swift */,
@@ -2450,6 +2467,7 @@
 			files = (
 				DF9F06101C7BC72D008CA6DC /* ContactTableViewCell.swift in Sources */,
 				B1ECD6A51CCC1F3F00CED9C4 /* CDConversationStore.m in Sources */,
+				DF43141D1D77C1E4002E21D5 /* ShareActivity.swift in Sources */,
 				B10C22281CCDC1760055ED35 /* PostViewController.swift in Sources */,
 				B1ECD7851CCC1F4000CED9C4 /* SETextAttachment.m in Sources */,
 				B1ECD78C1CCC1F4000CED9C4 /* SETextSelection.m in Sources */,
@@ -2482,6 +2500,7 @@
 				B1ECD6A81CCC1F3F00CED9C4 /* CDMessageHelper.m in Sources */,
 				DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */,
 				DF5AECA81D6434E800FB4B84 /* Extension+UITextView.swift in Sources */,
+				DF43141B1D777356002E21D5 /* WeiboService.swift in Sources */,
 				DF0180841D4882BF00935A60 /* LoadingIndicatorView.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */,
@@ -2547,6 +2566,7 @@
 				B1ECD76E1CCC1F4000CED9C4 /* XHHTTPClient.m in Sources */,
 				B1ECD7A11CCC1F4000CED9C4 /* XHEmotionCollectionViewFlowLayout.m in Sources */,
 				B1ECD7791CCC1F4000CED9C4 /* XHEmotionManager.m in Sources */,
+				DF4314201D77C2B3002E21D5 /* WeiboActivity.swift in Sources */,
 				B1ECD7B71CCC2AA800CED9C4 /* ChatRoomViewController.swift in Sources */,
 				DFA93AD71C912AFB00ECA503 /* ProfileInputSwitchTableCell.swift in Sources */,
 				02932A9C1CEE6DE2001220E8 /* PushNotification.swift in Sources */,

@@ -38,4 +38,6 @@ target 'Wumi' do
     pod 'Ji', '~> 1.2.0'
     
     pod 'TTTAttributedLabel'
+    
+    pod 'WeiboSDK', :git => 'https://github.com/sinaweibosdk/weibo_ios_sdk.git'
 end

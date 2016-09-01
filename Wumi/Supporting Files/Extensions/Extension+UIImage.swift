@@ -18,13 +18,13 @@ extension UIImage {
         if let jpegData = UIImageJPEGRepresentation(self, compress) {
             compress = CGFloat(size) / CGFloat(jpegData.length)
             if compress < 1.0 {
-                imageData = UIImageJPEGRepresentation(self, compress);
+                imageData = UIImageJPEGRepresentation(self, compress)
             }
             else {
                 imageData = jpegData
             }
         }
-        return imageData;
+        return imageData
     }
     
     // Scale an image to a specific size

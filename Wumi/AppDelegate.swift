@@ -43,6 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up reachability
         self.setupReachability()
         
+        // Social Network registration
+        self.setupSocialNetworking()
+        
         CDChatManager.sharedManager().userDelegate = IMUserFactory()
 
         self.setupLaunchViewController()
@@ -80,8 +83,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         currentInstallation.saveInBackground()
     }
     
+    func application(application: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        WeiboSDK.handleOpenURL(url, delegate: self)
+        return true
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        WeiboSDK.handleOpenURL(url, delegate: self)
+        return true
+    }
+    
     // Handle custom scheme and URL
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        WeiboSDK.handleOpenURL(url, delegate: self)
+        
         if let query = url.query {
             handleUrlQuery(query)
         }
@@ -189,6 +204,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
     }
     
+    // Set up social network accounts
+    private func setupSocialNetworking() {
+        WeiboService.registerApp()
+    }
+    
     // Set up reachability
     private func setupReachability() {
         do {
@@ -269,5 +289,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 abort()
             }
         }
+    }
+}
+
+// MARK: WeiboSDK delegate
+
+extension AppDelegate: WeiboSDKDelegate {
+    func didReceiveWeiboRequest(request: WBBaseRequest){
+        print("request")
+    }
+    
+    func didReceiveWeiboResponse(response: WBBaseResponse){
+        print("response")
     }
 }
