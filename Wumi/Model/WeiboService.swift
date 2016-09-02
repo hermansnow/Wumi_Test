@@ -55,7 +55,7 @@ struct WeiboService {
         else {
             postPage.thumbnailData = UIImage(named: "Logo")?.compressToSize(500)
         }
-        postPage.webpageUrl = "https://wumi.herokuapp.com?&p=\(post.objectId)"
+        postPage.webpageUrl = post.url
         
         message.text = "Shared from Wumi"
         message.mediaObject = postPage

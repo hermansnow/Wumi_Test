@@ -33,7 +33,7 @@ class HomeViewController: UIViewController {
     private var tableTop: NSLayoutConstraint?
     private var userBannerBottom: NSLayoutConstraint?
     
-    var resultSearchController = UISearchController()
+    var resultSearchController: UISearchController!
     
     var currentUser = User.currentUser()
     
@@ -161,6 +161,9 @@ class HomeViewController: UIViewController {
     deinit {
         // Remove notification observer
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        
+        // Remove UISearchController
+        self.resultSearchController.view.removeFromSuperview()
     }
     
     override func viewWillAppear(animated: Bool) {

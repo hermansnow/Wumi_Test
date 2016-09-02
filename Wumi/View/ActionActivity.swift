@@ -1,20 +1,19 @@
 //
-//  ShareActivity.swift
+//  ActionActivity.swift
 //  Wumi
 //
-//  Created by Zhe Cheng on 8/31/16.
+//  Created by Zhe Cheng on 9/2/16.
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
 import UIKit
 
-class ShareActivity: UIActivity {
-    
+class ActionActivity: UIActivity {
+
     var post: Post?
-    var rootVC: UIViewController?
     
     override class func activityCategory() -> UIActivityCategory {
-        return .Share
+        return .Action
     }
     
     override func activityType() -> String? {

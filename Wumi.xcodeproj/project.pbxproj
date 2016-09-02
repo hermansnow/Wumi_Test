@@ -336,9 +336,13 @@
 		DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */; };
 		DF3629571C9B305100D87574 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF3629561C9B305100D87574 /* ContactTableViewCell.xib */; };
 		DF4314191D755DF8002E21D5 /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4314181D755DF8002E21D5 /* MoreButton.swift */; };
-		DF43141B1D777356002E21D5 /* WeiboService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43141A1D777356002E21D5 /* WeiboService.swift */; };
 		DF43141D1D77C1E4002E21D5 /* ShareActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43141C1D77C1E4002E21D5 /* ShareActivity.swift */; };
 		DF4314201D77C2B3002E21D5 /* WeiboActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43141F1D77C2B3002E21D5 /* WeiboActivity.swift */; };
+		DF4314291D792650002E21D5 /* FacebookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4314281D792650002E21D5 /* FacebookService.swift */; };
+		DF43142B1D79266C002E21D5 /* WeiboService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43142A1D79266C002E21D5 /* WeiboService.swift */; };
+		DF43142D1D795DE5002E21D5 /* FacebookActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43142C1D795DE5002E21D5 /* FacebookActivity.swift */; };
+		DF43142F1D796BF9002E21D5 /* CopyLinkActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43142E1D796BF9002E21D5 /* CopyLinkActivity.swift */; };
+		DF4314311D796C35002E21D5 /* ActionActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4314301D796C35002E21D5 /* ActionActivity.swift */; };
 		DF4F532C1CCD9076009F3D2E /* PIKAImageCropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */; };
 		DF4F532D1CCD9076009F3D2E /* PIKAImageCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */; };
 		DF4F532F1CD30F7E009F3D2E /* EmailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */; };
@@ -875,9 +879,13 @@
 		DF2691FF1CAB8F420081D363 /* PostCategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategoryTableViewController.swift; path = Controller/PostCategoryTableViewController.swift; sourceTree = "<group>"; };
 		DF3629561C9B305100D87574 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactTableViewCell.xib; path = View/ContactTableViewCell.xib; sourceTree = "<group>"; };
 		DF4314181D755DF8002E21D5 /* MoreButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoreButton.swift; path = View/MoreButton.swift; sourceTree = "<group>"; };
-		DF43141A1D777356002E21D5 /* WeiboService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeiboService.swift; sourceTree = "<group>"; };
 		DF43141C1D77C1E4002E21D5 /* ShareActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareActivity.swift; path = View/ShareActivity.swift; sourceTree = "<group>"; };
 		DF43141F1D77C2B3002E21D5 /* WeiboActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeiboActivity.swift; path = View/WeiboActivity.swift; sourceTree = "<group>"; };
+		DF4314281D792650002E21D5 /* FacebookService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacebookService.swift; path = Model/FacebookService.swift; sourceTree = "<group>"; };
+		DF43142A1D79266C002E21D5 /* WeiboService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeiboService.swift; path = Model/WeiboService.swift; sourceTree = "<group>"; };
+		DF43142C1D795DE5002E21D5 /* FacebookActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacebookActivity.swift; path = View/FacebookActivity.swift; sourceTree = "<group>"; };
+		DF43142E1D796BF9002E21D5 /* CopyLinkActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CopyLinkActivity.swift; path = View/CopyLinkActivity.swift; sourceTree = "<group>"; };
+		DF4314301D796C35002E21D5 /* ActionActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionActivity.swift; path = View/ActionActivity.swift; sourceTree = "<group>"; };
 		DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PIKAImageCropView.xib; path = Controller/PIKA/PIKAImageCropView.xib; sourceTree = "<group>"; };
 		DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PIKAImageCropViewController.swift; path = Controller/PIKA/PIKAImageCropViewController.swift; sourceTree = "<group>"; };
 		DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmailButton.swift; path = View/EmailButton.swift; sourceTree = "<group>"; };
@@ -1054,10 +1062,11 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B1ECD4EF1CCC1F3F00CED9C4 /* LeanChatLib */,
 				B1ECD7AB1CCC1F6B00CED9C4 /* libc++.tbd */,
 				DF9F06051C5B6346008CA6DC /* libz.tbd */,
 				DF9F06021C5B5FF0008CA6DC /* libicucore.tbd */,
+				B1ECD4EF1CCC1F3F00CED9C4 /* LeanChatLib */,
+				81BA81751A49E0C500E65899 /* System Frameworks */,
 				DF9F06001C5B5FD3008CA6DC /* CoreTelephony.framework */,
 				DF9F05FE1C5B5FC9008CA6DC /* MobileCoreServices.framework */,
 				DF9F05FC1C5B5F96008CA6DC /* AVOSCloud.framework */,
@@ -1069,7 +1078,6 @@
 				DFD4A6111BE6CF4200C8B09E /* CoreLocation.framework */,
 				DFD4A60F1BE6CF3C00C8B09E /* CoreGraphics.framework */,
 				DFD4A60D1BE6CF2D00C8B09E /* CFNetwork.framework */,
-				81BA81751A49E0C500E65899 /* System Frameworks */,
 				54C897A1341D196EA1C0BC21 /* Pods_Wumi.framework */,
 			);
 			name = Frameworks;
@@ -1943,10 +1951,22 @@
 		DF43141E1D77C285002E21D5 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
+				DF4314301D796C35002E21D5 /* ActionActivity.swift */,
 				DF43141C1D77C1E4002E21D5 /* ShareActivity.swift */,
 				DF43141F1D77C2B3002E21D5 /* WeiboActivity.swift */,
+				DF43142C1D795DE5002E21D5 /* FacebookActivity.swift */,
+				DF43142E1D796BF9002E21D5 /* CopyLinkActivity.swift */,
 			);
 			name = Activity;
+			sourceTree = "<group>";
+		};
+		DF4314271D79262D002E21D5 /* SocialNetwork Services */ = {
+			isa = PBXGroup;
+			children = (
+				DF43142A1D79266C002E21D5 /* WeiboService.swift */,
+				DF4314281D792650002E21D5 /* FacebookService.swift */,
+			);
+			name = "SocialNetwork Services";
 			sourceTree = "<group>";
 		};
 		DF4F53291CCD9067009F3D2E /* PIKA */ = {
@@ -1979,6 +1999,7 @@
 		DF5E3D381BE9457900F44FFF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DF4314271D79262D002E21D5 /* SocialNetwork Services */,
 				02932A9B1CEE6DE2001220E8 /* PushNotification.swift */,
 				DF5E3D441BE9465000F44FFF /* User.swift */,
 				DF7E3B4A1C92324D000E8741 /* Profession.swift */,
@@ -1992,7 +2013,6 @@
 				DFBD2D441BEEF8F800D6FEBC /* Setting.swift */,
 				B1ECD7BE1CCC2B3200CED9C4 /* IMUser.swift */,
 				B1ECD7BC1CCC2B2B00CED9C4 /* IMUserFactory.swift */,
-				DF43141A1D777356002E21D5 /* WeiboService.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2475,7 +2495,9 @@
 				DFB612A11CA6158F00B3271B /* PostTextView.swift in Sources */,
 				B1ECD7651CCC1F4000CED9C4 /* XHPullRefreshTableViewController.m in Sources */,
 				DF86A2B41CE3B00800F67F48 /* PostContentTextView.swift in Sources */,
+				DF43142B1D79266C002E21D5 /* WeiboService.swift in Sources */,
 				B1ECD75F1CCC1F3F00CED9C4 /* XHMessageBubbleHelper.m in Sources */,
+				DF4314311D796C35002E21D5 /* ActionActivity.swift in Sources */,
 				B1ECD7511CCC1F3F00CED9C4 /* UIButton+XHButtonTitlePosition.m in Sources */,
 				B1ECD74A1CCC1F3F00CED9C4 /* Emoji.m in Sources */,
 				B1ECD79A1CCC1F4000CED9C4 /* XHMessageStatusView.m in Sources */,
@@ -2500,7 +2522,6 @@
 				B1ECD6A81CCC1F3F00CED9C4 /* CDMessageHelper.m in Sources */,
 				DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */,
 				DF5AECA81D6434E800FB4B84 /* Extension+UITextView.swift in Sources */,
-				DF43141B1D777356002E21D5 /* WeiboService.swift in Sources */,
 				DF0180841D4882BF00935A60 /* LoadingIndicatorView.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */,
@@ -2540,6 +2561,7 @@
 				B1ECD76A1CCC1F4000CED9C4 /* XHDisplayTextViewController.m in Sources */,
 				DF5AECAB1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift in Sources */,
 				DFA74C211BF8215900609E83 /* MainTabBarController.swift in Sources */,
+				DF43142F1D796BF9002E21D5 /* CopyLinkActivity.swift in Sources */,
 				DF0180691D3DF65600935A60 /* Extension+String.swift in Sources */,
 				B1ECD6A41CCC1F3F00CED9C4 /* CDChatManager.m in Sources */,
 				B1ECD75D1CCC1F3F00CED9C4 /* XHFoundationCommon.m in Sources */,
@@ -2667,6 +2689,7 @@
 				DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */,
 				B1ECD7711CCC1F4000CED9C4 /* XHMessageBubbleFactory.m in Sources */,
 				B1ECD7811CCC1F4000CED9C4 /* SEConstants.m in Sources */,
+				DF43142D1D795DE5002E21D5 /* FacebookActivity.swift in Sources */,
 				B1ECD7821CCC1F4000CED9C4 /* SELineLayout.m in Sources */,
 				B1ECD7931CCC1F4000CED9C4 /* XHSoundManager.m in Sources */,
 				B1ECD7571CCC1F3F00CED9C4 /* UIImage+XHRounded.m in Sources */,
@@ -2674,6 +2697,7 @@
 				DFA93ACF1C910DD700ECA503 /* ProfileTableCell.swift in Sources */,
 				DFA93AB61C882FE700ECA503 /* TextLinkButton.swift in Sources */,
 				B1ECD7A51CCC1F4000CED9C4 /* XHLoadMoreView.m in Sources */,
+				DF4314291D792650002E21D5 /* FacebookService.swift in Sources */,
 				B1ECD7B91CCC2ACA00CED9C4 /* MessageTableViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 			);

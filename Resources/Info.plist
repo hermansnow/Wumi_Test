@@ -46,6 +46,12 @@
 				<string>wb2493641654</string>
 			</array>
 		</dict>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb1836765936547463</string>
+            </array>
+        </dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>0.172</string>
@@ -57,6 +63,10 @@
 		<string>sinaweibo</string>
 		<string>weibosdk</string>
 		<string>weibosdk2.5</string>
+        <string>fbapi</string>
+        <string>fb-messenger-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -150,5 +160,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+    <key>FacebookAppID</key>
+    <string>1836765936547463</string>
+    <key>FacebookDisplayName</key>
+    <string>Wumi</string>
 </dict>
 </plist>

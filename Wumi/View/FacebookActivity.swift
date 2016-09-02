@@ -1,30 +1,30 @@
 //
-//  WeiboActivity.swift
+//  FacebookActivity.swift
 //  Wumi
 //
-//  Created by Zhe Cheng on 8/31/16.
+//  Created by Zhe Cheng on 9/2/16.
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
 import UIKit
 
-class WeiboActivity: ShareActivity {
-    
+class FacebookActivity: ShareActivity {
+
     override func activityTitle() -> String? {
-        return "Sina Weibo"
+        return "Facebook"
     }
     
     override func activityImage() -> UIImage? {
-        return UIImage(named: "Weibo")
+        return UIImage(named: "Facebook")
     }
     
     func activitySettingsImage() -> UIImage? {
-        return UIImage(named: "Weibo")
+        return UIImage(named: "Facebook")
     }
     
     override func canPerformWithActivityItems(activityItems: [AnyObject]) -> Bool {
         for item in activityItems {
-            if item is Post {
+            if item is Post && self.rootVC != nil {
                 return true
             }
         }
@@ -34,8 +34,8 @@ class WeiboActivity: ShareActivity {
     override func performActivity() {
         super.performActivity()
         
-        if let post = self.post {
-            WeiboService.sharePost(post)
+        if let post = self.post, vc = self.rootVC {
+            FacebookService.sharePost(post, fromViewController: vc)
         }
     }
 }

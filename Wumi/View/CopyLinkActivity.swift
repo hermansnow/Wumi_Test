@@ -1,25 +1,28 @@
 //
-//  WeiboActivity.swift
+//  CopyLinkActivity.swift
 //  Wumi
 //
-//  Created by Zhe Cheng on 8/31/16.
+//  Created by Zhe Cheng on 9/2/16.
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
 import UIKit
 
-class WeiboActivity: ShareActivity {
+class CopyLinkActivity: ActionActivity {
+    override class func activityCategory() -> UIActivityCategory {
+        return .Action
+    }
     
     override func activityTitle() -> String? {
-        return "Sina Weibo"
+        return "Copy Link"
     }
     
     override func activityImage() -> UIImage? {
-        return UIImage(named: "Weibo")
+        return UIImage(named: "Link")
     }
     
     func activitySettingsImage() -> UIImage? {
-        return UIImage(named: "Weibo")
+        return UIImage(named: "Link")
     }
     
     override func canPerformWithActivityItems(activityItems: [AnyObject]) -> Bool {
@@ -35,7 +38,8 @@ class WeiboActivity: ShareActivity {
         super.performActivity()
         
         if let post = self.post {
-            WeiboService.sharePost(post)
+            let pasteBoard = UIPasteboard.generalPasteboard()
+            pasteBoard.string = post.url
         }
     }
 }

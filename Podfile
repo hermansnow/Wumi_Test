@@ -40,4 +40,10 @@ target 'Wumi' do
     pod 'TTTAttributedLabel'
     
     pod 'WeiboSDK', :git => 'https://github.com/sinaweibosdk/weibo_ios_sdk.git'
+    
+    pod 'FBSDKCoreKit'
+    
+    pod 'FBSDKShareKit'
+    
+    pod 'FBSDKLoginKit'
 end

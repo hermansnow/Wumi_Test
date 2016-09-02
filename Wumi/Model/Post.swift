@@ -28,6 +28,12 @@ class Post: AVObject, AVSubclassing {
     var attachedThumbnails = [UIImage]()
     var externalPreviewImageUrl: NSURL?
     
+    var url: String {
+        get {
+            return "https://wumi.herokuapp.com?p=\(self.objectId)"
+        }
+    }
+    
     // MARK: Initializer and subclassing functions
     
     // Must have this init for subclassing AVObject

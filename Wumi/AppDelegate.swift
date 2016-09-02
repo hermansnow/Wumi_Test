@@ -10,6 +10,7 @@
 import AVOSCloud
 import ReachabilitySwift
 import CoreData
+import FBSDKCoreKit
 
 // If you want to use any of the UI components, uncomment this line
 // import ParseUI
@@ -44,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupReachability()
         
         // Social Network registration
-        self.setupSocialNetworking()
+        self.setupSocialNetworking(application, launchOptions: launchOptions)
         
         CDChatManager.sharedManager().userDelegate = IMUserFactory()
 
@@ -85,11 +86,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         WeiboSDK.handleOpenURL(url, delegate: self)
+        
         return true
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         WeiboSDK.handleOpenURL(url, delegate: self)
+        
+        FBSDKApplicationDelegate.sharedInstance().application(application,
+                                                              openURL: url,
+                                                              sourceApplication: sourceApplication,
+                                                              annotation: annotation)
+        
         return true
     }
     
@@ -205,8 +213,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Set up social network accounts
-    private func setupSocialNetworking() {
+    private func setupSocialNetworking(application: UIApplication, launchOptions: [NSObject: AnyObject]?) {
+        // Register weibo SDK
         WeiboService.registerApp()
+        
+        // Register Facebook SDK
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
     // Set up reachability
