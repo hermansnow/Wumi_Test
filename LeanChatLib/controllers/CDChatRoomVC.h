@@ -12,7 +12,7 @@
 /**
  *  聊天页面
  */
-@interface CDChatRoomVC : XHMessageTableViewController
+@interface CDChatRoomVC : XHMessageTableViewController<SETextViewDelegate>
 
 /**
  *  开放给子类，来对当前对话进行额外操作

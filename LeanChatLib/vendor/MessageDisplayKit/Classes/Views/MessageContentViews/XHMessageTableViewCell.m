@@ -257,7 +257,7 @@ static const CGFloat kXHBubbleMessageViewBottomPadding = 8;
                 tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sigleTapGestureRecognizerHandle:)];
             }
             tapGestureRecognizer.numberOfTapsRequired = (currentMediaType == XHBubbleMessageMediaTypeText ? 2 : 1);
-            [self.messageBubbleView.bubbleImageView addGestureRecognizer:tapGestureRecognizer];
+//            [self.messageBubbleView.bubbleImageView addGestureRecognizer:tapGestureRecognizer];
             break;
         }
         default:
@@ -398,6 +398,7 @@ static const CGFloat kXHBubbleMessageViewBottomPadding = 8;
     [self addGestureRecognizer:recognizer];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerHandle:)];
+    [tapGestureRecognizer setCancelsTouchesInView:NO];
     [self addGestureRecognizer:tapGestureRecognizer];
 }
 
