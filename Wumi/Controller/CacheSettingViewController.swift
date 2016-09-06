@@ -13,7 +13,7 @@ class CacheSettingViewController: UIViewController {
     @IBOutlet weak var cacheSizeLabel: UILabel!
     @IBOutlet weak var largeCacheSize: UILabel!
     
-    let largeFileSize = 30
+    let largeFileSize = 50
     
     // MARK: lifecycle methods
     override func viewDidLoad() {
@@ -32,37 +32,11 @@ class CacheSettingViewController: UIViewController {
     // MARK: actions
     @IBAction func clearCache(sender: AnyObject) {
         DataManager.sharedDataManager.cleanMemoryCache()
-        let fm = NSFileManager.defaultManager()
-        do {
-            let cachePaths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
-            let cacheDirectory = cachePaths[0]
-            let paths = try fm.contentsOfDirectoryAtPath(cacheDirectory)
-            for path in paths
-            {
-                try fm.removeItemAtPath("\(cacheDirectory)/\(path)")
-                print("delete file: \(cacheDirectory)/\(path)")
-            }
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-        updateCurrentCacheSize()
-        updateLargeCacheSize()
+        clearCacheLargerThan(1)
     }
     
     @IBAction func clearLargeFiles(sender: AnyObject) {
-        let list = getLargeFileList(largeFileSize)
-        let fm = NSFileManager.defaultManager()
-        do {
-            for path in list
-            {
-                try fm.removeItemAtPath(path)
-                print("delete file: \(path)")
-            }
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-        updateCurrentCacheSize()
-        updateLargeCacheSize()
+        clearCacheLargerThan(largeFileSize)
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,27 +45,41 @@ class CacheSettingViewController: UIViewController {
     }
     
     // MARK: helper functions
+    private func clearCacheLargerThan(fileSize: Int) {
+        let list = getFileListLargerThan(fileSize)
+        let fm = NSFileManager.defaultManager()
+        for path in list {
+            do {
+                try fm.removeItemAtPath(path)
+                print("delete file: \(path)")
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
+        updateCurrentCacheSize()
+        updateLargeCacheSize()
+    }
+    
     private func updateCurrentCacheSize() {
-        let cacheSize = getCacheFolderSize()
-        let mbSize = Double(cacheSize) / (1024 * 1024)
+        let list = getFileListLargerThan(0)
+        let fm = NSFileManager.defaultManager()
+        var totalSize = 0
+        do {
+            for filePath in list {
+                let attr = try fm.attributesOfItemAtPath(filePath)
+                let fileSize = attr[NSFileSize] as! NSNumber
+                totalSize += Int(fileSize)
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        let mbSize = Double(totalSize) / (1024 * 1024)
         cacheSizeLabel.text = String.init(format: "%4.2f MB", mbSize)
 
     }
     
-    func getCacheFolderSize() -> UInt64 {
-        let cachePaths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
-        let cacheDirectory = NSURL.init(string: cachePaths[0])
-        do {
-            let FolderSize = try NSFileManager.defaultManager().allocatedSizeOfDirectoryAtURL(cacheDirectory!)
-            return FolderSize
-        } catch {
-            print("error in allocatedSizeOfDirectoryAtURL")
-            return 0
-        }
-    }
-    
     private func updateLargeCacheSize() {
-        let list = getLargeFileList(largeFileSize)
+        let list = getFileListLargerThan(largeFileSize)
         let fm = NSFileManager.defaultManager()
         var totalSize = 0
         do {
@@ -107,7 +95,7 @@ class CacheSettingViewController: UIViewController {
         largeCacheSize.text = String.init(format: "%4.2f MB", mbSize)
     }
     
-    func getLargeFileList(fileSize: Int) -> [String] {
+    func getFileListLargerThan(fileSize: Int) -> [String] {
         let cachePaths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
         let cacheDirectory = cachePaths[0]
         let list = NSFileManager.defaultManager().listFileAtPath(cacheDirectory, largerThan: fileSize)
@@ -200,30 +188,26 @@ extension NSFileManager {
     }
     
     func listFileAtPath(path: String, largerThan size: Int) -> [String] {
-        print("-----------Listing all files found------------")
         var list = [String]()
-        do {
-            let cachePaths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
-            let cacheDirectory = NSURL.init(string: cachePaths[0])
-            let fm = NSFileManager.defaultManager()
-            let enumerator = fm.enumeratorAtPath(path)
-            var count = 0
-            
-            while let element = enumerator?.nextObject() as? String {
-                let absolutePath = cacheDirectory?.URLByAppendingPathComponent(element).absoluteString
+        let cachePaths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
+        let cacheDirectory = NSURL.init(string: cachePaths[0])
+        let fm = NSFileManager.defaultManager()
+        let enumerator = fm.enumeratorAtPath(path)
+        var count = 0
+        
+        while let element = enumerator?.nextObject() as? String {
+            let absolutePath = cacheDirectory?.URLByAppendingPathComponent(element).absoluteString
+            do {
                 let attr = try fm.attributesOfItemAtPath(absolutePath!)
                 let fileSize = attr[NSFileSize] as! NSNumber
                 let kbSize = fileSize.doubleValue / 1024
-                if kbSize > 30 {
+                if kbSize > Double(size) {
                     list.append(absolutePath!)
-                    print("File \(count): \(element) size: \(kbSize) KB")
                 }
                 count += 1
-//                print("File \(count): \(element) size: \(kbSize) KB")
+            } catch {
+                print("error finding contents of directory")
             }
-        } catch {
-            print("error finding contents of directory")
-            return [String]()
         }
         return list
     }
