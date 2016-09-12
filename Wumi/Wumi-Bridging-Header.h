@@ -5,3 +5,4 @@
 #import <AVOSCloudIM/AVOSCloudIM.h>
 #import "LeanChatLib.h"
 #import "WeiboSDK.h"
+#import "WXApi.h"

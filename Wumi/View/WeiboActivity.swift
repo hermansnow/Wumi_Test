@@ -6,12 +6,10 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-import UIKit
-
 class WeiboActivity: ShareActivity {
     
     override func activityTitle() -> String? {
-        return "Sina Weibo"
+        return "Weibo"
     }
     
     override func activityImage() -> UIImage? {

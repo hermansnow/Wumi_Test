@@ -343,6 +343,12 @@
 		DF43142D1D795DE5002E21D5 /* FacebookActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43142C1D795DE5002E21D5 /* FacebookActivity.swift */; };
 		DF43142F1D796BF9002E21D5 /* CopyLinkActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43142E1D796BF9002E21D5 /* CopyLinkActivity.swift */; };
 		DF4314311D796C35002E21D5 /* ActionActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4314301D796C35002E21D5 /* ActionActivity.swift */; };
+		DF43143B1D868080002E21D5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4314351D868080002E21D5 /* libWeChatSDK.a */; };
+		DF43143C1D868080002E21D5 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = DF4314361D868080002E21D5 /* read_me.txt */; };
+		DF43143D1D868080002E21D5 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DF4314371D868080002E21D5 /* README.txt */; };
+		DF43143F1D86812B002E21D5 /* WechatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF43143E1D86812B002E21D5 /* WechatService.swift */; };
+		DF4314431D86868B002E21D5 /* WechatFriendsActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4314421D86868B002E21D5 /* WechatFriendsActivity.swift */; };
+		DF4314451D868DCE002E21D5 /* WechatMomentsActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4314441D868DCE002E21D5 /* WechatMomentsActivity.swift */; };
 		DF4F532C1CCD9076009F3D2E /* PIKAImageCropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */; };
 		DF4F532D1CCD9076009F3D2E /* PIKAImageCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */; };
 		DF4F532F1CD30F7E009F3D2E /* EmailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */; };
@@ -886,6 +892,15 @@
 		DF43142C1D795DE5002E21D5 /* FacebookActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacebookActivity.swift; path = View/FacebookActivity.swift; sourceTree = "<group>"; };
 		DF43142E1D796BF9002E21D5 /* CopyLinkActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CopyLinkActivity.swift; path = View/CopyLinkActivity.swift; sourceTree = "<group>"; };
 		DF4314301D796C35002E21D5 /* ActionActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionActivity.swift; path = View/ActionActivity.swift; sourceTree = "<group>"; };
+		DF4314351D868080002E21D5 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		DF4314361D868080002E21D5 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		DF4314371D868080002E21D5 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		DF4314381D868080002E21D5 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		DF4314391D868080002E21D5 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		DF43143A1D868080002E21D5 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		DF43143E1D86812B002E21D5 /* WechatService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WechatService.swift; path = Model/WechatService.swift; sourceTree = "<group>"; };
+		DF4314421D86868B002E21D5 /* WechatFriendsActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WechatFriendsActivity.swift; path = View/WechatFriendsActivity.swift; sourceTree = "<group>"; };
+		DF4314441D868DCE002E21D5 /* WechatMomentsActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WechatMomentsActivity.swift; path = View/WechatMomentsActivity.swift; sourceTree = "<group>"; };
 		DF4F532A1CCD9076009F3D2E /* PIKAImageCropView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PIKAImageCropView.xib; path = Controller/PIKA/PIKAImageCropView.xib; sourceTree = "<group>"; };
 		DF4F532B1CCD9076009F3D2E /* PIKAImageCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PIKAImageCropViewController.swift; path = Controller/PIKA/PIKAImageCropViewController.swift; sourceTree = "<group>"; };
 		DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmailButton.swift; path = View/EmailButton.swift; sourceTree = "<group>"; };
@@ -990,6 +1005,7 @@
 				DFD4A6101BE6CF3C00C8B09E /* CoreGraphics.framework in Frameworks */,
 				DF9F05FD1C5B5F96008CA6DC /* AVOSCloud.framework in Frameworks */,
 				DFD4A60E1BE6CF2D00C8B09E /* CFNetwork.framework in Frameworks */,
+				DF43143B1D868080002E21D5 /* libWeChatSDK.a in Frameworks */,
 				81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
@@ -1066,6 +1082,7 @@
 				DF9F06051C5B6346008CA6DC /* libz.tbd */,
 				DF9F06021C5B5FF0008CA6DC /* libicucore.tbd */,
 				B1ECD4EF1CCC1F3F00CED9C4 /* LeanChatLib */,
+				DF4314341D868080002E21D5 /* SDKExport */,
 				81BA81751A49E0C500E65899 /* System Frameworks */,
 				DF9F06001C5B5FD3008CA6DC /* CoreTelephony.framework */,
 				DF9F05FE1C5B5FC9008CA6DC /* MobileCoreServices.framework */,
@@ -1952,10 +1969,12 @@
 			isa = PBXGroup;
 			children = (
 				DF4314301D796C35002E21D5 /* ActionActivity.swift */,
-				DF43141C1D77C1E4002E21D5 /* ShareActivity.swift */,
-				DF43141F1D77C2B3002E21D5 /* WeiboActivity.swift */,
-				DF43142C1D795DE5002E21D5 /* FacebookActivity.swift */,
 				DF43142E1D796BF9002E21D5 /* CopyLinkActivity.swift */,
+				DF43141C1D77C1E4002E21D5 /* ShareActivity.swift */,
+				DF43142C1D795DE5002E21D5 /* FacebookActivity.swift */,
+				DF43141F1D77C2B3002E21D5 /* WeiboActivity.swift */,
+				DF4314421D86868B002E21D5 /* WechatFriendsActivity.swift */,
+				DF4314441D868DCE002E21D5 /* WechatMomentsActivity.swift */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -1963,10 +1982,24 @@
 		DF4314271D79262D002E21D5 /* SocialNetwork Services */ = {
 			isa = PBXGroup;
 			children = (
-				DF43142A1D79266C002E21D5 /* WeiboService.swift */,
 				DF4314281D792650002E21D5 /* FacebookService.swift */,
+				DF43142A1D79266C002E21D5 /* WeiboService.swift */,
+				DF43143E1D86812B002E21D5 /* WechatService.swift */,
 			);
 			name = "SocialNetwork Services";
+			sourceTree = "<group>";
+		};
+		DF4314341D868080002E21D5 /* SDKExport */ = {
+			isa = PBXGroup;
+			children = (
+				DF4314351D868080002E21D5 /* libWeChatSDK.a */,
+				DF4314361D868080002E21D5 /* read_me.txt */,
+				DF4314371D868080002E21D5 /* README.txt */,
+				DF4314381D868080002E21D5 /* WechatAuthSDK.h */,
+				DF4314391D868080002E21D5 /* WXApi.h */,
+				DF43143A1D868080002E21D5 /* WXApiObject.h */,
+			);
+			path = SDKExport;
 			sourceTree = "<group>";
 		};
 		DF4F53291CCD9067009F3D2E /* PIKA */ = {
@@ -2222,6 +2255,7 @@
 				B1ECD6BD1CCC1F3F00CED9C4 /* rabbit_11_cover@2x.png in Resources */,
 				B1ECD7041CCC1F3F00CED9C4 /* tusiji_9_cover@2x.png in Resources */,
 				B1ECD6E61CCC1F3F00CED9C4 /* tusiji_0_cover@2x.png in Resources */,
+				DF43143D1D868080002E21D5 /* README.txt in Resources */,
 				B1ECD6FD1CCC1F3F00CED9C4 /* tusiji_6.gif in Resources */,
 				B1ECD6FE1CCC1F3F00CED9C4 /* tusiji_6_cover@2x.png in Resources */,
 				B1ECD6F41CCC1F3F00CED9C4 /* tusiji_1_cover@2x.png in Resources */,
@@ -2340,6 +2374,7 @@
 				B1ECD7071CCC1F3F00CED9C4 /* face_HL@2x.png in Resources */,
 				B1ECD6D81CCC1F3F00CED9C4 /* rabbit_3_cover@2x.png in Resources */,
 				B1ECD71C1CCC1F3F00CED9C4 /* MultiSelectedPanelConfirmBtnbKG@2x.png in Resources */,
+				DF43143C1D868080002E21D5 /* read_me.txt in Resources */,
 				B1ECD7241CCC1F3F00CED9C4 /* RecordCancel@2x.png in Resources */,
 				B1ECD6DD1CCC1F3F00CED9C4 /* rabbit_6.gif in Resources */,
 				B1ECD7001CCC1F3F00CED9C4 /* tusiji_7_cover@2x.png in Resources */,
@@ -2520,6 +2555,7 @@
 				B1ECD7641CCC1F4000CED9C4 /* XHBaseTableViewController.m in Sources */,
 				B1ECD78D1CCC1F4000CED9C4 /* SETextSelectionView.m in Sources */,
 				B1ECD6A81CCC1F3F00CED9C4 /* CDMessageHelper.m in Sources */,
+				DF43143F1D86812B002E21D5 /* WechatService.swift in Sources */,
 				DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */,
 				DF5AECA81D6434E800FB4B84 /* Extension+UITextView.swift in Sources */,
 				DF0180841D4882BF00935A60 /* LoadingIndicatorView.swift in Sources */,
@@ -2588,6 +2624,7 @@
 				B1ECD76E1CCC1F4000CED9C4 /* XHHTTPClient.m in Sources */,
 				B1ECD7A11CCC1F4000CED9C4 /* XHEmotionCollectionViewFlowLayout.m in Sources */,
 				B1ECD7791CCC1F4000CED9C4 /* XHEmotionManager.m in Sources */,
+				DF4314451D868DCE002E21D5 /* WechatMomentsActivity.swift in Sources */,
 				DF4314201D77C2B3002E21D5 /* WeiboActivity.swift in Sources */,
 				B1ECD7B71CCC2AA800CED9C4 /* ChatRoomViewController.swift in Sources */,
 				DFA93AD71C912AFB00ECA503 /* ProfileInputSwitchTableCell.swift in Sources */,
@@ -2654,6 +2691,7 @@
 				DF01806D1D3DF6C200935A60 /* Extension+UIImageView.swift in Sources */,
 				B1ECD7701CCC1F4000CED9C4 /* XHMessageAvatorFactory.m in Sources */,
 				B1ECD7731CCC1F4000CED9C4 /* XHMessageVoiceFactory.m in Sources */,
+				DF4314431D86868B002E21D5 /* WechatFriendsActivity.swift in Sources */,
 				02932AA21CEE6EA5001220E8 /* NotificationTableViewController.swift in Sources */,
 				DF0180641D3DF5AA00935A60 /* Extension+Array.swift in Sources */,
 				B1ECD77B1CCC1F4000CED9C4 /* XHShareMenuItem.m in Sources */,
@@ -2849,6 +2887,10 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SDKExport",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lz",
@@ -2904,6 +2946,10 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SDKExport",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lz",

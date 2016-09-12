@@ -6,8 +6,6 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-import UIKit
-
 class FacebookActivity: ShareActivity {
 
     override func activityTitle() -> String? {

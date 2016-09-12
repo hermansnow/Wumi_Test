@@ -85,12 +85,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        WXApi.handleOpenURL(url, delegate: self)
         WeiboSDK.handleOpenURL(url, delegate: self)
         
         return true
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        WXApi.handleOpenURL(url, delegate: self)
         WeiboSDK.handleOpenURL(url, delegate: self)
         
         FBSDKApplicationDelegate.sharedInstance().application(application,
@@ -214,6 +216,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Set up social network accounts
     private func setupSocialNetworking(application: UIApplication, launchOptions: [NSObject: AnyObject]?) {
+        // Register weixin SDK
+        WechatService.registerApp()
+        
         // Register weibo SDK
         WeiboService.registerApp()
         
@@ -312,6 +317,18 @@ extension AppDelegate: WeiboSDKDelegate {
     }
     
     func didReceiveWeiboResponse(response: WBBaseResponse){
+        print("response")
+    }
+}
+
+// MARK: WeixinSDK delegate
+
+extension AppDelegate: WXApiDelegate {
+    func onReq(req: BaseReq!) {
+        print("request")
+    }
+    
+    func onResp(resp: BaseResp!) {
         print("response")
     }
 }

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-import UIKit
-
 class ActionActivity: UIActivity {
 
     var post: Post?

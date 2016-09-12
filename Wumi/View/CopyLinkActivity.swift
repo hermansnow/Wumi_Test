@@ -6,8 +6,6 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-import UIKit
-
 class CopyLinkActivity: ActionActivity {
     override class func activityCategory() -> UIActivityCategory {
         return .Action
