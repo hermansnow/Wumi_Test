@@ -360,6 +360,7 @@ typedef void (^LCIMErrorBlock)(NSString *messageUUID, NSError *error);
         cell.timestampLabel.text = str;
     }
     SETextView *textView = cell.messageBubbleView.displayTextView;
+    textView.delegate = self;
     if (msg.bubbleMessageType == XHBubbleMessageTypeSending) {
         [textView setTextColor:[UIColor whiteColor]];
     } else {
