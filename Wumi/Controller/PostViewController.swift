@@ -593,15 +593,24 @@ extension PostViewController: MoreButtonDelegate {
         
         // Add share action to share post
         moreActionSheet.addAction(UIAlertAction(title: "Share", style: .Default) { (action) in
-            let friendsActivity = WechatFriendsActivity()
-            let momentsActivity = WechatMomentsActivity()
-            let weiboActivity = WeiboActivity()
-            let facebookActivity = FacebookActivity()
-            facebookActivity.rootVC = self
-            let copyLinkActivity = CopyLinkActivity()
+            var activities = [UIActivity]()
+            
+            if WechatService.appInstalled() {
+                activities.append(WechatFriendsActivity())
+                activities.append(WechatMomentsActivity())
+            }
+            if WechatService.appInstalled() {
+                activities.append(WeiboActivity())
+            }
+            if FacebookService.appInstalled() {
+                let facebookActivity = FacebookActivity()
+                facebookActivity.rootVC = self
+                activities.append(facebookActivity)
+            }
+            activities.append(CopyLinkActivity())
             
             let activityViewController = UIActivityViewController(activityItems: [post],
-                                                          applicationActivities: [friendsActivity, momentsActivity, weiboActivity, facebookActivity, copyLinkActivity])
+                                                          applicationActivities: activities)
             self.presentViewController(activityViewController, animated: true, completion: nil)
         })
         

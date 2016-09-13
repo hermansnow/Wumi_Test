@@ -20,6 +20,10 @@ struct WechatService {
         WXApi.registerApp(WechatService.appID)
     }
     
+    static func appInstalled() -> Bool {
+        return WXApi.isWXAppInstalled()
+    }
+    
     static func share(message: WXMediaMessage, shareScene: ShareScene) {
         // Create request
         let request = SendMessageToWXReq()
@@ -31,8 +35,6 @@ struct WechatService {
             request.scene = Int32(WXSceneSession.rawValue)
         case .Moments:
             request.scene = Int32(WXSceneTimeline.rawValue)
-        default:
-            break
         }
         
         // Send message
@@ -43,7 +45,7 @@ struct WechatService {
     static func sharePost(post: Post, scene: ShareScene) {
         let message = WXMediaMessage()
         
-        message.title = NSLocalizedString(post.title ?? "Wumi Post", comment: "")
+        message.title = NSLocalizedString(post.title != nil && post.title?.characters.count > 0 ? post.title! : "Wumi Post", comment: "")
         if let content = post.content {
             let endIndex = content.characters.count > 100 ? 100 : content.characters.count
             message.description = content.substringToIndex(content.startIndex.advancedBy(endIndex))
@@ -58,12 +60,26 @@ struct WechatService {
             message.setThumbImage(UIImage(named: "Logo")!)
         }
         
-        // Add webpage object
-        let postPage = WXWebpageObject()
-        postPage.webpageUrl = post.url
-        message.mediaObject = postPage
+        // Add extended object
+        let extendedObj = WXAppExtendObject()
+        extendedObj.url = post.url
+        extendedObj.extInfo = post.url
+        extendedObj.fileData = UIImage(named: "Logo")?.compressToSize(500)
+        message.mediaObject = extendedObj
         
         // Send message
         WechatService.share(message, shareScene: scene)
+    }
+    
+    static func getPostUrl(message: WXMediaMessage) -> String? {
+        if let extendedObj = message.mediaObject as? WXAppExtendObject {
+            return extendedObj.extInfo
+        }
+        else if let pageObj = message.mediaObject as? WXWebpageObject {
+            return pageObj.webpageUrl
+        }
+        else {
+            return nil
+        }
     }
 }

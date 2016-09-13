@@ -33,7 +33,7 @@ class WechatMomentsActivity: ShareActivity {
         super.performActivity()
         
         if let post = self.post {
-            WechatService.sharePost(post, scene: .Friends)
+            WechatService.sharePost(post, scene: .Moments)
         }
     }
 }

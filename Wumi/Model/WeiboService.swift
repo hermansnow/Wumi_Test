@@ -18,6 +18,10 @@ struct WeiboService {
         WeiboSDK.registerApp(WeiboService.appKey)
     }
     
+    static func appInstalled() -> Bool {
+        return WeiboSDK.isWeiboAppInstalled()
+    }
+    
     static func share(message: WBMessageObject, authRequest: WBAuthorizeRequest) {
         // Send message
         if let request = WBSendMessageToWeiboRequest.requestWithMessage(message, authInfo: authRequest, access_token: nil) as? WBSendMessageToWeiboRequest {
@@ -39,7 +43,7 @@ struct WeiboService {
         // Compost post weibo message
         let postPage = WBWebpageObject()
         postPage.objectID = "post.objectId"
-        postPage.title = NSLocalizedString(post.title ?? "Wumi Post", comment: "")
+        postPage.title = NSLocalizedString(post.title != nil && post.title?.characters.count > 0 ? post.title! : "Wumi Post", comment: "")
         
         if let content = post.content {
             let endIndex = content.characters.count > 100 ? 100 : content.characters.count

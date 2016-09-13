@@ -105,21 +105,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Handle custom scheme and URL
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        WXApi.handleOpenURL(url, delegate: self)
         WeiboSDK.handleOpenURL(url, delegate: self)
-        
-        if let query = url.query {
-            handleUrlQuery(query)
-        }
+        handleUrlQuery(url)
         
         return true
     }
     
     func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
-        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-            let url = userActivity.webpageURL,
-            query = url.query else { return false }
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL else { return false }
         
-        if handleUrlQuery(query) {
+        if handleUrlQuery(url) {
             return true
         }
         
@@ -129,7 +125,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
     
-    private func handleUrlQuery(query: String) -> Bool {
+    private func handleUrlQuery(url: NSURL) -> Bool {
+        guard let query = url.query else { return false }
+        
         let components = query.componentsSeparatedByString("&")
         
         for component in components {
@@ -144,7 +142,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return false
-
     }
     
     // Register classes
@@ -325,7 +322,26 @@ extension AppDelegate: WeiboSDKDelegate {
 
 extension AppDelegate: WXApiDelegate {
     func onReq(req: BaseReq!) {
-        print("request")
+        if let request = req as? ShowMessageFromWXReq {
+            if let urlString = WechatService.getPostUrl(request.message), url = NSURL(string: urlString) {
+                self.handleUrlQuery(url)
+            }
+            else {
+                print("unknow message")
+            }
+        }
+        else if let _ = req as? LaunchFromWXReq {
+            print("launch")
+        }
+        else if let _ = req as? GetMessageFromWXReq {
+            print("get messsage from wechat")
+        }
+        if let _ = req as? SendMessageToWXReq {
+            print("send message to wechat")
+        }
+        else {
+            print("unknown request")
+        }
     }
     
     func onResp(resp: BaseResp!) {
