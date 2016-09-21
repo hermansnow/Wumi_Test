@@ -361,21 +361,19 @@ extension ContactViewController: UITextFieldDelegate {
 extension ContactViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         switch (result) {
-        case MFMailComposeResultSent:
+        case .Sent:
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is sent successfully")
-        case MFMailComposeResultSaved:
+        case .Saved:
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is saved in draft folder")
-        case MFMailComposeResultCancelled:
+        case .Cancelled:
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is cancelled")
-        case MFMailComposeResultFailed:
+        case .Failed:
             if error != nil {
                 Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
             }
             else {
                 Helper.PopupErrorAlert(self, errorMessage: "Send failed")
             }
-        default:
-            break
         }
         
         // Dimiss the main compose view controller

@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageUI
-import BTNavigationDropdownMenu
+//import BTNavigationDropdownMenu
 
 class MessageTableViewController: UITableViewController {
     var resultSearchController = UISearchController(searchResultsController: nil)
@@ -69,7 +69,7 @@ class MessageTableViewController: UITableViewController {
         self.addSearchController()
         
         // Add dropdown list
-        self.addDropdownList()
+        //self.addDropdownList()
         
         // Set delegates
         self.tableView.dataSource = self
@@ -132,7 +132,7 @@ class MessageTableViewController: UITableViewController {
 //        self.tableView.setContentOffset(CGPoint(x: 0, y: tableView.tableHeaderView!.frame.size.height), animated: false) // Initially, hide search bar under the navigation bar
     }
     
-    
+    /*
     // Credential and reference: https://github.com/PhamBaTho/BTNavigationDropdownMenu
     private func addDropdownList() {
         // Initial a dropdown list with options
@@ -154,6 +154,7 @@ class MessageTableViewController: UITableViewController {
             self.loadUsers()
         }
     }
+ */
     
     // MARK: TableView delegate & data source
     
@@ -384,21 +385,19 @@ extension MessageTableViewController: UISearchBarDelegate, UISearchControllerDel
 extension MessageTableViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         switch (result) {
-        case MFMailComposeResultSent:
+        case .Sent:
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is sent successfully")
-        case MFMailComposeResultSaved:
+        case .Saved:
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is saved in draft folder")
-        case MFMailComposeResultCancelled:
+        case .Cancelled:
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is cancelled")
-        case MFMailComposeResultFailed:
+        case .Failed:
             if error != nil {
                 Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
             }
             else {
                 Helper.PopupErrorAlert(self, errorMessage: "Send failed")
             }
-        default:
-            break
         }
         
         // Dimiss the main compose view controller

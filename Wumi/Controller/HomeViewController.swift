@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import BTNavigationDropdownMenu
+//import BTNavigationDropdownMenu
 import SWRevealViewController
 import TSMessages
 import SDWebImage
@@ -27,7 +27,7 @@ class HomeViewController: UIViewController {
     private var refreshControl = UIRefreshControl()
     private var searchButton = UIBarButtonItem()
     private var composePostButton = UIBarButtonItem()
-    private var menuView: BTNavigationDropdownMenu?
+    //private var menuView: BTNavigationDropdownMenu?
     
     // Constaints
     private var tableTop: NSLayoutConstraint?
@@ -103,7 +103,7 @@ class HomeViewController: UIViewController {
         self.addRefreshControl()
         
         // Add Dropdown list
-        self.addDropdownList()
+        //self.addDropdownList()
         
         // Add current user banner
         self.addCurrentUserBanner()
@@ -181,7 +181,7 @@ class HomeViewController: UIViewController {
         // Reset search type if there is no filter
         if self.searchType == .Filter && self.category == nil {
             self.searchType = self.previousType
-            self.addDropdownList(updateOnly: false)
+            //self.addDropdownList(updateOnly: false)
         }
     }
     
@@ -236,6 +236,7 @@ class HomeViewController: UIViewController {
         self.postTableView.addSubview(self.refreshControl)
     }
     
+    /*
     private func addDropdownList(updateOnly update: Bool = false) {
         // Initial a dropdown list with options
         let optionTitles = ["All Activity", "Saved", "Custom Filter"]
@@ -243,7 +244,7 @@ class HomeViewController: UIViewController {
         
         // Initial title
         guard let index = optionSearchTypes.indexOf(self.searchType), title = optionTitles[safe: index] else { return }
-        self.menuView = BTNavigationDropdownMenu(navigationController: self.navigationController, title: title, items: optionTitles)
+        //self.menuView = BTNavigationDropdownMenu(navigationController: self.navigationController, title: title, items: optionTitles)
         
         if !update {
             // Add the dropdown list to the navigation bar
@@ -266,6 +267,7 @@ class HomeViewController: UIViewController {
             }
         }
     }
+ */
     
     private func addNewPostNotificationView() {
         self.newPostNotificationView.backgroundColor = Constants.General.Color.ThemeColor

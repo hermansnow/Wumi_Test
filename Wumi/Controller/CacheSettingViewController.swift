@@ -196,7 +196,7 @@ extension NSFileManager {
         var count = 0
         
         while let element = enumerator?.nextObject() as? String {
-            let absolutePath = cacheDirectory?.URLByAppendingPathComponent(element).absoluteString
+            let absolutePath = cacheDirectory?.URLByAppendingPathComponent(element)!.absoluteString
             do {
                 let attr = try fm.attributesOfItemAtPath(absolutePath!)
                 let fileSize = attr[NSFileSize] as! NSNumber

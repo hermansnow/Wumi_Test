@@ -34,7 +34,7 @@ class ColorGradientView: UIView {
                               y: rect.origin.y + (yOffset * rect.size.height),
                           width: rect.size.width,
                          height: rect.size.height * CGFloat(colorPercent))
-            CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
+            CGContextFillRect(UIGraphicsGetCurrentContext()!, rect);
         }
         
         self.backgroundColor?.setFill()

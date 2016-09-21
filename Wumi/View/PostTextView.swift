@@ -7,12 +7,13 @@
 //
 
 import UIKit
-import KMPlaceholderTextView
 
-class PostTextView: KMPlaceholderTextView {
+class PostTextView: UITextView {
     
     var characterLimit: Int?
     var selfUserInteractionEnabled: Bool = true // control user interaction of view itself but not subviews
+    
+    var placeholder: String?
     
     convenience init() {
         self.init(frame: CGRectZero)

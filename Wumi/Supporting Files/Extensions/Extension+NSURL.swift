@@ -6,8 +6,7 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-import Foundation
-import Ji
+//import Kanna
 
 extension NSURL {
     
@@ -15,6 +14,7 @@ extension NSURL {
     func fetchPageInfo(requirePreviewImage requirePreviewImage: Bool =  true, completion: ((title: String?, previewImageURL: NSURL?) -> Void)) {
         
         
+        /*
         guard let doc = Ji(htmlURL: self) else {
             completion(title: nil, previewImageURL: nil)
             return
@@ -26,9 +26,11 @@ extension NSURL {
         else {
             completion(title: self.getTitle(doc), previewImageURL: nil)
         }
+ */
     }
     
     // Title metadata
+    /*
     private func getTitle(jiDoc: Ji) -> String? {
         // Try get title from og:title meta tag
         if let nodes = jiDoc.xPath("//head/meta[@property='og:title']"),
@@ -100,22 +102,23 @@ extension NSURL {
             return nil
         }
     }
+    */
     
     // Check whether URL can be opened from an installed app
     func willOpenInApp() -> String? {
         let urlString = self.absoluteString
         
         // iTunes: App Store link: [itunes.apple.com]
-        if urlString.isMatch("\\/\\/itunes\\.apple\\.com\\/", options: [.CaseInsensitive]) && UIApplication.sharedApplication().canOpenURL(self) {
+        if urlString!.isMatch("\\/\\/itunes\\.apple\\.com\\/", options: [.CaseInsensitive]) && UIApplication.sharedApplication().canOpenURL(self) {
             return "Itunes"
         }
         // Apple map: [maps.apple.com]
-        if urlString.isMatch("\\/\\/maps\\.apple\\.com\\/", options: [.CaseInsensitive]) && UIApplication.sharedApplication().canOpenURL(self) {
+        if urlString!.isMatch("\\/\\/maps\\.apple\\.com\\/", options: [.CaseInsensitive]) && UIApplication.sharedApplication().canOpenURL(self) {
             return "Apple Map"
         }
         // Protocol/URL-Scheme without http(s)
-        else if self.scheme.lowercaseString != "http" && self.scheme.lowercaseString != "https" &&
-            !Constants.General.SchemeWhiteList.contains(self.scheme) && UIApplication.sharedApplication().canOpenURL(self) {
+        else if self.scheme!.lowercaseString != "http" && self.scheme!.lowercaseString != "https" &&
+            !Constants.General.SchemeWhiteList.contains(self.scheme!) && UIApplication.sharedApplication().canOpenURL(self) {
                 return self.scheme
         }
         else {

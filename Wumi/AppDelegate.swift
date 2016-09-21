@@ -8,7 +8,7 @@
 */
 
 import AVOSCloud
-import ReachabilitySwift
+//import ReachabilitySwift
 import CoreData
 import FBSDKCoreKit
 
@@ -24,7 +24,7 @@ let APNSReceivedNotificationIdentifier = "APNSReceivedNotification"
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var reachability: Reachability?
+    //var reachability: Reachability?
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupAVOSCloudSetting()
         
         // Set up reachability
-        self.setupReachability()
+        //self.setupReachability()
         
         // Social Network registration
         self.setupSocialNetworking(application, launchOptions: launchOptions)
@@ -224,6 +224,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Set up reachability
+    /*
     private func setupReachability() {
         do {
             self.reachability = try Reachability.reachabilityForInternetConnection()
@@ -241,6 +242,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("could not start reachability notifier")
         }
     }
+    */
     
     // MARK: - Core Data stack
     

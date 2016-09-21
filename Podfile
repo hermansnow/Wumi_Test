@@ -1,4 +1,5 @@
 use_frameworks!
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 
 target 'Wumi' do
@@ -7,9 +8,9 @@ target 'Wumi' do
     
     pod 'NHAlignmentFlowLayout'
     
-    pod 'BTNavigationDropdownMenu'
+    #pod 'BTNavigationDropdownMenu'
     
-    pod 'KMPlaceholderTextView', '~> 1.2.0' 
+    #pod 'KMPlaceholderTextView'
 
     pod 'SWRevealViewController'
 
@@ -29,13 +30,11 @@ target 'Wumi' do
 
     pod 'FormatterKit'
     
-    pod 'NVActivityIndicatorView'
+    pod 'DGActivityIndicatorView'
     
-    pod 'ReachabilitySwift'
+    #pod 'ReachabilitySwift'
     
     pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
-    
-    pod 'Ji', '~> 1.2.0'
     
     pod 'TTTAttributedLabel'
     

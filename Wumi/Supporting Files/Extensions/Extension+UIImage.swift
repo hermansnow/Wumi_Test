@@ -67,7 +67,7 @@ extension UIImage {
         self.drawInRect(CGRect(x: 0, y: 0, width: scaleSize.width, height: scaleSize.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return newImage
+        return newImage!
     }
     
     // Save an image into device's regular album of photo library

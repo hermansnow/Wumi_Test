@@ -18,7 +18,7 @@
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
-		9519A6BCABED44F1D7D798F5 /* Pods_Wumi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C897A1341D196EA1C0BC21 /* Pods_Wumi.framework */; };
+		8D869DFBD39E6CD49ACB2DE5 /* Pods_Wumi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C897A1341D196EA1C0BC21 /* Pods_Wumi.framework */; };
 		B10C22271CCDC0E10055ED35 /* AVIMEmotionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD4F91CCC1F3F00CED9C4 /* AVIMEmotionMessage.m */; };
 		B10C22281CCDC1760055ED35 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A21CA61B7800B3271B /* PostViewController.swift */; };
 		B12705AC1CE847D000BC21A7 /* ConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B12705AA1CE847D000BC21A7 /* ConversationCell.m */; };
@@ -1010,7 +1010,7 @@
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */,
-				9519A6BCABED44F1D7D798F5 /* Pods_Wumi.framework in Frameworks */,
+				8D869DFBD39E6CD49ACB2DE5 /* Pods_Wumi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2183,6 +2183,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Wumi" */;
 			buildPhases = (
+				E78E386236CAF0915DED5443 /* Check Pods Manifest.lock */,
 				CD887128FF1D95015B29D92C /* [CP] Check Pods Manifest.lock */,
 				81BA81411A49DA1800E65899 /* Sources */,
 				81BA81421A49DA1800E65899 /* Frameworks */,
@@ -2191,6 +2192,7 @@
 				26DBFF778290A0ED85970ED0 /* [CP] Embed Pods Frameworks */,
 				75B6142EF479D08FA95A778D /* [CP] Copy Pods Resources */,
 				E61980DFF0AAF653422796A5 /* Embed Pods Frameworks */,
+				B30B5ECD2CC7A47157031C06 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2214,6 +2216,7 @@
 					81BA81441A49DA1800E65899 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = K2Q6N244WC;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -2483,6 +2486,21 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script will upload symbol files for your application,\n# so all your crash reports are going to be symbolicated\n\n# Important!\n# Before using the script, please initialize CloudCode folder and replace <path_to_cloudcode_folder> with the path to it\n#\n# Read more on Parse.com - https://parse.com/apps/quickstart#analytics/crashreporting/ios/\n############################################################\n\n\n# export PATH=/usr/local/bin:$PATH\n# cd <path_to_cloudcode_folder>\n\n# parse symbols -p \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\n";
 		};
+		B30B5ECD2CC7A47157031C06 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wumi/Pods-Wumi-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CD887128FF1D95015B29D92C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2511,6 +2529,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wumi/Pods-Wumi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E78E386236CAF0915DED5443 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2901,8 +2934,6 @@
 					"-framework",
 					"\"AFNetworking\"",
 					"-framework",
-					"\"BTNavigationDropdownMenu\"",
-					"-framework",
 					"\"CYLDeallocBlockExecutor\"",
 					"-framework",
 					"\"DateTools\"",
@@ -2910,8 +2941,6 @@
 					"\"FMDB\"",
 					"-framework",
 					"\"JSBadgeView\"",
-					"-framework",
-					"\"KMPlaceholderTextView\"",
 					"-framework",
 					"\"NHAlignmentFlowLayout\"",
 					"-framework",
@@ -2924,6 +2953,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wumi/Wumi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2960,8 +2990,6 @@
 					"-framework",
 					"\"AFNetworking\"",
 					"-framework",
-					"\"BTNavigationDropdownMenu\"",
-					"-framework",
 					"\"CYLDeallocBlockExecutor\"",
 					"-framework",
 					"\"DateTools\"",
@@ -2969,8 +2997,6 @@
 					"\"FMDB\"",
 					"-framework",
 					"\"JSBadgeView\"",
-					"-framework",
-					"\"KMPlaceholderTextView\"",
 					"-framework",
 					"\"NHAlignmentFlowLayout\"",
 					"-framework",
@@ -2982,6 +3008,7 @@
 				PRODUCT_NAME = Wumi;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wumi/Wumi-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

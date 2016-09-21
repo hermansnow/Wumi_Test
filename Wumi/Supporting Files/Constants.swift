@@ -7,7 +7,7 @@
 //
 import UIKit
 import Foundation
-import ReachabilitySwift
+//import ReachabilitySwift
 
 struct Constants {
     
@@ -15,7 +15,8 @@ struct Constants {
         static let TabBarItemDidClickSelf = "TabBarItemDidClickSelf"
         static let CustomURLIdentifier = "CustomURLIdentifier"
         static let SchemeWhiteList = ["about"]
-        static let ReachabilityChangedNotification = ReachabilitySwift.ReachabilityChangedNotification
+        static let ReachabilityChangedNotification = "reachabilityTODO"
+        //static let ReachabilityChangedNotification = ReachabilitySwift.ReachabilityChangedNotification
 
         struct Color {
             static let TintColor = UIColor.whiteColor()
@@ -134,8 +135,8 @@ struct Constants {
         
         struct Font {
             static let ListCurrentUserBanner  = UIFont(name: ".SFUIText-Medium", size: 16)
-            static let ListTitle = UIFont(name: ".SFUIText-Regular", size: 16)
-            static let ListUserBanner = UIFont(name: ".SFUIText-Regular", size: 14)
+            static let ListTitle = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+            static let ListUserBanner = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
             static let ListContent = UIFont(name: ".SFUIText-Light", size: 16)
             static let ListTimeStamp = UIFont(name: ".SFUIText-Regular", size: 14)
             static let ListButton = UIFont(name: ".SFUIText-Medium", size: 14)

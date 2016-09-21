@@ -50,10 +50,11 @@ class PostViewController: UITableViewController {
                                                          selector: #selector(PostViewController.keyboardWillHiden(_:)),
                                                          name: UIKeyboardWillHideNotification,
                                                          object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        /*NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(self.reachabilityChanged(_:)),
                                                          name: Constants.General.ReachabilityChangedNotification,
                                                          object: nil)
+        */
         
         // Initialize tableview
         self.tableView.estimatedRowHeight = 100
@@ -117,7 +118,7 @@ class PostViewController: UITableViewController {
     }
     
     private func addReplyView() {
-        guard let view = NSBundle.mainBundle().loadNibNamed("ReplyTextView", owner: self, options: nil).first as? ReplyTextView else { return }
+        guard let view = NSBundle.mainBundle().loadNibNamed("ReplyTextView", owner: self, options: nil)!.first as? ReplyTextView else { return }
         
         view.frame = CGRect(x: 0, y: self.view.frame.height - 170, width: self.view.frame.width, height: 170)
         self.replyView = view
@@ -484,7 +485,7 @@ class PostViewController: UITableViewController {
         guard let post = self.post else { return }
         
         self.comments = nil
-        self.loadingView.startAnimation()
+        //self.loadingView.startAnimation()
         UIView.performWithoutAnimation { () -> Void in
             self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
         }
@@ -494,14 +495,14 @@ class PostViewController: UITableViewController {
             
             guard let comments = results as? [Comment] else {
                 self.comments = [Comment]()
-                self.loadingView.stopAnimation()
+                //self.loadingView.stopAnimation()
                 return
             }
             
             self.comments = comments
             
             // Stop loading view
-            self.loadingView.stopAnimation()
+            //self.loadingView.stopAnimation()
             
             // Disable animation for displaying comment list
             UIView.performWithoutAnimation { () -> Void in
