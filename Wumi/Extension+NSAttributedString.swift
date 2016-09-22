@@ -50,7 +50,12 @@ extension NSMutableAttributedString {
                 }
                 else {
                     url.fetchPageInfo(requirePreviewImage: requirePreviewImage) { (title, previewImageURL) in
-                        urlString.appendAttributedString(NSAttributedString(string: " \(title ?? url.absoluteURL)"))
+                        if let titleString = title {
+                            urlString.appendAttributedString(NSAttributedString(string: " \(titleString)"))
+                        }
+                        else if let urlAbsString = url.absoluteURL {
+                            urlString.appendAttributedString(NSAttributedString(string: " \(urlAbsString)"))
+                        }
                     
                         // Store preview images
                         if let imageURL = previewImageURL {

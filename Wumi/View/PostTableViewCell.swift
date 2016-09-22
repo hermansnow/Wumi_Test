@@ -56,7 +56,6 @@ class PostTableViewCell: UITableViewCell {
                 attributeContent.addAttribute(NSForegroundColorAttributeName,
                                               value: Constants.General.Color.TextColor,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
-                print(UIFont.familyNames())
                 attributeContent.addAttribute(NSFontAttributeName,
                                               value: Constants.Post.Font.ListTitle,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))

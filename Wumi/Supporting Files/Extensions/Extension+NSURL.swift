@@ -6,16 +6,21 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-//import Kanna
+import Kanna
 
 extension NSURL {
     
     // Fetch page information based on URL
     func fetchPageInfo(requirePreviewImage requirePreviewImage: Bool =  true, completion: ((title: String?, previewImageURL: NSURL?) -> Void)) {
         
+        var htmlContent: String?
         
-        /*
-        guard let doc = Ji(htmlURL: self) else {
+        do {
+            htmlContent = try String(contentsOfURL: self, encoding: NSUTF8StringEncoding)
+        }
+        catch { }
+        
+        guard let html = htmlContent, doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding) else {
             completion(title: nil, previewImageURL: nil)
             return
         }
@@ -26,83 +31,76 @@ extension NSURL {
         else {
             completion(title: self.getTitle(doc), previewImageURL: nil)
         }
- */
     }
     
     // Title metadata
-    /*
-    private func getTitle(jiDoc: Ji) -> String? {
+    private func getTitle(doc: HTMLDocument) -> String? {
         // Try get title from og:title meta tag
-        if let nodes = jiDoc.xPath("//head/meta[@property='og:title']"),
-            ogTitleNode = nodes.first,
-            content = ogTitleNode.attributes["content"] where content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
+        let ogNodes = doc.xpath("//head/meta[@property='og:title']")
+        if let ogTitleNode = ogNodes.first,
+            content = ogTitleNode["content"] where content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
                 return content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         }
+        
         // Try get title from general title tag
-        else if let nodes = jiDoc.xPath("//head/title"),
-            titleNode = nodes.first,
+        let nodes = doc.xpath("//head/title")
+        if let titleNode = nodes.first,
             content = titleNode.content where content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
                 return content.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         }
-        else {
-            return nil
-        }
+        
+        return nil
     }
     
     // Image metadata
-    private func getImageUrl(jiDoc: Ji) -> NSURL? {
+    private func getImageUrl(doc: HTMLDocument) -> NSURL? {
         // Try get image from open graph metadata
-        if let nodes = jiDoc.xPath("//head/meta[@property='og:image']"),
-            ogImageNode = nodes.first,
-            imageUrl = ogImageNode.attributes["content"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
+        let ogNodes = doc.xpath("//head/meta[@property='og:image']")
+        if let ogImageNode = ogNodes.first,
+            imageUrl = ogImageNode["content"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
                 return  NSURL(string: imageUrl)
         }
+        
         // Try get first image large than 300 * 300
-        else if let nodes = jiDoc.xPath("//img") {
-            var url: String?
-            for imageNode in nodes {
-                guard let width = imageNode.attributes["width"] where Int(width) > 300,
-                    let height = imageNode.attributes["height"] where Int(height) > 300 else { continue }
+        var url: String?
+        for imageNode in doc.xpath("//img") {
+            guard let width = imageNode["width"] where Int(width) > 300,
+                let height = imageNode["height"] where Int(height) > 300 else { continue }
                 
-                if let imageUrl = imageNode.attributes["href"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
-                    url = imageUrl
-                }
-                if let imageSrc = imageNode.attributes["src"] where imageSrc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
-                    guard let host = self.host else { continue }
+            if let imageUrl = imageNode["href"] where imageUrl.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
+                url = imageUrl
+            }
+            if let imageSrc = imageNode["src"] where imageSrc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).characters.count > 0 {
+                guard let host = self.host, scheme = self.scheme else { continue }
                     
-                    if imageSrc.hasPrefix("http://") || imageSrc.hasPrefix("https://") {
-                        url = imageSrc
-                    }
-                    else if imageSrc.hasPrefix("/") {
-                        url = self.scheme + ":" + host + imageSrc
-                    }
-                    else if imageSrc.hasPrefix("//") {
-                        url = self.scheme + ":" + imageSrc
-                    }
-                    else {
-                        guard let path = self.path,
-                            subPath = path.componentsSeparatedByString("/").first else { continue }
-                        url = self.scheme + ":" + host + "/" + subPath + "/" + imageSrc
-                    }
+                if imageSrc.hasPrefix("http://") || imageSrc.hasPrefix("https://") {
+                    url = imageSrc
                 }
+                else if imageSrc.hasPrefix("/") {
+                    url = scheme + ":" + host + imageSrc
+                }
+                else if imageSrc.hasPrefix("//") {
+                    url = scheme + ":" + imageSrc
+                }
+                else {
+                    guard let path = self.path,
+                        subPath = path.componentsSeparatedByString("/").first else { continue }
+                    url = scheme + ":" + host + "/" + subPath + "/" + imageSrc
+                }
+            }
                 
-                if url != nil {
-                    break
-                }
-            }
-            
             if url != nil {
-                return NSURL(string: url!)
+                break
             }
-            else {
-                return nil
-            }
+        }
+            
+        if url != nil {
+            return NSURL(string: url!)
         }
         else {
             return nil
         }
     }
-    */
     
     // Check whether URL can be opened from an installed app
     func willOpenInApp() -> String? {
