@@ -27,7 +27,7 @@ class CommentTableViewCell: UITableViewCell {
                                               value: Constants.General.Color.TextColor,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
                 attributeContent.addAttribute(NSFontAttributeName,
-                                              value: Constants.Post.Font.ListContent!,
+                                              value: Constants.Post.Font.ListContent,
                                               range: NSRange(location: 0, length: attributeContent.string.utf16.count))
                 self.contentTextView.attributedText = attributeContent
             }

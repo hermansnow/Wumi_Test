@@ -35,16 +35,16 @@ struct Constants {
         }
         
         struct Font {
-            static let InputFont = UIFont(name: ".SFUIText-Light", size: 16)
-            static let ErrorFont = UIFont(name: ".SFUIText-Light", size: 12)
-            static let LinkButtonFont = UIFont(name: ".SFUIText-Medium", size: 14)
-            static let ButtonFont = UIFont(name: ".SFUIText-Medium", size: 16)
-            static let DetailFont = UIFont(name: ".SFUIText-Bold", size: 16)
-            static let ProfileTitleFont = UIFont(name: ".SFUIText-Regular", size: 14)
-            static let ProfileNameFont = UIFont(name: ".STHeitiSC-Medium", size: 18)
-            static let ProfileLocationFont = UIFont(name: ".SFUIText-Regular", size: 16)
-            static let ProfileCollectionFont = UIFont(name: ".SFUIText-Regular", size: 14)
-            static let ProfileTextFont = UIFont(name: ".SFUIText-Regular", size: 16)
+            static let InputFont = UIFont.systemFontOfSize(16, weight: UIFontWeightLight)
+            static let ErrorFont = UIFont.systemFontOfSize(12, weight: UIFontWeightLight)
+            static let LinkButtonFont = UIFont.systemFontOfSize(14, weight: UIFontWeightMedium)
+            static let ButtonFont = UIFont.systemFontOfSize(16, weight: UIFontWeightMedium)
+            static let DetailFont = UIFont.systemFontOfSize(16, weight: UIFontWeightBold)
+            static let ProfileTitleFont = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
+            static let ProfileNameFont = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
+            static let ProfileLocationFont = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+            static let ProfileCollectionFont = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
+            static let ProfileTextFont = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
         }
         
         struct Image {
@@ -134,13 +134,13 @@ struct Constants {
         }
         
         struct Font {
-            static let ListCurrentUserBanner  = UIFont(name: ".SFUIText-Medium", size: 16)
+            static let ListCurrentUserBanner  = UIFont.systemFontOfSize(16, weight: UIFontWeightMedium)
             static let ListTitle = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
             static let ListUserBanner = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
-            static let ListContent = UIFont(name: ".SFUIText-Light", size: 16)
-            static let ListTimeStamp = UIFont(name: ".SFUIText-Regular", size: 14)
-            static let ListButton = UIFont(name: ".SFUIText-Medium", size: 14)
-            static let ListReply = UIFont(name: ".SFUIText-Regular", size: 14)
+            static let ListContent = UIFont.systemFontOfSize(16, weight: UIFontWeightLight)
+            static let ListTimeStamp = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
+            static let ListButton = UIFont.systemFontOfSize(14, weight: UIFontWeightMedium)
+            static let ListReply = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
         }
         
         struct  Color {

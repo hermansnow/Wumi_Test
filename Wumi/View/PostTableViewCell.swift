@@ -162,7 +162,7 @@ class PostTableViewCell: UITableViewCell {
         self.contentTextView.userInteractionEnabled = true
         self.contentTextView.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
         self.contentTextView.linkAttributes = [ NSForegroundColorAttributeName: Constants.General.Color.ThemeColor,
-                                                NSFontAttributeName: Constants.Post.Font.ListContent!]
+                                                NSFontAttributeName: Constants.Post.Font.ListContent]
         self.contentTextView.lineBreakMode = .ByWordWrapping
         
         // Set up image view
@@ -211,7 +211,7 @@ class PostTableViewCell: UITableViewCell {
                                       value: Constants.General.Color.TextColor,
                                       range: NSRange(location: 0, length: attributeContent.string.utf16.count))
         attributeContent.addAttribute(NSFontAttributeName,
-                                      value: Constants.Post.Font.ListContent!,
+                                      value: Constants.Post.Font.ListContent,
                                       range: NSRange(location: 0, length: attributeContent.string.utf16.count))
         
         return attributeContent

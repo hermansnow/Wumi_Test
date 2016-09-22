@@ -35,11 +35,11 @@ class ProfessionListViewController: UIViewController {
         let description = NSMutableAttributedString(string: "\(title) (\(details))")
         description.addAttributes(
             [NSForegroundColorAttributeName: Constants.General.Color.TextColor,
-                NSFontAttributeName: Constants.General.Font.DetailFont!],
+                NSFontAttributeName: Constants.General.Font.DetailFont],
             range: NSRange(location: 0, length: title.characters.count))
         description.addAttributes(
             [NSForegroundColorAttributeName: Constants.General.Color.ProfileTitleColor,
-                NSFontAttributeName: Constants.General.Font.ProfileTitleFont!],
+                NSFontAttributeName: Constants.General.Font.ProfileTitleFont],
             range: NSRange(location: title.characters.count, length: details.characters.count + 3))
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
@@ -170,7 +170,7 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
                 return CGSizeZero
         }
         
-        return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont!).width + 16, height: 24)
+        return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16, height: 24)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

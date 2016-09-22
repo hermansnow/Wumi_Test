@@ -62,7 +62,7 @@ extension NSMutableAttributedString {
                 // Replace the url string with short string (icon with a description)
                 let range = NSRange(location: 0, length: urlString.length)
                 urlString.removeAttribute(NSFontAttributeName, range: range)
-                urlString.addAttribute(NSFontAttributeName, value: Constants.Post.Font.ListContent!, range: range)
+                urlString.addAttribute(NSFontAttributeName, value: Constants.Post.Font.ListContent, range: range)
                 urlString.addAttribute(NSLinkAttributeName, value: url, range: range)
                 
                 urlReplaceDict[linkResult] = urlString

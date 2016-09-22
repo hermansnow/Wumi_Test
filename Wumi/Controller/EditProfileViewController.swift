@@ -460,11 +460,11 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
         switch (rowType) {
         case .Location:
             let text = "\(self.currentUser.location)"
-            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont!).width + 16, height: 24)
+            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16, height: 24)
             
         case .Profession:
             guard let profession = self.selectedProfessions[index: indexPath.row], text = profession.name else { return CGSizeZero }
-            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont!).width + 16, height: 24)
+            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16, height: 24)
             
         default:
             return CGSizeZero

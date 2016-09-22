@@ -143,7 +143,7 @@ class DataInputTextField: UIView {
         
         if let text = informationLabel.text {
             informationStackView.heightAnchor.constraintEqualToConstant(text.heightWithConstrainedWidth(informationLabel.frame.width,
-                                                                  font: Constants.General.Font.ErrorFont!)).active = true // Calculate information label height based on width and font
+                                                                  font: Constants.General.Font.ErrorFont)).active = true // Calculate information label height based on width and font
         }
     }
     
