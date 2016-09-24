@@ -151,7 +151,7 @@ extension NewPostViewController: ComposePostViewDelegate {
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        guard let postView = textView as? PostTextView, remainingCharaters = postView.checkRemainingCharacters() else { return true }
+        guard let postView = textView as? PlaceholderTextView, remainingCharaters = postView.checkRemainingCharacters() else { return true }
         
         return text.characters.count - range.length <= remainingCharaters
     }

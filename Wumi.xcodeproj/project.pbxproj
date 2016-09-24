@@ -404,7 +404,7 @@
 		DFB2507A1CAB9C9800413D52 /* PostCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB250791CAB9C9800413D52 /* PostCategory.swift */; };
 		DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612941CA2637600B3271B /* UserBannerView.swift */; };
 		DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */; };
-		DFB612A11CA6158F00B3271B /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A01CA6158F00B3271B /* PostTextView.swift */; };
+		DFB612A11CA6158F00B3271B /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A01CA6158F00B3271B /* PlaceholderTextView.swift */; };
 		DFB612A61CA6284000B3271B /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */; };
 		DFB612A71CA6284000B3271B /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */; };
 		DFB612A91CA62CAD00B3271B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612A81CA62CAD00B3271B /* Comment.swift */; };
@@ -958,7 +958,7 @@
 		DFB250791CAB9C9800413D52 /* PostCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategory.swift; path = Model/PostCategory.swift; sourceTree = "<group>"; };
 		DFB612941CA2637600B3271B /* UserBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserBannerView.swift; path = View/UserBannerView.swift; sourceTree = "<group>"; };
 		DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = Controller/NewPostViewController.swift; sourceTree = "<group>"; };
-		DFB612A01CA6158F00B3271B /* PostTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostTextView.swift; path = View/PostTextView.swift; sourceTree = "<group>"; };
+		DFB612A01CA6158F00B3271B /* PlaceholderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceholderTextView.swift; path = View/PlaceholderTextView.swift; sourceTree = "<group>"; };
 		DFB612A21CA61B7800B3271B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Controller/PostViewController.swift; sourceTree = "<group>"; };
 		DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTableViewCell.swift; path = View/CommentTableViewCell.swift; sourceTree = "<group>"; };
 		DFB612A51CA6284000B3271B /* CommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentTableViewCell.xib; path = View/CommentTableViewCell.xib; sourceTree = "<group>"; };
@@ -2076,7 +2076,7 @@
 				B175B2511CB872B800C95B33 /* CommentTextView.swift */,
 				DFB7CC0D1BEAB44E00BEACB7 /* DataInputTextField.swift */,
 				DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */,
-				DFB612A01CA6158F00B3271B /* PostTextView.swift */,
+				DFB612A01CA6158F00B3271B /* PlaceholderTextView.swift */,
 				DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */,
 				DF0180831D4882BF00935A60 /* LoadingIndicatorView.swift */,
 			);
@@ -2560,7 +2560,7 @@
 				B1ECD7851CCC1F4000CED9C4 /* SETextAttachment.m in Sources */,
 				B1ECD78C1CCC1F4000CED9C4 /* SETextSelection.m in Sources */,
 				DFA93ADD1C91EE0600ECA503 /* FavoriteButton.swift in Sources */,
-				DFB612A11CA6158F00B3271B /* PostTextView.swift in Sources */,
+				DFB612A11CA6158F00B3271B /* PlaceholderTextView.swift in Sources */,
 				B1ECD7651CCC1F4000CED9C4 /* XHPullRefreshTableViewController.m in Sources */,
 				DF86A2B41CE3B00800F67F48 /* PostContentTextView.swift in Sources */,
 				DF43142B1D79266C002E21D5 /* WeiboService.swift in Sources */,

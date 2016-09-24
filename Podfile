@@ -9,8 +9,6 @@ target 'Wumi' do
     pod 'NHAlignmentFlowLayout'
     
     #pod 'BTNavigationDropdownMenu'
-    
-    #pod 'KMPlaceholderTextView'
 
     pod 'SWRevealViewController'
 

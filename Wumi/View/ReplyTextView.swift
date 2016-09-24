@@ -11,7 +11,7 @@ import Foundation
 class ReplyTextView: UIView {
     
     @IBOutlet weak var myAvatarView: AvatarImageView!
-    weak var commentTextView: PostTextView!
+    @IBOutlet weak var commentTextView: PlaceholderTextView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

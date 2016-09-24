@@ -11,7 +11,7 @@ import UIKit
 class RichTextPostView: UIView {
 
     lazy var subjectTextField = UITextField()
-    lazy var contentTextView: PostTextView = PostTextView()
+    lazy var contentTextView: PlaceholderTextView = PlaceholderTextView()
     lazy var inputToolbar = UIToolbar()
     private lazy var stackView = UIStackView()
     

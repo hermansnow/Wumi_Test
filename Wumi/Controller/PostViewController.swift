@@ -445,7 +445,7 @@ class PostViewController: UITableViewController {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
             keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() else { return }
         
-        if let commentTextView = UIResponder.currentFirstResponder() as? PostTextView where commentTextView == self.replyView.commentTextView {
+        if let commentTextView = UIResponder.currentFirstResponder() as? PlaceholderTextView where commentTextView == self.replyView.commentTextView {
             var visibleRect = UIApplication.sharedApplication().delegate?.window!!.frame
             visibleRect!.size.height -= keyboardRect.size.height
             self.replyView.frame.origin.y = visibleRect!.size.height - self.replyView.frame.size.height
@@ -455,7 +455,7 @@ class PostViewController: UITableViewController {
     
     // Hide comment view when dismissing the keyboard
     func keyboardWillHiden(notification: NSNotification) {
-        if let commentTextView = UIResponder.currentFirstResponder() as? PostTextView where commentTextView == self.replyView.commentTextView {
+        if let commentTextView = UIResponder.currentFirstResponder() as? PlaceholderTextView where commentTextView == self.replyView.commentTextView {
             self.replyView.frame.origin.y = (UIApplication.sharedApplication().delegate?.window!!.frame.height)!
             self.maskView.removeFromSuperview()
         }

@@ -144,6 +144,7 @@ struct Constants {
         }
         
         struct  Color {
+            static let Placeholder = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22)
             static let ListDetailText = UIColor(red: 164/255, green: 164/255, blue: 164/255, alpha: 1.0)
         }
         

@@ -6,12 +6,10 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-import UIKit
-
 class ComposePostView: UIView {
     
     lazy var subjectTextField = UITextField()
-    lazy var contentTextView: PostTextView = PostTextView()
+    lazy var contentTextView: PlaceholderTextView = PlaceholderTextView()
     lazy var inputToolbar = UIView()
     lazy var addImageButton = UIButton()
     private lazy var postStackView = UIStackView()
