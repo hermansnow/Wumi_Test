@@ -8,7 +8,7 @@
 
 import Foundation
 import TSMessages
-//import ReachabilitySwift
+import ReachabilitySwift
 
 extension UIViewController {
     // Dismiss inputView when touching any other areas on the screen
@@ -24,13 +24,11 @@ extension UIViewController {
     // MARK - Reachability
     
     func checkReachability() {
-        /*
         if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate, reachability = delegate.reachability {
             if !reachability.isReachable() {
                 self.showReachabilityError()
             }
         }
-         */
     }
     
     func showReachabilityError() {
@@ -53,7 +51,6 @@ extension UIViewController {
     }
     
     func reachabilityChanged(notification: NSNotification) {
-        /*
         guard let reachability = notification.object as? Reachability else { return }
         
         if !reachability.isReachable() {
@@ -62,6 +59,5 @@ extension UIViewController {
         else {
             TSMessage.dismissActiveNotification()
         }
-         */
     }
 }

@@ -8,7 +8,7 @@
 */
 
 import AVOSCloud
-//import ReachabilitySwift
+import ReachabilitySwift
 import CoreData
 import FBSDKCoreKit
 
@@ -24,7 +24,7 @@ let APNSReceivedNotificationIdentifier = "APNSReceivedNotification"
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    //var reachability: Reachability?
+    var reachability: Reachability?
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -42,16 +42,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupAVOSCloudSetting()
         
         // Set up reachability
-        //self.setupReachability()
+        self.setupReachability()
         
         // Social Network registration
         self.setupSocialNetworking(application, launchOptions: launchOptions)
         
+        // Set up Chat manager
         CDChatManager.sharedManager().userDelegate = IMUserFactory()
 
+        // Set up intial launch vc
         self.setupLaunchViewController()
-        
-        AVOSCloud.registerForRemoteNotification()
         
         return true
     }
@@ -209,6 +209,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // China Setting
         //AVOSCloud.setServiceRegion(.CN)
         //AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
+        
+        AVOSCloud.registerForRemoteNotification()
     }
     
     // Set up social network accounts
@@ -224,7 +226,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Set up reachability
-    /*
     private func setupReachability() {
         do {
             self.reachability = try Reachability.reachabilityForInternetConnection()
@@ -242,7 +243,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("could not start reachability notifier")
         }
     }
-    */
     
     // MARK: - Core Data stack
     

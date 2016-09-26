@@ -32,7 +32,7 @@ target 'Wumi' do
     
     pod 'Kanna', '~> 1.1.0'
     
-    #pod 'ReachabilitySwift'
+    pod 'ReachabilitySwift', '~> 2.4'
     
     pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
     
