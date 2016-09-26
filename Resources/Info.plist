@@ -153,9 +153,9 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>YES</string>
+	<string>Use to get current user&apos;s location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>YES</string>
+	<string>Use to get current user&apos;s location when filling profile</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Use to upload profile images, share personal images or download images to user&apos;s default album</string>
 	<key>NSCameraUsageDescription</key>
