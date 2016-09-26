@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageUI
-//import BTNavigationDropdownMenu
+import BTNavigationDropdownMenu
 
 class ContactTableViewController: UITableViewController {
     
@@ -64,7 +64,7 @@ class ContactTableViewController: UITableViewController {
         self.addSearchController()
         
         // Add dropdown list
-        //self.addDropdownList()
+        self.addDropdownList()
         
         // Set delegates
         self.tableView.dataSource = self
@@ -127,7 +127,6 @@ class ContactTableViewController: UITableViewController {
         self.tableView.setContentOffset(CGPoint(x: 0, y: tableView.tableHeaderView!.frame.size.height), animated: false) // Initially, hide search bar under the navigation bar
     }
     
-    /*
     // Credential and reference: https://github.com/PhamBaTho/BTNavigationDropdownMenu
     private func addDropdownList() {
         // Initial a dropdown list with options
@@ -149,7 +148,6 @@ class ContactTableViewController: UITableViewController {
             self.loadUsers()
         }
     }
- */
     
     // MARK: TableView delegate & data source
     

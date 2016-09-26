@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageUI
-//import BTNavigationDropdownMenu
+import BTNavigationDropdownMenu
 
 class MessageTableViewController: UITableViewController {
     var resultSearchController = UISearchController(searchResultsController: nil)
@@ -69,7 +69,7 @@ class MessageTableViewController: UITableViewController {
         self.addSearchController()
         
         // Add dropdown list
-        //self.addDropdownList()
+        self.addDropdownList()
         
         // Set delegates
         self.tableView.dataSource = self
@@ -129,10 +129,9 @@ class MessageTableViewController: UITableViewController {
         self.definesPresentationContext = true
         
         self.tableView.tableHeaderView = self.resultSearchController.searchBar // Add search bar as the tableview's header
-//        self.tableView.setContentOffset(CGPoint(x: 0, y: tableView.tableHeaderView!.frame.size.height), animated: false) // Initially, hide search bar under the navigation bar
+        //self.tableView.setContentOffset(CGPoint(x: 0, y: tableView.tableHeaderView!.frame.size.height), animated: false) // Initially, hide search bar under the navigation bar
     }
     
-    /*
     // Credential and reference: https://github.com/PhamBaTho/BTNavigationDropdownMenu
     private func addDropdownList() {
         // Initial a dropdown list with options
@@ -154,7 +153,6 @@ class MessageTableViewController: UITableViewController {
             self.loadUsers()
         }
     }
- */
     
     // MARK: TableView delegate & data source
     

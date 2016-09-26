@@ -8,7 +8,7 @@ target 'Wumi' do
     
     pod 'NHAlignmentFlowLayout'
     
-    #pod 'BTNavigationDropdownMenu'
+    pod 'BTNavigationDropdownMenu', :git => 'https://github.com/PhamBaTho/BTNavigationDropdownMenu.git', :branch => 'swift-2.3'
 
     pod 'SWRevealViewController'
 
