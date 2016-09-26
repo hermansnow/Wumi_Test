@@ -1164,20 +1164,6 @@
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="uan-Qz-m8H">
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="XXK-MP-nNk">
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nzm-lq-kBe">
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Jj-XO-JHM">
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
-                                                            </stackView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2m-Zj-qGf">
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1242,10 +1228,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="graduationYearLabel" destination="4Jj-XO-JHM" id="ZgB-y7-s3M"/>
                         <outlet property="locationLabel" destination="Q2m-Zj-qGf" id="stF-39-3V7"/>
                         <outlet property="maskView" destination="OlQ-ao-CLO" id="ZM2-49-ugZ"/>
-                        <outlet property="nameLabel" destination="Nzm-lq-kBe" id="R94-dM-hOj"/>
                         <outlet property="profileImageButton" destination="My6-M3-D94" id="2j3-GB-qN5"/>
                         <outlet property="profileImageView" destination="K8m-1m-vcE" id="eDZ-uh-2mf"/>
                         <outlet property="tableView" destination="V6G-6l-XV9" id="rhC-Ze-34D"/>
@@ -1356,7 +1340,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ChO-TW-KPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3708" y="2147"/>
+            <point key="canvasLocation" x="3708" y="2200"/>
         </scene>
         <!--City-->
         <scene sceneID="82k-sg-8j1">
@@ -1521,7 +1505,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ojp-eI-zJx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3012" y="2147"/>
+            <point key="canvasLocation" x="3012" y="2200"/>
         </scene>
     </scenes>
     <resources>
