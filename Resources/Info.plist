@@ -66,7 +66,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>0.18</string>
+	<string>0.18.1</string>
 	<key>FacebookAppID</key>
 	<string>1836765936547463</string>
 	<key>FacebookDisplayName</key>
@@ -156,6 +156,10 @@
 	<string>YES</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>YES</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Use to upload profile images, share personal images or download images to user&apos;s default album</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Use to take user profile avatar</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -177,7 +181,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Use to upload profile images, share personal images or download images to user&apos;s default album</string>
 </dict>
 </plist>
