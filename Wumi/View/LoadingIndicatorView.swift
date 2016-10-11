@@ -6,9 +6,9 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-import DGActivityIndicatorView
+import NVActivityIndicatorView
 
-class LoadingIndicatorView: DGActivityIndicatorView {
+class LoadingIndicatorView: NVActivityIndicatorView {
     
     
     // MARK: Initializers
@@ -17,7 +17,7 @@ class LoadingIndicatorView: DGActivityIndicatorView {
         self.init(frame: CGRectZero)
     }
     
-    override init(frame: CGRect) {
+    init(frame: CGRect) {
         super.init(frame: frame)
         
         self.setProperty()
@@ -30,10 +30,9 @@ class LoadingIndicatorView: DGActivityIndicatorView {
     }
     
     private func setProperty() {
-        //self.type = .LineSpinFadeLoader
-       // self.padding = 1.0
-       // self.color = Constants.General.Color.ThemeColor
-        //self.hidesWhenStopped = true
+        self.type = .LineSpinFadeLoader
+        self.padding = 1.0
+        self.color = Constants.General.Color.ThemeColor
     }
 
 }

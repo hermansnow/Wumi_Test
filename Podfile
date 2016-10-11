@@ -28,7 +28,7 @@ target 'Wumi' do
 
     pod 'FormatterKit'
     
-    pod 'DGActivityIndicatorView'
+    pod 'NVActivityIndicatorView', :git => 'https://github.com/ninjaprox/NVActivityIndicatorView.git', :branch => 'swift2.3'
     
     pod 'Kanna', '~> 1.1.0'
     
