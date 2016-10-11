@@ -356,7 +356,6 @@
 		DF4F53341CD5A967009F3D2E /* PrivateMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */; };
 		DF5AECA61D58744900FB4B84 /* PostFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */; };
 		DF5AECA81D6434E800FB4B84 /* Extension+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5AECA71D6434E800FB4B84 /* Extension+UITextView.swift */; };
-		DF5AECAB1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5AECAA1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift */; };
 		DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */; };
 		DF5E3D451BE9465000F44FFF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E3D441BE9465000F44FFF /* User.swift */; };
 		DF5EF15D1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */; };
@@ -401,6 +400,10 @@
 		DFACE2501C578F6D00C6D737 /* SelectPhotoActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */; };
 		DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */; };
 		DFB0DC731C99CB87006BCD07 /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */; };
+		DFB220A71DAD8228008FB503 /* Extension+NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB220A61DAD8228008FB503 /* Extension+NSAttributedString.swift */; };
+		DFB220AA1DAD8279008FB503 /* Signup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220A81DAD8279008FB503 /* Signup.storyboard */; };
+		DFB220AD1DAD8859008FB503 /* Contact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220AB1DAD8859008FB503 /* Contact.storyboard */; };
+		DFB220B11DAD8FE5008FB503 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220AF1DAD8FE5008FB503 /* Setting.storyboard */; };
 		DFB2507A1CAB9C9800413D52 /* PostCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB250791CAB9C9800413D52 /* PostCategory.swift */; };
 		DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612941CA2637600B3271B /* UserBannerView.swift */; };
 		DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */; };
@@ -908,7 +911,6 @@
 		DF4F53331CD5A967009F3D2E /* PrivateMessageButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivateMessageButton.swift; path = View/PrivateMessageButton.swift; sourceTree = "<group>"; };
 		DF5AECA51D58744900FB4B84 /* PostFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostFilterViewController.swift; path = Controller/PostFilterViewController.swift; sourceTree = "<group>"; };
 		DF5AECA71D6434E800FB4B84 /* Extension+UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+UITextView.swift"; path = "Supporting Files/Extensions/Extension+UITextView.swift"; sourceTree = "<group>"; };
-		DF5AECAA1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+NSAttributedString.swift"; sourceTree = "<group>"; };
 		DF5AECAC1D6B9D4D00FB4B84 /* Wumi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Wumi.entitlements; path = Wumi/Wumi.entitlements; sourceTree = "<group>"; };
 		DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninViewController.swift; path = Controller/SigninViewController.swift; sourceTree = "<group>"; };
 		DF5E3D441BE9465000F44FFF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
@@ -955,6 +957,10 @@
 		DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectPhotoActionSheet.swift; path = Controller/SelectPhotoActionSheet.swift; sourceTree = "<group>"; };
 		DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactViewController.swift; path = Controller/ContactViewController.swift; sourceTree = "<group>"; };
 		DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileRow.swift; path = Model/ProfileRow.swift; sourceTree = "<group>"; };
+		DFB220A61DAD8228008FB503 /* Extension+NSAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+NSAttributedString.swift"; path = "Supporting Files/Extensions/Extension+NSAttributedString.swift"; sourceTree = "<group>"; };
+		DFB220A91DAD8279008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Signup.storyboard; sourceTree = SOURCE_ROOT; };
+		DFB220AC1DAD8859008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Contact.storyboard; sourceTree = SOURCE_ROOT; };
+		DFB220B01DAD8FE5008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Setting.storyboard; sourceTree = SOURCE_ROOT; };
 		DFB250791CAB9C9800413D52 /* PostCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategory.swift; path = Model/PostCategory.swift; sourceTree = "<group>"; };
 		DFB612941CA2637600B3271B /* UserBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserBannerView.swift; path = View/UserBannerView.swift; sourceTree = "<group>"; };
 		DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = Controller/NewPostViewController.swift; sourceTree = "<group>"; };
@@ -1061,12 +1067,8 @@
 		81BA81471A49DA1800E65899 /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				814C3AC61B69877600E307BB /* Main.storyboard */,
-				DF5EF1601D33215000C9B2F2 /* Home.storyboard */,
-				B1ECD7AE1CCC240900CED9C4 /* Inbox.storyboard */,
-				02932A9D1CEE6E07001220E8 /* Notification.storyboard */,
-				DFA93ABB1C8F8ECB00ECA503 /* LaunchScreen.storyboard */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
+				DFB220AE1DAD8F74008FB503 /* Storyboard */,
 				DF5E3D381BE9457900F44FFF /* Model */,
 				DFB7CC081BEA894300BEACB7 /* View */,
 				DF5E3D3D1BE9461300F44FFF /* Controller */,
@@ -1912,7 +1914,7 @@
 			children = (
 				DF0180611D3DF5AA00935A60 /* Extension+Array.swift */,
 				DF01805F1D3DF58300935A60 /* Extension+AVFile.swift */,
-				DF5AECAA1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift */,
+				DFB220A61DAD8228008FB503 /* Extension+NSAttributedString.swift */,
 				DF0180771D3DF91E00935A60 /* Extension+NSDate.swift */,
 				DF0180741D3DF77F00935A60 /* Extension+NSObject.swift */,
 				DF01808D1D4DEF3A00935A60 /* Extension+NSURL.swift */,
@@ -2141,6 +2143,21 @@
 			name = Contact;
 			sourceTree = "<group>";
 		};
+		DFB220AE1DAD8F74008FB503 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				814C3AC61B69877600E307BB /* Main.storyboard */,
+				DFA93ABB1C8F8ECB00ECA503 /* LaunchScreen.storyboard */,
+				DFB220A81DAD8279008FB503 /* Signup.storyboard */,
+				DF5EF1601D33215000C9B2F2 /* Home.storyboard */,
+				B1ECD7AE1CCC240900CED9C4 /* Inbox.storyboard */,
+				DFB220AB1DAD8859008FB503 /* Contact.storyboard */,
+				02932A9D1CEE6E07001220E8 /* Notification.storyboard */,
+				DFB220AF1DAD8FE5008FB503 /* Setting.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
 		DFB4152A1C1E705C00835EFE /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -2343,6 +2360,7 @@
 				B1ECD7021CCC1F3F00CED9C4 /* tusiji_8_cover@2x.png in Resources */,
 				B1ECD70E1CCC1F3F00CED9C4 /* input-field-cover.png in Resources */,
 				B1ECD6D01CCC1F3F00CED9C4 /* rabbit_20.gif in Resources */,
+				DFB220AD1DAD8859008FB503 /* Contact.storyboard in Resources */,
 				B1ECD6DE1CCC1F3F00CED9C4 /* rabbit_6_cover@2x.png in Resources */,
 				B1ECD6CC1CCC1F3F00CED9C4 /* rabbit_19.gif in Resources */,
 				B1ECD6ED1CCC1F3F00CED9C4 /* tusiji_12_cover@2x.png in Resources */,
@@ -2360,6 +2378,7 @@
 				B1ECD6F91CCC1F3F00CED9C4 /* tusiji_4.gif in Resources */,
 				B1ECD7031CCC1F3F00CED9C4 /* tusiji_9.gif in Resources */,
 				B1C922A31CACF68400335A60 /* cities.plist in Resources */,
+				DFB220AA1DAD8279008FB503 /* Signup.storyboard in Resources */,
 				B1ECD6B41CCC1F3F00CED9C4 /* contacts_add_voip@2x.png in Resources */,
 				B1ECD72F1CCC1F3F00CED9C4 /* SECoreTextView.bundle in Resources */,
 				B1ECD72E1CCC1F3F00CED9C4 /* SearchIcon@2x.png in Resources */,
@@ -2369,6 +2388,7 @@
 				DF5EF1621D33215000C9B2F2 /* Home.storyboard in Resources */,
 				B1ECD6C71CCC1F3F00CED9C4 /* rabbit_16_cover@2x.png in Resources */,
 				B1ECD73C1CCC1F3F00CED9C4 /* sharemore_videovoip@2x.png in Resources */,
+				DFB220B11DAD8FE5008FB503 /* Setting.storyboard in Resources */,
 				B1ECD7291CCC1F3F00CED9C4 /* RecordingSignal004@2x.png in Resources */,
 				B1ECD6CB1CCC1F3F00CED9C4 /* rabbit_18_cover@2x.png in Resources */,
 				B1ECD6CF1CCC1F3F00CED9C4 /* rabbit_2.gif in Resources */,
@@ -2628,7 +2648,6 @@
 				DF16E0451D25B84700F4C4FC /* ImageFullScreenViewController.swift in Sources */,
 				DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */,
 				B1ECD76A1CCC1F4000CED9C4 /* XHDisplayTextViewController.m in Sources */,
-				DF5AECAB1D6A7F4800FB4B84 /* Extension+NSAttributedString.swift in Sources */,
 				DFA74C211BF8215900609E83 /* MainTabBarController.swift in Sources */,
 				DF43142F1D796BF9002E21D5 /* CopyLinkActivity.swift in Sources */,
 				DF0180691D3DF65600935A60 /* Extension+String.swift in Sources */,
@@ -2678,6 +2697,7 @@
 				B1ECD76B1CCC1F4000CED9C4 /* XHMessageTableViewController.m in Sources */,
 				DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
+				DFB220A71DAD8228008FB503 /* Extension+NSAttributedString.swift in Sources */,
 				B1ECD7831CCC1F4000CED9C4 /* SELinkText.m in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */,
 				DF01808A1D4C8E2B00935A60 /* WebFullScreenViewController.swift in Sources */,
@@ -2817,6 +2837,30 @@
 				DF5EF1611D33215000C9B2F2 /* Base */,
 			);
 			name = Home.storyboard;
+			sourceTree = "<group>";
+		};
+		DFB220A81DAD8279008FB503 /* Signup.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFB220A91DAD8279008FB503 /* Base */,
+			);
+			name = Signup.storyboard;
+			sourceTree = "<group>";
+		};
+		DFB220AB1DAD8859008FB503 /* Contact.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFB220AC1DAD8859008FB503 /* Base */,
+			);
+			name = Contact.storyboard;
+			sourceTree = "<group>";
+		};
+		DFB220AF1DAD8FE5008FB503 /* Setting.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFB220B01DAD8FE5008FB503 /* Base */,
+			);
+			name = Setting.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

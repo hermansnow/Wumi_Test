@@ -16,7 +16,7 @@ class Helper {
         
         UIView.transitionWithView(((appDelegate?.window)!)!, duration: NSTimeInterval(0.5), options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
                 let previoudAnimationState = UIView.areAnimationsEnabled()
-                appDelegate?.window!!.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Sign In Navigation Controller")
+                appDelegate?.window!!.rootViewController = UIStoryboard(name: "Signup", bundle: nil).instantiateInitialViewController()
                 UIView.setAnimationsEnabled(previoudAnimationState)
             }, completion: nil)
     }

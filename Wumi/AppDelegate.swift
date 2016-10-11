@@ -186,8 +186,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Set up the initial launch view controller
     private func setupLaunchViewController() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let user = User.currentUser() {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
             CDChatManager.sharedManager().openWithClientId(user.objectId, callback: { (result: Bool, error: NSError!) -> Void in
                 if (error == nil) {
                     user.fetchInBackgroundWithBlock(nil)
@@ -196,8 +196,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = storyboard.instantiateInitialViewController()
         }
         else {
-            let loginNavigation = storyboard.instantiateViewControllerWithIdentifier("Sign In Navigation Controller")
-            self.window?.rootViewController = loginNavigation
+            let storyboard = UIStoryboard(name: "Signup", bundle: nil)
+            self.window?.rootViewController = storyboard.instantiateInitialViewController()
         }
     }
     
