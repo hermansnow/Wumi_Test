@@ -11,6 +11,7 @@
 @implementation ConversationCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     // Initialization code
     self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height / 2.0;
     self.avatarImageView.clipsToBounds = YES;
