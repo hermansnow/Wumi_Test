@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var currentUserAvatarView: AvatarImageView!
     @IBOutlet weak var postTableView: UITableView!
-    @IBOutlet var newPostNotificationView: UIView!
+    @IBOutlet weak var newPostNotificationView: UIView!
     @IBOutlet weak var newPostLabel: UILabel!
     
     // Navigation bar items
@@ -48,6 +48,7 @@ class HomeViewController: UIViewController {
     private var previousType: PostSearchType = .All
     private var searchType: PostSearchType = .All
     var category: PostCategory?
+    var area: Area?
     
     private var inputTimer: NSTimer?
     private var hasMoreResults: Bool = false
@@ -269,7 +270,7 @@ class HomeViewController: UIViewController {
     
     private func addNewPostNotificationView() {
         self.newPostNotificationView.backgroundColor = Constants.General.Color.ThemeColor
-        self.newPostLabel.textColor = UIColor.whiteColor()
+        self.newPostLabel.textColor = UIColor.blueColor()
         self.newPostLabel.font = Constants.Post.Font.ListCurrentUserBanner
         self.newPostNotificationView.layer.cornerRadius = self.newPostNotificationView.frame.size.height / 2
         
@@ -424,7 +425,7 @@ class HomeViewController: UIViewController {
         guard self.resultSearchController.active == false else { return }
         
         if let firstPost = self.displayPosts.first {
-            Post.countNewPosts(self.searchType, cutoffTime: firstPost.updatedAt, user: self.currentUser, block: { (count, error) in
+            Post.countNewPosts(self.searchType, cutoffTime: firstPost.updatedAt, user: self.currentUser, category:self.category, block: { (count, error) in
                 guard count > 0 && error == nil else {
                     self.view.sendSubviewToBack(self.newPostNotificationView)
                     self.newPostNotificationView.hidden = true
@@ -451,7 +452,8 @@ class HomeViewController: UIViewController {
                        type: self.searchType,
                        searchString: self.searchString,
                        user: self.currentUser,
-                       category: self.category) { (results, error) -> Void in
+                       category: self.category,
+                       area: self.area) { (results, error) -> Void in
                         guard let posts = results as? [Post] where error == nil else {
                             self.refreshControl.endRefreshing()
                             return
@@ -476,7 +478,8 @@ class HomeViewController: UIViewController {
                        cutoffTime: lastPost.updatedAt,
                        searchString: self.searchString,
                        user: self.currentUser,
-                       category: self.category) { (results, error) -> Void in
+                       category: self.category,
+                       area: self.area) { (results, error) -> Void in
                         self.refreshControl.endRefreshing()
                     
                         guard let posts = results as? [Post] where error == nil && posts.count > 0 else { return }

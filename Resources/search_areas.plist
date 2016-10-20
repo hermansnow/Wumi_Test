@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>New York</key>
+	<dict>
+		<key>Latitude</key>
+		<real>40.7128</real>
+		<key>Longitude</key>
+		<real>-74.0059</real>
+	</dict>
+	<key>Chicago</key>
+	<dict>
+		<key>Latitude</key>
+		<real>41.8781</real>
+		<key>Longitude</key>
+		<real>-87.6298</real>
+	</dict>
+	<key>Los Angeles</key>
+	<dict>
+		<key>Latitude</key>
+		<real>34.0522</real>
+		<key>Longitude</key>
+		<real>-118.2437</real>
+	</dict>
+	<key>San Francisco</key>
+	<dict>
+		<key>Latitude</key>
+		<real>37.7749</real>
+		<key>Longitude</key>
+		<real>-122.4194</real>
+	</dict>
+</dict>
+</plist>

@@ -404,6 +404,8 @@
 		DFB220AA1DAD8279008FB503 /* Signup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220A81DAD8279008FB503 /* Signup.storyboard */; };
 		DFB220AD1DAD8859008FB503 /* Contact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220AB1DAD8859008FB503 /* Contact.storyboard */; };
 		DFB220B11DAD8FE5008FB503 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220AF1DAD8FE5008FB503 /* Setting.storyboard */; };
+		DFB220B31DAF2409008FB503 /* search_areas.plist in Resources */ = {isa = PBXBuildFile; fileRef = DFB220B21DAF2409008FB503 /* search_areas.plist */; };
+		DFB220B51DAF2C49008FB503 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB220B41DAF2C49008FB503 /* Area.swift */; };
 		DFB2507A1CAB9C9800413D52 /* PostCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB250791CAB9C9800413D52 /* PostCategory.swift */; };
 		DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612941CA2637600B3271B /* UserBannerView.swift */; };
 		DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */; };
@@ -961,6 +963,8 @@
 		DFB220A91DAD8279008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Signup.storyboard; sourceTree = SOURCE_ROOT; };
 		DFB220AC1DAD8859008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Contact.storyboard; sourceTree = SOURCE_ROOT; };
 		DFB220B01DAD8FE5008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Setting.storyboard; sourceTree = SOURCE_ROOT; };
+		DFB220B21DAF2409008FB503 /* search_areas.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = search_areas.plist; sourceTree = "<group>"; };
+		DFB220B41DAF2C49008FB503 /* Area.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Area.swift; path = Model/Area.swift; sourceTree = "<group>"; };
 		DFB250791CAB9C9800413D52 /* PostCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategory.swift; path = Model/PostCategory.swift; sourceTree = "<group>"; };
 		DFB612941CA2637600B3271B /* UserBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserBannerView.swift; path = View/UserBannerView.swift; sourceTree = "<group>"; };
 		DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = Controller/NewPostViewController.swift; sourceTree = "<group>"; };
@@ -1036,6 +1040,7 @@
 			children = (
 				B1C922A21CACF68400335A60 /* cities.plist */,
 				B1F045221CB619080025CF7D /* country_state_city.plist */,
+				DFB220B21DAF2409008FB503 /* search_areas.plist */,
 				DF159E181C80231C00DB65FF /* Images.xcassets */,
 				814C3AC91B69877600E307BB /* Info.plist */,
 				DF01808B1D4DE47500935A60 /* error.html */,
@@ -2041,6 +2046,7 @@
 				DF1BE2681C9F9C7500F934EE /* Post.swift */,
 				DFB250791CAB9C9800413D52 /* PostCategory.swift */,
 				DFB612A81CA62CAD00B3271B /* Comment.swift */,
+				DFB220B41DAF2C49008FB503 /* Area.swift */,
 				DF9F060D1C7B7280008CA6DC /* Location.swift */,
 				DFC754251CBCE7C900C7E111 /* DataManager.swift */,
 				DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */,
@@ -2270,6 +2276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFF712C01CD70B4A00EAEFD2 /* ProfileListTableCell.xib in Resources */,
+				DFB220B31DAF2409008FB503 /* search_areas.plist in Resources */,
 				B1ECD6B21CCC1F3F00CED9C4 /* contacts_add_photo@2x.png in Resources */,
 				B1ECD6CD1CCC1F3F00CED9C4 /* rabbit_19_cover@2x.png in Resources */,
 				B1ECD6BD1CCC1F3F00CED9C4 /* rabbit_11_cover@2x.png in Resources */,
@@ -2628,6 +2635,7 @@
 				DF9F060E1C7B7280008CA6DC /* Location.swift in Sources */,
 				DF4F532D1CCD9076009F3D2E /* PIKAImageCropViewController.swift in Sources */,
 				DFBD2D451BEEF8F800D6FEBC /* Setting.swift in Sources */,
+				DFB220B51DAF2C49008FB503 /* Area.swift in Sources */,
 				B1ECD7A91CCC1F4000CED9C4 /* NSString+Emojize.m in Sources */,
 				DFA93AC51C90E04000ECA503 /* EditProfileViewController.swift in Sources */,
 				B16535261D5024DF00B0DA0E /* CacheSettingViewController.swift in Sources */,

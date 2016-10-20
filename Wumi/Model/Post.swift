@@ -21,12 +21,14 @@ class Post: AVObject, AVSubclassing {
     @NSManaged var mediaAttachments: [AVFile]
     @NSManaged var mediaThumbnails: [AVFile]
     @NSManaged var hasPreviewImage: Bool
+    @NSManaged var location: AVGeoPoint?
     
     // Local properties, will not be stored into server
     var attributedContent: NSMutableAttributedString?
     var attachedImages = [UIImage]()
     var attachedThumbnails = [UIImage]()
     var externalPreviewImageUrl: NSURL?
+    var area: Area?
     
     var url: String {
         get {
@@ -56,7 +58,7 @@ class Post: AVObject, AVSubclassing {
     }
     
     // MARK: Queries
-    class func countNewPosts(type: PostSearchType = .All, cutoffTime: NSDate? = nil, user: User? = nil, block: AVIntegerResultBlock!) {
+    class func countNewPosts(type: PostSearchType = .All, cutoffTime: NSDate? = nil, user: User? = nil, category: PostCategory? = nil, block: AVIntegerResultBlock!) {
         guard let query = Post.getQueryFromSearchType(type, forUser: user) else {
             block(0, NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
             return
@@ -69,6 +71,10 @@ class Post: AVObject, AVSubclassing {
             query.whereKey(index, greaterThan: cutoffTime)
         }
         
+        if let category = category where type == .Filter {
+            query.whereKey("categories", equalTo: category)
+        }
+        
         query.orderByDescending(index)
         query.cachePolicy = .NetworkOnly
         
@@ -76,7 +82,7 @@ class Post: AVObject, AVSubclassing {
     }
     
     // Search post based on several filters
-    class func loadPosts(limit limit: Int = 10, type: PostSearchType = .All, cutoffTime: NSDate? = nil, searchString: String = "", user: User? = nil, category: PostCategory? = nil, block: AVArrayResultBlock!) {
+    class func loadPosts(limit limit: Int = 10, type: PostSearchType = .All, cutoffTime: NSDate? = nil, searchString: String = "", user: User? = nil, category: PostCategory? = nil, area: Area? = nil, block: AVArrayResultBlock!) {
         guard var query = Post.getQueryFromSearchType(type, forUser: user) else {
             block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
             return
@@ -96,8 +102,14 @@ class Post: AVObject, AVSubclassing {
             query.whereKey(index, lessThan: cutoffTime)
         }
         
+        // Apply category filter
         if let category = category where type == .Filter {
             query.whereKey("categories", equalTo: category)
+        }
+        
+        // Apply location filter
+        if let area = area where type == .Filter {
+            query.whereKey("location", nearGeoPoint: AVGeoPoint(latitude: area.latitude, longitude: area.longitude), withinMiles: 600.0)
         }
         
         // Include relations
@@ -158,6 +170,11 @@ class Post: AVObject, AVSubclassing {
         // Set default value
         self.title = self.title ?? "No Title"
         self.commentCount = self.commentCount ?? 0
+        
+        // Set location
+        if let area = self.area {
+            self.location = AVGeoPoint(latitude: area.latitude, longitude: area.longitude)
+        }
         
         // Parse URLS
         if let content = self.content {

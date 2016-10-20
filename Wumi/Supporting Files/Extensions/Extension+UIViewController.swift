@@ -32,7 +32,6 @@ extension UIViewController {
     }
     
     func showReachabilityError() {
-        print("Show Error")
         TSMessage.showNotificationInViewController(self.parentViewController,
                                                    title: "Network error",
                                                    subtitle: "Couldn't connect to the server. Check your network connection.",
