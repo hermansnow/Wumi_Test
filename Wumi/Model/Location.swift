@@ -27,3 +27,13 @@ struct Location: CustomStringConvertible {
         return [city, state, country].flatMap{ $0 }.joinWithSeparator(", ")
     }
 }
+
+// MARK: Equatable
+
+func ==(lhs: Location, rhs: Location) -> Bool {
+    return lhs.country == rhs.country && lhs.state == rhs.state && lhs.city == rhs.city
+}
+
+func !=(lhs: Location, rhs: Location) -> Bool {
+    return !(lhs == rhs)
+}

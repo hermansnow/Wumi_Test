@@ -155,6 +155,10 @@ extension NewPostViewController: ComposePostViewDelegate {
         
         return text.characters.count - range.length <= remainingCharaters
     }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        textField.layoutIfNeeded() // Fix textfield bounce glitch issue in iOS 9+
+    }
 }
 
 // MARK: SelectedThumbnailImageView delegate

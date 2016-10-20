@@ -309,13 +309,7 @@
                             <constraint firstAttribute="trailing" secondItem="u4v-Di-cE8" secondAttribute="trailing" id="g2j-ri-Vmj"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="xUD-4o-veH">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="QqH-M5-Xf2">
-                            <connections>
-                                <action selector="save:" destination="val-jd-5cF" id="qYQ-8O-vPk"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Profile" id="xUD-4o-veH"/>
                     <connections>
                         <outlet property="graduationYearLabel" destination="iOX-2Q-VhE" id="fdN-8M-GSZ"/>
                         <outlet property="locationLabel" destination="VSc-Xh-pDY" id="AGs-SQ-oc4"/>

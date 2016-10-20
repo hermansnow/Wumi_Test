@@ -39,6 +39,7 @@ class SigninViewController: UIViewController {
         
         // Set text fields
         self.passwordTextField.inputTextField.secureTextEntry = true  // Securetext mode for password field
+        self.usernameTextField.inputTextField.autocorrectionType = .No
         self.usernameTextField.inputTextField.tag = 1
         self.passwordTextField.inputTextField.tag = 2
         
@@ -47,6 +48,7 @@ class SigninViewController: UIViewController {
         self.forgotPasswordButton.textLinkFont = Constants.General.Font.ErrorFont
         self.forgotPasswordButton.setTitle(Constants.SignIn.String.forgotPasswordLink, forState: .Normal)
         self.forgotPasswordButton.addTarget(self, action: #selector(forgotPassword), forControlEvents: .TouchUpInside)
+        self.forgotPasswordButton.hidden = true
         
         // Add Notification observer
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -108,6 +110,7 @@ class SigninViewController: UIViewController {
             guard let _ = result as? User else {
                 self.passwordTextField.errorText = Constants.SignIn.String.ErrorMessages.incorrectPassword
                 self.passwordTextField.actionHolder = self.forgotPasswordButton
+                self.forgotPasswordButton.hidden = false
                 return
             }
             CDChatManager.sharedManager().openWithClientId(User.currentUser().objectId, callback: { (result: Bool, error: NSError!) -> Void in
@@ -152,6 +155,16 @@ extension SigninViewController: UITextFieldDelegate {
         
         nextResponder.becomeFirstResponder()
         return false // Do not dismiss keyboard
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if self.passwordTextField.errorText != nil {
+            self.passwordTextField.errorText = nil
+            self.passwordTextField.actionHolder = nil
+            self.forgotPasswordButton.hidden = true
+        }
+        
+        return true
     }
 }
 

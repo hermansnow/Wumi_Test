@@ -14,6 +14,7 @@ class DataInputTextField: UIView {
     private var informationLabel = UILabel()
     private var actionView: UIView?
     private var underlineLayer = CALayer()
+    private var informationStackView = UIStackView()
     
     // Computed properties
     var informationHolder: UILabel {
@@ -105,28 +106,16 @@ class DataInputTextField: UIView {
         self.informationLabel.adjustsFontSizeToFitWidth = true
         
         // Add underline layer
-        self.layer.addSublayer(underlineLayer)
-    }
-    
-    // MARK: Draw view
-    
-    override func drawRect(rect: CGRect) {
-        // Auto-layout between information label and action view
-        let informationStackView = UIStackView()
-        informationStackView.axis = .Horizontal
-        informationStackView.distribution = .Fill
-        informationStackView.alignment = UIStackViewAlignment.Top
-        informationStackView.translatesAutoresizingMaskIntoConstraints = false;
+        self.layer.addSublayer(self.underlineLayer)
         
-        self.informationLabel.sizeToFit()
-        informationStackView.addArrangedSubview(informationLabel)
-        if self.actionView != nil {
-            self.actionView!.sizeToFit()
-            informationStackView.addArrangedSubview(self.actionView!)
-        }
+        // Auto-layout between information label and action view
+        self.informationStackView.axis = .Horizontal
+        self.informationStackView.distribution = .Fill
+        self.informationStackView.alignment = UIStackViewAlignment.Top
+        self.informationStackView.translatesAutoresizingMaskIntoConstraints = false;
         
         // Auto-layout for all subviews
-        let stackView = UIStackView(arrangedSubviews: [self.inputTextField, informationStackView, UIView()])
+        let stackView = UIStackView(arrangedSubviews: [self.inputTextField, self.informationStackView, UIView()])
         stackView.axis = .Vertical
         stackView.distribution = .Fill
         stackView.alignment = .Fill
@@ -140,10 +129,23 @@ class DataInputTextField: UIView {
         stackView.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
         stackView.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
         stackView.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
+    }
+    
+    // MARK: Draw view
+    
+    override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
         
-        if let text = informationLabel.text {
-            informationStackView.heightAnchor.constraintEqualToConstant(text.heightWithConstrainedWidth(informationLabel.frame.width,
-                                                                  font: Constants.General.Font.ErrorFont)).active = true // Calculate information label height based on width and font
+        self.informationLabel.sizeToFit()
+        informationStackView.addArrangedSubview(self.informationLabel)
+        if self.actionView != nil {
+            self.actionView!.sizeToFit()
+            informationStackView.addArrangedSubview(self.actionView!)
+        }
+        
+        if let text = self.informationLabel.text {
+            self.informationStackView.heightAnchor.constraintEqualToConstant(text.heightWithConstrainedWidth(self.informationLabel.frame.width,
+                font: Constants.General.Font.ErrorFont)).active = true // Calculate information label height based on width and font
         }
     }
     

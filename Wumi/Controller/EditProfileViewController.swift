@@ -19,7 +19,9 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var profileImageButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    lazy var graduationYearPickerView: GraduationYearPickerView = GraduationYearPickerView()
+    private lazy var saveButtonItem = UIBarButtonItem()
+    private lazy var graduationYearPickerView: GraduationYearPickerView = GraduationYearPickerView()
+    
     lazy var currentUser = User.currentUser()
     lazy var selectedProfessions = Set<Profession>()
     private var graduationYearTextfField: UITextField? // Save graduation year textfield, we need to track it when scrolling the picker
@@ -38,6 +40,12 @@ class EditProfileViewController: UIViewController {
         // Enable navigation bar
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationItem.backBarButtonItem?.enabled = true
+        self.saveButtonItem = UIBarButtonItem(title: "Save",
+                                              style: .Done,
+                                              target: self,
+                                              action: #selector(EditProfileViewController.save(_:)))
+        self.navigationItem.rightBarButtonItem = self.saveButtonItem
+        self.saveButtonItem.enabled = false
         
         // Initialize the tableview
         self.tableView.estimatedRowHeight = 100
@@ -166,16 +174,6 @@ class EditProfileViewController: UIViewController {
         })
     }
     
-    @IBAction func save(sender: AnyObject) {
-        // Dismiss current first responder
-        self.view.endEditing(true)
-        
-        // Save user changes
-        self.saveUserData()
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     @IBAction func changeProfileImage(sender: AnyObject) {
         // Dismiss current first responder
         self.view.endEditing(true)
@@ -185,6 +183,16 @@ class EditProfileViewController: UIViewController {
         picker.delegate = self
         
         self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func save(sender: AnyObject) {
+        // Dismiss current first responder
+        self.view.endEditing(true)
+        
+        // Save user changes
+        self.saveUserData()
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // Action when click the add button on location cell
@@ -199,14 +207,20 @@ class EditProfileViewController: UIViewController {
     
     // Action when click the switch button on email cell
     func changeEmailStatus(sender: UISwitch) {
+        guard self.currentUser.emailPublic != sender.on else { return }
+        
         self.currentUser.emailPublic = sender.on
+        self.saveButtonItem.enabled = true
         
         self.reloadRowForTypes([.Email])
     }
     
     // Action when click the switch button on phone cell
     func changePhoneStatus(sender: UISwitch) {
+        guard self.currentUser.phonePublic != sender.on else { return }
+        
         self.currentUser.phonePublic = sender.on
+        self.saveButtonItem.enabled = true
         
         self.reloadRowForTypes([.Phone])
     }
@@ -287,29 +301,10 @@ class EditProfileViewController: UIViewController {
             self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
         }
     }
-    
-    func changePassword() {
-        Helper.PopupInputBox(self, boxTitle: "Change Password", message: "Please input a new password",
-            numberOfFileds: 2, textValues: [["placeHolder": "Please enter a new password"], ["placeHolder": "Please confirm the new password"]]) { (inputValues) -> Void in
-                let newPassword = inputValues[0]
-                let confirmPassword = inputValues[1]
-                self.currentUser.password = newPassword
-                self.currentUser.confirmPassword = confirmPassword
-                self.currentUser.validateUser { (valid, validateError) -> Void in
-                    guard valid else {
-                        Helper.PopupErrorAlert(self, errorMessage: "\(validateError)")
-                        // Do not save anything in password properties
-                        self.currentUser.password = nil
-                        self.currentUser.confirmPassword = nil
-                        return
-                    }
-                }
-        }
-    }
 }
 
 // MARK: UITableView delegate & data source
-    
+
 extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -534,21 +529,35 @@ extension EditProfileViewController: UITextFieldDelegate {
         // Validate input of each text field
         switch (rowType) {
         case .Name:
+            guard self.currentUser.name != textField.text else { break }
+            
             self.currentUser.name = textField.text
             if let name = self.currentUser.name {
                 self.currentUser.pinyin = name.toChinesePinyin()
             }
+            self.saveButtonItem.enabled = true
         case .GraduationYear:
-            if let graduationYear = textField.text where graduationYear.characters.count > 0, let year = Int(graduationYear) {
-                self.currentUser.graduationYear = year
+            var year: Int?
+            if let graduationYear = textField.text where graduationYear.characters.count > 0 {
+                year = Int(graduationYear)
             }
             else {
-                self.currentUser.graduationYear = 0
+                year = 0
             }
+            guard let selectedYear = year where self.currentUser.graduationYear != year else { break }
+            
+            self.currentUser.graduationYear = selectedYear
+            self.saveButtonItem.enabled = true
         case .Email:
+            guard self.currentUser.email != textField.text else { break }
+            
             self.currentUser.email = textField.text
+            self.saveButtonItem.enabled = true
         case .Phone:
+            guard self.currentUser.phoneNumber != textField.text else { break }
+            
             self.currentUser.phoneNumber = textField.text
+            self.saveButtonItem.enabled = true
         default:
             break
         }
@@ -561,9 +570,10 @@ extension EditProfileViewController: UITextFieldDelegate {
 
 extension EditProfileViewController: LocationListDelegate {
     func finishLocationSelection(location: Location?) {
-        guard let selectedLocation = location else { return }
+        guard let selectedLocation = location where selectedLocation != self.currentUser.location else { return }
         
         self.currentUser.location = selectedLocation
+        self.saveButtonItem.enabled = true
         
         self.reloadRowForTypes([.Location])
     }
@@ -573,7 +583,10 @@ extension EditProfileViewController: LocationListDelegate {
 
 extension EditProfileViewController: ProfessionListDelegate {
     func finishProfessionSelection(selectedProfessions: Set<Profession>) {
+        guard selectedProfessions.subtract(self.selectedProfessions).count > 0 else { return }
+        
         self.selectedProfessions = selectedProfessions
+        self.saveButtonItem.enabled = true
         
         self.reloadRowForTypes([.Profession])
     }
