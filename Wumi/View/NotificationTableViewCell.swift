@@ -23,10 +23,10 @@ class NotificationTableViewCell: UITableViewCell {
         self.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         self.backgroundColor = UIColor.clearColor()
         self.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16)
-        self.contentLabel.textColor = UIColor.init(hexString: "#333435")
-        self.contentLabel.font = UIFont(name: ".SFUIText-Light", size: 16)
-        self.timeStampLabel.textColor = UIColor.init(hexString: "#A2A2A2")
-        self.timeStampLabel.font = UIFont(name: ".SFUIText-Regular", size: 14)
+        self.contentLabel.textColor = Constants.General.Color.TextColor
+        self.contentLabel.font = Constants.General.Font.InputFont
+        self.timeStampLabel.textColor = Constants.Post.Color.ListDetailText
+        self.timeStampLabel.font = Constants.Post.Font.ListTimeStamp
     }
     
 }

@@ -88,27 +88,27 @@ class NotificationTableViewController: UITableViewController {
        let cell = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell", forIndexPath: indexPath) as! NotificationTableViewCell
         
         let pushNotification = self.currentUser.pushNotificationsArray[indexPath.row]
-       
-        User.query().getObjectInBackgroundWithId(pushNotification.fromUser!.objectId){ (result, error) -> Void in
-            guard let user = result as? User where error == nil else { return }
-            let fromUserName = user.name!
-            Post.query().getObjectInBackgroundWithId(pushNotification.post!.objectId){
-                (result, error) -> Void in
-                guard let post = result as? Post where error == nil else { return }
-                
-                let postTitle  = post.title!
-                let postTitleAttrs = [NSFontAttributeName : UIFont.boldSystemFontOfSize(14)]
-                let postTitleBold = NSMutableAttributedString(string:postTitle, attributes:postTitleAttrs)
-                
-                
-                let pushMessageMiddle = pushNotification.isPostAuthor ? " replied to your post " : " replied to your saved post "
-                let pushMessage = NSMutableAttributedString(string:fromUserName + pushMessageMiddle)
-                pushMessage.appendAttributedString(postTitleBold)
-                
-                cell.contentLabel.attributedText = pushMessage;
-                
+        
+        if let fromUser = pushNotification.fromUser, fromUserName = fromUser.name, post = pushNotification.post {
+            
+            var postTitle: String
+            if let title = post.title where title.characters.count > 0 {
+                postTitle = title
             }
+            else {
+                postTitle = "No Title"
+            }
+            let postTitleAttrs = [NSFontAttributeName : UIFont.boldSystemFontOfSize(14)]
+            let postTitleBold = NSMutableAttributedString(string:postTitle, attributes:postTitleAttrs)
+            
+            
+            let pushMessageMiddle = pushNotification.isPostAuthor ? " replied to your post " : " replied to your saved post "
+            let pushMessage = NSMutableAttributedString(string:fromUserName + pushMessageMiddle)
+            pushMessage.appendAttributedString(postTitleBold)
+            
+            cell.contentLabel.attributedText = pushMessage
         }
+        
         let intervalSinceNow = pushNotification.createdAt.timeIntervalSinceNow
         // Display post date when the post is more than one day ago, otherwise display relative date.
         if (intervalSinceNow < -24*60*60)

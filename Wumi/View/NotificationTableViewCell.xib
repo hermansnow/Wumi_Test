@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,39 +12,39 @@
             <rect key="frame" x="0.0" y="0.0" width="699" height="95"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="699" height="94"/>
+                <frame key="frameInset" width="699" height="94"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="jgg-DG-8h9">
-                        <rect key="frame" x="28" y="15" width="643" height="49"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="jgg-DG-8h9">
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aby-bg-RXZ">
-                                <rect key="frame" x="0.0" y="0.0" width="643" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="42" id="kLN-bh-oiu"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Content Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aby-bg-RXZ">
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timestamp Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTL-iB-e5K">
-                                <rect key="frame" x="0.0" y="32" width="643" height="17"/>
                                 <edgeInsets key="layoutMargins" top="20" left="8" bottom="8" right="8"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="HTL-iB-e5K" firstAttribute="top" secondItem="Aby-bg-RXZ" secondAttribute="bottom" constant="12" id="nhR-Od-NfC"/>
+                            <constraint firstItem="HTL-iB-e5K" firstAttribute="leading" secondItem="jgg-DG-8h9" secondAttribute="leading" id="0Y6-7k-FVq"/>
+                            <constraint firstItem="Aby-bg-RXZ" firstAttribute="leading" secondItem="jgg-DG-8h9" secondAttribute="leading" id="8VT-5G-V0I"/>
+                            <constraint firstAttribute="bottom" secondItem="HTL-iB-e5K" secondAttribute="bottom" id="Aj5-dF-jTl"/>
+                            <constraint firstAttribute="trailing" secondItem="HTL-iB-e5K" secondAttribute="trailing" id="VfX-Lg-aWw"/>
+                            <constraint firstAttribute="trailing" secondItem="Aby-bg-RXZ" secondAttribute="trailing" id="iT5-oR-xHJ"/>
+                            <constraint firstItem="HTL-iB-e5K" firstAttribute="top" secondItem="Aby-bg-RXZ" secondAttribute="bottom" constant="6" id="nhR-Od-NfC"/>
+                            <constraint firstItem="Aby-bg-RXZ" firstAttribute="top" secondItem="jgg-DG-8h9" secondAttribute="top" id="pqj-uq-EBL"/>
                         </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="jgg-DG-8h9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="14" id="0qz-Lw-hIl"/>
-                    <constraint firstItem="jgg-DG-8h9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="LIa-Qz-XKK"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="jgg-DG-8h9" secondAttribute="bottom" constant="12" id="LU2-Ey-8vN"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="jgg-DG-8h9" secondAttribute="trailing" constant="20" id="Tac-dc-Nxv"/>
+                    <constraint firstItem="jgg-DG-8h9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="0qz-Lw-hIl"/>
+                    <constraint firstItem="jgg-DG-8h9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="16" id="LIa-Qz-XKK"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="jgg-DG-8h9" secondAttribute="bottom" constant="6" id="LU2-Ey-8vN"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="jgg-DG-8h9" secondAttribute="trailing" constant="16" id="Tac-dc-Nxv"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>

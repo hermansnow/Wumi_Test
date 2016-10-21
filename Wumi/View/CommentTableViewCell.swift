@@ -61,8 +61,7 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     private func setProperty() {
-        self.layer.borderColor = Constants.General.Color.LightBackgroundColor.CGColor
-        self.layer.backgroundColor = Constants.General.Color.LightBackgroundColor.CGColor
+        self.backgroundColor = Constants.General.Color.LightBackgroundColor
     }
     
     override func awakeFromNib() {

@@ -557,7 +557,7 @@ extension EditProfileViewController: UITextFieldDelegate {
             guard self.currentUser.phoneNumber != textField.text else { break }
             
             self.currentUser.phoneNumber = textField.text
-            self.saveButtonItem.enabled = true
+            
         default:
             break
         }

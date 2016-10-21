@@ -79,6 +79,9 @@ class PushNotification : AVObject, AVSubclassing  {
         // Sort results by
         query.orderByDescending("createdAt")
         
+        query.includeKey("fromUser.name")
+        query.includeKey("post.title")
+        
         query.whereKey("toUser", equalTo: user)
         
         query.cachePolicy = .NetworkElseCache
