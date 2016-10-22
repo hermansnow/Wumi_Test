@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    [self layoutIfNeeded];
     // Initialization code
     self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height / 2.0;
     self.avatarImageView.clipsToBounds = YES;
@@ -42,12 +43,11 @@
 - (void)setConversation:(AVIMConversation *)conversation
 {
     if (conversation.type == CDConversationTypeSingle) {
+        id <CDUserModelDelegate> user = [[CDChatManager manager].userDelegate getUserById:conversation.otherId];
         [self.operationQueue addOperationWithBlock:^{
-            id <CDUserModelDelegate> user = [[CDChatManager manager].userDelegate getUserById:conversation.otherId];
-            self.nameLabel.text = user.username;
             [self.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]];
         }];
-        
+        self.nameLabel.text = user.username;
     }
     else {
         [self.avatarImageView setImage:conversation.icon];
