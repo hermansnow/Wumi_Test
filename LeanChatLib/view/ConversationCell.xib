@@ -11,13 +11,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="foF-Y6-FPC" id="Seo-iO-AmS">
-                <frame key="frameInset" width="320" height="64.5"/>
+                <frame key="frameInset" width="320" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wt1-zG-iFt">
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="43x-vW-ZDq"/>
-                            <constraint firstAttribute="height" constant="30" id="pGb-JM-kJa"/>
+                            <constraint firstAttribute="width" constant="45" id="43x-vW-ZDq"/>
+                            <constraint firstAttribute="height" constant="45" id="pGb-JM-kJa"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qP-Cc-yei">
@@ -62,7 +62,7 @@
                     <constraint firstItem="3qP-Cc-yei" firstAttribute="leading" secondItem="p5X-fv-RFQ" secondAttribute="trailing" constant="10" id="gP2-yK-PwY"/>
                     <constraint firstItem="19C-Mz-ewz" firstAttribute="centerY" secondItem="Seo-iO-AmS" secondAttribute="centerY" id="hzt-44-lUl"/>
                     <constraint firstAttribute="trailing" secondItem="3qP-Cc-yei" secondAttribute="trailing" id="lGq-Df-o8O"/>
-                    <constraint firstItem="Wt1-zG-iFt" firstAttribute="top" secondItem="Seo-iO-AmS" secondAttribute="top" constant="14" id="m3D-dx-t1P"/>
+                    <constraint firstItem="Wt1-zG-iFt" firstAttribute="top" secondItem="Seo-iO-AmS" secondAttribute="top" constant="8" id="m3D-dx-t1P"/>
                     <constraint firstAttribute="bottom" secondItem="dL4-CE-bzF" secondAttribute="bottom" constant="12" id="q8a-Bb-88o"/>
                 </constraints>
             </tableViewCellContentView>
