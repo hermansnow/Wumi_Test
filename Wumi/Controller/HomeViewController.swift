@@ -171,7 +171,6 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.checkReachability()
-        self.checkNewPosts()
         
         if needResearch {
             self.loadPosts()
@@ -179,11 +178,16 @@ class HomeViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
         // Reset search type if there is no filter
         if self.searchType == .Filter && self.category == nil {
             self.searchType = self.previousType
             //self.addDropdownList(updateOnly: false)
         }
+        
+        // Check new post notification
+        self.showNewPostNotificationView()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -270,9 +274,8 @@ class HomeViewController: UIViewController {
     
     private func addNewPostNotificationView() {
         self.newPostNotificationView.backgroundColor = Constants.General.Color.ThemeColor
-        self.newPostLabel.textColor = UIColor.blueColor()
+        self.newPostLabel.textColor = UIColor.whiteColor()
         self.newPostLabel.font = Constants.Post.Font.ListCurrentUserBanner
-        self.newPostNotificationView.layer.cornerRadius = self.newPostNotificationView.frame.size.height / 2
         
         if let labelWidth = self.newPostLabel.text?.widthWithConstrainedHeight(20, font: self.newPostLabel.font) {
             let width = labelWidth + 24 + 12
@@ -293,7 +296,10 @@ class HomeViewController: UIViewController {
                            attribute: .CenterX,
                            multiplier: 1.0,
                            constant: 0).active = true
-        
+    }
+    
+    private func showNewPostNotificationView() {
+        self.newPostNotificationView.layer.cornerRadius = self.newPostNotificationView.frame.size.height / 2 // Issue in iOS 10, cornerRadisu does not work in ViewDidLoad, we should call it in viewDidAppear
         self.checkNewPosts()
     }
     
