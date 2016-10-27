@@ -252,6 +252,13 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         }
     }
     
+    // Save the user and fetch latest data after saving
+    func saveInBackgroundWithFetch(block: AVBooleanResultBlock!) {
+        let option = AVSaveOption()
+        option.fetchWhenSave = true
+        self.saveInBackgroundWithOption(option, block: block)
+    }
+    
     // Fetch if needed. This function will fetch user data from memory first, then from network if it is null
     override func fetchIfNeededInBackgroundWithBlock(block: AVObjectResultBlock!) {
         if self.isDataAvailable() {
@@ -387,10 +394,8 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     // MARK: Profession queries
     
     func updateProfessions(newProfessions: [Profession]) {
-        professions.removeAll()
-        professions.appendContentsOf(newProfessions)
-        
-        saveInBackground()
+        self.professions.removeAll()
+        self.professions.appendContentsOf(newProfessions)
     }
     
     // MARK: Saved post queries

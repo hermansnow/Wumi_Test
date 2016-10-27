@@ -92,9 +92,11 @@ class SignUpAccountViewController: ScrollTextFieldViewController {
     
     @IBAction func signUpUser(sender: AnyObject) {
         // Validate user inputs
+        self.showLoadingIndicator()
         self.user.validateUser { (valid, error) -> Void in
             guard valid else {
                 Helper.PopupErrorAlert(self, errorMessage: "Invalid user information: \(error)")
+                self.hideLoadingIndicator()
                 return
             }
             
@@ -102,6 +104,7 @@ class SignUpAccountViewController: ScrollTextFieldViewController {
             self.user.saveAvatarFile(self.newAvatarImage) { (saveImageSuccess, imageError) -> Void in
                 guard saveImageSuccess else {
                     Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
+                    self.hideLoadingIndicator()
                     return
                 }
                 
@@ -109,10 +112,11 @@ class SignUpAccountViewController: ScrollTextFieldViewController {
                 self.user.signUpInBackgroundWithBlock { (signUpSuccess, signUpError) -> Void in
                     guard signUpSuccess else {
                         Helper.PopupErrorAlert(self, errorMessage: "\(signUpError)")
+                        self.hideLoadingIndicator()
                         return
                     }
-                    
                     self.performSegueWithIdentifier("Add Profile", sender: self)
+                    self.hideLoadingIndicator()
                 }
             }
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostCategoryTableViewController: UITableViewController {
+class PostCategoryTableViewController: DataLoadingTableViewController {
     
     lazy var sendButton = UIBarButtonItem()
     
@@ -166,7 +166,9 @@ class PostCategoryTableViewController: UITableViewController {
             post.area = Area(name: name, latitude: latitude, longitude: longitude)
         }
         
+        self.showLoadingIndicator()
         post.saveInBackgroundWithBlock { (success, error) in
+            self.hideLoadingIndicator()
             guard success && error == nil else {
                 print("\(error)")
                 return

@@ -10,14 +10,14 @@ import UIKit
 import KIImagePager
 import TSMessages
 
-class PostViewController: UITableViewController {
+class PostViewController: DataLoadingTableViewController {
     
     var replyView: ReplyTextView!
     private lazy var replyButton = UIBarButtonItem()
     private lazy var cancelButton = UIBarButtonItem()
     private lazy var sendButton = UIBarButtonItem()
     private lazy var maskView = UIView()
-    private lazy var loadingView = LoadingIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    private lazy var commentLoadingView = LoadingIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     private lazy var emptyView = EmptyCommentView(frame: CGRect(x: 0, y: 0, width: 100, height: 20)) // Show header for empty data
     
     var delegate: PostViewControllerDelegate?
@@ -130,7 +130,7 @@ class PostViewController: UITableViewController {
         
         // Initialize mask view
         self.maskView.frame = self.view.frame
-        self.maskView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
+        self.maskView.backgroundColor = Constants.General.Color.LightMaskColor
         self.maskView.userInteractionEnabled = true
         self.maskView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.cancelReply(_:))))
     }
@@ -168,10 +168,10 @@ class PostViewController: UITableViewController {
         case 0:
             return nil
         case 1:
-            if self.comments == nil && self.loadingView.animating {
-                self.loadingView.frame.origin = CGPoint(x: self.tableView.frame.size.width / 2 - 10, y: 20) // Show loading view
+            if self.comments == nil && self.commentLoadingView.animating {
+                self.commentLoadingView.frame.origin = CGPoint(x: self.tableView.frame.size.width / 2 - 10, y: 20) // Show loading view
                 let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: 60))
-                headerView.addSubview(self.loadingView)
+                headerView.addSubview(self.commentLoadingView)
                 return headerView
             }
             else if self.comments != nil && self.comments!.count == 0 {
@@ -191,7 +191,7 @@ class PostViewController: UITableViewController {
         case 0:
             return 0
         case 1:
-            if self.comments == nil && self.loadingView.animating {
+            if self.comments == nil && self.commentLoadingView.animating {
                 return 60
             }
             else if self.comments != nil && self.comments!.count == 0 {
@@ -399,40 +399,45 @@ class PostViewController: UITableViewController {
             return
         }
         
-        self.replyView.removeFromSuperview()
-        
-        self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
-        self.navigationItem.rightBarButtonItem = self.replyButton
-        
         guard let post = self.post else { return }
         
-        Comment.sendNewCommentForPost(post, author: self.currentUser, content: self.replyView.commentTextView.text, replyComment: replyComment) { (success, error) -> Void in
+        self.showLoadingIndicator()
+        Comment.sendNewCommentForPost(post, author: self.currentUser, content: self.replyView.commentTextView.text, replyComment: replyComment) { (success, error) in
+            self.hideLoadingIndicator()
             guard success && error == nil else {
-                print("\(error)")
+                Helper.PopupErrorAlert(self, errorMessage: "\(error != nil ? error.description : "Unknown issue")") { (action) -> Void in
+                    self.replyView.commentTextView.becomeFirstResponder()
+                }
                 return
             }
             
+            // Hide reply frame
+            self.replyView.removeFromSuperview()
+            self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
+            self.navigationItem.rightBarButtonItem = self.replyButton
+            
+            // Update comments list data
             self.postCell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
             self.loadComments()
-        }
-        
-        // send push notification to users that saved this post 
-        post.loadFavoriteUsers { (results, error) in
-            guard let users = results as? [User] where error == nil else { return }
             
-            for user in users
-            {
-                if(!(user == self.currentUser))
+            // Send push notification to users that saved this post
+            post.loadFavoriteUsers { (results, error) in
+                guard let users = results as? [User] where error == nil else { return }
+                
+                for user in users
                 {
-                    PushNotification(fromUser: self.currentUser, toUser: user, post: post, isPostAuthor: false).sendPushForPost(self)
+                    if(!(user == self.currentUser))
+                    {
+                        PushNotification(fromUser: self.currentUser, toUser: user, post: post, isPostAuthor: false).sendPushForPost(self)
+                    }
                 }
             }
+            
+            // Send push notification to the author of this post
+            guard let toUser = post.author else { return }
+            if(toUser == self.currentUser) {return}
+            PushNotification(fromUser: self.currentUser, toUser: toUser, post: post, isPostAuthor: true).sendPushForPost(self)
         }
-        
-        // send push notification to the author of this post
-        guard let toUser = post.author else { return }
-        if(toUser == self.currentUser) {return}
-        PushNotification(fromUser: self.currentUser, toUser: toUser, post: post, isPostAuthor: true).sendPushForPost(self)
     }
     
     func showUserContact(recognizer: UITapGestureRecognizer) {
@@ -484,7 +489,7 @@ class PostViewController: UITableViewController {
         guard let post = self.post else { return }
         
         self.comments = nil
-        self.loadingView.startAnimating()
+        self.commentLoadingView.startAnimating()
         UIView.performWithoutAnimation { () -> Void in
             self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
         }
@@ -494,14 +499,14 @@ class PostViewController: UITableViewController {
             
             guard let comments = results as? [Comment] else {
                 self.comments = [Comment]()
-                self.loadingView.stopAnimating()
+                self.commentLoadingView.stopAnimating()
                 return
             }
             
             self.comments = comments
             
             // Stop loading view
-            self.loadingView.stopAnimating()
+            self.commentLoadingView.stopAnimating()
             
             // Disable animation for displaying comment list
             UIView.performWithoutAnimation { () -> Void in

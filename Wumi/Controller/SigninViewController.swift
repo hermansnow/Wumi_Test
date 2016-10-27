@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SigninViewController: UIViewController {
+class SigninViewController: DataLoadingViewController {
     
     @IBOutlet weak var logoView: UIView!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -106,17 +106,20 @@ class SigninViewController: UIViewController {
     @IBAction func SignIn(sender: AnyObject) {
         guard let userName = usernameTextField.text, userPassword = passwordTextField.text else { return }
         
+        self.showLoadingIndicator()
         User.logInWithUsernameInBackground(userName, password: userPassword) { (result, error) -> Void in
             guard let _ = result as? User else {
                 self.passwordTextField.errorText = Constants.SignIn.String.ErrorMessages.incorrectPassword
                 self.passwordTextField.actionHolder = self.forgotPasswordButton
                 self.forgotPasswordButton.hidden = false
+                self.hideLoadingIndicator()
                 return
             }
             CDChatManager.sharedManager().openWithClientId(User.currentUser().objectId, callback: { (result: Bool, error: NSError!) -> Void in
                 if (error == nil) {
                     self.performSegueWithIdentifier("Launch Main View", sender: self)
                 }
+                self.hideLoadingIndicator()
             })
         }
     }

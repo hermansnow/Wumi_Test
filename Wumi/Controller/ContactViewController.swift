@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class ContactViewController: UIViewController {
+class ContactViewController: DataLoadingViewController {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var maskView: UIView!
@@ -163,7 +163,9 @@ class ContactViewController: UIViewController {
         guard let selectedUserId = self.selectedUserId else { return }
         
         // Fetch user data
+        self.showLoadingIndicator()
         User.fetchUserInBackground(objectId: selectedUserId) { (result, error) -> Void in
+            self.hideLoadingIndicator()
             guard let user = result as? User where error == nil else {
                 print("\(error)")
                 return

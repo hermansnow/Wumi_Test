@@ -406,6 +406,8 @@
 		DFB220B11DAD8FE5008FB503 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220AF1DAD8FE5008FB503 /* Setting.storyboard */; };
 		DFB220B31DAF2409008FB503 /* search_areas.plist in Resources */ = {isa = PBXBuildFile; fileRef = DFB220B21DAF2409008FB503 /* search_areas.plist */; };
 		DFB220B51DAF2C49008FB503 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB220B41DAF2C49008FB503 /* Area.swift */; };
+		DFB220B71DC1ECE7008FB503 /* DataLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB220B61DC1ECE7008FB503 /* DataLoadingViewController.swift */; };
+		DFB220B91DC1F070008FB503 /* DataLoadingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB220B81DC1F070008FB503 /* DataLoadingTableViewController.swift */; };
 		DFB2507A1CAB9C9800413D52 /* PostCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB250791CAB9C9800413D52 /* PostCategory.swift */; };
 		DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB612941CA2637600B3271B /* UserBannerView.swift */; };
 		DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */; };
@@ -965,6 +967,8 @@
 		DFB220B01DAD8FE5008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Setting.storyboard; sourceTree = SOURCE_ROOT; };
 		DFB220B21DAF2409008FB503 /* search_areas.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = search_areas.plist; sourceTree = "<group>"; };
 		DFB220B41DAF2C49008FB503 /* Area.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Area.swift; path = Model/Area.swift; sourceTree = "<group>"; };
+		DFB220B61DC1ECE7008FB503 /* DataLoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataLoadingViewController.swift; path = Controller/DataLoadingViewController.swift; sourceTree = "<group>"; };
+		DFB220B81DC1F070008FB503 /* DataLoadingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataLoadingTableViewController.swift; path = Controller/DataLoadingTableViewController.swift; sourceTree = "<group>"; };
 		DFB250791CAB9C9800413D52 /* PostCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCategory.swift; path = Model/PostCategory.swift; sourceTree = "<group>"; };
 		DFB612941CA2637600B3271B /* UserBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserBannerView.swift; path = View/UserBannerView.swift; sourceTree = "<group>"; };
 		DFB6129E1CA5078E00B3271B /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = Controller/NewPostViewController.swift; sourceTree = "<group>"; };
@@ -1952,7 +1956,10 @@
 			isa = PBXGroup;
 			children = (
 				DF4F53291CCD9067009F3D2E /* PIKA */,
+				DFB220B61DC1ECE7008FB503 /* DataLoadingViewController.swift */,
+				DFB220B81DC1F070008FB503 /* DataLoadingTableViewController.swift */,
 				DFACE24F1C578F6D00C6D737 /* SelectPhotoActionSheet.swift */,
+				DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */,
 				DF16E03E1D1D02DC00F4C4FC /* ImagePageItemViewController.swift */,
 				DF16E0441D25B84700F4C4FC /* ImageFullScreenViewController.swift */,
 				DF0180891D4C8E2B00935A60 /* WebFullScreenViewController.swift */,
@@ -2181,7 +2188,6 @@
 		DFB4152B1C1E706F00835EFE /* SignIn/SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				DFB861451BEDBA7E0075014A /* ScrollTextFieldViewController.swift */,
 				DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */,
 				DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */,
 				DFBD2D3D1BEC626800D6FEBC /* SignUpAccountViewController.swift */,
@@ -2764,7 +2770,9 @@
 				B1ECD79E1CCC1F4000CED9C4 /* XHMessageTextView.m in Sources */,
 				B1ECD75B1CCC1F3F00CED9C4 /* XHAudioPlayerHelper.m in Sources */,
 				B1ECD79D1CCC1F4000CED9C4 /* XHMessageInputView.m in Sources */,
+				DFB220B91DC1F070008FB503 /* DataLoadingTableViewController.swift in Sources */,
 				B1ECD74C1CCC1F3F00CED9C4 /* LZConversationCell.m in Sources */,
+				DFB220B71DC1ECE7008FB503 /* DataLoadingViewController.swift in Sources */,
 				B1ECD77A1CCC1F4000CED9C4 /* XHMessage.m in Sources */,
 				DF5EF15D1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift in Sources */,
 				DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */,

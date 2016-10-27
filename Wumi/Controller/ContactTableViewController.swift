@@ -10,7 +10,7 @@ import UIKit
 import MessageUI
 import BTNavigationDropdownMenu
 
-class ContactTableViewController: UITableViewController {
+class ContactTableViewController: DataLoadingTableViewController {
     
     var resultSearchController = UISearchController(searchResultsController: nil)
     
@@ -226,9 +226,11 @@ class ContactTableViewController: UITableViewController {
     
     // MARK: Data handlers
     func loadUsers() {
+        self.showLoadingIndicator()
         self.currentUser.loadUsers(limit: Constants.Query.LoadUserLimit,
                                     type: self.searchType,
                             searchString: self.searchString) { (results, error) -> Void in
+                                self.hideLoadingIndicator()
                                 guard let users = results as? [User] where error == nil else { return }
                 
                                 self.displayUsers = users
@@ -244,10 +246,12 @@ class ContactTableViewController: UITableViewController {
     
     // Load more users based on filters
     func loadMoreUsers() {
+        self.showLoadingIndicator()
         self.currentUser.loadUsers(limit: Constants.Query.LoadUserLimit,
                                     type: self.searchType,
                             searchString: self.searchString,
                                sinceUser: self.displayUsers.last) { (results, error) -> Void in
+                                self.hideLoadingIndicator()
                                 guard let users = results as? [User] where error == nil && users.count > 0 else { return }
                                 
                                 self.displayUsers.appendContentsOf(users)

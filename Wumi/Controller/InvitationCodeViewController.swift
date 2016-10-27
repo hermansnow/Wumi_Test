@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InvitationCodeViewController: UIViewController {
+class InvitationCodeViewController: DataLoadingViewController {
     
     @IBOutlet weak var logoView: UIView!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -94,7 +94,11 @@ class InvitationCodeViewController: UIViewController {
     
     @IBAction func verifyCode(sender: AnyObject) {
         invitationCode.invitationCode = invitationCodeTextField.text
+        
+        // Verify the codes
+        self.showLoadingIndicator()
         invitationCode.verifyCodeWhithBlock({ (verified) -> Void in
+            self.hideLoadingIndicator()
             if !verified {
                 self.invitationCodeTextField.errorText = Constants.InvitationCode.String.ErrorMessages.incorrenctInvitationCode
             }

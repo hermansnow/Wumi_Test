@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class EditProfileViewController: UIViewController {
+class EditProfileViewController: DataLoadingViewController {
 
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var maskView: UIView!
@@ -101,7 +101,7 @@ class EditProfileViewController: UIViewController {
                                                          object: nil)
 
         // Fetch user data. We will refetch current user to guarantee to show latest data
-        self.displayUserData()
+        self.loadUserData()
     }
     
     deinit {
@@ -190,9 +190,17 @@ class EditProfileViewController: UIViewController {
         self.view.endEditing(true)
         
         // Save user changes
-        self.saveUserData()
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.showLoadingIndicator()
+        self.currentUser.updateProfessions(Array(selectedProfessions))
+        self.currentUser.saveInBackgroundWithFetch { (success, error) in
+            self.hideLoadingIndicator()
+            guard success else {
+                Helper.PopupErrorAlert(self, errorMessage: "Save Error: " + error.description)
+                return
+            }
+            self.displayUserBanner() // Repaint user banner for new data
+            self.saveButtonItem.enabled = false
+        }
     }
     
     // Action when click the add button on location cell
@@ -227,14 +235,16 @@ class EditProfileViewController: UIViewController {
 
     // MARK: Help functions
     
-    private func displayUserData() {
-        // Fetch user data
+    // Fetch user data
+    private func loadUserData() {
+        self.showLoadingIndicator()
         self.currentUser.fetchInBackgroundWithBlock() { (result, error) -> Void in
+            self.hideLoadingIndicator() // Hide general loading indicator once we receive the response from server
             guard let _ = result as? User where error == nil else {
                 return
             }
             
-            self.locationLabel.text = "\(self.currentUser.location)"
+            self.displayUserBanner()
             
             self.currentUser.loadAvatar() { (image, error) -> Void in
                 guard error == nil else {
@@ -242,16 +252,6 @@ class EditProfileViewController: UIViewController {
                     return
                 }
                 self.profileImageView.image = image
-            }
-            
-            self.nameLabel.text = self.currentUser.name
-            
-            let graduationText = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
-            if graduationText.characters.count > 0 {
-                self.graduationYearLabel.text = "(" + graduationText + ")"
-            }
-            else {
-                self.graduationYearLabel.text = graduationText
             }
             
             // Load professions
@@ -270,19 +270,17 @@ class EditProfileViewController: UIViewController {
         }
     }
     
-    private func saveUserData() {
-        self.currentUser.updateProfessions(Array(selectedProfessions))
-        
-        let option = AVSaveOption()
-        option.fetchWhenSave = true
-        
-        self.currentUser.saveInBackgroundWithOption(option) { (success, error) -> Void in
-            guard success else {
-                print("\(error)")
-                // Fetch correct user data
-                self.currentUser.fetchInBackgroundWithBlock(nil)
-                return
-            }
+    private func displayUserBanner() {
+        self.locationLabel.text = "\(self.currentUser.location)"
+            
+        self.nameLabel.text = self.currentUser.name
+            
+        let graduationText = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
+        if graduationText.characters.count > 0 {
+            self.graduationYearLabel.text = "(" + graduationText + ")"
+        }
+        else {
+            self.graduationYearLabel.text = graduationText
         }
     }
     

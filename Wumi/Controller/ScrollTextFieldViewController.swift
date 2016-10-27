@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScrollTextFieldViewController: UIViewController {
+class ScrollTextFieldViewController: DataLoadingViewController {
     
     @IBOutlet weak var formScrollView: UIScrollView!
     
