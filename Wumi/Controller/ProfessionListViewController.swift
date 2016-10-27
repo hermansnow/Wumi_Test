@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import NHAlignmentFlowLayout
+import UICollectionViewLeftAlignedLayout
 
 class ProfessionListViewController: UIViewController {
 
@@ -52,9 +52,7 @@ class ProfessionListViewController: UIViewController {
         self.headerView.backgroundColor = Constants.General.Color.LightBackgroundColor
         
         // Initializde collection view
-        let flowLayout = NHAlignmentFlowLayout ()
-        flowLayout.scrollDirection = .Vertical
-        flowLayout.alignment = .TopLeftAligned
+        let flowLayout = UICollectionViewLeftAlignedLayout()
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         self.professionCollectionView.collectionViewLayout = flowLayout
         self.professionCollectionView.backgroundColor = UIColor.whiteColor()

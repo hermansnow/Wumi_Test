@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import NHAlignmentFlowLayout
+import UICollectionViewLeftAlignedLayout
 
 class ProfileListTableCell: ProfileTableCell {
 
@@ -20,9 +20,7 @@ class ProfileListTableCell: ProfileTableCell {
         super.awakeFromNib()
         
         // Initialize the collection's layout - left alignment flow layout
-        let flowLayout = NHAlignmentFlowLayout()
-        flowLayout.alignment = .TopLeftAligned
-        flowLayout.scrollDirection = .Vertical
+        let flowLayout = UICollectionViewLeftAlignedLayout()
         self.collectionView.collectionViewLayout = flowLayout
         self.collectionView.scrollEnabled = false
         

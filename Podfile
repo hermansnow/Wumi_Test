@@ -6,7 +6,7 @@ target 'Wumi' do
 
     pod 'AFNetworking', '~> 3.0.4'
     
-    pod 'NHAlignmentFlowLayout'
+    pod 'UICollectionViewLeftAlignedLayout'
     
     pod 'BTNavigationDropdownMenu', :git => 'https://github.com/PhamBaTho/BTNavigationDropdownMenu.git', :branch => 'swift-2.3'
 

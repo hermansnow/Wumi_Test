@@ -238,14 +238,26 @@ class EditProfileViewController: DataLoadingViewController {
     // Fetch user data
     private func loadUserData() {
         self.showLoadingIndicator()
-        self.currentUser.fetchInBackgroundWithBlock() { (result, error) -> Void in
-            self.hideLoadingIndicator() // Hide general loading indicator once we receive the response from server
+        self.currentUser.fetchInBackgroundWithBlock() { (result, error) in
             guard let _ = result as? User where error == nil else {
                 return
             }
             
             self.displayUserBanner()
             
+            // Load professions
+            Profession.fetchAllInBackground(self.currentUser.professions) { (results, error) -> Void in
+                self.hideLoadingIndicator() // Hide general loading indicator once we receive the response from server
+                guard let selectedProfessions = results as? [Profession] where error == nil else { return }
+                
+                for selectedProfession in selectedProfessions {
+                    self.selectedProfessions.insert(selectedProfession)
+                }
+                
+                self.tableView.reloadData()
+            }
+            
+            // Load profile image asynchronously
             self.currentUser.loadAvatar() { (image, error) -> Void in
                 guard error == nil else {
                     print("\(error)")
@@ -253,20 +265,6 @@ class EditProfileViewController: DataLoadingViewController {
                 }
                 self.profileImageView.image = image
             }
-            
-            // Load professions
-            Profession.fetchAllInBackground(self.currentUser.professions) { (results, error) -> Void in
-                guard let selectedProfessions = results as? [Profession] where error == nil else { return }
-                
-                for selectedProfession in selectedProfessions {
-                    self.selectedProfessions.insert(selectedProfession)
-                }
-                
-                self.reloadRowForTypes([.Profession])
-            }
-            
-            // Reload specific rows
-            self.reloadRowForTypes([.Name, .GraduationYear, .Email, .Phone])
         }
     }
     

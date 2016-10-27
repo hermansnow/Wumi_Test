@@ -235,6 +235,24 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         }
     }
     
+    // Fetch if needed. This function will fetch user data from memory first, then from network if it is null
+    override func fetchIfNeededInBackgroundWithBlock(block: AVObjectResultBlock!) {
+        if self.isDataAvailable() {
+            block(self, nil)
+            return
+        }
+        
+        // Try fetch data from memory by objectId
+        if let user = DataManager.sharedDataManager.cache["user_" + self.objectId] as? User {
+            print("Found \(user.name) in memory cache")
+            block(user, nil)
+            return
+        }
+        
+        // Try fetch data from
+        User.fetchUserInBackground(objectId: self.objectId, block: block)
+    }
+    
     // Fetch an user based on object ID
     class func fetchUserInBackground(objectId id: String, block: AVObjectResultBlock!) {
         let query = User.query()
@@ -257,24 +275,6 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         let option = AVSaveOption()
         option.fetchWhenSave = true
         self.saveInBackgroundWithOption(option, block: block)
-    }
-    
-    // Fetch if needed. This function will fetch user data from memory first, then from network if it is null
-    override func fetchIfNeededInBackgroundWithBlock(block: AVObjectResultBlock!) {
-        if self.isDataAvailable() {
-            block(self, nil)
-            return
-        }
-        
-        // Try fetch data from memory by objectId
-        if let user = DataManager.sharedDataManager.cache["user_" + self.objectId] as? User {
-            print("Found \(user.name) in memory cache")
-            block(user, nil)
-            return
-        }
-        
-        // Try fetch data from
-        User.fetchUserInBackground(objectId: self.objectId, block: block)
     }
     
     // Cache a user data into local memory
