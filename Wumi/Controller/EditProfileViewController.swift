@@ -48,7 +48,7 @@ class EditProfileViewController: DataLoadingViewController {
         self.saveButtonItem.enabled = false
         
         // Initialize the tableview
-        self.tableView.estimatedRowHeight = 100
+        self.tableView.estimatedRowHeight = 60
         self.tableView.rowHeight = UITableViewAutomaticDimension // self-size table view cell
         self.tableView.separatorStyle = .None
         self.tableView.backgroundColor = Constants.General.Color.BackgroundColor
@@ -99,7 +99,6 @@ class EditProfileViewController: DataLoadingViewController {
                                                          selector: #selector(self.reachabilityChanged(_:)),
                                                          name: Constants.General.ReachabilityChangedNotification,
                                                          object: nil)
-
         // Fetch user data. We will refetch current user to guarantee to show latest data
         self.loadUserData()
     }
@@ -254,7 +253,7 @@ class EditProfileViewController: DataLoadingViewController {
                     self.selectedProfessions.insert(selectedProfession)
                 }
                 
-                self.tableView.reloadData()
+                self.reloadRowForTypes([.Profession])
             }
             
             // Load profile image asynchronously
@@ -265,6 +264,9 @@ class EditProfileViewController: DataLoadingViewController {
                 }
                 self.profileImageView.image = image
             }
+            
+            // Reload other cells
+            self.reloadRowForTypes([.Name, .GraduationYear, .Location, .Email, .Phone])
         }
     }
     
