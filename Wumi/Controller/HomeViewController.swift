@@ -23,6 +23,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var newPostNotificationView: UIView!
     @IBOutlet weak var newPostLabel: UILabel!
     
+    private var resultSearchController: UISearchController!
+    
     // Navigation bar items
     private var refreshControl = UIRefreshControl()
     private var searchButton = UIBarButtonItem()
@@ -33,9 +35,7 @@ class HomeViewController: UIViewController {
     private var tableTop: NSLayoutConstraint?
     private var userBannerBottom: NSLayoutConstraint?
     
-    var resultSearchController: UISearchController!
-    
-    var currentUser = User.currentUser()
+    private var currentUser = User.currentUser()
     
     // Post arrays
     private lazy var posts = [Post]()
@@ -188,6 +188,11 @@ class HomeViewController: UIViewController {
         
         // Check new post notification
         self.showNewPostNotificationView()
+        
+        // Check launch data
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate, postId = appDelegate.launchPostId {
+            self.showPost(postId)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -316,11 +321,10 @@ class HomeViewController: UIViewController {
                     postVC.post = selectedPost
                     self.selectedPostIndexPath = indexPath
             }
-            if let notification = sender as? NSNotification,
-                postId = notification.object as? String {
-                    let post = Post()
-                    post.objectId = postId
-                    postVC.post = post
+            if let postId = sender as? String {
+                let post = Post()
+                post.objectId = postId
+                postVC.post = post
             }
             if let button = sender as? ReplyButton {
                 let buttonPosition = button.convertPoint(CGPointZero, toView: self.postTableView)
@@ -384,7 +388,10 @@ class HomeViewController: UIViewController {
     
     func showPost(sender: AnyObject) {
         if let notification = sender as? NSNotification, postId = notification.object as? String where Post.findPost(objectId: postId) {
-            self.performSegueWithIdentifier("Show Post", sender: sender)
+            self.performSegueWithIdentifier("Show Post", sender: postId)
+        }
+        if let postId = sender as? String where Post.findPost(objectId: postId) {
+            self.performSegueWithIdentifier("Show Post", sender: postId)
         }
     }
     
@@ -573,11 +580,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             post.loadExternalUrlContentWithBlock(requirePreviewImage: true) { (foundUrl) in
                 guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell else { return }
                 
-                if !foundUrl {
-                    cell.content = post.attributedContent
-                    return
-                }
-                else {
+                cell.content = post.attributedContent
+                
+                // Reload cell if text changed
+                if foundUrl {
                     self.postTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 }
             }

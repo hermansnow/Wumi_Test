@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var reachability: Reachability?
+    var launchPostId: String?
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -35,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Register classes
         self.registerClass()
         
-        // Set up appearanceı∫∫
+        // Set up appearance
         self.setupAppearance()
         
         // Set up AVOSCloud
@@ -51,7 +52,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CDChatManager.sharedManager().userDelegate = IMUserFactory()
 
         // Set up intial launch vc
-        self.setupLaunchViewController()
+        self.setupLaunchViewController(launchOptions)
+        
+        // Check launch URL
+        if let options = launchOptions, url = options[UIApplicationLaunchOptionsURLKey] as? NSURL {
+            WXApi.handleOpenURL(url, delegate: self)
+            WeiboSDK.handleOpenURL(url, delegate: self)
+            handleUrlQuery(url)
+            
+            FBSDKApplicationDelegate.sharedInstance().application(application,
+                                                                  openURL: url,
+                                                                  sourceApplication: nil,
+                                                                  annotation: nil)
+        }
         
         return true
     }
@@ -84,9 +97,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         currentInstallation.saveInBackground()
     }
     
+    // Handle custom scheme and URL
     func application(application: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         WXApi.handleOpenURL(url, delegate: self)
         WeiboSDK.handleOpenURL(url, delegate: self)
+        handleUrlQuery(url)
         
         return true
     }
@@ -94,6 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         WXApi.handleOpenURL(url, delegate: self)
         WeiboSDK.handleOpenURL(url, delegate: self)
+        handleUrlQuery(url)
         
         FBSDKApplicationDelegate.sharedInstance().application(application,
                                                               openURL: url,
@@ -103,10 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    // Handle custom scheme and URL
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-        WXApi.handleOpenURL(url, delegate: self)
-        WeiboSDK.handleOpenURL(url, delegate: self)
         handleUrlQuery(url)
         
         return true
@@ -136,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if command.lowercaseString == "p" {
                 NSNotificationCenter.defaultCenter().postNotificationName(Constants.General.CustomURLIdentifier, object:value)
-                
+                self.launchPostId = value
                 return true
             }
         }
@@ -185,15 +198,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Set up the initial launch view controller
-    private func setupLaunchViewController() {
+    private func setupLaunchViewController(launchOptions: [NSObject: AnyObject]?) {
         if let user = User.currentUser() {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            self.window?.rootViewController = storyboard.instantiateInitialViewController()
+            
+            // Open chat manager
             CDChatManager.sharedManager().openWithClientId(user.objectId, callback: { (result: Bool, error: NSError!) -> Void in
                 if (error == nil) {
                     user.fetchInBackgroundWithBlock(nil)
                 }
             })
-            self.window?.rootViewController = storyboard.instantiateInitialViewController()
         }
         else {
             let storyboard = UIStoryboard(name: "Signup", bundle: nil)
