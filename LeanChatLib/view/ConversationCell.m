@@ -18,7 +18,7 @@
     self.avatarImageView.clipsToBounds = YES;
     self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.litteBadgeView.hidden = YES;
-    _badgeView = [[JSBadgeView alloc]initWithParentView:self.timestampLabel alignment:JSBadgeViewAlignmentBottomCenter];
+    _badgeView = [[JSBadgeView alloc]initWithParentView:self.avatarImageView alignment:JSBadgeViewAlignmentTopRight];
     
     _operationQueue = [[NSOperationQueue alloc]init];
 }
@@ -63,6 +63,7 @@
         } else {
             self.badgeView.badgeText = [NSString stringWithFormat:@"%ld", conversation.unreadCount];
         }
+        self.litteBadgeView.hidden = NO;
     }
     
 }
