@@ -10,7 +10,11 @@ import UIKit
 
 class ButtomBorderView: UIView {
     
-    var borderColor: UIColor = Constants.General.Color.LightBorderColor
+    var borderColor: UIColor = Constants.General.Color.LightBorderColor {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
 
     override func drawRect(rect: CGRect) {
         // Drawing code

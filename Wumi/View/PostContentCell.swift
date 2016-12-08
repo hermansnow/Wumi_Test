@@ -96,6 +96,12 @@ class PostContentCell: UITableViewCell {
         }
     }
     
+    var buttomBorderColor: UIColor = Constants.General.Color.LightBorderColor {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
+    
     var delegate: protocol<UITextViewDelegate, KIImagePagerDelegate, KIImagePagerDataSource, FavoriteButtonDelegate, ReplyButtonDelegate, MoreButtonDelegate>? {
         didSet {
             self.contentTextView.delegate = self.delegate
@@ -148,6 +154,15 @@ class PostContentCell: UITableViewCell {
         self.replyLabel.textColor = Constants.General.Color.ThemeColor
         self.repliesButton.titleLabel?.font = Constants.Post.Font.ListReply
         self.repliesButton.titleLabel?.textColor = Constants.General.Color.ThemeColor
+    }
+    
+    override func drawRect(rect: CGRect) {
+        let buttomLayer = CALayer()
+        buttomLayer.backgroundColor = self.buttomBorderColor.CGColor
+        buttomLayer.frame = CGRect(x: 0, y: rect.height - 1, width: rect.width, height: 1)
+        self.layer.addSublayer(buttomLayer)
+        
+        super.drawRect(rect)
     }
     
     // MARK: Help functions
