@@ -436,6 +436,7 @@
 		DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF712BC1CD7060100EAEFD2 /* ProfileLabelTableCell.swift */; };
 		DFF712BF1CD7076400EAEFD2 /* ProfileLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */; };
 		DFF712C01CD70B4A00EAEFD2 /* ProfileListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93ACC1C910C4C00ECA503 /* ProfileListTableCell.xib */; };
+		FF51601E1DF9FE2D00AD872B /* ButtomBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -998,6 +999,7 @@
 		DFF712BC1CD7060100EAEFD2 /* ProfileLabelTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileLabelTableCell.swift; path = View/ProfileLabelTableCell.swift; sourceTree = "<group>"; };
 		DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileLabelTableCell.xib; path = View/ProfileLabelTableCell.xib; sourceTree = "<group>"; };
 		EF924A8F3A88FA9716BF6670 /* Pods-Wumi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.release.xcconfig"; sourceTree = "<group>"; };
+		FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtomBorderView.swift; path = View/ButtomBorderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2112,6 +2114,7 @@
 				DF5EF15C1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift */,
 				DF01807B1D459E4A00935A60 /* ReplyTextView.xib */,
 				DF01807D1D459E6100935A60 /* ReplyTextView.swift */,
+				FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2212,7 +2215,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Wumi" */;
 			buildPhases = (
-				E78E386236CAF0915DED5443 /* Check Pods Manifest.lock */,
+				E78E386236CAF0915DED5443 /* [CP] Check Pods Manifest.lock */,
 				CD887128FF1D95015B29D92C /* [CP] Check Pods Manifest.lock */,
 				81BA81411A49DA1800E65899 /* Sources */,
 				81BA81421A49DA1800E65899 /* Frameworks */,
@@ -2564,19 +2567,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wumi/Pods-Wumi-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E78E386236CAF0915DED5443 /* Check Pods Manifest.lock */ = {
+		E78E386236CAF0915DED5443 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2625,6 +2628,7 @@
 				DF01807A1D413C5E00935A60 /* ReplyButton.swift in Sources */,
 				DF5AECA81D6434E800FB4B84 /* Extension+UITextView.swift in Sources */,
 				DF0180841D4882BF00935A60 /* LoadingIndicatorView.swift in Sources */,
+				FF51601E1DF9FE2D00AD872B /* ButtomBorderView.swift in Sources */,
 				DFBD2D411BEC671200D6FEBC /* InvitationCode.swift in Sources */,
 				DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */,
 				DFBD2D431BEC7DF400D6FEBC /* AddProfileViewController.swift in Sources */,

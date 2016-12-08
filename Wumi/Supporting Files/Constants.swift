@@ -24,6 +24,7 @@ struct Constants {
             static let ThemeColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1.0)
             static let TextColor = UIColor(red: 51/255, green: 52/255, blue: 53/255, alpha: 1.0)
             static let BorderColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+            static let LightBorderColor = UIColor(hexString: "#a8a8a8")
             static let ErrorColor = UIColor(red: 241/255, green: 81/255, blue: 43/255, alpha: 1)
             static let LightBackgroundColor = UIColor(red: 240/255, green: 241/255, blue: 242/255, alpha: 1.0)
             static let ProfileTitleColor = UIColor(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
