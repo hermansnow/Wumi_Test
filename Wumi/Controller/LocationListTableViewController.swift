@@ -14,7 +14,7 @@ class LocationListTableViewController: UITableViewController {
     
     var locationDelegate: LocationListDelegate?
     
-    lazy var countryList = [String]()
+    lazy var countryList = [String: String]()
     var selectedLocation: Location?
     lazy var locationManager = CLLocationManager()
     var isLocating = false
@@ -165,9 +165,9 @@ class LocationListTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let stateListTableViewController = segue.destinationViewController as? StateListTableViewController where segue.identifier == "Select State" {
             guard let index = self.tableView.indexPathForSelectedRow else { return }
-            guard let sectionArray = self.sections[safe: index.section], countryName = sectionArray[safe: index.row] else { return }
+            guard let sectionArray = self.sections[safe: index.section], countryName = sectionArray[safe: index.row], countryCode = self.countryList[countryName] else { return }
             stateListTableViewController.countryName = countryName
-            stateListTableViewController.stateDict = cityData[countryName]!
+            stateListTableViewController.stateDict = cityData[countryCode]!
             
             stateListTableViewController.locationDelegate = self.locationDelegate
             stateListTableViewController.selectedLocation = self.selectedLocation
@@ -204,32 +204,32 @@ class LocationListTableViewController: UITableViewController {
     }
     
     private func loadCountries() -> Void {
-        var countryList = [String]()
         
-//        for countryCode in NSLocale.ISOCountryCodes() {
-//            if let countryName = NSLocale.currentLocale().displayNameForKey(NSLocaleCountryCode, value: countryCode) {
-//                countryList.append(countryName)
-//            }
-//        }
-//        countryList.sortInPlace()
-
-        guard let plistPath = NSBundle.mainBundle().pathForResource("country_state_city", ofType: "plist") else { return }
-        cityData = NSDictionary.init(contentsOfFile: plistPath) as! [String: [String: [String]]]
-        countryList = Array(cityData.keys)
-        countryList.sortInPlace()
+        guard let plistPath = NSBundle.mainBundle().pathForResource("country_state_city", ofType: "plist"), cityData = NSDictionary(contentsOfFile: plistPath) as? [String: [String: [String]]] else { return }
         
-        self.buildSectionIndex(countryList)
+        self.cityData = cityData
+        let countryCodes = Array(self.cityData.keys)
+        
+        for countryCode in countryCodes {
+            if let countryName = NSLocale.currentLocale().displayNameForKey(NSLocaleCountryCode, value: countryCode) {
+                self.countryList[countryName] = countryCode
+            }
+        }
+        var countries = Array(self.countryList.keys)
+        countries.sortInPlace()
+        
+        self.buildSectionIndex(countries)
     }
     
     private func buildSectionIndex(data: [String]) {
-        // Reser collasion
+        // Reset collation
         self.collation = UILocalizedIndexedCollation.currentCollation()
         
         var sectionArrays: [[String]] = Array(count: self.collation.sectionTitles.count, repeatedValue: [String]())
         
-        for country in data {
-            let sectionIndex = collation.sectionForObject(country, collationStringSelector: #selector(NSObject.selfMethod))
-            sectionArrays[sectionIndex].append(country)
+        for item in data {
+            let sectionIndex = collation.sectionForObject(item, collationStringSelector: #selector(NSObject.selfMethod))
+            sectionArrays[sectionIndex].append(item)
         }
         
         // Add current location section

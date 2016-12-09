@@ -302,7 +302,6 @@
 		B1ECD7BD1CCC2B2B00CED9C4 /* IMUserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7BC1CCC2B2B00CED9C4 /* IMUserFactory.swift */; };
 		B1ECD7BF1CCC2B3200CED9C4 /* IMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ECD7BE1CCC2B3200CED9C4 /* IMUser.swift */; };
 		B1F045211CB614DB0025CF7D /* StateListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */; };
-		B1F045231CB619080025CF7D /* country_state_city.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1F045221CB619080025CF7D /* country_state_city.plist */; };
 		DF01805E1D3DF54500935A60 /* ImageFullScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF01805D1D3DF54500935A60 /* ImageFullScreenView.xib */; };
 		DF0180601D3DF58300935A60 /* Extension+AVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01805F1D3DF58300935A60 /* Extension+AVFile.swift */; };
 		DF0180641D3DF5AA00935A60 /* Extension+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0180611D3DF5AA00935A60 /* Extension+Array.swift */; };
@@ -437,6 +436,8 @@
 		DFF712BF1CD7076400EAEFD2 /* ProfileLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */; };
 		DFF712C01CD70B4A00EAEFD2 /* ProfileListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93ACC1C910C4C00ECA503 /* ProfileListTableCell.xib */; };
 		FF51601E1DF9FE2D00AD872B /* ButtomBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */; };
+		FF5160241DFA212B00AD872B /* country_code.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160231DFA212B00AD872B /* country_code.plist */; };
+		FF5160261DFA2CBB00AD872B /* country_state_city.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160251DFA2CBB00AD872B /* country_state_city.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -858,7 +859,6 @@
 		B1ECD7BC1CCC2B2B00CED9C4 /* IMUserFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMUserFactory.swift; sourceTree = "<group>"; };
 		B1ECD7BE1CCC2B3200CED9C4 /* IMUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMUser.swift; sourceTree = "<group>"; };
 		B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateListTableViewController.swift; path = Controller/StateListTableViewController.swift; sourceTree = "<group>"; };
-		B1F045221CB619080025CF7D /* country_state_city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_state_city.plist; sourceTree = "<group>"; };
 		DF01805D1D3DF54500935A60 /* ImageFullScreenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageFullScreenView.xib; path = View/ImageFullScreenView.xib; sourceTree = "<group>"; };
 		DF01805F1D3DF58300935A60 /* Extension+AVFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+AVFile.swift"; path = "Supporting Files/Extensions/Extension+AVFile.swift"; sourceTree = "<group>"; };
 		DF0180611D3DF5AA00935A60 /* Extension+Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+Array.swift"; path = "Supporting Files/Extensions/Extension+Array.swift"; sourceTree = "<group>"; };
@@ -1000,6 +1000,8 @@
 		DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileLabelTableCell.xib; path = View/ProfileLabelTableCell.xib; sourceTree = "<group>"; };
 		EF924A8F3A88FA9716BF6670 /* Pods-Wumi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.release.xcconfig"; sourceTree = "<group>"; };
 		FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtomBorderView.swift; path = View/ButtomBorderView.swift; sourceTree = "<group>"; };
+		FF5160231DFA212B00AD872B /* country_code.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_code.plist; sourceTree = "<group>"; };
+		FF5160251DFA2CBB00AD872B /* country_state_city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_state_city.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1045,7 +1047,8 @@
 			isa = PBXGroup;
 			children = (
 				B1C922A21CACF68400335A60 /* cities.plist */,
-				B1F045221CB619080025CF7D /* country_state_city.plist */,
+				FF5160251DFA2CBB00AD872B /* country_state_city.plist */,
+				FF5160231DFA212B00AD872B /* country_code.plist */,
 				DFB220B21DAF2409008FB503 /* search_areas.plist */,
 				DF159E181C80231C00DB65FF /* Images.xcassets */,
 				814C3AC91B69877600E307BB /* Info.plist */,
@@ -2345,7 +2348,6 @@
 				02932A9F1CEE6E07001220E8 /* Notification.storyboard in Resources */,
 				B1ECD7301CCC1F3F00CED9C4 /* send.caf in Resources */,
 				DFA93AD31C91299500ECA503 /* ProfileInputTableCell.xib in Resources */,
-				B1F045231CB619080025CF7D /* country_state_city.plist in Resources */,
 				B1ECD6F01CCC1F3F00CED9C4 /* tusiji_14.gif in Resources */,
 				B1ECD7431CCC1F3F00CED9C4 /* VoiceBtn_BlackHL@2x.png in Resources */,
 				B1ECD6EC1CCC1F3F00CED9C4 /* tusiji_12.gif in Resources */,
@@ -2435,6 +2437,7 @@
 				B1ECD6E81CCC1F3F00CED9C4 /* tusiji_10.gif in Resources */,
 				B1ECD73D1CCC1F3F00CED9C4 /* sharemore_voiceinput@2x.png in Resources */,
 				B1ECD7211CCC1F3F00CED9C4 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
+				FF5160261DFA2CBB00AD872B /* country_state_city.plist in Resources */,
 				B1ECD6C11CCC1F3F00CED9C4 /* rabbit_13_cover@2x.png in Resources */,
 				B1ECD7401CCC1F3F00CED9C4 /* voice@2x.png in Resources */,
 				B1ECD7131CCC1F3F00CED9C4 /* loudReceive.caf in Resources */,
@@ -2444,6 +2447,7 @@
 				B1ECD6C41CCC1F3F00CED9C4 /* rabbit_15.gif in Resources */,
 				B1ECD6D61CCC1F3F00CED9C4 /* rabbit_2_cover@2x.png in Resources */,
 				B1ECD7231CCC1F3F00CED9C4 /* ReceiverVoiceNodePlaying@2x.png in Resources */,
+				FF5160241DFA212B00AD872B /* country_code.plist in Resources */,
 				B1ECD6C01CCC1F3F00CED9C4 /* rabbit_13.gif in Resources */,
 				B1ECD6C51CCC1F3F00CED9C4 /* rabbit_15_cover@2x.png in Resources */,
 				B1ECD6D11CCC1F3F00CED9C4 /* rabbit_20_cover@2x.png in Resources */,

@@ -170,7 +170,7 @@ class ContactTableViewController: DataLoadingTableViewController {
         // Set cell with user data
         guard let user = displayUsers[safe: indexPath.row] else { return cell }
         
-        cell.nameLabel.text = user.name
+        cell.nameLabel.text = user.nameDescription
             
         // Load avatar image
         cell.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
