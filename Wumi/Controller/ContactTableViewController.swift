@@ -183,7 +183,7 @@ class ContactTableViewController: DataLoadingTableViewController {
         }
         
         // Load location
-        cell.locationLabel.text = "\(user.location)"
+        cell.locationLabel.text = user.location.shortDiscription
             
         // Load favorite status with login user
         cell.delegate = self

@@ -10,7 +10,7 @@ import UIKit
 
 class CityListTableViewController: UITableViewController {
     
-    var countryName = String()
+    var countryCode = String()
     var stateName = String()
     lazy var cityArray = [String]()
     var selectedLocation: Location?
@@ -61,7 +61,7 @@ class CityListTableViewController: UITableViewController {
             cell.textLabel!.text = city
             
             // Add checkmark for selected country
-            if let location = self.selectedLocation where location.country == countryName && location.city == city {
+            if let location = self.selectedLocation where location.countryCode == self.countryCode && location.city == city {
                 cell.accessoryType = .Checkmark
             }
             else {
@@ -76,7 +76,7 @@ class CityListTableViewController: UITableViewController {
         switch indexPath.section {
         default:
             guard let sectionArray = self.sections[safe: indexPath.section], cityName = sectionArray[safe: indexPath.row] else { break }
-            self.selectedLocation = Location(Country: countryName, State: stateName, City: cityName)
+            self.selectedLocation = Location(CountryCode: countryCode, State: stateName, City: cityName)
             if let location = selectedLocation, delegate = locationDelegate {
                 delegate.finishLocationSelection(location)
             }

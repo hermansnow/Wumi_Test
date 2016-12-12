@@ -612,7 +612,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
                 guard let user = result as? User where error == nil else { return }
                 
-                cell.authorView.detailLabel.text = user.nameDescription + (user.location.description.characters.count > 0 ? ", " + user.location.description : "")
+                cell.authorView.detailLabel.text = user.shortUserBannerDesc
                 cell.authorView.userObjectId = user.objectId
                 
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in

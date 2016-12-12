@@ -10,7 +10,7 @@ import UIKit
 
 class StateListTableViewController: UITableViewController {
 
-    var countryName = String()
+    var countryCode = String()
     lazy var stateDict = [String: [String]]()
     lazy var stateArray = [String]()
     var selectedLocation: Location?
@@ -85,9 +85,9 @@ class StateListTableViewController: UITableViewController {
         if let cityListTableViewController = segue.destinationViewController as? CityListTableViewController where segue.identifier == "Select City" {
             guard let index = self.tableView.indexPathForSelectedRow else { return }
             guard let sectionArray = self.sections[safe: index.section], stateName = sectionArray[safe: index.row] else { return }
-            cityListTableViewController.countryName = countryName
+            cityListTableViewController.countryCode = self.countryCode
             cityListTableViewController.stateName = stateName
-            cityListTableViewController.cityArray = stateDict[stateName]!
+            cityListTableViewController.cityArray = self.stateDict[stateName]!
             
             cityListTableViewController.locationDelegate = self.locationDelegate
             cityListTableViewController.selectedLocation = self.selectedLocation

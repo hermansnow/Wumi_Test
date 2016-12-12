@@ -132,7 +132,7 @@ class LocationListTableViewController: UITableViewController {
                 }
             }
             else if let location = self.currentLocation {
-                cell.textLabel!.text = "\(Location(Country: location.country, State: location.administrativeArea, City: location.locality))"
+                cell.textLabel!.text = "\(Location(CountryCode: location.ISOcountryCode, CountryName: location.country, State: location.administrativeArea, City: location.locality))"
             }
         default:
             cell = tableView.dequeueReusableCellWithIdentifier("Country Cell", forIndexPath: indexPath)
@@ -150,7 +150,7 @@ class LocationListTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             guard let location = self.currentLocation else { break }
-            self.selectedLocation = Location(Country: location.country, State: location.administrativeArea, City: location.locality)
+            self.selectedLocation = Location(CountryCode: location.ISOcountryCode, State: location.administrativeArea, City: location.locality)
             
             if let location = selectedLocation, delegate = locationDelegate {
                 delegate.finishLocationSelection(location)
@@ -166,7 +166,7 @@ class LocationListTableViewController: UITableViewController {
         if let stateListTableViewController = segue.destinationViewController as? StateListTableViewController where segue.identifier == "Select State" {
             guard let index = self.tableView.indexPathForSelectedRow else { return }
             guard let sectionArray = self.sections[safe: index.section], countryName = sectionArray[safe: index.row], countryCode = self.countryList[countryName] else { return }
-            stateListTableViewController.countryName = countryName
+            stateListTableViewController.countryCode = countryCode
             stateListTableViewController.stateDict = cityData[countryCode]!
             
             stateListTableViewController.locationDelegate = self.locationDelegate

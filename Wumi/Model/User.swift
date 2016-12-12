@@ -24,7 +24,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     @NSManaged var pinyin: String?
     @NSManaged var city: String?
     @NSManaged var state: String?
-    @NSManaged var country: String?
+    @NSManaged var countryCode: String?
     @NSManaged var favoriteUsers: AVRelation?
     @NSManaged var professions: [Profession]
     @NSManaged var savedPosts: AVRelation?
@@ -40,10 +40,10 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     
     var location: Location {
         get {
-            return Location(Country: self.country, State: self.state, City: self.city)
+            return Location(CountryCode: self.countryCode, State: self.state, City: self.city)
         }
         set {
-            self.country = newValue.country
+            self.countryCode = newValue.countryCode
             self.state = newValue.state
             self.city = newValue.city
         }
@@ -51,6 +51,10 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     
     var nameDescription: String {
         return (self.name ?? "") + (self.graduationYear > 0 ? "(" + String(format: "%02d", self.graduationYear % 100) + ")" : "")
+    }
+    
+    var shortUserBannerDesc: String {
+        return self.nameDescription + (self.location.shortDiscription.characters.count > 0 ? ", " + self.location.shortDiscription : "")
     }
     
     // MARK: Initializer

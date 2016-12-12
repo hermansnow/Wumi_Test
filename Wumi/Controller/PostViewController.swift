@@ -252,7 +252,7 @@ class PostViewController: DataLoadingTableViewController {
             author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
                 guard let user = result as? User where error == nil else { return }
                 
-                self.postCell.authorView.detailLabel.text = user.nameDescription + (user.location.description.characters.count > 0 ? ", " + user.location.description : "")
+                self.postCell.authorView.detailLabel.text = user.shortUserBannerDesc
                 self.postCell.authorView.userObjectId = user.objectId
             
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
