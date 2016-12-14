@@ -33,7 +33,13 @@
                             <outlet property="delegate" destination="ZJk-uj-ugs" id="iWQ-OO-bIw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="9Uz-qk-LAL"/>
+                    <navigationItem key="navigationItem" id="9Uz-qk-LAL">
+                        <barButtonItem key="rightBarButtonItem" image="Map" id="Vme-Jk-9ja">
+                            <connections>
+                                <segue destination="nM9-mv-Pga" kind="show" identifier="Show Map" id="bXu-jn-WZC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchDisplayController" destination="pH8-7u-MlV" id="ZYj-AF-kXw"/>
                         <segue destination="cpF-X4-SJR" kind="show" identifier="Show Contact" id="XK6-Su-fmg">
@@ -52,6 +58,39 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="2633" y="772"/>
+        </scene>
+        <!--Contact Map View Controller-->
+        <scene sceneID="LFB-9M-lgy">
+            <objects>
+                <viewController id="nM9-mv-Pga" customClass="ContactMapViewController" customModule="Wumi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cbe-kP-gjF"/>
+                        <viewControllerLayoutGuide type="bottom" id="HYF-t2-ziU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="V0q-yc-1V8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WSi-4g-nEJ">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WSi-4g-nEJ" firstAttribute="leading" secondItem="V0q-yc-1V8" secondAttribute="leading" id="0pv-Y4-Mvk"/>
+                            <constraint firstAttribute="trailing" secondItem="WSi-4g-nEJ" secondAttribute="trailing" id="KcL-M8-GQ3"/>
+                            <constraint firstItem="WSi-4g-nEJ" firstAttribute="top" secondItem="cbe-kP-gjF" secondAttribute="bottom" id="gRO-SU-wXU"/>
+                            <constraint firstItem="HYF-t2-ziU" firstAttribute="top" secondItem="WSi-4g-nEJ" secondAttribute="bottom" id="zcm-WL-PmL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="WSi-4g-nEJ" id="nDN-0a-fV0"/>
+                        <segue destination="cpF-X4-SJR" kind="show" identifier="Show Contact" id="ahn-qU-aEa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RdW-Ob-bej" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3606" y="322"/>
         </scene>
         <!--Contact Content-->
         <scene sceneID="nbj-3u-K34">
@@ -216,7 +255,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l1O-RR-eou" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3542" y="772"/>
+            <point key="canvasLocation" x="3606" y="1103"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aT1-Nk-C01">
@@ -239,7 +278,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Map" width="22" height="22"/>
         <image name="Private_Message" width="23" height="23"/>
         <image name="Star" width="16" height="16"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="XK6-Su-fmg"/>
+    </inferredMetricsTieBreakers>
 </document>

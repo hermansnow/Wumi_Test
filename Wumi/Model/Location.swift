@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 struct Location: CustomStringConvertible {
     var countryCode: String?
@@ -35,6 +36,11 @@ struct Location: CustomStringConvertible {
     
     static func show(CountryName countryName: String?, State state: String?, City city: String?) -> String {
         return [city, state, countryName].flatMap{ $0 }.joinWithSeparator(", ")
+    }
+    
+    func calculateCoordinate(completionHandler: CLGeocodeCompletionHandler) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(self.description, completionHandler: completionHandler)
     }
 }
 

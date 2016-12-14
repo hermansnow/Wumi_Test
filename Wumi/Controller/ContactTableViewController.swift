@@ -12,7 +12,7 @@ import BTNavigationDropdownMenu
 
 class ContactTableViewController: DataLoadingTableViewController {
     
-    var resultSearchController = UISearchController(searchResultsController: nil)
+    private var resultSearchController = UISearchController(searchResultsController: nil)
     
     var currentUser = User.currentUser()
     lazy var users = [User]() // array of users records
@@ -108,6 +108,10 @@ class ContactTableViewController: DataLoadingTableViewController {
             contactVC.delegate = self
             contactVC.selectedUserId = selectedUser.objectId
             contactVC.hidesBottomBarWhenPushed = true
+        }
+        else if let mapVC = segue.destinationViewController as? ContactMapViewController where segue.identifier == "Show Map" {
+            mapVC.displayUsers = self.displayUsers
+            mapVC.hidesBottomBarWhenPushed = true
         }
     }
     

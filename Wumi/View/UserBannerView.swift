@@ -12,7 +12,7 @@ class UserBannerView: UIView {
 
     lazy var avatarImageView: AvatarImageView = AvatarImageView()
     lazy var detailLabel = UILabel()
-    lazy var placeHolder = UIView()
+    private lazy var placeHolder = UIView()
     private lazy var stackView = UIStackView()
     
     var userObjectId: String?
@@ -30,6 +30,9 @@ class UserBannerView: UIView {
     }
     
     private func setProperty() {
+        self.backgroundColor = UIColor.clearColor()
+        self.opaque = false
+        
         // Add Margin
         self.stackView.frame = self.bounds
         

@@ -8,6 +8,7 @@
 
 import AVOSCloud
 import UIKit
+import MapKit
 import CoreData
 
 class User: AVUser, NSCoding, TimeBaseCacheable {

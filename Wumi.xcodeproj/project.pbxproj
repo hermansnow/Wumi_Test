@@ -435,9 +435,13 @@
 		DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF712BC1CD7060100EAEFD2 /* ProfileLabelTableCell.swift */; };
 		DFF712BF1CD7076400EAEFD2 /* ProfileLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */; };
 		DFF712C01CD70B4A00EAEFD2 /* ProfileListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93ACC1C910C4C00ECA503 /* ProfileListTableCell.xib */; };
+		FF23804F1DFE7AA800C82027 /* ContactMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23804E1DFE7AA800C82027 /* ContactMapViewController.swift */; };
+		FF3919AA1DFF63C5002AC4E5 /* ContactPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */; };
+		FF3919AC1E01D710002AC4E5 /* ContactAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */; };
 		FF51601E1DF9FE2D00AD872B /* ButtomBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */; };
 		FF5160241DFA212B00AD872B /* country_code.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160231DFA212B00AD872B /* country_code.plist */; };
 		FF5160261DFA2CBB00AD872B /* country_state_city.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160251DFA2CBB00AD872B /* country_state_city.plist */; };
+		FF665F7E1E0206EB00F20219 /* Extension+MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF665F7D1E0206EB00F20219 /* Extension+MKMapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -999,9 +1003,13 @@
 		DFF712BC1CD7060100EAEFD2 /* ProfileLabelTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileLabelTableCell.swift; path = View/ProfileLabelTableCell.swift; sourceTree = "<group>"; };
 		DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileLabelTableCell.xib; path = View/ProfileLabelTableCell.xib; sourceTree = "<group>"; };
 		EF924A8F3A88FA9716BF6670 /* Pods-Wumi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.release.xcconfig"; sourceTree = "<group>"; };
+		FF23804E1DFE7AA800C82027 /* ContactMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactMapViewController.swift; path = Controller/ContactMapViewController.swift; sourceTree = "<group>"; };
+		FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactPoint.swift; path = Model/ContactPoint.swift; sourceTree = "<group>"; };
+		FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactAnnotationView.swift; path = View/ContactAnnotationView.swift; sourceTree = "<group>"; };
 		FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtomBorderView.swift; path = View/ButtomBorderView.swift; sourceTree = "<group>"; };
 		FF5160231DFA212B00AD872B /* country_code.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_code.plist; sourceTree = "<group>"; };
 		FF5160251DFA2CBB00AD872B /* country_state_city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_state_city.plist; sourceTree = "<group>"; };
+		FF665F7D1E0206EB00F20219 /* Extension+MKMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+MKMapView.swift"; path = "Supporting Files/Extensions/Extension+MKMapView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1928,6 +1936,7 @@
 			children = (
 				DF0180611D3DF5AA00935A60 /* Extension+Array.swift */,
 				DF01805F1D3DF58300935A60 /* Extension+AVFile.swift */,
+				FF665F7D1E0206EB00F20219 /* Extension+MKMapView.swift */,
 				DFB220A61DAD8228008FB503 /* Extension+NSAttributedString.swift */,
 				DF0180771D3DF91E00935A60 /* Extension+NSDate.swift */,
 				DF0180741D3DF77F00935A60 /* Extension+NSObject.swift */,
@@ -2058,6 +2067,7 @@
 				DF1BE2681C9F9C7500F934EE /* Post.swift */,
 				DFB250791CAB9C9800413D52 /* PostCategory.swift */,
 				DFB612A81CA62CAD00B3271B /* Comment.swift */,
+				FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */,
 				DFB220B41DAF2C49008FB503 /* Area.swift */,
 				DF9F060D1C7B7280008CA6DC /* Location.swift */,
 				DFC754251CBCE7C900C7E111 /* DataManager.swift */,
@@ -2099,6 +2109,7 @@
 				DFB612A01CA6158F00B3271B /* PlaceholderTextView.swift */,
 				DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */,
 				DF0180831D4882BF00935A60 /* LoadingIndicatorView.swift */,
+				FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -2158,6 +2169,7 @@
 			children = (
 				B15824021C82C40F00D314B3 /* ContactTableViewController.swift */,
 				DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */,
+				FF23804E1DFE7AA800C82027 /* ContactMapViewController.swift */,
 			);
 			name = Contact;
 			sourceTree = "<group>";
@@ -2624,6 +2636,7 @@
 				DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */,
 				B1ECD74B1CCC1F3F00CED9C4 /* EmojiEmoticons.m in Sources */,
 				DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */,
+				FF23804F1DFE7AA800C82027 /* ContactMapViewController.swift in Sources */,
 				B1ECD79B1CCC1F4000CED9C4 /* XHMessageTableView.m in Sources */,
 				B1ECD7641CCC1F4000CED9C4 /* XHBaseTableViewController.m in Sources */,
 				B1ECD78D1CCC1F4000CED9C4 /* SETextSelectionView.m in Sources */,
@@ -2723,6 +2736,7 @@
 				B1ECD7831CCC1F4000CED9C4 /* SELinkText.m in Sources */,
 				DFB7CC071BEA893C00BEACB7 /* GraduationYearPickerView.swift in Sources */,
 				DF01808A1D4C8E2B00935A60 /* WebFullScreenViewController.swift in Sources */,
+				FF3919AA1DFF63C5002AC4E5 /* ContactPoint.swift in Sources */,
 				DFB0DC731C99CB87006BCD07 /* ProfileRow.swift in Sources */,
 				B1997AF61CACDADC0086F8F4 /* CityListTableViewController.swift in Sources */,
 				B1ECD76C1CCC1F4000CED9C4 /* XHCacheManager.m in Sources */,
@@ -2742,6 +2756,7 @@
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
 				DF0180711D3DF72300935A60 /* Extension+UIResponder.swift in Sources */,
 				B1ECD7521CCC1F3F00CED9C4 /* UIImage+Alpha.m in Sources */,
+				FF665F7E1E0206EB00F20219 /* Extension+MKMapView.swift in Sources */,
 				DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */,
 				B1ECD7801CCC1F4000CED9C4 /* SECompatibility.m in Sources */,
 				B1ECD7AA1CCC1F4000CED9C4 /* UIImage+Icon.m in Sources */,
@@ -2790,6 +2805,7 @@
 				DFB2507A1CAB9C9800413D52 /* PostCategory.swift in Sources */,
 				B1F045211CB614DB0025CF7D /* StateListTableViewController.swift in Sources */,
 				B1ECD77E1CCC1F4000CED9C4 /* FLAnimatedImageView.m in Sources */,
+				FF3919AC1E01D710002AC4E5 /* ContactAnnotationView.swift in Sources */,
 				B1ECD77F1CCC1F4000CED9C4 /* LKBadgeView.m in Sources */,
 				DF01806B1D3DF68A00935A60 /* Extension+UIImage.swift in Sources */,
 				B1ECD7A01CCC1F4000CED9C4 /* XHEmotionCollectionViewCell.m in Sources */,

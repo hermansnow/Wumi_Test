@@ -47,8 +47,13 @@ class AvatarImageView: UIView {
     }
     
     private func setProperty() {
+        self.backgroundColor = UIColor.clearColor()
+        self.opaque = false
+        
         // Add container image view
         self.containerImageView.contentMode = .ScaleAspectFill
+        self.containerImageView.backgroundColor = UIColor.clearColor()
+        self.containerImageView.opaque = false
         addSubview(containerImageView)
         
         // Set circular avatar image
