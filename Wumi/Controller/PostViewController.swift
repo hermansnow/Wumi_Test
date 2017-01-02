@@ -393,7 +393,7 @@ class PostViewController: DataLoadingTableViewController {
     
     func sendReply(sender: AnyObject) {
         guard self.replyView.commentTextView.text.characters.count > 0 else {
-            Helper.PopupErrorAlert(self, errorMessage: "Cannot send blank comment") { (action) -> Void in
+            ErrorHandler.popupErrorAlert(self, errorMessage: "Cannot send blank comment") { (action) -> Void in
                 self.replyView.commentTextView.becomeFirstResponder()
             }
             return
@@ -405,7 +405,7 @@ class PostViewController: DataLoadingTableViewController {
         Comment.sendNewCommentForPost(post, author: self.currentUser, content: self.replyView.commentTextView.text, replyComment: replyComment) { (success, error) in
             self.hideLoadingIndicator()
             guard success && error == nil else {
-                Helper.PopupErrorAlert(self, errorMessage: "\(error != nil ? error.description : "Unknown issue")") { (action) -> Void in
+                ErrorHandler.popupErrorAlert(self, errorMessage: "\(error != nil ? error.description : "Unknown issue")") { (action) -> Void in
                     self.replyView.commentTextView.becomeFirstResponder()
                 }
                 return

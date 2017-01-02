@@ -92,8 +92,28 @@ struct Constants {
             
             static let forgotPasswordLink = "Forgot Password?"
             
+            /**
+             Struct includes error messages for sign in/up.
+             */
             struct ErrorMessages {
-                static let incorrectPassword = "Incorrect password"
+                /// Error message to indicate unknow error.
+                static let unknown = "Unknow issue occurred"
+                /// Error message to indicate username is blank.
+                static let blankUsername = "Username is blank"
+                /// Error message to indicate username string is shorter than 3 characters.
+                static let shortUsername =  "Length of user name should larger than 3 characters"
+                /// Error message to indicate password is blank.
+                static let blankPassword = "Password is blank"
+                /// Error message to indicate password string is shorter than 3 characters.
+                static let shortPassword = "Length of user password should larger than 3 characters"
+                /// Error message to indicate password not match with confirmed password
+                static let passwordNotMatch = "Passwords entered not match"
+                /// Error message to indicate sign-in username or password is incorrect.
+                static let incorrectPassword = "Incorrect username or password"
+                /// Error message to indicate sign-up invitation code is blank.
+                static let blankInvitationCode = "Invitation code is blank"
+                /// Error message to indicate sign-up invitation code is invalid.
+                static let invalidInvitationCode = "Invitation code is invalid"
             }
             
             struct Alert {

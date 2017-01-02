@@ -188,7 +188,7 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
                 cell.style = .Selected
             }
             else {
-                Helper.PopupErrorAlert(self, errorMessage: "You have already reached the maximum number of professions, can not select anymore.")
+                ErrorHandler.popupErrorAlert(self, errorMessage: "You have already reached the maximum number of professions, can not select anymore.")
             }
         case .Selected:
             for selectedProfession in self.selectedProfessions {

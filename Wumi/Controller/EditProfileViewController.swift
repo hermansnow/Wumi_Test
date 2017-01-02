@@ -192,9 +192,9 @@ class EditProfileViewController: DataLoadingViewController {
         self.showLoadingIndicator()
         self.currentUser.updateProfessions(Array(selectedProfessions))
         self.currentUser.saveInBackgroundWithFetch { (success, error) in
-            self.hideLoadingIndicator()
+            self.dismissLoadingIndicator()
             guard success else {
-                Helper.PopupErrorAlert(self, errorMessage: "Save Error: " + error.description)
+                ErrorHandler.popupErrorAlert(self, errorMessage: "Save Error: " + error.description)
                 return
             }
             self.displayUserBanner() // Repaint user banner for new data
@@ -246,7 +246,7 @@ class EditProfileViewController: DataLoadingViewController {
             
             // Load professions
             Profession.fetchAllInBackground(self.currentUser.professions) { (results, error) -> Void in
-                self.hideLoadingIndicator() // Hide general loading indicator once we receive the response from server
+                self.dismissLoadingIndicator() // Hide general loading indicator once we receive the response from server
                 guard let selectedProfessions = results as? [Profession] where error == nil else { return }
                 
                 for selectedProfession in selectedProfessions {
@@ -477,7 +477,7 @@ extension EditProfileViewController: SelectPhotoActionSheetDelegate  {
         
         self.currentUser.saveAvatarFile(profileImage) { (success, imageError) -> Void in
             guard success else {
-                Helper.PopupErrorAlert(self, errorMessage: "\(imageError)")
+                ErrorHandler.popupErrorAlert(self, errorMessage: "\(imageError)")
                 return
             }
             

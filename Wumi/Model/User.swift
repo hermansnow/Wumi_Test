@@ -32,6 +32,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     @NSManaged var pushNotifications: AVRelation?
     
     // Properties should not be saved into PFUser
+    /// Confirmed password string.
     var confirmPassword: String?
     lazy var favoriteUsersArray: [User] = []
     lazy var savedPostsArray: [Post] = []
@@ -100,56 +101,108 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     
     // MARK: Validation functions
     
-    // Validate user information
-    func validateUser(block: (valid: Bool, error: NSDictionary) -> Void) {
-        let errors = NSMutableDictionary()
+    /**
+     Validate user's profile data asynchronously with a block.
+     
+     - Parameters:
+        - block: block includes validation results returned asynchronously.
+                its first parameter indicates whether this user's profile is valid or not; 
+                second parameter is a Wumi error array.
+     
+     */
+    func validateUser(block: (valid: Bool, error: [WumiError]) -> Void) {
+        var errors = [WumiError]()
         var errorMesage = ""
         
-        // validate user name
-        if (!validateUserName(&errorMesage)) {
-            errors.setValue(errorMesage, forKey: "NameError")
+        // Validate user name
+        if (!self.validateUserName(&errorMesage)) {
+            errors.append(WumiError(type: .Name, error: errorMesage))
         }
         
         // Validate user password
-        if (!validateUserPassword(&errorMesage)) {
-            errors.setValue(errorMesage, forKey: "PasswordError")
+        if (!self.validatePassword(&errorMesage)) {
+            errors.append(WumiError(type: .Password, error: errorMesage))
         }
         
-        // Validate confirm password
-        if (!validateConfirmPassword(&errorMesage)) {
-            errors.setValue(errorMesage, forKey: "ConfirmPasswordError")
+        // Validate confirmed password
+        if (!self.validateConfirmPassword(&errorMesage)) {
+            errors.append(WumiError(type: .ConfirmPassword, error: errorMesage))
         }
         
         block(valid: errors.count == 0, error: errors)
     }
     
-    // Validate username
+    /**
+     Validate user's name.
+     
+     - Parameters:
+        - error: output parameter used to store error message.
+     
+     - Returns:
+        True if user name is valid, otherwise false.
+     */
     func validateUserName(inout error: String) -> Bool {
-        error = ""
-        if ((self.username?.utf16.count) <= 3) {
-            error = "Length of user name should larger than 3 characters"
+        guard let username = self.username else {
+            error = Constants.SignIn.String.ErrorMessages.blankUsername
             return false
         }
+        
+        guard username.characters.count > 3 else {
+            error = Constants.SignIn.String.ErrorMessages.shortUsername
+            return false
+        }
+        
         return true
     }
     
-    // Validate password
-    func validateUserPassword(inout error: String) -> Bool {
-        error = ""
-        if ((self.password?.utf16.count) <= 3) {
-            error = "Length of user password should larger than 3 characters"
+    /**
+     Validate user's password.
+     
+     - Parameters:
+        - error: output parameter used to store error message.
+     
+     - Returns:
+        True if user's password is valid, otherwise false.
+     */
+    func validatePassword(inout error: String) -> Bool {
+        guard let password = self.password else {
+            error = Constants.SignIn.String.ErrorMessages.blankPassword
             return false
         }
+        
+        guard password.characters.count > 3 else {
+            error = Constants.SignIn.String.ErrorMessages.shortPassword
+            return false
+        }
+        
         return true
     }
     
-    // Validate comfirm password
+    /**
+     Validate user's confirmed password.
+     
+     - Parameters:
+        - error: output parameter used to store error message.
+     
+     - Returns:
+        True if user's confirmed password is valid, otherwise false.
+     */
     func validateConfirmPassword(inout error: String) -> Bool {
-        error = ""
-        if (self.password != self.confirmPassword) {
-            error = "Passwords entered not match"
+        guard let confirmPassword = self.confirmPassword else {
+            error = Constants.SignIn.String.ErrorMessages.blankPassword
             return false
         }
+        
+        guard confirmPassword.characters.count > 3 else {
+            error = Constants.SignIn.String.ErrorMessages.shortPassword
+            return false
+        }
+        
+        guard self.password == confirmPassword else {
+            error = Constants.SignIn.String.ErrorMessages.passwordNotMatch
+            return false
+        }
+        
         return true
     }
     
@@ -174,15 +227,35 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         AVFile.loadImageFile(file, size: size, block: block)
     }
     
-    // Save avatar to cloud server
-    func saveAvatarFile(avatarImage: UIImage?, block: (success: Bool, error: NSError?) -> Void) {
+    /** 
+    Save avatar to cloud server asynchronously.
+     
+    - Parameters:
+        - avatarImage: UIimage will be stored as avatar.
+        - block: Block includes result of saving avatar to server
+    */
+    func saveAvatarFile(avatarImage: UIImage?, block: (success: Bool, error: WumiError?) -> Void) {
         guard let image = avatarImage else {
-            block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Image is nil"]))
+            block(success: false,
+                  error: WumiError(type: .Image,
+                                   error: "Image is nil"))
             return
         }
         
-        AVFile.saveImageFile(&self.avatarThumbnail, image: image, size: CGSize(width: Constants.General.Size.AvatarThumbnail.Width, height: Constants.General.Size.AvatarThumbnail.Height), block: block)
-        AVFile.saveImageFile(&self.avatarImageFile, image: image, block: block)
+        // Save original image
+        AVFile.saveImageFile(&self.avatarImageFile, image: image) { (success, error) in
+            guard success else {
+                block(success: success, error: error)
+                return
+            }
+            
+            // Save thumbnail
+            AVFile.saveImageFile(&self.avatarThumbnail,
+                                 image: image,
+                                 size: CGSize(width: Constants.General.Size.AvatarThumbnail.Width,
+                                              height: Constants.General.Size.AvatarThumbnail.Height),
+                                 block: block)
+        }
     }
     
     // MARK: User queries

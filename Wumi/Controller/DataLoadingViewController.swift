@@ -9,16 +9,27 @@
 import UIKit
 
 class DataLoadingViewController: UIViewController {
-    private lazy var loadingView = LoadingIndicatorView() // Loading indicator for async operations
     
+    /// Loading indicator for async operations.
+    private lazy var loadingView: LoadingIndicatorView = {
+        let view = LoadingIndicatorView()
+        view.frame.size = CGSize(width: 40, height: 40)
+        view.center = self.view.center
+        return view
+    }()
+    
+    /**
+     Show loading indicator.
+     */
     func showLoadingIndicator() {
-        self.loadingView.frame.size = CGSize(width: 40, height: 40)
-        self.loadingView.center = self.view.center
         self.loadingView.startAnimating()
         self.view.addSubview(loadingView)
     }
     
-    func hideLoadingIndicator() {
+    /**
+     Dismiss loading indicator.
+     */
+    func dismissLoadingIndicator() {
         self.loadingView.stopAnimating()
         self.loadingView.removeFromSuperview()
     }

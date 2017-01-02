@@ -389,7 +389,7 @@ extension ContactTableViewController: EmailButtonDelegate {
             presentViewController(mailComposeVC, animated: true, completion: nil)
         }
         else {
-            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
+            ErrorHandler.popupErrorAlert(self, errorMessage: "Mail services are not available")
         }
     }
 }
@@ -408,7 +408,7 @@ extension ContactTableViewController: PhoneButtonDelegate {
                 UIApplication.sharedApplication().openURL(url)
             }
             else {
-                Helper.PopupErrorAlert(self, errorMessage: "Failed to call \(phoneNumber)")
+                ErrorHandler.popupErrorAlert(self, errorMessage: "Failed to call \(phoneNumber)")
             }
         }
     }
@@ -462,10 +462,10 @@ extension ContactTableViewController: MFMailComposeViewControllerDelegate {
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is cancelled")
         case .Failed:
             if error != nil {
-                Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
+                ErrorHandler.popupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
             }
             else {
-                Helper.PopupErrorAlert(self, errorMessage: "Send failed")
+                ErrorHandler.popupErrorAlert(self, errorMessage: "Send failed")
             }
         }
         

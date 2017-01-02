@@ -10,13 +10,16 @@ import UIKit
 
 class GraduationYearPickerView: UIView {
     
-    // Subviews: A toolbar with two buttons and an UIPickerView
-    var graduationYearPicker: UIPickerView = UIPickerView()
-    var toolBar: UIToolbar = UIToolbar()
-    
-    // Properties to save the year information
+    /// UIPickerView for selecting graduation.
+    private var graduationYearPicker: UIPickerView = UIPickerView()
+    /// Internal toolbar on top of view.
+    private var toolBar: UIToolbar = UIToolbar()
+    /// Current year based on NSCalendar.
     private lazy var currentYear = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
+    /// Array of selectable years.
     private lazy var years = [Int]()
+    
+    /// Current selected year
     var year: Int = 0 {
         didSet {
             self.graduationYearPicker.selectRow(self.years.indexOf(self.year)!, inComponent: 0, animated: true)
@@ -24,8 +27,12 @@ class GraduationYearPickerView: UIView {
     }
     
     // Closures passed in from caller. These closures are used by callers to define view behaviors
+    
+    /// Action when a year is selected.
     var onYearSelected: ((year: Int) -> Void)?
+    /// Action when confirm button is clicked.
     var comfirmSelection: (() -> Void)?
+    /// Action when cancel button is clicked.
     var cancelSelection: (() -> Void)?
     
     // MARK: Initializers
@@ -33,16 +40,25 @@ class GraduationYearPickerView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.setProperty()
         self.setupYearList()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        self.setProperty()
         self.setupYearList()
     }
     
     // MARK: Draw view
+    
+    /**
+     Private function to be called after initialization to set up properties for this view and its subviews.
+     */
+    private func setProperty() {
+        self.toolBar.tintColor = Constants.General.Color.ThemeColor
+    }
     
     override func drawRect(rect: CGRect) {
         // Set up top toolbar

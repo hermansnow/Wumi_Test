@@ -400,7 +400,7 @@
 		DFAE491C1C878F5400DDEE90 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */; };
 		DFB0DC731C99CB87006BCD07 /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */; };
 		DFB220A71DAD8228008FB503 /* Extension+NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB220A61DAD8228008FB503 /* Extension+NSAttributedString.swift */; };
-		DFB220AA1DAD8279008FB503 /* Signup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220A81DAD8279008FB503 /* Signup.storyboard */; };
+		DFB220AA1DAD8279008FB503 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220A81DAD8279008FB503 /* SignIn.storyboard */; };
 		DFB220AD1DAD8859008FB503 /* Contact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220AB1DAD8859008FB503 /* Contact.storyboard */; };
 		DFB220B11DAD8FE5008FB503 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFB220AF1DAD8FE5008FB503 /* Setting.storyboard */; };
 		DFB220B31DAF2409008FB503 /* search_areas.plist in Resources */ = {isa = PBXBuildFile; fileRef = DFB220B21DAF2409008FB503 /* search_areas.plist */; };
@@ -438,10 +438,12 @@
 		FF23804F1DFE7AA800C82027 /* ContactMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23804E1DFE7AA800C82027 /* ContactMapViewController.swift */; };
 		FF3919AA1DFF63C5002AC4E5 /* ContactPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */; };
 		FF3919AC1E01D710002AC4E5 /* ContactAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */; };
+		FF3BCA2B1E03601300741D38 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3BCA2A1E03601300741D38 /* ErrorHandler.swift */; };
 		FF51601E1DF9FE2D00AD872B /* ButtomBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */; };
 		FF5160241DFA212B00AD872B /* country_code.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160231DFA212B00AD872B /* country_code.plist */; };
 		FF5160261DFA2CBB00AD872B /* country_state_city.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160251DFA2CBB00AD872B /* country_state_city.plist */; };
 		FF665F7E1E0206EB00F20219 /* Extension+MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF665F7D1E0206EB00F20219 /* Extension+MKMapView.swift */; };
+		FF848E7C1E07F26400A09DA5 /* WumiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF848E7B1E07F26400A09DA5 /* WumiError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -967,7 +969,7 @@
 		DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactViewController.swift; path = Controller/ContactViewController.swift; sourceTree = "<group>"; };
 		DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileRow.swift; path = Model/ProfileRow.swift; sourceTree = "<group>"; };
 		DFB220A61DAD8228008FB503 /* Extension+NSAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+NSAttributedString.swift"; path = "Supporting Files/Extensions/Extension+NSAttributedString.swift"; sourceTree = "<group>"; };
-		DFB220A91DAD8279008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Signup.storyboard; sourceTree = SOURCE_ROOT; };
+		DFB220A91DAD8279008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/SignIn.storyboard; sourceTree = SOURCE_ROOT; };
 		DFB220AC1DAD8859008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Contact.storyboard; sourceTree = SOURCE_ROOT; };
 		DFB220B01DAD8FE5008FB503 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Resources/Base.lproj/Setting.storyboard; sourceTree = SOURCE_ROOT; };
 		DFB220B21DAF2409008FB503 /* search_areas.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = search_areas.plist; sourceTree = "<group>"; };
@@ -1006,10 +1008,12 @@
 		FF23804E1DFE7AA800C82027 /* ContactMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactMapViewController.swift; path = Controller/ContactMapViewController.swift; sourceTree = "<group>"; };
 		FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactPoint.swift; path = Model/ContactPoint.swift; sourceTree = "<group>"; };
 		FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactAnnotationView.swift; path = View/ContactAnnotationView.swift; sourceTree = "<group>"; };
+		FF3BCA2A1E03601300741D38 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = Model/ErrorHandler.swift; sourceTree = "<group>"; };
 		FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtomBorderView.swift; path = View/ButtomBorderView.swift; sourceTree = "<group>"; };
 		FF5160231DFA212B00AD872B /* country_code.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_code.plist; sourceTree = "<group>"; };
 		FF5160251DFA2CBB00AD872B /* country_state_city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_state_city.plist; sourceTree = "<group>"; };
 		FF665F7D1E0206EB00F20219 /* Extension+MKMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+MKMapView.swift"; path = "Supporting Files/Extensions/Extension+MKMapView.swift"; sourceTree = "<group>"; };
+		FF848E7B1E07F26400A09DA5 /* WumiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WumiError.swift; path = Model/WumiError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2076,6 +2080,8 @@
 				DFBD2D441BEEF8F800D6FEBC /* Setting.swift */,
 				B1ECD7BE1CCC2B3200CED9C4 /* IMUser.swift */,
 				B1ECD7BC1CCC2B2B00CED9C4 /* IMUserFactory.swift */,
+				FF3BCA2A1E03601300741D38 /* ErrorHandler.swift */,
+				FF848E7B1E07F26400A09DA5 /* WumiError.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2179,7 +2185,7 @@
 			children = (
 				814C3AC61B69877600E307BB /* Main.storyboard */,
 				DFA93ABB1C8F8ECB00ECA503 /* LaunchScreen.storyboard */,
-				DFB220A81DAD8279008FB503 /* Signup.storyboard */,
+				DFB220A81DAD8279008FB503 /* SignIn.storyboard */,
 				DF5EF1601D33215000C9B2F2 /* Home.storyboard */,
 				B1ECD7AE1CCC240900CED9C4 /* Inbox.storyboard */,
 				DFB220AB1DAD8859008FB503 /* Contact.storyboard */,
@@ -2206,10 +2212,10 @@
 		DFB4152B1C1E706F00835EFE /* SignIn/SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */,
 				DF5E3D3E1BE9463F00F44FFF /* SigninViewController.swift */,
-				DFBD2D3D1BEC626800D6FEBC /* SignUpAccountViewController.swift */,
 				DFBD2D3B1BEC623E00D6FEBC /* InvitationCodeViewController.swift */,
+				DFBD2D3D1BEC626800D6FEBC /* SignUpAccountViewController.swift */,
+				DFBD2D421BEC7DF400D6FEBC /* AddProfileViewController.swift */,
 			);
 			name = SignIn/SignUp;
 			sourceTree = "<group>";
@@ -2408,7 +2414,7 @@
 				B1ECD6F91CCC1F3F00CED9C4 /* tusiji_4.gif in Resources */,
 				B1ECD7031CCC1F3F00CED9C4 /* tusiji_9.gif in Resources */,
 				B1C922A31CACF68400335A60 /* cities.plist in Resources */,
-				DFB220AA1DAD8279008FB503 /* Signup.storyboard in Resources */,
+				DFB220AA1DAD8279008FB503 /* SignIn.storyboard in Resources */,
 				B1ECD6B41CCC1F3F00CED9C4 /* contacts_add_voip@2x.png in Resources */,
 				B1ECD72F1CCC1F3F00CED9C4 /* SECoreTextView.bundle in Resources */,
 				B1ECD72E1CCC1F3F00CED9C4 /* SearchIcon@2x.png in Resources */,
@@ -2612,6 +2618,7 @@
 				B1ECD7851CCC1F4000CED9C4 /* SETextAttachment.m in Sources */,
 				B1ECD78C1CCC1F4000CED9C4 /* SETextSelection.m in Sources */,
 				DFA93ADD1C91EE0600ECA503 /* FavoriteButton.swift in Sources */,
+				FF3BCA2B1E03601300741D38 /* ErrorHandler.swift in Sources */,
 				DFB612A11CA6158F00B3271B /* PlaceholderTextView.swift in Sources */,
 				B1ECD7651CCC1F4000CED9C4 /* XHPullRefreshTableViewController.m in Sources */,
 				DF86A2B41CE3B00800F67F48 /* PostContentTextView.swift in Sources */,
@@ -2750,6 +2757,7 @@
 				B1ECD78F1CCC1F4000CED9C4 /* XHImageViewer.m in Sources */,
 				B1ECD76D1CCC1F4000CED9C4 /* XHFileAttribute.m in Sources */,
 				DF7E3B4D1C923C0A000E8741 /* ProfessionListViewController.swift in Sources */,
+				FF848E7C1E07F26400A09DA5 /* WumiError.swift in Sources */,
 				B1ECD7581CCC1F3F00CED9C4 /* UIScrollView+XHkeyboardControl.m in Sources */,
 				B175B2521CB872B800C95B33 /* CommentTextView.swift in Sources */,
 				DF7E3B4B1C92324D000E8741 /* Profession.swift in Sources */,
@@ -2879,12 +2887,12 @@
 			name = Home.storyboard;
 			sourceTree = "<group>";
 		};
-		DFB220A81DAD8279008FB503 /* Signup.storyboard */ = {
+		DFB220A81DAD8279008FB503 /* SignIn.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				DFB220A91DAD8279008FB503 /* Base */,
 			);
-			name = Signup.storyboard;
+			name = SignIn.storyboard;
 			sourceTree = "<group>";
 		};
 		DFB220AB1DAD8859008FB503 /* Contact.storyboard */ = {

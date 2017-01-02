@@ -211,7 +211,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         else {
-            let storyboard = UIStoryboard(name: "Signup", bundle: nil)
+            let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
             self.window?.rootViewController = storyboard.instantiateInitialViewController()
         }
     }

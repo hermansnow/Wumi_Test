@@ -50,7 +50,7 @@ class PushNotification : AVObject, AVSubclassing  {
     {
         self.saveInBackgroundWithBlock { (success, error) -> Void in
             if !success {
-                Helper.PopupErrorAlert(containingVC, errorMessage: "\(error)")
+                ErrorHandler.popupErrorAlert(containingVC, errorMessage: "\(error)")
             }
             else {
                 // Create our Installation query

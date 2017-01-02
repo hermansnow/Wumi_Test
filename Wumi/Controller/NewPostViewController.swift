@@ -96,7 +96,7 @@ class NewPostViewController: UIViewController {
     
     func next(sender: AnyObject) {
         guard self.composePostView.content.characters.count > 0 else {
-            Helper.PopupErrorAlert(self, errorMessage: "Cannot send blank post")
+            ErrorHandler.popupErrorAlert(self, errorMessage: "Cannot send blank post")
             return
         }
         

@@ -10,32 +10,28 @@ import UIKit
 
 class Helper {
     
-    // Redirect to Sign in UIViewController
+    /**
+     Redirect to sign-in view controller in 0.5 second.
+     */
     static func RedirectToSignIn () {
         let appDelegate = UIApplication.sharedApplication().delegate
         
-        UIView.transitionWithView(((appDelegate?.window)!)!, duration: NSTimeInterval(0.5), options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-                let previoudAnimationState = UIView.areAnimationsEnabled()
-                appDelegate?.window!!.rootViewController = UIStoryboard(name: "Signup", bundle: nil).instantiateInitialViewController()
-                UIView.setAnimationsEnabled(previoudAnimationState)
-            }, completion: nil)
+        UIView.transitionWithView(((appDelegate?.window)!)!,
+                                  duration: NSTimeInterval(0.5),
+                                  options: UIViewAnimationOptions.TransitionCrossDissolve,
+                                  animations: { () -> Void in
+                                    let previoudAnimationState = UIView.areAnimationsEnabled()
+                                    appDelegate?.window!!.rootViewController = UIStoryboard(name: "SignIn",
+                                                                                            bundle: nil).instantiateInitialViewController()
+                                    UIView.setAnimationsEnabled(previoudAnimationState)
+                                  },
+                                  completion: nil)
     }
     
     // Logout current user
     static func LogOut () {
         RedirectToSignIn()
         User.logOut()
-    }
-    
-    // Popup an UIAlertController for error message
-    static func PopupErrorAlert (controller: UIViewController, errorMessage: String, dismissButtonTitle: String = "Cancel", block: ((UIAlertAction) -> Void)? = nil) {
-        let alert = UIAlertController(title: "Failed", message: errorMessage, preferredStyle: .Alert)
-        
-        // Add a dismiss button to dismiss the popup alert
-        alert.addAction(UIAlertAction(title: dismissButtonTitle, style: .Cancel, handler: block))
-        
-        // Present alert controller
-        controller.presentViewController(alert, animated: true, completion: nil)
     }
     
     // Popup an UIAlertController for showing information

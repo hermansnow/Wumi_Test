@@ -153,7 +153,7 @@ class ContactViewController: DataLoadingViewController {
             UIApplication.sharedApplication().openURL(url)
         }
         else {
-            Helper.PopupErrorAlert(self, errorMessage: "Failed to send message to \(phoneNumber)")
+            ErrorHandler.popupErrorAlert(self, errorMessage: "Failed to send message to \(phoneNumber)")
         }
     }
     
@@ -165,7 +165,7 @@ class ContactViewController: DataLoadingViewController {
         // Fetch user data
         self.showLoadingIndicator()
         User.fetchUserInBackground(objectId: selectedUserId) { (result, error) -> Void in
-            self.hideLoadingIndicator()
+            self.dismissLoadingIndicator()
             guard let user = result as? User where error == nil else {
                 print("\(error)")
                 return
@@ -371,10 +371,10 @@ extension ContactViewController: MFMailComposeViewControllerDelegate {
             Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is cancelled")
         case .Failed:
             if error != nil {
-                Helper.PopupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
+                ErrorHandler.popupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
             }
             else {
-                Helper.PopupErrorAlert(self, errorMessage: "Send failed")
+                ErrorHandler.popupErrorAlert(self, errorMessage: "Send failed")
             }
         }
         
@@ -418,7 +418,7 @@ extension ContactViewController: EmailButtonDelegate {
             presentViewController(mailComposeVC, animated: true, completion: nil)
         }
         else {
-            Helper.PopupErrorAlert(self, errorMessage: "Mail services are not available")
+            ErrorHandler.popupErrorAlert(self, errorMessage: "Mail services are not available")
         }
     }
 }
@@ -434,7 +434,7 @@ extension ContactViewController: PhoneButtonDelegate {
                 UIApplication.sharedApplication().openURL(url)
             }
             else {
-                Helper.PopupErrorAlert(self, errorMessage: "Failed to call \(phoneNumber)")
+                ErrorHandler.popupErrorAlert(self, errorMessage: "Failed to call \(phoneNumber)")
             }
         }
     }
@@ -447,7 +447,7 @@ extension ContactViewController: PrivateMessageButtonDelegate {
         guard let user = self.selectedUser, text = privateMessageTextInputField.text else { return }
         
         guard text.characters.count > 0 else {
-            Helper.PopupErrorAlert(self, errorMessage: "Cannot send empty message")
+            ErrorHandler.popupErrorAlert(self, errorMessage: "Cannot send empty message")
             return
         }
         

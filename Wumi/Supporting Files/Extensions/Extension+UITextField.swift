@@ -9,7 +9,12 @@
 import Foundation
 
 extension UITextField {
-    // Return next responding textfield based on tag order
+    /**
+     Find next responding textfield based on tag order
+     
+     - Returns:
+        The text field object which will be the next response when tabbing based on tag order, nil if not found
+     */
     func nextResponderTextField() -> UITextField? {
         let nextTag = self.tag + 1;
         

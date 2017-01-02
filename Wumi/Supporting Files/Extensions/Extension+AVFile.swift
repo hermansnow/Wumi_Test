@@ -35,7 +35,7 @@ extension AVFile {
     }
     
     // Save avatar to cloud server asynchronously
-    class func saveImageFile(inout file: AVFile?, image: UIImage, name: String? = nil, size: CGSize? = nil, dataSize: Int? = nil, block: (success: Bool, error: NSError?) -> Void) {
+    class func saveImageFile(inout file: AVFile?, image: UIImage, name: String? = nil, size: CGSize? = nil, dataSize: Int? = nil, block: (success: Bool, error: WumiError?) -> Void) {
         // Scale image
         let resizedImage: UIImage
         if size != nil {
@@ -48,7 +48,9 @@ extension AVFile {
         // Compress the image data if it excesses the max size defined for server (5 MB).
         let compressSize = dataSize ?? 500
         guard let imageData = resizedImage.compressToSize(compressSize) else {
-            block(success: false, error: NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Cannot scale image"]))
+            block(success: false,
+                  error: WumiError(type: .Image,
+                                   error: "Cannot scale image"))
             return
         }
         
@@ -62,7 +64,17 @@ extension AVFile {
         
         // Save file
         if file != nil {
-            file!.saveInBackgroundWithBlock(block)
+            file!.saveInBackgroundWithBlock({ (success, imageError) in
+                if let error = imageError {
+                    block(success: success,
+                          error: WumiError(domain: error.domain,
+                                           code: error.code,
+                                           userInfo: error.userInfo))
+                }
+                else {
+                    block(success: success, error: nil)
+                }
+            })
         }
     }
     

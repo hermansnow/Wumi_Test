@@ -37,7 +37,8 @@ class InvitationCode: AVObject, AVSubclassing {
         return "InvitationCode"
     }
 
-    // Invitation code functions
+    // MARK: Invitation code functions
+    
     func generateNewCode() {
         self.invitationCode = randomAlphaNumericString(6)
         self.numberOfUse = 0
@@ -47,20 +48,29 @@ class InvitationCode: AVObject, AVSubclassing {
         self.save()
     }
     
-    func verifyCodeWhithBlock(block: (verified: Bool) -> Void) {
+    /**
+     Verify this invitation code asynchronouslly.
+     
+     - Parameters:
+        - block: Return closure block with a verified boolean flag and a wumi error message.
+     */
+    func verifyCodeWhithBlock(block: (verified: Bool, error: WumiError?) -> Void) {
         guard let inputCode = self.invitationCode else {
-            block(verified: false)
+            block(verified: false, error: WumiError(type: .InvitationCode, error: Constants.SignIn.String.ErrorMessages.blankInvitationCode))
             return
         }
-        if let inviteCode = findCode(inputCode) {
+        
+        // Internal Debug backdoor, TODO: Remove it before releasing
+        if inputCode == "12345" {
+            block(verified: true, error: nil)
+        }
+        else if let inviteCode = findCode(inputCode) {
             inviteCode.incrementKey("numberOfUse")
             inviteCode.saveInBackground()
-            block(verified: true)
-        } else if inputCode == "12345" {
-            block(verified: true)
+            block(verified: true, error: nil)
         }
         else {
-            block(verified: false)
+            block(verified: false, error: WumiError(type: .InvitationCode, error: Constants.SignIn.String.ErrorMessages.invalidInvitationCode))
         }
     }
     
@@ -79,18 +89,27 @@ class InvitationCode: AVObject, AVSubclassing {
     }
     
     // MARK: Query
+    
+    /**
+     Server query to get a valid invitation code object based on code string.
+     
+     - Parameters:
+        - code: Invitation code string used for query.
+     
+     - Returns:
+        An InvitationCode onject if found, otherwise nil.
+     */
     func findCode(code: String) -> InvitationCode? {
         let query = InvitationCode.query()
         query.cachePolicy = .IgnoreCache
         query.whereKey("invitationCode", equalTo: code)
-        var result: InvitationCode?
+        var code: InvitationCode?
         
-        if let queryResult = query.findObjects() {
-            if queryResult.count > 0 {
-                result = queryResult.first as! InvitationCode?
-            }
+        if let queryResults = query.findObjects(), result = queryResults.first as? InvitationCode {
+            code = result
         }
-        return result
+        
+        return code
     }
 }
 

@@ -1,7 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Bef-6p-lgc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Bef-6p-lgc">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,10 +23,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oJt-BH-LK0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="556"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ghd-Yr-Gna" userLabel="Logo View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="191"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="DBV-yr-rds">
+                                                <rect key="frame" x="136" y="44" width="104" height="104"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="DBV-yr-rds" secondAttribute="height" multiplier="1:1" id="SrD-nD-3gX"/>
                                                 </constraints>
@@ -42,18 +48,23 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sVP-Pl-ZnW">
+                                        <rect key="frame" x="0.0" y="191" width="375" height="44"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W7p-GX-eEl">
+                                        <rect key="frame" x="0.0" y="235" width="375" height="207"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ILS-wM-r33">
+                                                <rect key="frame" x="37" y="0.0" width="302" height="207"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="7iw-8L-VQA">
+                                                        <rect key="frame" x="0.0" y="0.0" width="302" height="207"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hf1-xW-anH" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="302" height="207"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tgz-v2-Mdz">
-                                                                        <frame key="frameInset" minX="-91" minY="4" width="37" height="74"/>
+                                                                        <rect key="frame" x="-91" y="4" width="37" height="74"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </view>
@@ -97,10 +108,13 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKp-FW-wDE">
+                                        <rect key="frame" x="0.0" y="442" width="375" height="114"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="DV1-BN-qsM">
+                                                <rect key="frame" x="37" y="42" width="302" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XxM-qq-kex" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="131" height="44"/>
                                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" title="Cancel">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -111,6 +125,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3mL-j8-UTJ" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="171" y="0.0" width="131" height="44"/>
                                                         <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" title="Verify">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -160,14 +175,14 @@
                         <outlet property="invitationCodeTextField" destination="Hf1-xW-anH" id="lcV-2w-kFs"/>
                         <outlet property="logoImageView" destination="DBV-yr-rds" id="HIc-lx-ALk"/>
                         <outlet property="logoView" destination="Ghd-Yr-Gna" id="E4e-MZ-0cb"/>
-                        <segue destination="IIN-Ba-avN" kind="show" identifier="Show New Account Form" id="pkF-BK-f2d">
+                        <segue destination="IIN-Ba-avN" kind="show" identifier="Show Sign Up Form" id="pkF-BK-f2d">
                             <nil key="action"/>
                         </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fVO-z8-jzZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1615" y="2877"/>
+            <point key="canvasLocation" x="1610" y="2878"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="5X2-MI-ZGq">
@@ -182,10 +197,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="s7p-ds-iBf">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xWc-Xc-vbW" customClass="ColorGradientView" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="192"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UkI-CP-wtL" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
+                                                <rect key="frame" x="143" y="51.5" width="89" height="89"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="UkI-CP-wtL" secondAttribute="height" multiplier="1:1" id="Stl-rp-Ql9"/>
@@ -206,32 +224,40 @@
                                         </constraints>
                                     </view>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="IB9-TV-hTt">
+                                        <rect key="frame" x="0.0" y="192" width="375" height="253"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N2t-RS-xrF">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="253"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Sgj-cM-tmk">
+                                                        <rect key="frame" x="36.5" y="0.0" width="302" height="253"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="nNv-aJ-28z">
+                                                                <rect key="frame" x="0.0" y="0.0" width="302" height="250"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vaL-am-gI0" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="302" height="53.5"/>
                                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fcy-kv-Got" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="65.5" width="302" height="53.5"/>
                                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KBw-CQ-xGn" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="131" width="302" height="53.5"/>
                                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Confirm passwrd"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oxt-jO-58T" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="196.5" width="302" height="53.5"/>
                                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Email"/>
@@ -248,6 +274,7 @@
                                                                 </variation>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ovA-ZB-YFI">
+                                                                <rect key="frame" x="0.0" y="250" width="302" height="3"/>
                                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </view>
                                                         </subviews>
@@ -285,10 +312,13 @@
                                         </constraints>
                                     </scrollView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kz-JO-MKG">
+                                        <rect key="frame" x="0.0" y="445" width="375" height="114"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="doQ-LD-Uhc">
+                                                <rect key="frame" x="36.5" y="42" width="302" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Po6-Nt-OuW" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="131" height="44"/>
                                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" title="Cancel">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -298,6 +328,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pJg-66-WVp" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="171" y="0.0" width="131" height="44"/>
                                                         <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" title="Sign Up">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -357,7 +388,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KAF-lr-wN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2679" y="2878"/>
+            <point key="canvasLocation" x="2505" y="2877"/>
         </scene>
         <!--Add Profile-->
         <scene sceneID="wbv-Wf-lw9">
@@ -372,10 +403,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dPt-4t-dRP">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="79w-2a-Msq" customClass="ColorGradientView" customModule="Wumi" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="192"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H9X-RL-AXf" customClass="AvatarImageView" customModule="Wumi" customModuleProvider="target">
+                                                <rect key="frame" x="143" y="51.5" width="89" height="89"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="120" id="1Iq-w7-1V6"/>
@@ -396,20 +430,26 @@
                                         </constraints>
                                     </view>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="lOa-3g-T0s">
+                                        <rect key="frame" x="0.0" y="192" width="375" height="253"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zZD-wK-uYD">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="253"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mgT-66-Esf">
+                                                        <rect key="frame" x="36.5" y="0.0" width="302" height="253"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hvb-me-Fhm">
+                                                                <rect key="frame" x="0.0" y="0.0" width="302" height="108.5"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pCz-ph-qfW" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="302" height="48.5"/>
                                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Name"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UvV-y5-pkE" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="60.5" width="302" height="48"/>
                                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Graduation year"/>
@@ -426,6 +466,7 @@
                                                                 </variation>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SIA-Dk-aYl">
+                                                                <rect key="frame" x="0.0" y="108.5" width="302" height="144.5"/>
                                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </view>
                                                         </subviews>
@@ -446,8 +487,8 @@
                                                 </constraints>
                                                 <variation key="default">
                                                     <mask key="constraints">
-                                                        <exclude reference="mU7-aR-MAP"/>
                                                         <exclude reference="aCN-4r-Ob3"/>
+                                                        <exclude reference="mU7-aR-MAP"/>
                                                     </mask>
                                                 </variation>
                                             </view>
@@ -463,10 +504,13 @@
                                         </constraints>
                                     </scrollView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QoS-H5-oVh">
+                                        <rect key="frame" x="0.0" y="445" width="375" height="114"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="7MP-ws-BRH">
+                                                <rect key="frame" x="36.5" y="42" width="302" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Jy-i1-OZF" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="131" height="44"/>
                                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" title="Skip">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -476,6 +520,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qea-bp-dX2" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                        <rect key="frame" x="171" y="0.0" width="131" height="44"/>
                                                         <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" title="Add Profile">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -530,7 +575,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eHn-Z8-fI9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3636" y="2878"/>
+            <point key="canvasLocation" x="3358" y="2878"/>
         </scene>
         <!--MainScene-->
         <scene sceneID="ERM-Xd-caa">
@@ -553,10 +598,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="blU-bv-eo9">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="556"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="08W-hX-VIi">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="191"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="dEr-1L-lvr">
+                                                <rect key="frame" x="136" y="44" width="104" height="104"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="dEr-1L-lvr" secondAttribute="height" multiplier="1:1" id="i90-1i-L5G"/>
                                                 </constraints>
@@ -575,17 +623,21 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IdH-Df-bYZ">
+                                        <rect key="frame" x="0.0" y="191" width="375" height="44"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="BRB-3J-HIh">
+                                        <rect key="frame" x="0.0" y="235" width="375" height="143"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qoT-6v-koB" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                <rect key="frame" x="36.5" y="0.0" width="302" height="65"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i5b-nZ-ptt" customClass="DataInputTextField" customModule="Wumi" customModuleProvider="target">
+                                                <rect key="frame" x="36.5" y="78" width="302" height="65"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
@@ -598,18 +650,21 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gny-kD-Dcf">
+                                        <rect key="frame" x="0.0" y="378" width="375" height="43"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IMT-QJ-k0H">
+                                        <rect key="frame" x="0.0" y="421" width="375" height="48"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYl-GJ-6BF" customClass="SystemButton" customModule="Wumi" customModuleProvider="target">
+                                                <rect key="frame" x="37" y="0.0" width="302" height="48"/>
                                                 <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="blf-99-QbJ"/>
                                                 </constraints>
                                                 <state key="normal" title="Sign in"/>
                                                 <connections>
-                                                    <action selector="SignIn:" destination="gqG-8p-LXs" eventType="touchUpInside" id="UcK-dP-VSk"/>
+                                                    <action selector="SignIn:" destination="gqG-8p-LXs" eventType="touchUpInside" id="zsO-BA-6Fx"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -623,17 +678,22 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FxB-gy-6c4">
+                                        <rect key="frame" x="0.0" y="469" width="375" height="87"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GJJ-od-CRq">
+                                                <rect key="frame" x="86" y="29" width="204" height="29"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tyn-FD-SxD">
+                                                        <rect key="frame" x="0.0" y="0.0" width="204" height="29"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account? " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylc-Zs-lSW">
+                                                                <rect key="frame" x="0.0" y="0.0" width="155" height="29"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="afs-S5-RkD" customClass="TextLinkButton" customModule="Wumi" customModuleProvider="target">
+                                                                <rect key="frame" x="155" y="0.0" width="49" height="29"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <state key="normal" title="Sign up"/>
                                                                 <connections>
