@@ -9,9 +9,17 @@
 import Foundation
 
 extension AVFile {
-    // Load avatar. This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background
+    /**
+     Load an image file data asynchronously.
+     This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background.
+    
+     - Parameters:
+        - file: AVFile to be fetched.
+        - size: Scale file to a specific size.
+        - block: An AVImageResultBlock includes file data or error info if failed.
+     */
     class func loadImageFile(file: AVFile, size: CGSize? = nil, block: AVImageResultBlock!) {
-        file.getDataInBackgroundWithBlock { (imageData, error) -> Void in
+        file.getDataInBackgroundWithBlock { (imageData, error) in
             // create a queue to parse image
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 guard error == nil else {
@@ -19,10 +27,11 @@ extension AVFile {
                     return
                 }
                 
-                let image = parseDataToImage(imageData, size: size)
+                let image = AVFile.parseDataToImage(imageData, size: size)
                 
+                // Return to main queue to excute block.
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    block(image, error)
+                    block(image, nil)
                 })
             })
         }

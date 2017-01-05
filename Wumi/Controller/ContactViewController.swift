@@ -23,18 +23,21 @@ class ContactViewController: DataLoadingViewController {
     @IBOutlet weak var privateMessageTextInputField: UITextField!
     @IBOutlet weak var privateMessageButton: PrivateMessageButton!
     
+    /// ContactViewController delegete.
     var delegate: ContactViewControllerDelegate?
-    
-    var selectedUserId: String?
-    var selectedUser: User?
-    var currentUser = User.currentUser()
-    private var cells = [ContactCellRowType]()
-    
+    /// Contact to be displayed.
+    var contact: User?
+    /// Flag to indicate whether this contact is favorited or not.
     var isFavorite: Bool = false {
         didSet {
             self.favoriteButton.selected = self.isFavorite
         }
     }
+    
+    /// Current login user.
+    private var currentUser = User.currentUser()
+    /// Array of contact information cells
+    private var cells = [ProfileRow]()
     
     // MARK: Lifecycle methods
     
@@ -42,54 +45,42 @@ class ContactViewController: DataLoadingViewController {
         super.viewDidLoad()
         
         // Register nib
-        self.tableView.registerNib(UINib(nibName: "ProfileLabelTableCell", bundle: nil), forCellReuseIdentifier: "ProfileLabelTableCell")
-        self.tableView.registerNib(UINib(nibName: "ProfileListTableCell", bundle: nil), forCellReuseIdentifier: "ProfileListTableCell")
-        
-        // Add delegates
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.favoriteButton.delegate = self
+        self.tableView.registerNib(UINib(nibName: "ProfileLabelTableCell",
+                                         bundle: nil),
+                                   forCellReuseIdentifier: "ProfileLabelTableCell")
+        self.tableView.registerNib(UINib(nibName: "ProfileListTableCell",
+                                         bundle: nil),
+                                   forCellReuseIdentifier: "ProfileListTableCell")
         
         // Enable navigation bar
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationItem.backBarButtonItem?.enabled = true
         
+        
+        // Add delegates
+        self.favoriteButton.delegate = self
+        
         // Initialize the tableview
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.separatorStyle = .None
-        self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: 20))
+        self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0,
+                                                              y: 0,
+                                                              width: self.tableView.bounds.size.width,
+                                                              height: 20))
         self.tableView.keyboardDismissMode = .OnDrag
         self.tableView.bounces = false
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissInputView))
-        self.tableView.addGestureRecognizer(tap)
+        self.tableView.addGestureRecognizer(UITapGestureRecognizer(target: self,
+                                                                   action: #selector(self.dismissInputView)))
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
         
-        // Initialize the mask view
-        self.maskView.backgroundColor = Constants.General.Color.LightMaskColor
-        
-        // Set font
-        self.nameLabel.font = Constants.General.Font.ProfileNameFont
-        self.graduationYearLabel.font = Constants.General.Font.ProfileNameFont
-        self.locationLabel.font = Constants.General.Font.ProfileLocationFont
-        self.favoriteLabel.font = Constants.General.Font.ProfileTitleFont
-        
-        
-        // Set color
-        self.nameLabel.textColor = Constants.General.Color.TextColor
-        self.graduationYearLabel.textColor = Constants.General.Color.TextColor
-        self.locationLabel.textColor = Constants.General.Color.TextColor
-        self.favoriteLabel.textColor = Constants.General.Color.ThemeColor
-        
-        // Hide favorite section if open my contact
-        if selectedUserId == self.currentUser.objectId {
-            self.favoriteLabel.alpha = 0.0
-            self.favoriteButton.alpha = 0.0
-        }
-        
-        // Add private message input textfield
+        // Set up subview components
+        self.setupImageView()
+        self.setupLabels()
         self.addPrivateMessageInputField()
         
-        // Setup keyboard Listener
+        // Add notification observer
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(keyboardWillShown(_:)),
                                                          name: UIKeyboardWillShowNotification,
@@ -100,7 +91,13 @@ class ContactViewController: DataLoadingViewController {
                                                          object: nil)
         
         // Show data
-        self.displayUserData()
+        self.loadContactData()
+        
+        // Hide favorite section if open my contact
+        if let contact = self.contact where contact == self.currentUser {
+            self.favoriteLabel.alpha = 0.0
+            self.favoriteButton.alpha = 0.0
+        }
     }
 
     deinit {
@@ -109,7 +106,13 @@ class ContactViewController: DataLoadingViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.privateMessageButton.enabled = self.privateMessageTextInputField.text?.characters.count > 0
+        
+        if let text = self.privateMessageTextInputField.text where !text.isEmpty {
+            self.privateMessageButton.enabled = true
+        }
+        else {
+            self.privateMessageButton.enabled = false
+        }
     }
 
     override func willMoveToParentViewController(parent: UIViewController?) {
@@ -119,20 +122,36 @@ class ContactViewController: DataLoadingViewController {
         }
     }
     
-    // Resize text view when showing the keyboard
-    func keyboardWillShown(notification: NSNotification) {
-        guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
-            keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() else { return }
+    // MARK: UI Functions
+    
+    /**
+     Set up image view.
+     */
+    private func setupImageView() {
+        self.maskView.backgroundColor = Constants.General.Color.LightMaskColor
+    }
+    
+    /**
+     Set up data labels.
+     */
+    private func setupLabels() {
+        // Set font
+        self.nameLabel.font = Constants.General.Font.ProfileNameFont
+        self.graduationYearLabel.font = Constants.General.Font.ProfileNameFont
+        self.locationLabel.font = Constants.General.Font.ProfileLocationFont
+        self.favoriteLabel.font = Constants.General.Font.ProfileTitleFont
         
-        self.privateMessageWrapperView.frame = CGRect(origin: CGPoint(x: self.privateMessageWrapperView.frame.origin.x, y: self.view.bounds.size.height - self.privateMessageWrapperView.bounds.size.height - keyboardRect.size.height), size: self.privateMessageWrapperView.bounds.size)
+        // Set color
+        self.nameLabel.textColor = Constants.General.Color.TextColor
+        self.graduationYearLabel.textColor = Constants.General.Color.TextColor
+        self.locationLabel.textColor = Constants.General.Color.TextColor
+        self.favoriteLabel.textColor = Constants.General.Color.ThemeColor
     }
     
-    // Resize text view when dismissing the keyboard
-    func keyboardWillHiden(notification: NSNotification) {
-        self.privateMessageWrapperView.frame = CGRect(origin: CGPoint(x: self.privateMessageWrapperView.frame.origin.x, y: self.view.bounds.size.height - self.privateMessageWrapperView.bounds.size.height), size: self.privateMessageWrapperView.bounds.size)
-    }
-    
-    func addPrivateMessageInputField() {
+    /**
+     Set up private message input field.
+     */
+    private func addPrivateMessageInputField() {
         self.privateMessageWrapperView.backgroundColor = Constants.General.Color.BackgroundColor
         self.privateMessageTextInputField.font = Constants.General.Font.InputFont
         self.privateMessageTextInputField.placeholder = "Send Message..."
@@ -140,91 +159,100 @@ class ContactViewController: DataLoadingViewController {
         self.privateMessageButton.enabled = false
         self.privateMessageButton.delegate = self
         self.privateMessageTextInputField.delegate = self
-        self.privateMessageTextInputField.addTarget(self, action: #selector(textFieldDidChange(_:)), forControlEvents: .EditingChanged)
+        self.privateMessageTextInputField.addTarget(self,
+                                                    action: #selector(textFieldDidChange(_:)),
+                                                    forControlEvents: .EditingChanged)
     }
     
     // MARK: Actions
     
-    // Action when clicking message button
-    func sendSMS(sender: AnyObject) {
-        guard let user = self.selectedUser, phoneNumber = user.phoneNumber else { return }
+    /** 
+     Resize text view when showing the keyboard.
+     
+     - Parameters:
+        - notification: NSNotification triggers this action with user info.
+     */
+    func keyboardWillShown(notification: NSNotification) {
+        guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
+            keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() else { return }
         
-        if let url = NSURL(string: "sms:\(phoneNumber)") where UIApplication.sharedApplication().canOpenURL(url) {
-            UIApplication.sharedApplication().openURL(url)
-        }
-        else {
-            ErrorHandler.popupErrorAlert(self, errorMessage: "Failed to send message to \(phoneNumber)")
-        }
+        self.privateMessageWrapperView.frame = CGRect(origin: CGPoint(x: self.privateMessageWrapperView.frame.origin.x,
+                                                                      y: self.view.bounds.size.height - self.privateMessageWrapperView.bounds.size.height - keyboardRect.size.height),
+                                                      size: self.privateMessageWrapperView.bounds.size)
+    }
+    
+    /**
+     Resize text view when dismissing the keyboard.
+     
+     - Parameters:
+        - notification: NSNotification triggers this action with user info.
+     */
+    func keyboardWillHiden(notification: NSNotification) {
+        self.privateMessageWrapperView.frame = CGRect(origin: CGPoint(x: self.privateMessageWrapperView.frame.origin.x,
+                                                                      y: self.view.bounds.size.height - self.privateMessageWrapperView.bounds.size.height),
+                                                      size: self.privateMessageWrapperView.bounds.size)
     }
     
     // MARK: Help functions
     
-    private func displayUserData() {
-        guard let selectedUserId = self.selectedUserId else { return }
+    /**
+     Load a specific contact data and display it on ContactViewController.
+     */
+    private func loadContactData() {
+        guard let contact = self.contact, contactId = contact.objectId else { return }
         
-        // Fetch user data
+        // Show loading indicator
         self.showLoadingIndicator()
-        User.fetchUserInBackground(objectId: selectedUserId) { (result, error) -> Void in
-            self.dismissLoadingIndicator()
-            guard let user = result as? User where error == nil else {
-                print("\(error)")
+        
+        // Fetch contact data
+        User.loadUserInBackground(objectId: contactId) { (user, error) in
+            guard let contact = user where error == nil else {
+                ErrorHandler.log("\(error)")
+                self.dismissLoadingIndicator() // Dismiss loading indicator
                 return
             }
             
-            self.selectedUser = user
-            
-            user.loadAvatar() { (image, error) -> Void in
-                guard error == nil else {
-                    print("\(error)")
+            // Load avatar image
+            contact.loadAvatar { (image, error) in
+                guard let avatar = image where error == nil else {
+                    ErrorHandler.log("\(error)")
                     return
                 }
-                self.backgroundImageView.image = image
+                self.backgroundImageView.image = avatar
             }
             
-            self.nameLabel.text = user.name
-            
-            self.locationLabel.text = "\(user.location)"
-            
-            let graduationText = GraduationYearPickerView.showGraduationString(user.graduationYear)
-            if graduationText.characters.count > 0 {
+            // Set demographic labels
+            self.nameLabel.text = contact.name
+            self.locationLabel.text = "\(contact.location)"
+            let graduationText = GraduationYearPickerView.showGraduationString(contact.graduationYear)
+            if !graduationText.isEmpty {
                 self.graduationYearLabel.text = "(" + graduationText + ")"
             }
             else {
-                self.graduationYearLabel.text = graduationText
+                self.graduationYearLabel.text = ""
             }
             
-            self.isFavorite = self.currentUser.favoriteUsersArray.contains(user)
+            // Set favorite button
+            self.isFavorite = self.currentUser.favoriteUsersArray.contains(contact)
             
+            // Set table cells
             self.cells.removeAll()
-            if user.professions.count > 0 {
-                self.cells.append(.Professions)
+            if contact.professions.count > 0 {
+                self.cells.append("Professions")
             }
             
-            if user.email.characters.count > 0 && user.emailPublic {
-                self.cells.append(.Email)
+            if contact.emailPublic && !contact.email.isEmpty {
+                self.cells.append("Email")
             }
             
-            if let phone = user.phoneNumber where phone.characters.count > 0 && user.phonePublic {
-                self.cells.append(.Phone)
+            if let phone = contact.phoneNumber where contact.phonePublic && !phone.isEmpty {
+                self.cells.append("Phone")
             }
             
+            self.contact = contact
             self.tableView.reloadData()
-        }
-    }
-    
-    private func reloadRowForTypes(types: [ContactCellRowType]) {
-        var indexPaths = [NSIndexPath]()
-        for index in 0..<self.cells.count {
-            guard let cell = self.cells[safe: index] else { continue }
             
-            for type in types {
-                if cell == type {
-                    indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
-                }
-            }
-        }
-        if indexPaths.count > 0 {
-            self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+            self.dismissLoadingIndicator() // Dismiss loading indicator
         }
     }
 }
@@ -241,25 +269,30 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let rowType = cells[safe: indexPath.row] else { return UITableViewCell() }
+        guard let row = cells[safe: indexPath.row], title = row.title else {
+            return UITableViewCell()
+        }
         
-        switch (rowType) {
+        // Generate cell based on cell type
+        switch (title) {
         // Profession Cell
-        case .Professions:
+        case "Professions":
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListTableCell") as! ProfileListTableCell
             cell.reset()
+            cell.titleLabel.text = title
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
-            cell.titleLabel.text = ContactCellRowType.Professions.rawValue.title
+            cell.titleLabel.text = title
             cell.addButton.alpha = 0.0
             return cell
         
         // Email Cell
-        case .Email:
+        case "Email":
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileLabelTableCell") as! ProfileLabelTableCell
             cell.reset()
-            cell.titleLabel.text = ContactCellRowType.Email.rawValue.title
-            guard let user = self.selectedUser where user.emailPublic else { return cell }
-            cell.detail = user.email
+            cell.titleLabel.text = title
+            guard let contact = self.contact where contact.emailPublic else { return cell }
+            
+            cell.detail = contact.email
                 
             // Add email button
             let emailButton = EmailButton()
@@ -270,12 +303,13 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         
         // Phone  Cell
-        case .Phone:
+        case "Phone":
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileLabelTableCell") as! ProfileLabelTableCell
             cell.reset()
-            cell.titleLabel.text = ContactCellRowType.Phone.rawValue.title
-            guard let user = self.selectedUser where user.phonePublic else { return cell }
-            cell.detail = user.phoneNumber
+            cell.titleLabel.text = title
+            guard let contact = self.contact where contact.phonePublic else { return cell }
+            
+            cell.detail = contact.phoneNumber
             
             // Add phone button
             let phoneButton = PhoneButton()
@@ -284,6 +318,9 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.setNeedsDisplay()
             return cell
+            
+        default:
+            return UITableViewCell()
         }
     }
 }
@@ -296,12 +333,13 @@ extension ContactViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let rowType = self.cells[safe: collectionView.tag] else { return 0 }
+        guard let row = self.cells[safe: collectionView.tag], title = row.title else { return 0 }
         
-        switch (rowType) {
-        case .Professions:
-            guard let user = self.selectedUser else { return 0 }
-            return user.professions.count
+        // Generate collection based on cell type
+        switch (title) {
+        case "Professions":
+            guard let contact = self.contact else { return 0 }
+            return contact.professions.count
         default:
             return 0
         }
@@ -309,13 +347,14 @@ extension ContactViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath) as? ProfileCollectionCell,
-            rowType = self.cells[safe: collectionView.tag] else {
+            row = self.cells[safe: collectionView.tag], title = row.title else {
                 return ProfileCollectionCell()
         }
         
-        switch (rowType) {
-        case .Professions:
-            guard let user = self.selectedUser, profession = user.professions[safe: indexPath.row] else { break }
+        // Generate collection based on cell type
+        switch (title) {
+        case "Professions":
+            guard let contact = self.contact, profession = contact.professions[safe: indexPath.row] else { break }
             cell.cellLabel.text = profession.name
             
         default:
@@ -329,7 +368,7 @@ extension ContactViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        guard let user = self.selectedUser, profession = user.professions[safe: indexPath.row], text = profession.name else { return CGSizeZero }
+        guard let contact = self.contact, profession = contact.professions[safe: indexPath.row], text = profession.name else { return CGSizeZero }
         
         return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16, height: 24)
     }
@@ -344,7 +383,14 @@ extension ContactViewController: UICollectionViewDelegate, UICollectionViewDataS
 
 extension ContactViewController: UITextFieldDelegate {
     func textFieldDidChange(textField: UITextField) -> Bool {
-        self.privateMessageButton.enabled = textField.text?.characters.count > 0
+        // Determine private message button's status based on filled in text. The button will be enabled only if the text field is not empty
+        if let text = textField.text where !text.isEmpty {
+            self.privateMessageButton.enabled = true
+        }
+        else {
+            self.privateMessageButton.enabled = false
+        }
+        
         return true
     }
     
@@ -353,7 +399,9 @@ extension ContactViewController: UITextFieldDelegate {
             return true
         }
         
+        // Send message if click return while editing private message's text field
         self.sendMessage(self.privateMessageButton)
+        
         return true
     }
 }
@@ -364,11 +412,17 @@ extension ContactViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         switch (result) {
         case .Sent:
-            Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is sent successfully")
+            Helper.PopupInformationBox(self,
+                                       boxTitle: "Send Email",
+                                       message: "Email is sent successfully")
         case .Saved:
-            Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is saved in draft folder")
+            Helper.PopupInformationBox(self,
+                                       boxTitle: "Send Email",
+                                       message: "Email is saved in draft folder")
         case .Cancelled:
-            Helper.PopupInformationBox(self, boxTitle: "Send Email", message: "Email is cancelled")
+            Helper.PopupInformationBox(self,
+                                       boxTitle: "Send Email",
+                                       message: "Email is cancelled")
         case .Failed:
             if error != nil {
                 ErrorHandler.popupErrorAlert(self, errorMessage: (error?.localizedDescription)!)
@@ -386,18 +440,30 @@ extension ContactViewController: MFMailComposeViewControllerDelegate {
 // MARK: Favorite button delegate
 
 extension ContactViewController: FavoriteButtonDelegate {
+    /**
+     Add a record as favorite by clicking this favorite button.
+     
+     - Parameters:
+        - favoriteButton: Favorite Button is clicked.
+     */
     func addFavorite(favoriteButton: FavoriteButton) {
-        guard let user = self.selectedUser else { return }
-        self.currentUser.addFavoriteUser(user) { (result, error) -> Void in
+        guard let contact = self.contact else { return }
+        self.currentUser.addFavoriteUser(contact) { (result, error) -> Void in
             guard result && error == nil else { return }
             
             self.isFavorite = true
         }
     }
     
+    /**
+     Remove a favorited record by clicking this favorite button.
+     
+     - Parameters:
+        - favoriteButton: Favorite Button is clicked.
+     */
     func removeFavorite(favoriteButton: FavoriteButton) {
-        guard let user = self.selectedUser else { return }
-        self.currentUser.removeFavoriteUser(user) { (result, error) -> Void in
+        guard let contact = self.contact else { return }
+        self.currentUser.removeFavoriteUser(contact) { (result, error) -> Void in
             guard result && error == nil else { return }
             
             self.isFavorite = false
@@ -408,13 +474,19 @@ extension ContactViewController: FavoriteButtonDelegate {
 // MARK: Email button delegate
 
 extension ContactViewController: EmailButtonDelegate {
+    /**
+     Try send an email by clicking this email button.
+     
+     - Parameters:
+        - emailButton: Email Button clicked.
+     */
     func sendEmail(emailButton: EmailButton) {
-        guard let user = self.selectedUser else { return }
+        guard let contact = self.contact else { return }
         
         if MFMailComposeViewController.canSendMail() {
             let mailComposeVC = MFMailComposeViewController()
             mailComposeVC.mailComposeDelegate = self
-            mailComposeVC.setToRecipients([user.email])
+            mailComposeVC.setToRecipients([contact.email])
             presentViewController(mailComposeVC, animated: true, completion: nil)
         }
         else {
@@ -424,12 +496,21 @@ extension ContactViewController: EmailButtonDelegate {
 }
 
 // MARK: Phone button delegate
-
+/**
+ Try call a number by clicking this phone button.
+ 
+ - Parameters:
+    - phoneButton: Email Button clicked.
+ */
 extension ContactViewController: PhoneButtonDelegate {
     func callPhone(phoneButton: PhoneButton) {
-        guard let user = self.selectedUser, phoneNumber = user.phoneNumber else { return }
+        guard let contact = self.contact, phoneNumber = contact.phoneNumber else { return }
         
-        Helper.PopupConfirmationBox(self, boxTitle: nil, message: "Call \(phoneNumber)?", cancelBlock: nil) { (action) -> Void in
+        Helper.PopupConfirmationBox(self,
+                                    boxTitle: nil,
+                                    message: "Call \(phoneNumber)?",
+                                    cancelBlock: nil)
+        { (action) -> Void in
             if let url = NSURL(string: "tel:\(phoneNumber)") where UIApplication.sharedApplication().canOpenURL(url) {
                 UIApplication.sharedApplication().openURL(url)
             }
@@ -443,74 +524,50 @@ extension ContactViewController: PhoneButtonDelegate {
 // MARK: PrivateMessage button delegate
 
 extension ContactViewController: PrivateMessageButtonDelegate {
+    /**
+     Try send an private message by clicking this button.
+     
+     - Parameters:
+        - privateMessageButton: PrivateMessage Button clicked.
+     */
     func sendMessage(privateMessageButton: PrivateMessageButton) {
-        guard let user = self.selectedUser, text = privateMessageTextInputField.text else { return }
+        guard let contact = self.contact, text = privateMessageTextInputField.text else { return }
         
-        guard text.characters.count > 0 else {
+        guard !text.isEmpty else {
             ErrorHandler.popupErrorAlert(self, errorMessage: "Cannot send empty message")
             return
         }
         
-        CDChatManager.sharedManager().sendWelcomeMessageToOther(user.objectId, text: text, block: {(result, error) -> Void in
-            if (error != nil) {
-                print("error: \(error)")
-            } else {
-                CDChatManager.sharedManager().fetchConversationWithOtherId(user.objectId, callback: { (conv: AVIMConversation!, error: NSError!) -> Void in
-                    if (error != nil) {
-                        print("error: \(error)")
-                    } else {
-                        let chatRoomVC = ChatRoomViewController(conversation: conv)
-                        self.navigationController?.pushViewController(chatRoomVC, animated: true)
-                    }
-                    self.privateMessageTextInputField.text = ""
-                    self.dismissInputView()
-                })
+        CDChatManager.sharedManager().sendWelcomeMessageToOther(contact.objectId, text: text) {(result, error) in
+            guard error == nil else {
+                ErrorHandler.log("\(error)")
+                return
             }
-        })
+            
+            CDChatManager.sharedManager().fetchConversationWithOtherId(contact.objectId) { (conv: AVIMConversation!, error: NSError!) in
+                self.privateMessageTextInputField.text = ""
+                self.dismissInputView()
+                
+                guard error == nil else {
+                    ErrorHandler.log("\(error)")
+                    return
+                }
+                
+                let chatRoomVC = ChatRoomViewController(conversation: conv)
+                self.navigationController?.pushViewController(chatRoomVC, animated: true)
+            }
+        }
     }
 }
 
-// MARK: Custome delegate
+// MARK: ContactViewController delegate
 
 protocol ContactViewControllerDelegate {
+    /**
+     Function will be triggered when this view controller is finished for display and navagated back to parent view controller.
+     
+     - Parameters:
+        - contactVC: the ContactViewController finished for displaying.
+     */
     func finishViewContact(contactVC: ContactViewController)
-}
-
-// MARK: Custom row type
-
-private enum ContactCellRowType: ProfileRow, RawRepresentable {
-    case Professions = "Professions"
-    case Email = "Email"
-    case Phone = "Phone"
-    
-    static let allCases = [Professions, Email, Phone]
-    
-    typealias RawValue = ProfileRow
-    
-    var rawValue: RawValue {
-        switch self {
-        case .Professions:
-            return "Professions"
-        case .Email:
-            return "Email"
-        case .Phone:
-            return "Phone"
-        }
-    }
-    
-    init?(rawValue: ContactCellRowType.RawValue) {
-        var foundType: ContactCellRowType? = nil
-        
-        for type in ContactCellRowType.allCases {
-            if rawValue == type.rawValue {
-                foundType = type
-                break
-            }
-        }
-        
-        guard let type = foundType else {
-            return nil
-        }
-        self = type
-    }
 }

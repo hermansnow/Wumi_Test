@@ -21,7 +21,7 @@ class MessageTableViewController: UITableViewController {
     var inputTimer: NSTimer?
     var searchString: String = "" // String of next search
     var lastSearchString: String? // String of last search
-    var searchType: UserSearchType = .All
+    var searchType: ContactSearchType = .All
     var hasMoreResults: Bool = false
     
     lazy var nextButton = UIBarButtonItem()
@@ -111,7 +111,7 @@ class MessageTableViewController: UITableViewController {
             
             self.selectedUserIndexPath = indexPath
             contactVC.delegate = self
-            contactVC.selectedUserId = selectedUser.objectId
+            contactVC.contact = selectedUser
             contactVC.hidesBottomBarWhenPushed = true
         }
     }
@@ -136,7 +136,7 @@ class MessageTableViewController: UITableViewController {
     private func addDropdownList() {
         // Initial a dropdown list with options
         let optionTitles = ["All", "Favorites", "Graduation Year"]
-        let optionSearchTypes: [UserSearchType] = [.All, .Favorites, .Graduation]
+        let optionSearchTypes: [ContactSearchType] = [.All, .Favorites, .Graduation]
         
         // Initial title
         guard let index = optionSearchTypes.indexOf(self.searchType), title = optionTitles[safe: index] else { return }
@@ -178,7 +178,7 @@ class MessageTableViewController: UITableViewController {
         cell.nameLabel.text = user.name
         
         // Load avatar image
-        cell.avatarImageView.image = Constants.General.Image.AnonymousAvatarImage
+        cell.avatarImageView.image = UIImage(named: Constants.General.ImageName.AnonymousAvatar)
         user.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
             guard imageError == nil && avatarImage != nil else {
                 print("\(imageError)")
@@ -208,8 +208,10 @@ class MessageTableViewController: UITableViewController {
         }
         
         let checkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        checkButton.setImage(Constants.General.Image.Check, forState: .Selected)
-        checkButton.setImage(Constants.General.Image.Uncheck, forState: .Normal)
+        checkButton.setImage(UIImage(named: Constants.General.ImageName.Check),
+                             forState: .Selected)
+        checkButton.setImage(UIImage(named: Constants.General.ImageName.Uncheck),
+                             forState: .Normal)
         checkButton.tag = indexPath.row
         checkButton.addTarget(self, action: #selector(selectUser(_:)), forControlEvents: .TouchUpInside)
         cell.accessoryView = checkButton
@@ -276,40 +278,44 @@ class MessageTableViewController: UITableViewController {
     
     // MARK: Data handlers
     func loadUsers() {
-        self.currentUser.loadUsers(limit: Constants.Query.LoadUserLimit,
-                                   type: self.searchType,
-                                   searchString: self.searchString) { (results, error) -> Void in
-                                    guard let users = results as? [User] where error == nil else { return }
+        User.loadUsers(searchString: self.searchString,
+                       limit: Constants.Query.LoadUserLimit,
+                       type: self.searchType,
+                       forUser: self.currentUser)
+        { (users, error) -> Void in
+            guard error == nil else { return }
                                     
-                                    self.displayUsers = users
+            self.displayUsers = users
                                     
-                                    if let index = self.displayUsers.indexOf(self.currentUser) {
-                                        self.displayUsers.removeAtIndex(index)
-                                    }
+            if let index = self.displayUsers.indexOf(self.currentUser) {
+                self.displayUsers.removeAtIndex(index)
+            }
                                     
-                                    self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
-                                    self.lastSearchString = self.searchString
+            self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
+            self.lastSearchString = self.searchString
                                     
-                                    self.tableView.reloadData()
+            self.tableView.reloadData()
                                     
-                                    // End refreshing
-                                    self.refreshControl?.endRefreshing()
+            // End refreshing
+            self.refreshControl?.endRefreshing()
         }
     }
     
     // Load more users based on filters
     func loadMoreUsers() {
-        self.currentUser.loadUsers(limit: Constants.Query.LoadUserLimit,
-                                   type: self.searchType,
-                                   searchString: self.searchString,
-                                   sinceUser: self.displayUsers.last) { (results, error) -> Void in
-                                    guard let users = results as? [User] where error == nil && users.count > 0 else { return }
+        User.loadUsers(searchString: self.searchString,
+                       limit: Constants.Query.LoadUserLimit,
+                       type: self.searchType,
+                       forUser: self.currentUser,
+                       sinceUser: self.displayUsers.last)
+        { (users, error) -> Void in
+            guard error == nil && users.count > 0 else { return }
                                     
-                                    self.displayUsers.appendContentsOf(users)
-                                    self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
-                                    self.lastSearchString = self.searchString
-                                    
-                                    self.tableView.reloadData()
+            self.displayUsers.appendContentsOf(users)
+            self.hasMoreResults = users.count == Constants.Query.LoadUserLimit
+            self.lastSearchString = self.searchString
+            
+            self.tableView.reloadData()
         }
     }
 }

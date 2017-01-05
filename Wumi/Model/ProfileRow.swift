@@ -9,6 +9,7 @@
 import Foundation
 
 struct ProfileRow {
+    /// Title string of a profile row.
     var title: String?
     
     init(title: String?) {

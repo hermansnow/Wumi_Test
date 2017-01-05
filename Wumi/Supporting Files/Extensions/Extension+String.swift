@@ -20,14 +20,20 @@ extension String {
         }
     }
     
-    // Check whether string contains Chinese characters
+    /**
+     Check whether this string contains Chinese characters or nor.
+     
+     - Returns:
+        True if contains any Chinese character, otherwise false.
+     */
     func containChinese() -> Bool {
         do {
             let regex = try NSRegularExpression(pattern: "\\p{script=Han}", options: .AnchorsMatchLines)
-            return regex.numberOfMatchesInString(self, options: [], range: NSRange(location: 0, length: self.characters.count)) > 0
+            return regex.numberOfMatchesInString(self, options: [],
+                                                 range: NSRange(location: 0, length: self.characters.count)) > 0
         }
         catch {
-            print("Failed in creating NSRegularExpression for Han")
+            ErrorHandler.log("Failed in creating NSRegularExpression for Han")
             return false
         }
     }

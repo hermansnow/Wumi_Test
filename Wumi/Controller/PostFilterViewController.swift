@@ -73,8 +73,10 @@ class PostFilterViewController: UITableViewController {
         cell.textLabel!.text = category.name
         
         let checkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        checkButton.setImage(Constants.General.Image.Check, forState: .Selected)
-        checkButton.setImage(Constants.General.Image.Uncheck, forState: .Normal)
+        checkButton.setImage(UIImage(named: Constants.General.ImageName.Check),
+                             forState: .Selected)
+        checkButton.setImage(UIImage(named: Constants.General.ImageName.Uncheck),
+                             forState: .Normal)
         checkButton.tag = indexPath.row
         checkButton.addTarget(self, action: #selector(selectCategory(_:)), forControlEvents: .TouchUpInside)
         cell.accessoryView = checkButton
@@ -88,8 +90,10 @@ class PostFilterViewController: UITableViewController {
         cell.textLabel!.text = area.name
         
         let checkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        checkButton.setImage(Constants.General.Image.Check, forState: .Selected)
-        checkButton.setImage(Constants.General.Image.Uncheck, forState: .Normal)
+        checkButton.setImage(UIImage(named: Constants.General.ImageName.Check),
+                             forState: .Selected)
+        checkButton.setImage(UIImage(named: Constants.General.ImageName.Uncheck),
+                             forState: .Normal)
         checkButton.tag = indexPath.row
         checkButton.addTarget(self, action: #selector(selectArea(_:)), forControlEvents: .TouchUpInside)
         cell.accessoryView = checkButton

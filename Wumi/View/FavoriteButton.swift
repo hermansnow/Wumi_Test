@@ -8,11 +8,10 @@
 
 import UIKit
 
-class FavoriteButton: UIButton {
+class FavoriteButton: ActionButton {
     
+    /// Favorite button delegate.
     var delegate: FavoriteButtonDelegate?
-    
-    // MARK: Initializers
     
     override var selected: Bool {
         get {
@@ -26,52 +25,52 @@ class FavoriteButton: UIButton {
         }
     }
     
-    convenience init() {
-        self.init(frame: CGRectZero)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    internal override func setProperty() {
+        super.setProperty()
         
-        self.setProperty()
-        self.addTarget()
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.Unfavorite),
+                                forState: .Normal)
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.Favorite),
+                                forState: .Selected)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    override func tapped(sender: ActionButton) {
+        super.tapped(sender)
         
-        self.setProperty()
-        self.addTarget()
-    }
-    
-    private func setProperty() {
-        self.setBackgroundImage(UIImage(named: "Star"), forState: .Normal)
-        self.setBackgroundImage(UIImage(named: "Star_Selected"), forState: .Selected)
+        guard let button = sender as? FavoriteButton, delegate = self.delegate else { return }
         
-        self.adjustsImageWhenHighlighted = false
-        self.showsTouchWhenHighlighted = false
-    }
-    
-    private func addTarget() {
-        self.addTarget(self, action: #selector(tapped(_:)), forControlEvents: .TouchUpInside)
-    }
-    
-    func tapped(sender: FavoriteButton) {
-        if sender.selected {
-            if let delegate = self.delegate {
-                delegate.removeFavorite(self)
-            }
+        if button.selected {
+            delegate.removeFavorite(self)
         }
         else {
-            if let delegate = self.delegate {
-                delegate.addFavorite(self)
-            }
+            delegate.addFavorite(self)
         }
     }
 }
 
 @objc protocol FavoriteButtonDelegate {
+    /**
+     Add a record as favorite by clicking this favorite button.
+     
+     - Parameters:
+        - favoriteButton: Favorite Button is clicked.
+     */
     func addFavorite(favoriteButton: FavoriteButton)
+    
+    /**
+     Remove a favorited record by clicking this favorite button.
+     
+     - Parameters:
+        - favoriteButton: Favorite Button is clicked.
+     */
     func removeFavorite(favoriteButton: FavoriteButton)
+    
+    /**
+     Function to be triggered when a selected status of this button is changed.
+     
+     - Parameters:
+        - favoriteButton: Favorite Button is clicked.
+        - selected: New selected value for this button.
+     */
     optional func didChangeSelected(favoriteButton: FavoriteButton, selected: Bool)
 }

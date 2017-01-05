@@ -13,49 +13,70 @@ class ContactMapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
-    var displayUsers = [User]()
+    /// Array of contacts to be displayed on the map.
+    var displayContacts = [User]()
+    /// Current location of device.
     private var currentLocation: CLLocation?
+    /// Radius for visible region.
     private var regionRadius: CLLocationDistance = 50000
+    /// CLLocation manager.
     private var locationManager = CLLocationManager()
+    
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.addMapView()
+        // Add MKMapView instance
+        self.setMapView()
         
+        // Load contacts
         self.loadContacts()
     }
     
-    private func addMapView() {
-        self.mapView.mapType = .Standard
-        self.mapView.delegate = self
-        self.locationManager.delegate = self
-        if let centerLocation = MKMapView.getMapCenterCache() {
-            self.mapView.centerMapOnLocation(centerLocation, WithRadius: self.regionRadius)
-        }
-        self.getCurrentLocation()
-    }
-    
-    // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
             guard let annotationView = sender as? ContactAnnotationView,
                 annotation = annotationView.annotation as? ContactPoint,
-                selectedUser = annotation.user else { return }
+                selectedContact = annotation.contact else { return }
             
-            contactVC.selectedUserId = selectedUser.objectId
+            contactVC.contact = selectedContact
             contactVC.hidesBottomBarWhenPushed = true
         }
     }
     
+    // MARK: UI Functions
+    
+    /**
+     Initialize the map view
+     */
+    private func setMapView() {
+        self.mapView.mapType = .Standard
+        self.mapView.delegate = self
+        self.locationManager.delegate = self
+        
+        // Re-use existing cached map center
+        if let centerLocation = MKMapView.getMapCenterCache() {
+            self.mapView.centerMapOnLocation(centerLocation, WithRadius: self.regionRadius)
+        }
+        
+        // Get current location
+        self.getCurrentLocation()
+    }
+    
+    // MARK: Help functions
+    
+    /**
+     Load all contacts needed to be displayed.
+     */
     private func loadContacts() {
-        for user in self.displayUsers {
-            user.location.calculateCoordinate { (results: [CLPlacemark]?, error: NSError?) in
+        for contact in self.displayContacts {
+            // Initilize an annotation for each contact
+            contact.location.calculateCoordinate { (results: [CLPlacemark]?, error: NSError?) in
                 guard let placemarks = results, placemark = placemarks.first, location = placemark.location else { return }
                 
-                let contactPoint = ContactPoint(User: user)
+                let contactPoint = ContactPoint(Contact: contact)
                 contactPoint.coordinate = location.coordinate
                 self.mapView.addAnnotation(contactPoint)
             }
@@ -85,9 +106,9 @@ extension ContactMapViewController: MKMapViewDelegate {
             view = ContactAnnotationView(annotation: contactPoint, reuseIdentifier: identifier)
         }
         
-        // Load user data
-        if let user = contactPoint.user {
-            user.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
+        // Load contact data
+        if let contact = contactPoint.contact {
+            contact.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
                 guard imageError == nil && avatarImage != nil else {
                     print("\(imageError)")
                     return
@@ -101,10 +122,14 @@ extension ContactMapViewController: MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        // Show a specific contact
         self.performSegueWithIdentifier("Show Contact", sender: view)
     }
     
-    func getCurrentLocation() {
+    /**
+     Get current device's location and show it on map.
+     */
+    private func getCurrentLocation() {
         if Double(UIDevice.currentDevice().systemVersion) > 8.0 {
             self.locationManager.requestWhenInUseAuthorization()
         }
@@ -113,6 +138,8 @@ extension ContactMapViewController: MKMapViewDelegate {
         }
     }
 }
+
+// MARK: CLLocationManager delegate
 
 extension ContactMapViewController: CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {

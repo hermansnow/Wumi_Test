@@ -208,23 +208,42 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     
     // MARK: Avatar functions
  
-    // Load avatar. This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background
-    func loadAvatar(ScaleToSize size: CGSize? = nil, block: AVImageResultBlock!) {
+    /**
+     Load avatar of this user asynchorously.
+     This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background.
+     
+     - Parameters:
+        - scaleToSize: Scale avatar to a specific size.
+        - block: Block includes result avatar image or a WumiError if failed.
+     */
+    func loadAvatar(scaleToSize size: CGSize? = nil, block: (avatar: UIImage?, error: WumiError?) -> Void) {
         guard let file = self.avatarImageFile else {
-            block!(nil, NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            block(avatar: nil, error: WumiError(type: .Image, error: "No avatar image for this user."))
             return
         }
         
-        AVFile.loadImageFile(file, size: size, block: block)
+        AVFile.loadImageFile(file, size: size) { (image, error) in
+            block(avatar: image, error: ErrorHandler.parseError(error))
+        }
     }
     
-    func loadAvatarThumbnail(ScaleToSize size: CGSize? = nil, block: AVImageResultBlock!) {
+    /**
+     Load avatar's thumbnail of this user asynchorously.
+     This function will check whether the image in in local cache first. If not, then try download it from Leancloud server asynchronously in background.
+     
+     - Parameters:
+        - scaleToSize: Scale avatar to a specific size.
+        - block: Block includes result avatar image or a WumiError if failed.
+     */
+    func loadAvatarThumbnail(ScaleToSize size: CGSize? = nil, block: (avatar: UIImage?, error: WumiError?) -> Void) {
         guard let file = self.avatarThumbnail else {
-            block!(nil, NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            block(avatar: nil, error: WumiError(type: .Image, error: "No avatar thumbnail image for this user."))
             return
         }
         
-        AVFile.loadImageFile(file, size: size, block: block)
+        AVFile.loadImageFile(file, size: size) { (image, error) in
+            block(avatar: image, error: ErrorHandler.parseError(error))
+        }
     }
     
     /** 
@@ -236,9 +255,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     */
     func saveAvatarFile(avatarImage: UIImage?, block: (success: Bool, error: WumiError?) -> Void) {
         guard let image = avatarImage else {
-            block(success: false,
-                  error: WumiError(type: .Image,
-                                   error: "Image is nil"))
+            block(success: false, error: WumiError(type: .Image, error: "Image is nil."))
             return
         }
         
@@ -260,9 +277,20 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     
     // MARK: User queries
     
-    func loadUsers(limit limit: Int = 200, type: UserSearchType = .All, searchString: String = "", sinceUser: User? = nil, block: AVArrayResultBlock!) {
-        guard var query = User.getQueryFromSearchType(type, forUser: self) else {
-            block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
+    /**
+     Load user records asynchonously.
+     
+     - Parameters:
+        - searchString: search text string.
+        - limit: Limit of results returned.
+        - type: Contact search type. The category is defined in ContactSearchType enum.
+        - forUser: load user for a specific user.
+        - sinceUser: Last user loaded. We will search from start if it is nil, otherwise, load more.
+        - block: Block includes search results: array of user records or a WumiError record.
+     */
+    class func loadUsers(searchString searchString: String = "", limit: Int = 200, type: ContactSearchType = .All, forUser user: User? = nil, sinceUser lastUser: User? = nil, block: (users: [User], error: WumiError?) -> Void) {
+        guard var query = User.getQueryFromSearchType(type, forUser: user) else {
+            block(users: [], error: WumiError(type: .Query, error: "Failed in starting query"))
             return
         }
         
@@ -276,16 +304,11 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         }
         
         // Handle load more
-        if let user = sinceUser, indexQuery = User.getQueryFromSearchType(type, forUser: self), tieBreakerQuery = User.getQueryFromSearchType(type, forUser: self) {
-            indexQuery.whereKey(index, greaterThan: user[index])
-            tieBreakerQuery.whereKey(index, equalTo: user[index])
-            tieBreakerQuery.whereKey("objectId", greaterThan: user.objectId)
+        if let lastUser = lastUser, indexQuery = User.getQueryFromSearchType(type, forUser: user), tieBreakerQuery = User.getQueryFromSearchType(type, forUser: user) {
+            indexQuery.whereKey(index, greaterThan: lastUser[index])
+            tieBreakerQuery.whereKey(index, equalTo: lastUser[index])
+            tieBreakerQuery.whereKey("objectId", greaterThan: lastUser.objectId)
             query = AVQuery.orQueryWithSubqueries([indexQuery, tieBreakerQuery])
-        }
-        
-        // Add filter based on search type
-        if type == .Graduation {
-            query.whereKey("graduationYear", equalTo: self.graduationYear)
         }
         
         // Handler search string
@@ -293,59 +316,79 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
             query.whereKey(index, containsString: searchString)
         }
         
+        // Add filter based on search type
+        if let user = user where type == .Graduation {
+            query.whereKey("graduationYear", equalTo: user.graduationYear)
+        }
+        
         // Sort results by
         query.orderByAscending(index)
         query.addAscendingOrder("objectId")
         
+        // Set limit
         query.limit = limit
         
         // Cache policy
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 3600 * 24 * 30
         
+        // Search users
         query.findObjectsInBackgroundWithBlock { (results, error) in
-            if let users = results as? [User] where error == nil {
-                for user in users {
-                    User.cacheUserData(user)
-                }
+            guard let users = results as? [User] where error == nil else {
+                block(users: [], error: ErrorHandler.parseError(error))
+                return
             }
-            block(results, error)
+            
+            for user in users {
+                User.cacheUserData(user)
+            }
+            block(users: users, error: nil)
+        }
+    }
+    
+    /**
+     Load an user object based on object Id.
+     
+     - Parameters:
+        - objectId: Object Id of the user to be fetched.
+        - block: Block includes search results: a user record or a WumiError record if failed.
+     */
+    class func loadUserInBackground(objectId id: String, block: (user: User?, error: WumiError?) -> Void) {
+        let query = User.query()
+        query.includeKey("professions") // Also fetch associated professions
+        
+        // Cache policy
+        query.cachePolicy = .CacheThenNetwork
+        query.maxCacheAge = 3600 * 24 * 30
+        
+        // Load User
+        query.getObjectInBackgroundWithId(id) { (result, error) in
+            guard let user = result as? User where error == nil else {
+                block(user: nil, error: ErrorHandler.parseError(error))
+                return
+            }
+            
+            User.cacheUserData(user)
+            block(user: user, error: nil)
         }
     }
     
     // Fetch if needed. This function will fetch user data from memory first, then from network if it is null
-    override func fetchIfNeededInBackgroundWithBlock(block: AVObjectResultBlock!) {
+    func loadIfNeededInBackgroundWithBlock(block: (user: User?, error: WumiError?) -> Void) {
         if self.isDataAvailable() {
-            block(self, nil)
+            block(user: self, error: nil)
             return
         }
         
         // Try fetch data from memory by objectId
         if let user = DataManager.sharedDataManager.cache["user_" + self.objectId] as? User {
             print("Found \(user.name) in memory cache")
-            block(user, nil)
+            block(user: user, error: nil)
             return
         }
         
         // Try fetch data from
-        User.fetchUserInBackground(objectId: self.objectId, block: block)
-    }
-    
-    // Fetch an user based on object ID
-    class func fetchUserInBackground(objectId id: String, block: AVObjectResultBlock!) {
-        let query = User.query()
-        query.includeKey("professions")
-        
-        query.cachePolicy = .CacheThenNetwork
-        query.maxCacheAge = 3600 * 24 * 30
-        
-        query.getObjectInBackgroundWithId(id) { (result, error) in
-            if let user = result as? User where error == nil {
-                User.cacheUserData(user)
-            }
-            
-            block(result, error)
-        }
+        User.loadUserInBackground(objectId: self.objectId, block: block)
     }
     
     // Save the user and fetch latest data after saving
@@ -355,19 +398,32 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         self.saveInBackgroundWithOption(option, block: block)
     }
     
-    // Cache a user data into local memory
+    /**
+     Cache an user data into local memory.
+     
+     - Parameters:
+        - user: User record to be cached.
+     */
     class func cacheUserData(user: User) {
-        //BackupUser.saveUser(user)
-        
-        // Save into local cache
+        // Set up cache age
         user.maxCacheAge = 3600 * 24
+        
         DataManager.sharedDataManager.cache["user_" + user.objectId] = user
         
-        print("Cached \(user.name) in memory")
+        DataManager.log("Cached \(user.name) in memory")
     }
     
-    // Get associated AVQuery object based on search type
-    class func getQueryFromSearchType(searchType: UserSearchType, forUser user: User? = nil) -> AVQuery? {
+    /**
+     Get associated AVQuery object based on search type.
+     
+     - Parameters:
+        - searchType: Contact search type. The category is defined in ContactSearchType.
+        - forUser: Query for a specific user.
+     
+     - Returns:
+        An AVQuery object for query. Nil if failed.
+     */
+    class func getQueryFromSearchType(searchType: ContactSearchType, forUser user: User? = nil) -> AVQuery? {
         var query: AVQuery? = nil
         
         switch (searchType) {
@@ -558,6 +614,14 @@ func ==(lhs: User, rhs: User) -> Bool {
 
 // MARK: User Search Type enum
 
-enum UserSearchType {
+/**
+ Search category for contacts:
+ 
+ * All: Search contacts from all users.
+ * Favorites: Search contacts from favorited users of current login user.
+ * Graduation: Search contacts from users graduated in same year.
+ 
+ */
+enum ContactSearchType {
     case All, Favorites, Graduation
 }

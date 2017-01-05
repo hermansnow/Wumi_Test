@@ -8,51 +8,39 @@
 
 import UIKit
 
-class PhoneButton: UIButton {
+class PhoneButton: ActionButton {
     
+    /// Phone button delegate.
     var delegate: PhoneButtonDelegate?
     
-    // MARK: Initializers
-    
-    convenience init() {
-        self.init(frame: CGRectZero)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    internal override func setProperty() {
+        super.setProperty()
         
-        self.setProperty()
-        self.addTarget()
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.Phone),
+                                forState: .Normal)
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.Phone_Selected),
+                                forState: .Highlighted)
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.Phone_Selected),
+                                forState: .Selected)
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.Phone_Disabled),
+                                forState: .Disabled)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    override func tapped(sender: ActionButton) {
+        super.tapped(sender)
         
-        self.setProperty()
-        self.addTarget()
-    }
-    
-    private func setProperty() {
-        self.setBackgroundImage(UIImage(named: "Phone"), forState: .Normal)
-        self.setBackgroundImage(UIImage(named: "Phone_Selected"), forState: .Highlighted)
-        self.setBackgroundImage(UIImage(named: "Phone_Selected"), forState: .Selected)
-        self.setBackgroundImage(UIImage(named: "Phone_Inactive"), forState: .Disabled)
-        
-        self.adjustsImageWhenHighlighted = false
-        self.showsTouchWhenHighlighted = false
-    }
-    
-    private func addTarget() {
-        self.addTarget(self, action: #selector(tapped(_:)), forControlEvents: .TouchUpInside)
-    }
-    
-    func tapped(sender: FavoriteButton) {
-        guard let delegate = self.delegate else { return }
+        guard let _ = sender as? PhoneButton, delegate = self.delegate else { return }
         
         delegate.callPhone(self)
     }
 }
 
 protocol PhoneButtonDelegate {
+    /**
+     Try call a number by clicking this phone button.
+     
+     - Parameters:
+        - phoneButton: Email Button clicked.
+     */
     func callPhone(phoneButton: PhoneButton)
 }

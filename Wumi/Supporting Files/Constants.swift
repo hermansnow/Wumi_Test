@@ -47,11 +47,24 @@ struct Constants {
             static let ProfileTextFont = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
         }
         
-        struct Image {
+        struct ImageName {
             static let Logo = UIImage(named: "Logo")
-            static let AnonymousAvatarImage = UIImage(named: "Anonymous")
-            static let Check = UIImage(named: "Checkmark")
-            static let Uncheck = UIImage(named: "Uncheck")
+            static let AnonymousAvatar = "Anonymous"
+            static let Check = "Checkmark"
+            static let Uncheck = "Uncheck"
+            static let Favorite = "Star_Selected"
+            static let Unfavorite = "Star"
+            static let More = "More"
+            static let More_Selected = "More_Selected"
+            static let Email = "Email"
+            static let Email_Selected = "Email_Selected"
+            static let Email_Disabled = "Email_Inactive"
+            static let Phone = "Phone"
+            static let Phone_Selected = "Phone_Selected"
+            static let Phone_Disabled = "Phone_Inactive"
+            static let Private_Message = "Private_Message"
+            static let Private_Message_Selected = "Private_Message_Selected"
+            static let Private_Message_Disabled = "Private_Message_Inactive"
         }
         
         struct Size {

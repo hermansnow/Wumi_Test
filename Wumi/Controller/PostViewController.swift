@@ -141,7 +141,7 @@ class PostViewController: DataLoadingTableViewController {
         if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
             guard let view = sender as? UserBannerView, selectedUserId = view.userObjectId else { return }
             contactVC.delegate = self
-            contactVC.selectedUserId = selectedUserId
+            contactVC.contact = User(objectId: selectedUserId)
             contactVC.hidesBottomBarWhenPushed = true
         }
     }
@@ -249,8 +249,8 @@ class PostViewController: DataLoadingTableViewController {
         self.postCell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
         
         if let author = post.author {
-            author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-                guard let user = result as? User where error == nil else { return }
+            author.loadIfNeededInBackgroundWithBlock { (result, error) in
+                guard let user = result where error == nil else { return }
                 
                 self.postCell.authorView.detailLabel.text = user.shortUserBannerDesc
                 self.postCell.authorView.userObjectId = user.objectId
@@ -317,8 +317,8 @@ class PostViewController: DataLoadingTableViewController {
         cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostViewController.showUserContact(_:))))
         
         if let author = comment.author {
-            author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-                guard let user = result as? User where error == nil else { return }
+            author.loadIfNeededInBackgroundWithBlock { (result, error) in
+                guard let user = result where error == nil else { return }
                 cell.authorView.detailLabel.text = user.name
                 cell.authorView.userObjectId = user.objectId
             
@@ -403,7 +403,7 @@ class PostViewController: DataLoadingTableViewController {
         
         self.showLoadingIndicator()
         Comment.sendNewCommentForPost(post, author: self.currentUser, content: self.replyView.commentTextView.text, replyComment: replyComment) { (success, error) in
-            self.hideLoadingIndicator()
+            self.dismissLoadingIndicator()
             guard success && error == nil else {
                 ErrorHandler.popupErrorAlert(self, errorMessage: "\(error != nil ? error.description : "Unknown issue")") { (action) -> Void in
                     self.replyView.commentTextView.becomeFirstResponder()

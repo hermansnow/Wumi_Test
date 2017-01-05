@@ -442,6 +442,7 @@
 		FF51601E1DF9FE2D00AD872B /* ButtomBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */; };
 		FF5160241DFA212B00AD872B /* country_code.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160231DFA212B00AD872B /* country_code.plist */; };
 		FF5160261DFA2CBB00AD872B /* country_state_city.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160251DFA2CBB00AD872B /* country_state_city.plist */; };
+		FF6067591E1B92DB003116FA /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6067581E1B92DB003116FA /* ActionButton.swift */; };
 		FF665F7E1E0206EB00F20219 /* Extension+MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF665F7D1E0206EB00F20219 /* Extension+MKMapView.swift */; };
 		FF848E7C1E07F26400A09DA5 /* WumiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF848E7B1E07F26400A09DA5 /* WumiError.swift */; };
 /* End PBXBuildFile section */
@@ -1012,6 +1013,7 @@
 		FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtomBorderView.swift; path = View/ButtomBorderView.swift; sourceTree = "<group>"; };
 		FF5160231DFA212B00AD872B /* country_code.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_code.plist; sourceTree = "<group>"; };
 		FF5160251DFA2CBB00AD872B /* country_state_city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_state_city.plist; sourceTree = "<group>"; };
+		FF6067581E1B92DB003116FA /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionButton.swift; path = View/ActionButton.swift; sourceTree = "<group>"; };
 		FF665F7D1E0206EB00F20219 /* Extension+MKMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+MKMapView.swift"; path = "Supporting Files/Extensions/Extension+MKMapView.swift"; sourceTree = "<group>"; };
 		FF848E7B1E07F26400A09DA5 /* WumiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WumiError.swift; path = Model/WumiError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2046,6 +2048,7 @@
 		DF4F53301CD30F8C009F3D2E /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				FF6067581E1B92DB003116FA /* ActionButton.swift */,
 				DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */,
 				DF0180791D413C5E00935A60 /* ReplyButton.swift */,
 				DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */,
@@ -2737,6 +2740,7 @@
 				B1ECD7901CCC1F4000CED9C4 /* XHViewState.m in Sources */,
 				B1ECD7871CCC1F4000CED9C4 /* SETextGeometry.m in Sources */,
 				B1ECD76B1CCC1F4000CED9C4 /* XHMessageTableViewController.m in Sources */,
+				FF6067591E1B92DB003116FA /* ActionButton.swift in Sources */,
 				DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
 				DFB220A71DAD8228008FB503 /* Extension+NSAttributedString.swift in Sources */,

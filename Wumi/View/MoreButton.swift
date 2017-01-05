@@ -8,49 +8,44 @@
 
 import UIKit
 
-class MoreButton: UIButton {
+class MoreButton: ActionButton {
     
+    /// More button delegate.
     var delegate: MoreButtonDelegate?
     
-    // MARK: Initializers
+    // MARK: Help functions
     
-    convenience init() {
-        self.init(frame: CGRectZero)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    /**
+     Set properties for the button.
+     */
+    internal override func setProperty() {
+        super.setProperty()
         
-        self.setProperty()
-        self.addTarget()
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.More),
+                                forState: .Normal)
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.More_Selected),
+                                forState: .Selected)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    /**
+     Event handler when button is clicked.
+     */
+    override func tapped(sender: ActionButton) {
+        super.tapped(sender)
         
-        self.setProperty()
-        self.addTarget()
-    }
-    
-    private func setProperty() {
-        self.setBackgroundImage(UIImage(named: "More"), forState: .Normal)
-        self.setBackgroundImage(UIImage(named: "More_Selected"), forState: .Selected)
-        
-        self.adjustsImageWhenHighlighted = false
-        self.showsTouchWhenHighlighted = false
-    }
-    
-    private func addTarget() {
-        self.addTarget(self, action: #selector(tapped(_:)), forControlEvents: .TouchUpInside)
-    }
-    
-    func tapped(sender: ReplyButton) {
-        guard let delegate = self.delegate else { return }
+        guard let _ = sender as? MoreButton, delegate = self.delegate else { return }
         
         delegate.showMoreActions(self)
     }
 }
 
 @objc protocol MoreButtonDelegate {
+    
+    /**
+     Click more button to show more.
+     
+     - Parameters:
+        - moreButton: The MoreButton object clicked.
+     */
     func showMoreActions(moreButton: MoreButton)
 }

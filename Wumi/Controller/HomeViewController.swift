@@ -345,7 +345,7 @@ class HomeViewController: UIViewController {
         
         if let contactVC = segue.destinationViewController as? ContactViewController where segue.identifier == "Show Contact" {
             guard let view = sender as? UserBannerView, selectedUserId = view.userObjectId else { return }
-            contactVC.selectedUserId = selectedUserId
+            contactVC.contact = User(objectId: selectedUserId)
             contactVC.hidesBottomBarWhenPushed = true
         }
         
@@ -601,7 +601,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         else if let url = post.externalPreviewImageUrl{
-            cell.imagePreview.sd_setImageWithURL(url, placeholderImage: Constants.General.Image.Logo)
+            cell.imagePreview.sd_setImageWithURL(url, placeholderImage: Constants.General.ImageName.Logo)
         }
         
         cell.timeStamp = post.updatedAt.timeAgo()
@@ -609,8 +609,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         // Fetch author information
         if let author = post.author {
-            author.fetchIfNeededInBackgroundWithBlock { (result, error) -> Void in
-                guard let user = result as? User where error == nil else { return }
+            author.loadIfNeededInBackgroundWithBlock { (result, error) in
+                guard let user = result where error == nil else { return }
                 
                 cell.authorView.detailLabel.text = user.shortUserBannerDesc
                 cell.authorView.userObjectId = user.objectId

@@ -19,6 +19,7 @@ class WumiError: NSError {
         case Image
         case DisplayName
         case GraduationYear
+        case Query
     }
     
     /// Type of this Wumi error

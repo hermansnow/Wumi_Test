@@ -11,24 +11,29 @@ import MapKit
 
 class ContactPoint: NSObject, MKAnnotation {
     
+    /// Title of annotation.
     var title: String?
+    /// Detailed description of annotation.
     var detail: String?
+    /// Location coordinate data for annoation.
     var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D()
-    
-    var user: User? {
+    /// User contact this annoation represents.
+    var contact: User? {
         didSet {
-            if let user = self.user {
-                self.title = user.nameDescription
-                self.detail = user.location.shortDiscription
+            if let contact = self.contact {
+                self.title = contact.nameDescription
+                self.detail = contact.location.shortDiscription
             }
         }
     }
     
-    convenience init(User user: User) {
+    // MARK: Initializers
+    
+    convenience init(Contact contact: User) {
         self.init()
         // Use tricky way to invoke didSet for user property
         defer {
-            self.user = user
+            self.contact = contact
         }
     }
 }

@@ -120,6 +120,15 @@ class GraduationYearPickerView: UIView {
         self.graduationYearPicker.dataSource = self
     }
     
+    /**
+     Show graduation year in picker.
+     
+     - Parameters:
+        - year: Year number to be shown.
+     
+     - Return:
+        String to be shown in picker for this year.
+     */
     class func showGraduationString(year: Int) -> String {
         if year == 0 {
             return ""

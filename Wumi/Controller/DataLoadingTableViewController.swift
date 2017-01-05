@@ -9,8 +9,12 @@
 import UIKit
 
 class DataLoadingTableViewController: UITableViewController {
-    private lazy var loadingView = LoadingIndicatorView() // Loading indicator for async operations
+    /// Loading indicator for async operations.
+    private lazy var loadingView = LoadingIndicatorView()
     
+    /**
+     Show loading indicator.
+     */
     func showLoadingIndicator() {
         self.loadingView.frame.size = CGSize(width: 40, height: 40)
         self.loadingView.center = self.view.center
@@ -19,7 +23,10 @@ class DataLoadingTableViewController: UITableViewController {
         self.view.bringSubviewToFront(loadingView)
     }
     
-    func hideLoadingIndicator() {
+    /**
+     Dismiss loading indicator.
+     */
+    func dismissLoadingIndicator() {
         self.loadingView.stopAnimating()
         self.loadingView.removeFromSuperview()
     }

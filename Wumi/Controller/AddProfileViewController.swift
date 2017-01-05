@@ -68,15 +68,14 @@ class AddProfileViewController: ScrollTextFieldViewController {
      */
     private func setupAvatarView() {
         // Set avatar image
-        self.avatarImageView.image = avatarImage ?? Constants.General.Image.AnonymousAvatarImage
+        self.avatarImageView.image = avatarImage ?? UIImage(named: Constants.General.ImageName.AnonymousAvatar)
         
         // Set background views
         self.avatarBackgroundView.colors = [Constants.General.Color.ThemeColor, UIColor.whiteColor()]
         
         // Add avatar view mask
         self.maskLayer.fillColor = Constants.SignIn.Color.MaskColor.CGColor
-        self.avatarBackgroundView.layer.insertSublayer(self.maskLayer,
-                                                       below: self.avatarImageView.layer)
+        self.avatarBackgroundView.layer.insertSublayer(self.maskLayer, below: self.avatarImageView.layer)
     }
     
     /**
@@ -222,7 +221,7 @@ extension AddProfileViewController: UITextFieldDelegate {
             self.user.name = nameTextField.text
             
         case self.graduationYearTextField.inputTextField:
-            guard let graduationYear = graduationYearTextField.text where graduationYear.characters.count > 0,
+            guard let graduationYear = graduationYearTextField.text where !graduationYear.isEmpty,
                 let graduationYearValue = Int(graduationYear) else { break }
             
             self.user.graduationYear = graduationYearValue

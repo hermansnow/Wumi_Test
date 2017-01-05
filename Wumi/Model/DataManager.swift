@@ -76,6 +76,7 @@ class DataManager {
     }
     
     // MARK: Core Data
+    
     func getManagerObjectContext() -> NSManagedObjectContext? {
         if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
             return appDelegate.managedObjectContext
@@ -83,6 +84,18 @@ class DataManager {
         else {
             return nil
         }
+    }
+    
+    // MARK: Help Functions
+    
+    /**
+     Log message.
+     
+     - Parameters:
+        - message: Data management information message string.
+     */
+    class func log(message: String?) {
+        print(message)
     }
 }
 

@@ -27,7 +27,7 @@ class ReplyTextView: UIView {
         self.commentTextView.characterLimit = 300  // Limitation for lenght of comment
         self.commentTextView.placeholder = "Write a message"
         
-        self.myAvatarView.image = Constants.General.Image.AnonymousAvatarImage
+        self.myAvatarView.image = UIImage(named: Constants.General.ImageName.AnonymousAvatar)
     }
     
     func reset() {
