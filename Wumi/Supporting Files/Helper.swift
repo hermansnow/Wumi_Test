@@ -13,7 +13,7 @@ class Helper {
     /**
      Redirect to sign-in view controller in 0.5 second.
      */
-    static func RedirectToSignIn () {
+    static func RedirectToSignIn() {
         let appDelegate = UIApplication.sharedApplication().delegate
         
         UIView.transitionWithView(((appDelegate?.window)!)!,
@@ -28,9 +28,11 @@ class Helper {
                                   completion: nil)
     }
     
-    // Logout current user
-    static func LogOut () {
-        RedirectToSignIn()
+    /**
+     Logout current user and navigation back to login view controller.
+     */
+    static func LogOut() {
+        Helper.RedirectToSignIn()
         User.logOut()
     }
     

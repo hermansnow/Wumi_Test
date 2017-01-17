@@ -39,14 +39,52 @@ class InvitationCode: AVObject, AVSubclassing {
 
     // MARK: Invitation code functions
     
-    func generateNewCode() {
-        self.invitationCode = randomAlphaNumericString(6)
-        self.numberOfUse = 0
-        while findCode(self.invitationCode!) != nil {
-            self.invitationCode = randomAlphaNumericString(6)
+    /**
+     Generate a new invitation code asynchronously.
+     
+     - Parameters:
+        - block: Block with a boolean flag to indicate whether generation succeed and a wumi error if failed.
+     */
+    func generateNewCode(block: (success: Bool, error: WumiError?) -> Void) {
+        self.invitationCode = nil // Clean invitation code
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { 
+            // Generate new unique code
+            while InvitationCode.findCode(self.invitationCode) != nil {
+                self.invitationCode = self.randomAlphaNumericString(6)
+            }
+            self.numberOfUse = 0
+            
+            dispatch_async(dispatch_get_main_queue(), { 
+                // Store it into server
+                self.saveInBackgroundWithBlock({ (success, error) in
+                    block(success: success, error: ErrorHandler.parseError(error))
+                })
+            })
         }
-        self.save()
     }
+    
+    /**
+     Generate a random string.
+     
+     - Pamameters:
+        - length: Length of the string.
+     */
+    private func randomAlphaNumericString(length: Int) -> String {
+        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let allowedCharsCount = UInt32(allowedChars.characters.count)
+        var randomString = ""
+        
+        for _ in (0..<length) {
+            let randomNum = Int(arc4random_uniform(allowedCharsCount))
+            let newCharacter = allowedChars[allowedChars.startIndex.advancedBy(randomNum)]
+            randomString += String(newCharacter)
+        }
+        print("DEBUG: random String: \(randomString)")
+        return randomString
+    }
+    
+    // MARK: Query
     
     /**
      Verify this invitation code asynchronouslly.
@@ -64,7 +102,7 @@ class InvitationCode: AVObject, AVSubclassing {
         if inputCode == "12345" {
             block(verified: true, error: nil)
         }
-        else if let inviteCode = findCode(inputCode) {
+        else if let inviteCode = InvitationCode.findCode(inputCode) {
             inviteCode.incrementKey("numberOfUse")
             inviteCode.saveInBackground()
             block(verified: true, error: nil)
@@ -73,22 +111,6 @@ class InvitationCode: AVObject, AVSubclassing {
             block(verified: false, error: WumiError(type: .InvitationCode, error: Constants.SignIn.String.ErrorMessages.invalidInvitationCode))
         }
     }
-    
-    func randomAlphaNumericString(length: Int) -> String {
-        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let allowedCharsCount = UInt32(allowedChars.characters.count)
-        var randomString = ""
-        
-        for _ in (0..<length) {
-            let randomNum = Int(arc4random_uniform(allowedCharsCount))
-            let newCharacter = allowedChars[allowedChars.startIndex.advancedBy(randomNum)]
-            randomString += String(newCharacter)
-        }
-        print("DEBUG: random String: \(randomString)")
-        return randomString
-    }
-    
-    // MARK: Query
     
     /**
      Server query to get a valid invitation code object based on code string.
@@ -99,21 +121,25 @@ class InvitationCode: AVObject, AVSubclassing {
      - Returns:
         An InvitationCode onject if found, otherwise nil.
      */
-    func findCode(code: String) -> InvitationCode? {
+    class func findCode(code: String?) -> InvitationCode? {
+        guard let invitationCode = code where !invitationCode.isEmpty else { return nil }
+        
         let query = InvitationCode.query()
         query.cachePolicy = .IgnoreCache
-        query.whereKey("invitationCode", equalTo: code)
-        var code: InvitationCode?
+        query.whereKey("invitationCode", equalTo: invitationCode)
         
-        if let queryResults = query.findObjects(), result = queryResults.first as? InvitationCode {
-            code = result
+        if let queryResults = query.findObjects(), resultCode = queryResults.first as? InvitationCode {
+            return resultCode
         }
-        
-        return code
+        else {
+            return nil
+        }
+
     }
 }
 
 // MARK: Equatable
+
 func ==(lhs: InvitationCode, rhs: InvitationCode) -> Bool {
     return lhs.objectId == rhs.objectId
 }

@@ -37,7 +37,14 @@ class Profession: AVObject, AVSubclassing {
     }
     
     // MARK: Query
-    class func loadAllProfessions(block: AVArrayResultBlock!) {
+    
+    /**
+     Load all professions from server in background.
+     
+     - Parameters:
+        - block: Block includes query results: an array of professions and a WumiError record if failed.
+     */
+    class func loadAllProfessions(block: ([Profession], WumiError?) -> Void) {
         let query = Profession.query()
         
         query.cachePolicy = .NetworkElseCache
@@ -46,7 +53,14 @@ class Profession: AVObject, AVSubclassing {
         query.orderByAscending("category")
         query.addAscendingOrder("name")
         
-        query.findObjectsInBackgroundWithBlock(block)
+        query.findObjectsInBackgroundWithBlock { (results, error) in
+            guard let professions = results as? [Profession] where error == nil else {
+                block([], ErrorHandler.parseError(error))
+                return
+            }
+            
+            block(professions, ErrorHandler.parseError(error))
+        }
     }
 
 }

@@ -217,8 +217,6 @@ class ContactTableViewController: DataLoadingTableViewController {
         cell.locationLabel.text = contact.location.shortDiscription
             
         // Load favorite status with login user
-        print(contact.name)
-        print(self.currentUser.favoriteUsersArray.contains( { $0 == contact } ))
         cell.favoriteButton.selected = self.currentUser.favoriteUsersArray.contains( { $0 == contact } )
         
         // Setup initial status for additional buttons

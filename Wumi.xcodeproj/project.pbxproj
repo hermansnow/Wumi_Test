@@ -366,7 +366,7 @@
 		DF6A1B331CF2508C00CB6973 /* RichTextPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */; };
 		DF6A1B351CF266CA00CB6973 /* SelectedThumbnailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */; };
 		DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */; };
-		DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */; };
+		DF72ACF51C65F79B00F81491 /* CountryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF72ACF41C65F79B00F81491 /* CountryListTableViewController.swift */; };
 		DF7E3B4B1C92324D000E8741 /* Profession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7E3B4A1C92324D000E8741 /* Profession.swift */; };
 		DF7E3B4D1C923C0A000E8741 /* ProfessionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7E3B4C1C923C0A000E8741 /* ProfessionListViewController.swift */; };
 		DF86A2B41CE3B00800F67F48 /* PostContentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */; };
@@ -381,7 +381,7 @@
 		DF9F060E1C7B7280008CA6DC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F060D1C7B7280008CA6DC /* Location.swift */; };
 		DF9F06101C7BC72D008CA6DC /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */; };
 		DFA077451C92A79A00E3382E /* SettingSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA077441C92A79A00E3382E /* SettingSwitch.swift */; };
-		DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */; };
+		DFA74C1F1BF81B1500609E83 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C1E1BF81B1500609E83 /* SettingTableViewController.swift */; };
 		DFA74C211BF8215900609E83 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA74C201BF8215900609E83 /* MainTabBarController.swift */; };
 		DFA8B0991BEB30F300D5B5DD /* HyperLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */; };
 		DFA93AB61C882FE700ECA503 /* TextLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */; };
@@ -445,6 +445,12 @@
 		FF6067591E1B92DB003116FA /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6067581E1B92DB003116FA /* ActionButton.swift */; };
 		FF665F7E1E0206EB00F20219 /* Extension+MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF665F7D1E0206EB00F20219 /* Extension+MKMapView.swift */; };
 		FF848E7C1E07F26400A09DA5 /* WumiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF848E7B1E07F26400A09DA5 /* WumiError.swift */; };
+		FFADB9971E1EE66200DD896F /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFADB9951E1EE66200DD896F /* SettingTableViewCell.swift */; };
+		FFADB9981E1EE66200DD896F /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFADB9961E1EE66200DD896F /* SettingTableViewCell.xib */; };
+		FFADB99A1E1F910400DD896F /* Extension+NSFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFADB9991E1F910400DD896F /* Extension+NSFileManager.swift */; };
+		FFF6CAD61E2CC41B00FED3CB /* LocationListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF6CAD51E2CC41B00FED3CB /* LocationListTableViewController.swift */; };
+		FFF6CAD91E2E07C600FED3CB /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF6CAD71E2E07C500FED3CB /* LocationTableViewCell.swift */; };
+		FFF6CADA1E2E07C600FED3CB /* LocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFF6CAD81E2E07C500FED3CB /* LocationTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -935,7 +941,7 @@
 		DF6A1B321CF2508C00CB6973 /* RichTextPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RichTextPostView.swift; path = View/RichTextPostView.swift; sourceTree = "<group>"; };
 		DF6A1B341CF266CA00CB6973 /* SelectedThumbnailImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedThumbnailImageView.swift; path = View/SelectedThumbnailImageView.swift; sourceTree = "<group>"; };
 		DF72ACF21C64DBFA00F81491 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AvatarImageView.swift; path = View/AvatarImageView.swift; sourceTree = "<group>"; };
-		DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationListTableViewController.swift; path = Controller/LocationListTableViewController.swift; sourceTree = "<group>"; };
+		DF72ACF41C65F79B00F81491 /* CountryListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CountryListTableViewController.swift; path = Controller/CountryListTableViewController.swift; sourceTree = "<group>"; };
 		DF7E3B4A1C92324D000E8741 /* Profession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Profession.swift; path = Model/Profession.swift; sourceTree = "<group>"; };
 		DF7E3B4C1C923C0A000E8741 /* ProfessionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfessionListViewController.swift; path = Controller/ProfessionListViewController.swift; sourceTree = "<group>"; };
 		DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostContentTextView.swift; path = View/PostContentTextView.swift; sourceTree = "<group>"; };
@@ -950,7 +956,7 @@
 		DF9F060D1C7B7280008CA6DC /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Model/Location.swift; sourceTree = "<group>"; };
 		DF9F060F1C7BC72D008CA6DC /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewCell.swift; path = View/ContactTableViewCell.swift; sourceTree = "<group>"; };
 		DFA077441C92A79A00E3382E /* SettingSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingSwitch.swift; path = View/SettingSwitch.swift; sourceTree = "<group>"; };
-		DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WMUserTableViewController.swift; path = Controller/WMUserTableViewController.swift; sourceTree = "<group>"; };
+		DFA74C1E1BF81B1500609E83 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingTableViewController.swift; path = Controller/SettingTableViewController.swift; sourceTree = "<group>"; };
 		DFA74C201BF8215900609E83 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = Controller/MainTabBarController.swift; sourceTree = "<group>"; };
 		DFA8B0981BEB30F300D5B5DD /* HyperLinkTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HyperLinkTextView.swift; path = View/HyperLinkTextView.swift; sourceTree = "<group>"; };
 		DFA93AB51C882FE700ECA503 /* TextLinkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextLinkButton.swift; path = View/TextLinkButton.swift; sourceTree = "<group>"; };
@@ -1016,6 +1022,12 @@
 		FF6067581E1B92DB003116FA /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionButton.swift; path = View/ActionButton.swift; sourceTree = "<group>"; };
 		FF665F7D1E0206EB00F20219 /* Extension+MKMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+MKMapView.swift"; path = "Supporting Files/Extensions/Extension+MKMapView.swift"; sourceTree = "<group>"; };
 		FF848E7B1E07F26400A09DA5 /* WumiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WumiError.swift; path = Model/WumiError.swift; sourceTree = "<group>"; };
+		FFADB9951E1EE66200DD896F /* SettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingTableViewCell.swift; path = View/SettingTableViewCell.swift; sourceTree = "<group>"; };
+		FFADB9961E1EE66200DD896F /* SettingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingTableViewCell.xib; path = View/SettingTableViewCell.xib; sourceTree = "<group>"; };
+		FFADB9991E1F910400DD896F /* Extension+NSFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+NSFileManager.swift"; path = "Supporting Files/Extensions/Extension+NSFileManager.swift"; sourceTree = "<group>"; };
+		FFF6CAD51E2CC41B00FED3CB /* LocationListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationListTableViewController.swift; path = Controller/LocationListTableViewController.swift; sourceTree = "<group>"; };
+		FFF6CAD71E2E07C500FED3CB /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationTableViewCell.swift; path = View/LocationTableViewCell.swift; sourceTree = "<group>"; };
+		FFF6CAD81E2E07C500FED3CB /* LocationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocationTableViewCell.xib; path = View/LocationTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1955,6 +1967,7 @@
 				DF0180721D3DF75100935A60 /* Extension+UITextField.swift */,
 				DF5AECA71D6434E800FB4B84 /* Extension+UITextView.swift */,
 				DF01806E1D3DF6F300935A60 /* Extension+UIViewController.swift */,
+				FFADB9991E1F910400DD896F /* Extension+NSFileManager.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -2169,6 +2182,10 @@
 				DFB612A41CA6284000B3271B /* CommentTableViewCell.swift */,
 				DFA93ACE1C910DD700ECA503 /* ProfileTableCell.swift */,
 				DFA93AD01C91127800ECA503 /* ProfileCollectionLabel.swift */,
+				FFADB9951E1EE66200DD896F /* SettingTableViewCell.swift */,
+				FFADB9961E1EE66200DD896F /* SettingTableViewCell.xib */,
+				FFF6CAD71E2E07C500FED3CB /* LocationTableViewCell.swift */,
+				FFF6CAD81E2E07C500FED3CB /* LocationTableViewCell.xib */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -2201,13 +2218,14 @@
 		DFB4152A1C1E705C00835EFE /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				DFA74C1E1BF81B1500609E83 /* WMUserTableViewController.swift */,
+				DFA74C1E1BF81B1500609E83 /* SettingTableViewController.swift */,
+				B16535251D5024DF00B0DA0E /* CacheSettingViewController.swift */,
 				DFA93AC41C90E04000ECA503 /* EditProfileViewController.swift */,
-				DF72ACF41C65F79B00F81491 /* LocationListTableViewController.swift */,
 				DF7E3B4C1C923C0A000E8741 /* ProfessionListViewController.swift */,
+				FFF6CAD51E2CC41B00FED3CB /* LocationListTableViewController.swift */,
+				DF72ACF41C65F79B00F81491 /* CountryListTableViewController.swift */,
 				B1F045201CB614DB0025CF7D /* StateListTableViewController.swift */,
 				B1997AF51CACDADC0086F8F4 /* CityListTableViewController.swift */,
-				B16535251D5024DF00B0DA0E /* CacheSettingViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2386,6 +2404,7 @@
 				B1ECD71B1CCC1F3F00CED9C4 /* MultiSelectedPanelBkg@2x.png in Resources */,
 				B1ECD7191CCC1F3F00CED9C4 /* multiMedia@2x.png in Resources */,
 				B1ECD6F71CCC1F3F00CED9C4 /* tusiji_3.gif in Resources */,
+				FFADB9981E1EE66200DD896F /* SettingTableViewCell.xib in Resources */,
 				B1ECD6B01CCC1F3F00CED9C4 /* contacts_add_friend@2x.png in Resources */,
 				B1ECD6F61CCC1F3F00CED9C4 /* tusiji_2_cover@2x.png in Resources */,
 				B1ECD7B01CCC240900CED9C4 /* Inbox.storyboard in Resources */,
@@ -2429,6 +2448,7 @@
 				B1ECD73C1CCC1F3F00CED9C4 /* sharemore_videovoip@2x.png in Resources */,
 				DFB220B11DAD8FE5008FB503 /* Setting.storyboard in Resources */,
 				B1ECD7291CCC1F3F00CED9C4 /* RecordingSignal004@2x.png in Resources */,
+				FFF6CADA1E2E07C600FED3CB /* LocationTableViewCell.xib in Resources */,
 				B1ECD6CB1CCC1F3F00CED9C4 /* rabbit_18_cover@2x.png in Resources */,
 				B1ECD6CF1CCC1F3F00CED9C4 /* rabbit_2.gif in Resources */,
 				DF01805E1D3DF54500935A60 /* ImageFullScreenView.xib in Resources */,
@@ -2666,6 +2686,7 @@
 				DF173EF31C86A58600018B4A /* Helper.swift in Sources */,
 				B12705AC1CE847D000BC21A7 /* ConversationCell.m in Sources */,
 				02932AA61CEE6ECC001220E8 /* NotificationTableViewCell.swift in Sources */,
+				FFF6CAD61E2CC41B00FED3CB /* LocationListTableViewController.swift in Sources */,
 				DFB612951CA2637600B3271B /* UserBannerView.swift in Sources */,
 				DF4F532F1CD30F7E009F3D2E /* EmailButton.swift in Sources */,
 				DF173EEC1C86A55F00018B4A /* Constants.swift in Sources */,
@@ -2691,7 +2712,7 @@
 				DF01808E1D4DEF3A00935A60 /* Extension+NSURL.swift in Sources */,
 				DF5EF15F1D30590300C9B2F2 /* HamburgerMenuButton.swift in Sources */,
 				DF16E0451D25B84700F4C4FC /* ImageFullScreenViewController.swift in Sources */,
-				DF72ACF51C65F79B00F81491 /* LocationListTableViewController.swift in Sources */,
+				DF72ACF51C65F79B00F81491 /* CountryListTableViewController.swift in Sources */,
 				B1ECD76A1CCC1F4000CED9C4 /* XHDisplayTextViewController.m in Sources */,
 				DFA74C211BF8215900609E83 /* MainTabBarController.swift in Sources */,
 				DF43142F1D796BF9002E21D5 /* CopyLinkActivity.swift in Sources */,
@@ -2736,6 +2757,7 @@
 				B1ECD6A91CCC1F3F00CED9C4 /* CDSoundManager.m in Sources */,
 				B1ECD7A21CCC1F4000CED9C4 /* XHEmotionManagerView.m in Sources */,
 				B1ECD7941CCC1F4000CED9C4 /* XHWaterDropRefresh.m in Sources */,
+				FFF6CAD91E2E07C600FED3CB /* LocationTableViewCell.swift in Sources */,
 				B1ECD6A21CCC1F3F00CED9C4 /* AVIMConversation+Custom.m in Sources */,
 				B1ECD7901CCC1F4000CED9C4 /* XHViewState.m in Sources */,
 				B1ECD7871CCC1F4000CED9C4 /* SETextGeometry.m in Sources */,
@@ -2769,6 +2791,7 @@
 				DF0180711D3DF72300935A60 /* Extension+UIResponder.swift in Sources */,
 				B1ECD7521CCC1F3F00CED9C4 /* UIImage+Alpha.m in Sources */,
 				FF665F7E1E0206EB00F20219 /* Extension+MKMapView.swift in Sources */,
+				FFADB99A1E1F910400DD896F /* Extension+NSFileManager.swift in Sources */,
 				DFB861461BEDBA7E0075014A /* ScrollTextFieldViewController.swift in Sources */,
 				B1ECD7801CCC1F4000CED9C4 /* SECompatibility.m in Sources */,
 				B1ECD7AA1CCC1F4000CED9C4 /* UIImage+Icon.m in Sources */,
@@ -2780,6 +2803,7 @@
 				DF8D51911C9716F5004D808E /* ProfessionSectionHeader.swift in Sources */,
 				B1ECD7631CCC1F4000CED9C4 /* XHBaseNavigationController.m in Sources */,
 				DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */,
+				FFADB9971E1EE66200DD896F /* SettingTableViewCell.swift in Sources */,
 				DF01806F1D3DF6F300935A60 /* Extension+UIViewController.swift in Sources */,
 				DF1BE2631C9F2EA300F934EE /* PostTableViewCell.swift in Sources */,
 				B1ECD7981CCC1F4000CED9C4 /* XHMessageBubbleView.m in Sources */,
@@ -2799,7 +2823,7 @@
 				B1ECD77B1CCC1F4000CED9C4 /* XHShareMenuItem.m in Sources */,
 				B1ECD7591CCC1F3F00CED9C4 /* UIView+XHBadgeView.m in Sources */,
 				B1ECD7991CCC1F4000CED9C4 /* XHMessageDisplayTextView.m in Sources */,
-				DFA74C1F1BF81B1500609E83 /* WMUserTableViewController.swift in Sources */,
+				DFA74C1F1BF81B1500609E83 /* SettingTableViewController.swift in Sources */,
 				B1ECD7721CCC1F4000CED9C4 /* XHMessageVideoConverPhotoFactory.m in Sources */,
 				B1ECD75E1CCC1F3F00CED9C4 /* XHLocationHelper.m in Sources */,
 				B1ECD79E1CCC1F4000CED9C4 /* XHMessageTextView.m in Sources */,

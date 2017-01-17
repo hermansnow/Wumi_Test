@@ -19,11 +19,8 @@ class DataManager {
     
     // MARK: In-memory cache
     
-    lazy var cache = NSCache() // NSCache object for in-memory cache
-    
-    func cleanMemoryCache() {
-        self.cache.removeAllObjects()
-    }
+    /// NSCache object for in-memory cache
+    lazy var cache = NSCache()
     
     // MARK: Disk File Manager
     
@@ -73,6 +70,13 @@ class DataManager {
         if let path = self.pathForDataFile(fileName), rootObject = self.cache.objectForKey(cacheKey) {
             NSKeyedArchiver.archiveRootObject(rootObject, toFile: path)
         }
+    }
+    
+    /**
+     Clean disk cache.
+     */
+    func cleanMemoryCache() {
+        self.cache.removeAllObjects()
     }
     
     // MARK: Core Data

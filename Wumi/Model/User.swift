@@ -247,7 +247,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     }
     
     /** 
-    Save avatar to cloud server asynchronously.
+    Save avatar to the user on server asynchronously.
      
     - Parameters:
         - avatarImage: UIimage will be stored as avatar.
@@ -259,19 +259,53 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
             return
         }
         
+        User.saveAvatarFiles(image) { (avatarFile, thumbnailFile, error) in
+            guard error == nil else {
+                block(success: false, error: error)
+                return
+            }
+            
+            self.avatarImageFile = avatarFile
+            self.avatarThumbnail = thumbnailFile
+            block(success: true, error: nil)
+        }
+    }
+    
+    /*
+     Save image as avatar and thumbnail to cloud server asynchronously.
+     
+     - Parameters:
+        - avatarImage: UIimage will be stored as avatar.
+        - block: Block includes result of saving avatar to server: new avatar file, thumbnail file or wumi error object if failed.
+     */
+    class func saveAvatarFiles(avatarImage: UIImage?, block: (avatarFile: AVFile?, thumbnailFile: AVFile?, error: WumiError?) -> Void) {
+        guard let image = avatarImage else {
+            block(avatarFile: nil, thumbnailFile: nil, error: WumiError(type: .Image, error: "Image is nil."))
+            return
+        }
+        
         // Save original image
-        AVFile.saveImageFile(&self.avatarImageFile, image: image) { (success, error) in
-            guard success else {
-                block(success: success, error: error)
+        var avatarImageFile: AVFile?
+        AVFile.saveImageFile(&avatarImageFile, image: image) { (success, error) in
+            guard success && error == nil else {
+                block(avatarFile: nil, thumbnailFile: nil, error: ErrorHandler.parseError(error))
                 return
             }
             
             // Save thumbnail
-            AVFile.saveImageFile(&self.avatarThumbnail,
+            var avatarThumbnailFile: AVFile?
+            AVFile.saveImageFile(&avatarThumbnailFile,
                                  image: image,
                                  size: CGSize(width: Constants.General.Size.AvatarThumbnail.Width,
-                                              height: Constants.General.Size.AvatarThumbnail.Height),
-                                 block: block)
+                                              height: Constants.General.Size.AvatarThumbnail.Height))
+            { (success, error) in
+                guard success && error == nil else {
+                    block(avatarFile: avatarImageFile, thumbnailFile: nil, error: ErrorHandler.parseError(error))
+                    return
+                }
+                
+                block(avatarFile: avatarImageFile, thumbnailFile: avatarThumbnailFile, error: nil)
+            }
         }
     }
     
@@ -373,6 +407,33 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         }
     }
     
+    /**
+     Load the user asynchronously and executes the given callback block.
+     
+     - Parameters:
+        - block: Block includes search results: a user record or a WumiError record if failed.
+     */
+    func fetchUserInBackgroundWithBlock(block: (success: Bool, error: WumiError?) -> Void) {
+        super.fetchInBackgroundWithBlock { (result, error) in
+            guard let user = result as? User where error == nil else {
+                block(success: false, error: ErrorHandler.parseError(error))
+                return
+            }
+            
+            // Fetch professions
+            Profession.fetchAllInBackground(user.professions) { (results, error) in
+                guard let professions = results as? [Profession] where error == nil else {
+                    block(success: false, error: ErrorHandler.parseError(error))
+                    return
+                }
+                
+                self.professions = professions
+                user.professions = professions
+                block(success: true, error: nil)
+            }
+        }
+    }
+    
     // Fetch if needed. This function will fetch user data from memory first, then from network if it is null
     func loadIfNeededInBackgroundWithBlock(block: (user: User?, error: WumiError?) -> Void) {
         if self.isDataAvailable() {
@@ -391,11 +452,18 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         User.loadUserInBackground(objectId: self.objectId, block: block)
     }
     
-    // Save the user and fetch latest data after saving
-    func saveInBackgroundWithFetch(block: AVBooleanResultBlock!) {
+    /**
+     Save the user and fetch latest data after saving.
+     
+     - Parameters:
+        - block: Block includes save results: a status flag and a WumiError record if failed.
+     */
+    func saveInBackgroundWithFetch(block: (success: Bool, error: WumiError?) -> Void) {
         let option = AVSaveOption()
         option.fetchWhenSave = true
-        self.saveInBackgroundWithOption(option, block: block)
+        self.saveInBackgroundWithOption(option) { (success, error) in
+            block(success: success, error: ErrorHandler.parseError(error))
+        }
     }
     
     /**
@@ -527,6 +595,12 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     
     // MARK: Profession queries
     
+    /**
+     Update the user's profession list locally. Note this function does not store value to server.
+     
+     - Parameter:
+        - newProfessions: An array of new professions.
+     */
     func updateProfessions(newProfessions: [Profession]) {
         self.professions.removeAll()
         self.professions.appendContentsOf(newProfessions)

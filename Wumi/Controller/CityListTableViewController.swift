@@ -8,102 +8,47 @@
 
 import UIKit
 
-class CityListTableViewController: UITableViewController {
-    
-    var countryCode = String()
-    var stateName = String()
-    lazy var cityArray = [String]()
+class CityListTableViewController: LocationListTableViewController {
+    /// Current selected location.
     var selectedLocation: Location?
-    var locationDelegate: LocationListDelegate?
+    /// Array of city names.
+    lazy var cityArray = [String]()
     
-    // Add index collation
-    lazy var collation = UILocalizedIndexedCollation.currentCollation()
-    lazy var sections = [[String]]()
-    lazy var sectionTitles = [String]()
-    lazy var sectionIndexTitles = [String]()
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.tableView.sectionIndexBackgroundColor = UIColor(white: 1.0, alpha: 0.1)
+        
         self.buildSectionIndex(cityArray)
     }
 
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.sections.count
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionArray = self.sections[safe: section] else { return 0 }
-        return sectionArray.count
-    }
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.sectionTitles[section]
-    }
-    
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String] {
-        return self.sectionIndexTitles
-    }
-    
-    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        return index
-    }
+    // MARK: Table view data source
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("City Cell", forIndexPath: indexPath)
-
-        switch indexPath.section {
-        default:
-            guard let sectionArray = self.sections[safe: indexPath.section], city = sectionArray[safe: indexPath.row] else { break }
-            cell.textLabel!.text = city
-            
-            // Add checkmark for selected country
-            if let location = self.selectedLocation where location.countryCode == self.countryCode && location.city == city {
-                cell.accessoryType = .Checkmark
-            }
-            else {
-                cell.accessoryType = .None
-            }
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as? LocationTableViewCell,
+            sectionArray = self.sections[safe: indexPath.section], cityName = sectionArray[safe: indexPath.row] else {
+                return UITableViewCell()
         }
-
+        
+        cell.title = cityName
+        
+        // Add check image if it is current selected country
+        if let selectedLocation = self.selectedLocation where cityName == selectedLocation.city {
+            cell.detail = "Selected"
+        }
+        
         return cell
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        switch indexPath.section {
-        default:
-            guard let sectionArray = self.sections[safe: indexPath.section], cityName = sectionArray[safe: indexPath.row] else { break }
-            self.selectedLocation = Location(CountryCode: countryCode, State: stateName, City: cityName)
-            if let location = selectedLocation, delegate = locationDelegate {
-                delegate.finishLocationSelection(location)
-            }
-            self.navigationController?.popToViewController(locationDelegate as! UIViewController, animated: true)
+        guard let sectionArray = self.sections[safe: indexPath.section], cityName = sectionArray[safe: indexPath.row] else {
+            return
         }
+        
+        if var location = self.selectedLocation, let delegate = locationDelegate {
+            location.city = cityName
+            delegate.finishLocationSelection(location)
+        }
+        self.navigationController?.popToViewController(locationDelegate as! UIViewController, animated: true)
     }
-
-    // MARK: - Helper functions
-    
-    private func buildSectionIndex(data: [String]) {
-        // Reset collasion
-        self.collation = UILocalizedIndexedCollation.currentCollation()
-        
-        var sectionArrays: [[String]] = Array(count: self.collation.sectionTitles.count, repeatedValue: [String]())
-        
-        for city in data {
-            let sectionIndex = collation.sectionForObject(city, collationStringSelector: #selector(NSObject.selfMethod))
-            sectionArrays[sectionIndex].append(city)
-        }
-        
-        for sectionIndex in 0...sectionArrays.count {
-            guard let section = sectionArrays[safe: sectionIndex] where section.count > 0 else { continue }
-            
-            self.sections.append(section)
-            self.sectionTitles.append(self.collation.sectionTitles[sectionIndex])
-            self.sectionIndexTitles.append(self.collation.sectionIndexTitles[sectionIndex])
-        }
-    }
-
 }

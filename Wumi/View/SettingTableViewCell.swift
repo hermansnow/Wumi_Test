@@ -10,15 +10,28 @@ import UIKit
 
 class SettingTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    /// Title of setting cell.
+    var title: String? {
+        get {
+            return self.titleLabel.text
+        }
+        set {
+            self.titleLabel.text = newValue
+        }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    // MARK: Help Functions
+    
+    /**
+     Reset cell data.
+     */
+    func reset() {
+        self.title = nil
+    }
 }

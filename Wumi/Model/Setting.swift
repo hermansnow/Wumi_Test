@@ -6,10 +6,8 @@
 //  Copyright © 2015 Parse. All rights reserved.
 //
 
-import UIKit
-
-class Setting: NSObject {
-    enum SettingType {
+struct Setting {
+    public enum SettingType {
         case Disclosure
         case Switch
         case Picker

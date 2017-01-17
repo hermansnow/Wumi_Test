@@ -86,17 +86,11 @@ class AddProfileViewController: ScrollTextFieldViewController {
                                                                                               y: view.frame.height / 3 * 2),
                                                                               size: CGSize(width: view.frame.width,
                                                                                            height: view.frame.height / 3)))
-        // Define comfirm/cancel actions
-        graduationYearPickerView.comfirmSelection = {
-            if graduationYearPickerView.year == 0 {
-                self.graduationYearTextField.text = nil
-            }
-            else {
-                self.graduationYearTextField.text = String(graduationYearPickerView.year)
-            }
-        }
-        graduationYearPickerView.cancelSelection = nil
         self.graduationYearTextField.inputTextField.inputView = graduationYearPickerView
+        
+        // Add delegate
+        graduationYearPickerView.launchTextField = self.graduationYearTextField.inputTextField
+        graduationYearPickerView.delegate = self
     }
     
     /**
@@ -239,6 +233,21 @@ extension AddProfileViewController: UITextFieldDelegate {
         
         nextResponder.becomeFirstResponder()
         return false // Do not dismiss keyboard
+    }
+}
+
+// MARK: GraduationYearPickerView delegates
+
+extension AddProfileViewController: GraduationYearPickerDelegate {
+    func confirmSelection(picker: GraduationYearPickerView, launchTextField: UITextField?) {
+        guard let graduationYearTextField = launchTextField else { return }
+        
+        if picker.year == 0 {
+            graduationYearTextField.text = nil
+        }
+        else {
+            graduationYearTextField.text = String(picker.year)
+        }
     }
 }
 

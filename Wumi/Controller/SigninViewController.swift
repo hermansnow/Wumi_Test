@@ -199,24 +199,24 @@ class SigninViewController: DataLoadingViewController {
      */
     func forgotPassword() {
         // Pop up an input box for end-users to entering registered email
-        Helper.PopupInputBox(self, boxTitle: Constants.SignIn.String.Alert.ResetPassword.Title,
-                                    message: Constants.SignIn.String.Alert.ResetPassword.Message,
+        Helper.PopupInputBox(self,
+                             boxTitle: Constants.SignIn.String.Alert.ResetPassword.Title,
+                             message: Constants.SignIn.String.Alert.ResetPassword.Message,
                              numberOfFileds: 1,
-                                 textValues: [["placeHolder": "Email"]]) { (inputValues) in
-                                    guard let email = inputValues.first! where email.characters.count == 0 else { return }
+                             textValues: [["placeHolder": "Email"]]) { (inputValues) in
+                                guard let email = inputValues.first! where !email.isEmpty else { return }
                                     
-                                    User.requestPasswordResetForEmailInBackground(email) { (success, error) in
-                                        guard success else {
-                                            ErrorHandler.popupErrorAlert(self,
-                                                                   errorMessage: "\(error)")
-                                            return
-                                        }
-                                        
-                                        Helper.PopupInformationBox(self,
-                                                                   boxTitle: Constants.SignIn.String.Alert.ResetPasswordConfirm.Title,
-                                                                   message: Constants.SignIn.String.Alert.ResetPasswordConfirm.Message)
+                                User.requestPasswordResetForEmailInBackground(email) { (success, error) in
+                                    guard success else {
+                                        ErrorHandler.popupErrorAlert(self, errorMessage: "\(error)")
+                                        return
                                     }
+                                        
+                                    Helper.PopupInformationBox(self,
+                                                               boxTitle: Constants.SignIn.String.Alert.ResetPasswordConfirm.Title,
+                                                               message: Constants.SignIn.String.Alert.ResetPasswordConfirm.Message)
                                 }
+                            }
     }
 }
 

@@ -15,7 +15,7 @@ extension Set {
     }
     
     // Map a set to an array
-    func toArray <T: Hashable>(map: (Element) -> T?) -> Set<T> {
+    func toArray<T: Hashable>(map: (Element) -> T?) -> Set<T> {
         var result = Set<T>()
         
         for element in self {

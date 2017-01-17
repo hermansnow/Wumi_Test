@@ -1,5 +1,5 @@
 //
-//  LocationListTableViewController.swift
+//  CountryListTableViewController.swift
 //  Wumi
 //
 //  Created by Herman on 2/6/16.
@@ -10,11 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class LocationListTableViewController: UITableViewController {
-    
-    /// LocagtionList delegate.
-    var locationDelegate: LocationListDelegate?
-    
+class CountryListTableViewController: LocationListTableViewController {
     /// Location manager.
     private lazy var locationManager = CLLocationManager()
     /// Flag to indicate whether we are locating current location or not.
@@ -24,22 +20,10 @@ class LocationListTableViewController: UITableViewController {
     
     /// Current selected location.
     var selectedLocation: Location?
-    
     /// Country name and code map: [CountryName: CountryCode].
     lazy var countryList = [String: String]()
-    /// Location map for countries: [CountryName: [StateName: [CityName]]].
+    /// Location dictionary for countries: [CountryName: [StateName: [CityName]]].
     lazy var locations = [String: [String: [String]]]()
-    
-    // Add index collation
-    
-    /// Index collation.
-    private lazy var collation = UILocalizedIndexedCollation.currentCollation()
-    /// Index collation section array.
-    private lazy var sections = [[String]]()
-    /// Title string for each index collation sections.
-    private lazy var sectionTitles = [String]()
-    /// Title string for each indexes.
-    private lazy var sectionIndexTitles = [String]()
     
     // MARK: Lifecycle methods
     
@@ -48,9 +32,6 @@ class LocationListTableViewController: UITableViewController {
         
         // Show navigation bar
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        
-        // Set table view
-        self.tableView.sectionIndexBackgroundColor = UIColor(white: 1.0, alpha: 0.1)
         
         // Add delegates
         self.locationManager.delegate = self
@@ -73,11 +54,9 @@ class LocationListTableViewController: UITableViewController {
                 countryCode = self.countryList[countryName],
                 countryData = self.locations[countryCode] else { return }
             
-            stateListTableViewController.countryCode = countryCode
             stateListTableViewController.stateDict = countryData
-            
-            stateListTableViewController.locationDelegate = self.locationDelegate
             stateListTableViewController.selectedLocation = self.selectedLocation
+            stateListTableViewController.locationDelegate = self.locationDelegate
         }
     }
     
@@ -89,39 +68,15 @@ class LocationListTableViewController: UITableViewController {
      - Parameters:
         - data: data to be displayed on table.
      */
-    private func buildSectionIndex(data: [String]) {
-        // Reset collation
-        self.collation = UILocalizedIndexedCollation.currentCollation()
-        
-        // Initial a section array
-        var sectionArrays: [[String]] = Array(count: self.collation.sectionTitles.count, repeatedValue: [String]())
-        
-        // Parse all display data to sections
-        for item in data {
-            let sectionIndex = collation.sectionForObject(item, collationStringSelector: #selector(NSObject.selfMethod))
-            sectionArrays[sectionIndex].append(item)
-        }
-        
+    override func buildSectionIndex(data: [String]) {
         // Add current location section
         self.sections.append([String]())
         self.sectionTitles.append("Current Location")
         
-        // Build index
-        for sectionIndex in 0..<sectionArrays.count {
-            guard let section = sectionArrays[safe: sectionIndex] where section.count > 0 else { continue }
-            
-            self.sections.append(section)
-            self.sectionTitles.append(self.collation.sectionTitles[sectionIndex])
-            self.sectionIndexTitles.append(self.collation.sectionIndexTitles[sectionIndex])
-        }
+        super.buildSectionIndex(data)
     }
 
     // MARK: Table view data source
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.sections.count
-    }
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -130,14 +85,6 @@ class LocationListTableViewController: UITableViewController {
             guard let sectionArray = self.sections[safe: section] else { return 0 }
             return sectionArray.count
         }
-    }
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.sectionTitles[section]
-    }
-    
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String] {
-        return self.sectionIndexTitles
     }
     
     override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
@@ -153,7 +100,10 @@ class LocationListTableViewController: UITableViewController {
                 CLLocationManager.authorizationStatus() == .Restricted {
                     let footerView = UITableViewHeaderFooterView()
                     
-                    let warningLable = UILabel(frame: CGRect(x: 40, y: 10, width: tableView.frame.width - 80, height: tableView.sectionFooterHeight))
+                    let warningLable = UILabel(frame: CGRect(x: 40,
+                                                             y: 10,
+                                                             width: tableView.frame.width - 80,
+                                                             height: tableView.sectionFooterHeight))
                     warningLable.font = UIFont.boldSystemFontOfSize(10)
                     warningLable.text = "Enable access for Wumi in \"Settings\" - \"Privacy\" - \"Location Service\" on your device"
                     warningLable.lineBreakMode = .ByWordWrapping
@@ -186,36 +136,54 @@ class LocationListTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell
         switch indexPath.section {
         case 0:
-            cell = tableView.dequeueReusableCellWithIdentifier("Current Location Cell", forIndexPath: indexPath)
+            guard let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as? LocationTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            cell.reset()
+            
             if self.currentLocation == nil {
                 if isLocating {
-                    cell.textLabel!.text = "Location..."
+                    cell.title = "Location..."
                 }
                 else {
-                    cell.textLabel!.text = "Unable to access your location"
+                    cell.title = "Unable to access your location"
                 }
             }
-            else if let location = self.currentLocation {
-                cell.textLabel!.text = "\(Location(CountryCode: location.ISOcountryCode, CountryName: location.country, State: location.administrativeArea, City: location.locality))"
+            else if let locationPlacemark = self.currentLocation {
+                let location = Location(CountryCode: locationPlacemark.ISOcountryCode,
+                                        CountryName: locationPlacemark.country,
+                                        State: locationPlacemark.administrativeArea,
+                                        City: locationPlacemark.locality)
+                
+                cell.title = location.description
+                if let selectedLocation = self.selectedLocation where selectedLocation == location {
+                    cell.detail = "Selected"
+                }
             }
-        default:
-            cell = tableView.dequeueReusableCellWithIdentifier("Country Cell", forIndexPath: indexPath)
-            guard let sectionArray = self.sections[safe: indexPath.section], country = sectionArray[safe: indexPath.row] else { break }
+            return  cell
             
-            cell.textLabel!.text = country
+        default:
+            guard let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as? LocationTableViewCell,
+                sectionArray = self.sections[safe: indexPath.section], country = sectionArray[safe: indexPath.row] else { break }
+            
+            cell.reset()
+            
+            cell.title = country
             
             // Add check image if it is current selected country
             if let countryCode = self.countryList[country], selectedLocation = self.selectedLocation where countryCode == selectedLocation.countryCode {
-                cell.imageView?.image = UIImage(named: Constants.General.ImageName.Check)
+                cell.detail = "Selected"
             }
             
             cell.accessoryType = .DisclosureIndicator
+            
+            return cell
         }
         
-        return cell
+        return UITableViewCell()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -231,7 +199,24 @@ class LocationListTableViewController: UITableViewController {
             self.navigationController?.popViewControllerAnimated(true)
             break
         default:
-            break
+            guard let sectionArray = self.sections[safe: indexPath.section],
+                countryName = sectionArray[safe: indexPath.row],
+                countryCode = self.countryList[countryName] else { return }
+            
+            // Update selected location
+            if let _ = self.selectedLocation {
+                self.selectedLocation!.countryCode = countryCode
+                self.selectedLocation!.countryName = countryName
+            }
+            else {
+                self.selectedLocation = Location(CountryCode: countryCode,
+                                                 CountryName: countryName,
+                                                 State: nil,
+                                                 City: nil)
+            }
+            
+            // Perform segue
+            self.performSegueWithIdentifier("Select State", sender: self)
         }
     }
     
@@ -240,7 +225,7 @@ class LocationListTableViewController: UITableViewController {
     /**
      Load location data from plist file "country_state_city".
      */
-    private func loadLocations() -> Void {
+    private func loadLocations() {
         guard let plistPath = NSBundle.mainBundle().pathForResource("country_state_city", ofType: "plist"),
             data = NSDictionary(contentsOfFile: plistPath) as? [String: [String: [String]]] else { return }
         
@@ -262,7 +247,7 @@ class LocationListTableViewController: UITableViewController {
 
 // MARK: CLLocationManager delegate
 
-extension LocationListTableViewController: CLLocationManagerDelegate {
+extension CountryListTableViewController: CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         let geoCoder = CLGeocoder()
         
@@ -325,11 +310,5 @@ extension LocationListTableViewController: CLLocationManagerDelegate {
         self.isLocating = false
         self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
     }
-}
-
-// MARK: Custome delegate
-
-protocol LocationListDelegate {
-    func finishLocationSelection(location: Location?)
 }
 

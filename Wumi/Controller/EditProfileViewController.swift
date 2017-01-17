@@ -19,13 +19,35 @@ class EditProfileViewController: DataLoadingViewController {
     @IBOutlet weak var profileImageButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    /// Save button on navigation bar.
     private lazy var saveButtonItem = UIBarButtonItem()
+    /// Picker for graduatuin year.
     private lazy var graduationYearPickerView: GraduationYearPickerView = GraduationYearPickerView()
+    /// Current login user.
+    private lazy var currentUser = User.currentUser()
     
-    lazy var currentUser = User.currentUser()
-    lazy var selectedProfessions = Set<Profession>()
-    private var graduationYearTextfField: UITextField? // Save graduation year textfield, we need to track it when scrolling the picker
-    private var cells: [EditProfileCellRowType] = [.Name, .GraduationYear, .Location, .Profession, .Email, .Phone]
+    /// New Avater File.
+    private var newAvatar: AVFile?
+    /// New Thumbnail File.
+    private var newThumbnail: AVFile?
+    /// New name.
+    private var newName: String?
+    /// New graduation Year.
+    private var newGraduationYear: Int?
+    /// New location.
+    private var newLocation: Location?
+    /// New profession set.
+    private var newProfessions: [Profession]?
+    /// New email address.
+    private var newEmail: String?
+    /// New email status.
+    private var newEmailPublic: Bool?
+    /// New phone number.
+    private var newPhone: String?
+    /// New phone status.
+    private var newPhonePublic: Bool?
+    /// Profile cells.
+    private lazy var cells: [ProfileRow] = ["Display Name", "Year You Graduated", "Your Location", "Professions", "Your Email", "Your Phone Number"]
     
     // MARK: Lifecycle methods
     
@@ -33,19 +55,12 @@ class EditProfileViewController: DataLoadingViewController {
         super.viewDidLoad()
         
         // Register nib
-        self.tableView.registerNib(UINib(nibName: "ProfileInputTableCell", bundle: nil), forCellReuseIdentifier: "ProfileInputTableCell")
-        self.tableView.registerNib(UINib(nibName: "ProfileListTableCell", bundle: nil), forCellReuseIdentifier: "ProfileListTableCell")
-        self.tableView.registerNib(UINib(nibName: "ProfileInputSwitchTableCell", bundle: nil), forCellReuseIdentifier: "ProfileInputSwitchTableCell")
-        
-        // Enable navigation bar
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-        self.navigationItem.backBarButtonItem?.enabled = true
-        self.saveButtonItem = UIBarButtonItem(title: "Save",
-                                              style: .Done,
-                                              target: self,
-                                              action: #selector(EditProfileViewController.save(_:)))
-        self.navigationItem.rightBarButtonItem = self.saveButtonItem
-        self.saveButtonItem.enabled = false
+        self.tableView.registerNib(UINib(nibName: "ProfileInputTableCell", bundle: nil),
+                                   forCellReuseIdentifier: "ProfileInputTableCell")
+        self.tableView.registerNib(UINib(nibName: "ProfileListTableCell", bundle: nil),
+                                   forCellReuseIdentifier: "ProfileListTableCell")
+        self.tableView.registerNib(UINib(nibName: "ProfileInputSwitchTableCell", bundle: nil),
+                                   forCellReuseIdentifier: "ProfileInputSwitchTableCell")
         
         // Initialize the tableview
         self.tableView.estimatedRowHeight = 60
@@ -54,35 +69,16 @@ class EditProfileViewController: DataLoadingViewController {
         self.tableView.backgroundColor = Constants.General.Color.BackgroundColor
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.tableView.bounces = false
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissInputView))
-        self.tableView.addGestureRecognizer(tap)
+        self.tableView.addGestureRecognizer(UITapGestureRecognizer(target: self,
+                                                                   action: #selector(self.dismissInputView)))
         
-        // Initialize the graduation year picker view
-        self.graduationYearPickerView = GraduationYearPickerView(frame: CGRect(origin: CGPoint(x: 0, y: view.frame.height / 3 * 2),
-                                                                  size: CGSize(width: view.frame.width, height: view.frame.height / 3)))
-        self.graduationYearPickerView.year = self.currentUser.graduationYear
+        // Set up subview components
+        self.addNavigateButton()
+        self.setupImageView()
+        self.setupLabels()
+        self.setupGraduationPicker()
         
-        self.graduationYearPickerView.comfirmSelection = {
-            guard let graduationYearTextfField = self.graduationYearTextfField else { return }
-            graduationYearTextfField.text = GraduationYearPickerView.showGraduationString(self.graduationYearPickerView.year)
-        }
-        self.graduationYearPickerView.cancelSelection = nil
-        
-        // Initialize the mask view
-        self.maskView.backgroundColor = Constants.General.Color.LightMaskColor
-        
-        // Set font
-        self.nameLabel.font = Constants.General.Font.ProfileNameFont
-        self.graduationYearLabel.font = Constants.General.Font.ProfileNameFont
-        self.locationLabel.font = Constants.General.Font.ProfileLocationFont
-        
-        
-        // Set color
-        self.nameLabel.textColor = Constants.General.Color.TextColor
-        self.graduationYearLabel.textColor = Constants.General.Color.TextColor
-        self.locationLabel.textColor = Constants.General.Color.TextColor
-        
-        // Add delegates
+        // Add table view delegates
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
@@ -99,6 +95,7 @@ class EditProfileViewController: DataLoadingViewController {
                                                          selector: #selector(self.reachabilityChanged(_:)),
                                                          name: Constants.General.ReachabilityChangedNotification,
                                                          object: nil)
+        
         // Fetch user data. We will refetch current user to guarantee to show latest data
         self.loadUserData()
     }
@@ -121,21 +118,99 @@ class EditProfileViewController: DataLoadingViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let countryListViewController = segue.destinationViewController as? LocationListTableViewController where segue.identifier == "Select Location" {
+        if let countryListViewController = segue.destinationViewController as? CountryListTableViewController
+            where segue.identifier == "Select Location" {
             countryListViewController.locationDelegate = self
             // Set current selected location
-            countryListViewController.selectedLocation = self.currentUser.location
+            let location = self.newLocation ?? self.currentUser.location
+            countryListViewController.selectedLocation = location
         }
         
-        if let professionListViewController = segue.destinationViewController as? ProfessionListViewController where segue.identifier == "Select Profession" {
-            professionListViewController.professionDelegate = self
+        if let professionListViewController = segue.destinationViewController as? ProfessionListViewController
+            where segue.identifier == "Select Profession" {
+            professionListViewController.delegate = self
             professionListViewController.avatarImage = self.profileImageView.image
-            professionListViewController.selectedProfessions = self.selectedProfessions
+            // Set current selected professions
+            let professions = self.newProfessions ?? self.currentUser.professions
+            professionListViewController.selectedProfessions = professions
+        }
+    }
+    
+    // MARK: UI Functions
+    
+    /**
+     Enable navigation bar with a save button.
+     */
+    private func addNavigateButton() {
+        // Enable navigation bar
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        // Add save button
+        self.navigationItem.backBarButtonItem?.enabled = true
+        self.saveButtonItem = UIBarButtonItem(title: "Save",
+                                              style: .Done,
+                                              target: self,
+                                              action: #selector(self.save))
+        self.navigationItem.rightBarButtonItem = self.saveButtonItem
+        self.saveButtonItem.enabled = false
+    }
+    
+    /**
+     Set up image view.
+     */
+    private func setupImageView() {
+        self.maskView.backgroundColor = Constants.General.Color.LightMaskColor
+    }
+    
+    /**
+     Set up data labels.
+     */
+    private func setupLabels() {
+        // Set font
+        self.nameLabel.font = Constants.General.Font.ProfileNameFont
+        self.graduationYearLabel.font = Constants.General.Font.ProfileNameFont
+        self.locationLabel.font = Constants.General.Font.ProfileLocationFont
+        
+        // Set color
+        self.nameLabel.textColor = Constants.General.Color.TextColor
+        self.graduationYearLabel.textColor = Constants.General.Color.TextColor
+        self.locationLabel.textColor = Constants.General.Color.TextColor
+    }
+    
+    /**
+     Set up graduation picker view.
+     */
+    private func setupGraduationPicker() {
+        self.graduationYearPickerView = GraduationYearPickerView(frame: CGRect(origin: CGPoint(x: 0, y: view.frame.height / 3 * 2),
+                                                                 size: CGSize(width: view.frame.width, height: view.frame.height / 3)))
+        self.graduationYearPickerView.year = self.currentUser.graduationYear
+    }
+    
+    /**
+     Display current user's banner over avatar image.
+     */
+    private func displayUserBanner() {
+        self.locationLabel.text = "\(self.currentUser.location)"
+        
+        self.nameLabel.text = self.currentUser.name
+        
+        let graduationText = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
+        if graduationText.characters.count > 0 {
+            self.graduationYearLabel.text = "(" + graduationText + ")"
+        }
+        else {
+            self.graduationYearLabel.text = graduationText
         }
     }
     
     // MARK: Actions
-    // Scroll view when showing the keyboard
+    
+    /**
+     Scroll view when showing the keyboard
+     
+     - Parameters:
+        - notification: NSNotification triggers this action with user info.
+     */
     func keyboardWillShown(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
             keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue(),
@@ -158,7 +233,12 @@ class EditProfileViewController: DataLoadingViewController {
         }
     }
     
-    // Reset view when dismissing the keyboard
+    /**
+     Reset view when dismissing the keyboard
+     
+     - Parameters:
+        - notification: NSNotification triggers this action with user info.
+     */
     func keyboardWillHiden(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
             keyboardDurVal = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey] else { return }
@@ -173,10 +253,78 @@ class EditProfileViewController: DataLoadingViewController {
         })
     }
     
-    @IBAction func changeProfileImage(sender: AnyObject) {
+    /**
+     Click Save button to save new user profile data to server asynchronously.
+     */
+    func save() {
         // Dismiss current first responder
         self.view.endEditing(true)
         
+        // Show indicator
+        self.showLoadingIndicator()
+        
+        // Update data
+        if let newValue = self.newAvatar {
+            self.currentUser.avatarImageFile = newValue
+            self.currentUser.avatarThumbnail = self.newThumbnail
+        }
+        if let newValue = self.newName {
+            self.currentUser.name = newValue
+            self.currentUser.pinyin = newValue.toChinesePinyin()
+        }
+        if let newValue = self.newGraduationYear {
+            self.currentUser.graduationYear = newValue
+        }
+        if let newValue = self.newLocation {
+            self.currentUser.location = newValue
+        }
+        if let newValue = self.newEmail {
+            self.currentUser.email = newValue
+        }
+        if let newValue =  self.newEmailPublic {
+            self.currentUser.emailPublic = newValue
+        }
+        if let newValue = self.newPhone{
+            self.currentUser.phoneNumber = newValue
+        }
+        if let newValue = self.newPhonePublic {
+            self.currentUser.phonePublic = newValue
+        }
+        if let newValue = self.newProfessions {
+            self.currentUser.updateProfessions(newValue)
+        }
+        
+        // Save user changes
+        self.currentUser.saveInBackgroundWithFetch { (success, wumiError) in
+            // Dismiss indicator
+            self.dismissLoadingIndicator()
+            
+            guard success else {
+                if let error = wumiError, errorMessage = error.error where !errorMessage.isEmpty {
+                    ErrorHandler.popupErrorAlert(self, errorMessage: "Save Error: " + errorMessage)
+                }
+                else {
+                    ErrorHandler.popupErrorAlert(self, errorMessage: "Save Error: Unknown error.")
+                }
+                return
+            }
+            
+            self.displayUserBanner() // Repaint user banner for new data
+            self.saveButtonItem.enabled = false
+        }
+    }
+    
+    /**
+     Click avatar image to change profile avatar.
+     
+     - Parameters:
+        - sender: Image view clicked.
+     */
+    @IBAction func changeProfileImage(sender: AnyObject) {
+        // Dismiss current first responder
+        self.dismissInputView()
+        
+        // Launch photo selection action sheet.
         let picker = SelectPhotoActionSheet()
         picker.cropImage = true
         picker.delegate = self
@@ -184,117 +332,114 @@ class EditProfileViewController: DataLoadingViewController {
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
-    func save(sender: AnyObject) {
-        // Dismiss current first responder
-        self.view.endEditing(true)
-        
-        // Save user changes
-        self.showLoadingIndicator()
-        self.currentUser.updateProfessions(Array(selectedProfessions))
-        self.currentUser.saveInBackgroundWithFetch { (success, error) in
-            self.dismissLoadingIndicator()
-            guard success else {
-                ErrorHandler.popupErrorAlert(self, errorMessage: "Save Error: " + error.description)
-                return
-            }
-            self.displayUserBanner() // Repaint user banner for new data
-            self.saveButtonItem.enabled = false
-        }
-    }
-    
-    // Action when click the add button on location cell
+    /**
+     Action when click the add button on location cell.
+     
+     - Parameters:
+        - sender: UIButton clicked.
+     */
     func selectLocation(sender: UIButton) {
-        performSegueWithIdentifier("Select Location", sender: self)
+        self.dismissInputView()
+        
+        self.performSegueWithIdentifier("Select Location", sender: self)
     }
     
-    // Action when click the add button on profession cell
+    /**
+     Action when click the add button on profession cell.
+     
+     - Parameters:
+        - sender: UIButton clicked.
+     */
     func selectProfession(sender: UIButton) {
-        performSegueWithIdentifier("Select Profession", sender: self)
+        self.dismissInputView()
+        
+        self.performSegueWithIdentifier("Select Profession", sender: self)
     }
     
-    // Action when click the switch button on email cell
+    /**
+     Action when click the switch button on email cell.
+     
+     - Parameters:
+        - sender: UISwitch tapped.
+     */
     func changeEmailStatus(sender: UISwitch) {
+        self.dismissInputView()
+        
         guard self.currentUser.emailPublic != sender.on else { return }
         
-        self.currentUser.emailPublic = sender.on
+        self.newEmailPublic = sender.on
         self.saveButtonItem.enabled = true
-        
-        self.reloadRowForTypes([.Email])
     }
     
-    // Action when click the switch button on phone cell
+    /**
+     Action when click the switch button on phone cell.
+     
+     - Parameters:
+        - sender: UISwitch tapped.
+     */
     func changePhoneStatus(sender: UISwitch) {
+        self.dismissInputView()
+        
         guard self.currentUser.phonePublic != sender.on else { return }
         
-        self.currentUser.phonePublic = sender.on
+        self.newPhonePublic = sender.on
         self.saveButtonItem.enabled = true
-        
-        self.reloadRowForTypes([.Phone])
     }
 
     // MARK: Help functions
     
-    // Fetch user data
+    /**
+     Fetch current login user's data asynchronously.
+     */
     private func loadUserData() {
+        // Show loading indicator
         self.showLoadingIndicator()
-        self.currentUser.fetchInBackgroundWithBlock() { (result, error) in
-            guard let _ = result as? User where error == nil else {
+        
+        // Fetch data in background
+        self.currentUser.fetchUserInBackgroundWithBlock { (success, error) in
+            // Dismiss loading indicator
+            self.dismissLoadingIndicator()
+            
+            guard success && error == nil else {
+                ErrorHandler.popupErrorAlert(self, errorMessage: "Unable to load user data.")
                 return
             }
             
+            // Show user banner
             self.displayUserBanner()
-            
-            // Load professions
-            Profession.fetchAllInBackground(self.currentUser.professions) { (results, error) -> Void in
-                self.dismissLoadingIndicator() // Hide general loading indicator once we receive the response from server
-                guard let selectedProfessions = results as? [Profession] where error == nil else { return }
-                
-                for selectedProfession in selectedProfessions {
-                    self.selectedProfessions.insert(selectedProfession)
-                }
-                
-                self.reloadRowForTypes([.Profession])
-            }
             
             // Load profile image asynchronously
             self.currentUser.loadAvatar() { (image, error) -> Void in
                 guard error == nil else {
-                    print("\(error)")
+                    ErrorHandler.log(error?.error)
                     return
                 }
                 self.profileImageView.image = image
             }
             
-            // Reload other cells
-            self.reloadRowForTypes([.Name, .GraduationYear, .Location, .Email, .Phone])
+            // Reload cells
+            self.tableView.reloadData()
         }
     }
     
-    private func displayUserBanner() {
-        self.locationLabel.text = "\(self.currentUser.location)"
-            
-        self.nameLabel.text = self.currentUser.name
-            
-        let graduationText = GraduationYearPickerView.showGraduationString(self.currentUser.graduationYear)
-        if graduationText.characters.count > 0 {
-            self.graduationYearLabel.text = "(" + graduationText + ")"
-        }
-        else {
-            self.graduationYearLabel.text = graduationText
-        }
-    }
-    
-    private func reloadRowForTypes(types: [EditProfileCellRowType]) {
+    /**
+     Reload specific profile rows.
+     
+     - Parameters:
+        - rows: Profile rows to be reloaded.
+     */
+    private func reloadProfileRows(rows: [ProfileRow]) {
         var indexPaths = [NSIndexPath]()
         for index in 0..<self.cells.count {
             guard let cell = self.cells[safe: index] else { continue }
             
-            for type in types {
-                if cell == type {
+            for row in rows {
+                if cell == row {
                     indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
                 }
             }
         }
+        
         if indexPaths.count > 0 {
             self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
         }
@@ -309,67 +454,70 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cells.count
+        return self.cells.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let rowType = cells[safe: indexPath.row] else { return UITableViewCell() }
+        guard let row = self.cells[safe: indexPath.row], title = row.title else {
+            return UITableViewCell()
+        }
         
-        switch (rowType) {
+        switch (title) {
         // Name Cell
-        case .Name:
+        case "Display Name":
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputTableCell") as! ProfileInputTableCell
             cell.reset()
             cell.enableBorder = true
-            cell.titleLabel.text = EditProfileCellRowType.Name.rawValue.title
+            cell.titleLabel.text = title
             cell.inputTextField.placeholder = "Please enter your name"
-            cell.inputTextField.text = self.currentUser.name
+            cell.inputTextField.text = self.newName ?? self.currentUser.name
             cell.inputTextField.keyboardType = .NamePhonePad
             cell.inputTextField.tag = indexPath.row
             cell.inputTextField.delegate = self
             return cell
         
         // Graduation Year Cell
-        case .GraduationYear:
+        case "Year You Graduated":
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputTableCell") as! ProfileInputTableCell
             cell.reset()
             cell.enableBorder = true
-            cell.titleLabel.text = EditProfileCellRowType.GraduationYear.rawValue.title
-            cell.inputTextField.text = GraduationYearPickerView.showGraduationString(self.graduationYearPickerView.year)
+            cell.titleLabel.text = title
+            cell.inputTextField.text = GraduationYearPickerView.showGraduationString(self.newGraduationYear ?? self.graduationYearPickerView.year)
             cell.inputTextField.placeholder = "Please select your graduation year"
             cell.inputTextField.inputView = self.graduationYearPickerView
             cell.inputTextField.tag = indexPath.row
             cell.inputTextField.delegate = self
-            self.graduationYearTextfField = cell.inputTextField
+            self.graduationYearPickerView.launchTextField = cell.inputTextField
+            self.graduationYearPickerView.delegate = self
             return cell
         
         // Location Cell
-        case .Location:
+        case "Your Location":
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListTableCell") as! ProfileListTableCell
             cell.reset()
             cell.enableBorder = true
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
-            cell.titleLabel.text = EditProfileCellRowType.Location.rawValue.title
-            cell.addButton.addTarget(self, action: #selector(selectLocation(_:)), forControlEvents: .TouchUpInside)
+            cell.titleLabel.text = title
+            cell.addButton.addTarget(self, action: #selector(self.selectLocation(_:)), forControlEvents: .TouchUpInside)
             return cell
             
         // Profession Cell
-        case .Profession:
+        case "Professions":
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileListTableCell") as! ProfileListTableCell
             cell.reset()
             cell.enableBorder = true
             cell.setCollectionViewDataSourceDelegate(self, ForIndexPath: indexPath)
-            cell.titleLabel.text = EditProfileCellRowType.Profession.rawValue.title
-            cell.addButton.addTarget(self, action: #selector(selectProfession(_:)), forControlEvents: .TouchUpInside)
+            cell.titleLabel.text = title
+            cell.addButton.addTarget(self, action: #selector(self.selectProfession(_:)), forControlEvents: .TouchUpInside)
             return cell
         
         // Email Cell
-        case .Email:
+        case "Your Email":
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchTableCell") as! ProfileInputSwitchTableCell
             cell.reset()
             cell.enableBorder = true
-            cell.titleLabel.text = EditProfileCellRowType.Email.rawValue.title
-            cell.inputTextField.text = self.currentUser.email
+            cell.titleLabel.text = title
+            cell.inputTextField.text = self.newEmail ?? self.currentUser.email
             cell.inputTextField.placeholder = "Please enter your email"
             cell.inputTextField.keyboardType = .EmailAddress
             cell.inputTextField.delegate = self
@@ -379,12 +527,12 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             return cell
         
         // Phone Cell
-        case .Phone:
+        case "Your Phone Number":
             let cell = tableView.dequeueReusableCellWithIdentifier("ProfileInputSwitchTableCell") as! ProfileInputSwitchTableCell
             cell.reset()
             cell.enableBorder = true
-            cell.titleLabel.text = EditProfileCellRowType.Phone.rawValue.title
-            cell.inputTextField.text = self.currentUser.phoneNumber
+            cell.titleLabel.text = title
+            cell.inputTextField.text = self.newPhone ?? self.currentUser.phoneNumber
             cell.inputTextField.placeholder = "Please enter your phone number"
             cell.inputTextField.keyboardType = .PhonePad
             cell.inputTextField.delegate = self
@@ -392,6 +540,8 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate 
             cell.showPublic = self.currentUser.phonePublic
             cell.statusSwitch.addTarget(self, action: #selector(changePhoneStatus(_:)), forControlEvents: .ValueChanged)
             return cell
+        default:
+            return UITableViewCell()
         }
     }
 }
@@ -404,18 +554,22 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let rowType = self.cells[safe: collectionView.tag] else { return 0 }
+        guard let row = self.cells[safe: collectionView.tag], title = row.title else {
+            return 0
+        }
         
-        switch (rowType) {
-        case .Location:
-            if self.currentUser.location.description.characters.count > 0 {
+        switch (title) {
+        case "Your Location":
+            let location = self.newLocation ?? self.currentUser.location
+            if location.description.characters.count > 0 {
                 return 1
             }
             else {
                 return 0
             }
-        case .Profession:
-            return self.selectedProfessions.count
+        case "Professions":
+            let professions = self.newProfessions ?? self.currentUser.professions
+            return professions.count
         default:
             return 0
         }
@@ -423,18 +577,21 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath) as? ProfileCollectionCell,
-            rowType = self.cells[safe: collectionView.tag] else {
+            row = self.cells[safe: collectionView.tag], title = row.title else {
                 return ProfileCollectionCell()
         }
         
-        switch (rowType) {
-        case .Location:
-            cell.cellLabel.text = "\(self.currentUser.location)"
+        switch (title) {
+        case "Your Location":
+            let location = self.newLocation ?? self.currentUser.location
+            cell.cellLabel.text = "\(location)"
             
-        case .Profession:
-            guard let profession = self.selectedProfessions[index: indexPath.row] else {
+        case "Professions":
+            let professions = self.newProfessions ?? self.currentUser.professions
+            guard let profession = professions[safe: indexPath.row] else {
                 break
             }
+            
             cell.cellLabel.text = profession.name
             
         default:
@@ -448,16 +605,25 @@ extension EditProfileViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        guard let rowType = self.cells[safe: collectionView.tag] else { return CGSizeZero }
+        guard let row = self.cells[safe: collectionView.tag], title = row.title else {
+            return CGSizeZero
+        }
         
-        switch (rowType) {
-        case .Location:
-            let text = "\(self.currentUser.location)"
-            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16, height: 24)
+        switch (title) {
+        case "Your Location":
+            let location = self.newLocation ?? self.currentUser.location
+            let text = "\(location)"
+            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16,
+                          height: 24)
             
-        case .Profession:
-            guard let profession = self.selectedProfessions[index: indexPath.row], text = profession.name else { return CGSizeZero }
-            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16, height: 24)
+        case "Professions":
+            let professions = self.newProfessions ?? self.currentUser.professions
+            guard let profession = professions[safe: indexPath.row], text = profession.name else {
+                return CGSizeZero
+            }
+            
+            return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16,
+                          height: 24)
             
         default:
             return CGSizeZero
@@ -475,13 +641,16 @@ extension EditProfileViewController: SelectPhotoActionSheetDelegate  {
     func selectPhotoActionSheet(controller: SelectPhotoActionSheet, didFinishePickingPhotos images: [UIImage], assets: [PHAsset]?, sourceType: UIImagePickerControllerSourceType) {
         guard let profileImage = images.first else { return }
         
-        self.currentUser.saveAvatarFile(profileImage) { (success, imageError) -> Void in
-            guard success else {
-                ErrorHandler.popupErrorAlert(self, errorMessage: "\(imageError)")
+        User.saveAvatarFiles(profileImage) { (avatarFile, thumbnailFile, error) in
+            guard error == nil else {
+                ErrorHandler.popupErrorAlert(self, errorMessage: error?.error)
                 return
             }
             
+            self.newAvatar = avatarFile
+            self.newThumbnail = thumbnailFile
             self.profileImageView.image = profileImage
+            self.saveButtonItem.enabled = true
         }
     }
 }
@@ -490,11 +659,11 @@ extension EditProfileViewController: SelectPhotoActionSheetDelegate  {
 
 extension EditProfileViewController: UITextFieldDelegate {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        guard let rowType = self.cells[safe: textField.tag] else { return false }
+        guard let row = self.cells[safe: textField.tag], title = row.title else { return false }
         
         // Validate input of each text field
-        switch (rowType) {
-        case .GraduationYear:
+        switch (title) {
+        case "Year You Graduated":
             return false
         default:
             return true
@@ -518,7 +687,7 @@ extension EditProfileViewController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        textField.backgroundColor = Constants.General.Color.LightBackgroundColor
+        textField.backgroundColor = Constants.General.Color.LightBackgroundColor // Highlight current editing textfield
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
@@ -526,41 +695,35 @@ extension EditProfileViewController: UITextFieldDelegate {
         
         // Validate input of each text field
         switch (rowType) {
-        case .Name:
-            guard self.currentUser.name != textField.text else { break }
-            
-            self.currentUser.name = textField.text
-            if let name = self.currentUser.name {
-                self.currentUser.pinyin = name.toChinesePinyin()
+        case "Display Name":
+            guard self.currentUser.name != textField.text else {
+                self.newName = nil
+                break
             }
+            
+            self.newName = textField.text
             self.saveButtonItem.enabled = true
-        case .GraduationYear:
-            var year: Int?
-            if let graduationYear = textField.text where graduationYear.characters.count > 0 {
-                year = Int(graduationYear)
+        case "Your Email":
+            guard self.currentUser.email != textField.text else {
+                self.newEmail = nil
+                break
             }
-            else {
-                year = 0
+            
+            self.newEmail = textField.text
+            self.saveButtonItem.enabled = true
+        case "Your Phone Number":
+            guard self.currentUser.phoneNumber != textField.text else {
+                self.newPhone = nil
+                break
             }
-            guard let selectedYear = year where self.currentUser.graduationYear != year else { break }
             
-            self.currentUser.graduationYear = selectedYear
+            self.newPhone = textField.text
             self.saveButtonItem.enabled = true
-        case .Email:
-            guard self.currentUser.email != textField.text else { break }
-            
-            self.currentUser.email = textField.text
-            self.saveButtonItem.enabled = true
-        case .Phone:
-            guard self.currentUser.phoneNumber != textField.text else { break }
-            
-            self.currentUser.phoneNumber = textField.text
-            
         default:
             break
         }
         
-        textField.backgroundColor = UIColor.whiteColor()
+        textField.backgroundColor = UIColor.whiteColor() // Reset textfield background color
     }
 }
     
@@ -568,72 +731,72 @@ extension EditProfileViewController: UITextFieldDelegate {
 
 extension EditProfileViewController: LocationListDelegate {
     func finishLocationSelection(location: Location?) {
-        guard let selectedLocation = location where selectedLocation != self.currentUser.location else { return }
+        let curLocation = self.newLocation ?? self.currentUser.location
         
-        self.currentUser.location = selectedLocation
-        self.saveButtonItem.enabled = true
+        guard let selectedLocation = location else { return }
         
-        self.reloadRowForTypes([.Location])
+        // Check whether this new selected location is diff with current user's location
+        if selectedLocation != self.currentUser.location {
+            self.newLocation = selectedLocation
+            self.saveButtonItem.enabled = true
+        }
+        else {
+            self.newLocation = nil
+            return
+        }
+
+        
+        // Check whether location changed
+        if curLocation != selectedLocation {
+            self.reloadProfileRows(["Your Location"])
+        }
     }
 }
 
 // MARK: ProfessionList delegate
 
 extension EditProfileViewController: ProfessionListDelegate {
-    func finishProfessionSelection(selectedProfessions: Set<Profession>) {
-        guard selectedProfessions.subtract(self.selectedProfessions).count > 0 else { return }
+    func finishProfessionSelection(selectedProfessions: [Profession]) {
+        let curProfessions = self.newProfessions ?? self.currentUser.professions
         
-        self.selectedProfessions = selectedProfessions
-        self.saveButtonItem.enabled = true
+        // Check whether this new selected professions are diff with current user's profession list
+        if !selectedProfessions.compare(self.currentUser.professions) {
+            self.newProfessions = selectedProfessions
+            self.saveButtonItem.enabled = true
+        }
+        else {
+            self.newProfessions = nil
+        }
         
-        self.reloadRowForTypes([.Profession])
+        // Check whether profession changed
+        if !selectedProfessions.compare(curProfessions) {
+            self.reloadProfileRows(["Professions"])
+        }
     }
 }
 
-// MARK: Custom row type
+// MARK: GraduationYearPickerView delegates
 
-private enum EditProfileCellRowType: ProfileRow, RawRepresentable {
-    case Name = "Display Name"
-    case GraduationYear = "Year you graduated"
-    case Location = "Your location"
-    case Profession = "Professions"
-    case Email = "Your email"
-    case Phone = "Phone"
-    
-    static let allCases = [Name, GraduationYear, Location, Profession, Email, Phone]
-    
-    typealias RawValue = ProfileRow
-    
-    var rawValue: RawValue {
-        switch self {
-        case .Name:
-            return "Display Name"
-        case .GraduationYear:
-            return "Year you graduated"
-        case .Location:
-            return "Your location"
-        case .Profession:
-            return "Professions"
-        case .Email:
-            return "Your email"
-        case .Phone:
-            return "Phone"
+extension EditProfileViewController: GraduationYearPickerDelegate {
+    func confirmSelection(picker: GraduationYearPickerView, launchTextField: UITextField?) {
+        guard let graduationYearTextField = launchTextField else { return }
+        
+        graduationYearTextField.text = GraduationYearPickerView.showGraduationString(self.graduationYearPickerView.year)
+        
+        if self.currentUser.graduationYear != picker.year {
+            self.newGraduationYear = picker.year
+            self.saveButtonItem.enabled = true
         }
+        else {
+            self.newGraduationYear = nil
+        }
+        
+        graduationYearTextField.resignFirstResponder()
     }
     
-    init?(rawValue: EditProfileCellRowType.RawValue) {
-        var foundType: EditProfileCellRowType? = nil
+    func cancelSelection(picker: GraduationYearPickerView, launchTextField: UITextField?) {
+        guard let graduationYearTextField = launchTextField else { return }
         
-        for type in EditProfileCellRowType.allCases {
-            if rawValue == type.rawValue {
-                foundType = type
-                break
-            }
-        }
-        
-        guard let type = foundType else {
-            return nil
-        }
-        self = type
+        graduationYearTextField.resignFirstResponder()
     }
 }

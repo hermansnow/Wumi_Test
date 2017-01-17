@@ -17,11 +17,16 @@ class ProfessionListViewController: UIViewController {
     @IBOutlet weak var listDescription: UILabel!
     @IBOutlet weak var professionCollectionView: UICollectionView!
     
-    var professionDelegate: ProfessionListDelegate?
+    /// ProfessionList delegates.
+    var delegate: ProfessionListDelegate?
     
+    /// Avatar image of current login user.
     var avatarImage: UIImage?
-    var selectedProfessions = Set<Profession>()
+    /// Array of current selected professions.
+    var selectedProfessions = [Profession]()
+    /// Full list of professions
     lazy var professions = [String: [Profession]]()
+    /// Full list of profession categories.
     lazy var professionCategories = [String]()
     
     // MARK: Lifecycle methods
@@ -29,32 +34,56 @@ class ProfessionListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initialize header
+        // Set up subview components
+        self.setupUserHeader()
+        self.setupProfessionCollection()
+        
+        // Load profession data
+        self.loadProfessions()
+    }
+    
+    // MARK: UI Functions
+    
+    /**
+     Set up user header view.
+     */
+    private func setupUserHeader() {
+        // Header description text
         let title = "Professions"
-        let details = "you can select up to 3 related professions"
+        let details = "you can select up to \(Constants.General.Value.MaxProfessionCount) related professions"
         let description = NSMutableAttributedString(string: "\(title) (\(details))")
-        description.addAttributes(
-            [NSForegroundColorAttributeName: Constants.General.Color.TextColor,
-                NSFontAttributeName: Constants.General.Font.DetailFont],
-            range: NSRange(location: 0, length: title.characters.count))
-        description.addAttributes(
-            [NSForegroundColorAttributeName: Constants.General.Color.ProfileTitleColor,
-                NSFontAttributeName: Constants.General.Font.ProfileTitleFont],
-            range: NSRange(location: title.characters.count, length: details.characters.count + 3))
+        // Set attributes for title text
+        description.addAttributes([NSForegroundColorAttributeName: Constants.General.Color.TextColor,
+                                   NSFontAttributeName: Constants.General.Font.DetailFont],
+                                  range: NSRange(location: 0, length: title.characters.count))
+        // Set attributes for description text
+        description.addAttributes([NSForegroundColorAttributeName: Constants.General.Color.ProfileTitleColor,
+                                   NSFontAttributeName: Constants.General.Font.ProfileTitleFont],
+                                  range: NSRange(location: title.characters.count, length: details.characters.count + 3))
+        // Set paragraph style
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
         description.addAttribute(NSParagraphStyleAttributeName,
-                          value: style,
-                          range: NSRange(location: 0, length: description.length))
+                                 value: style,
+                                 range: NSRange(location: 0, length: description.length))
+        
         self.listDescription.attributedText = description
         self.listDescription.numberOfLines = 0
+        
         self.avatarImageView.image = self.avatarImage
         self.headerView.backgroundColor = Constants.General.Color.LightBackgroundColor
-        
-        // Initializde collection view
+    }
+    
+    /**
+     Set up profession collection view
+     */
+    private func setupProfessionCollection() {
+        // Set up left aligned layout
         let flowLayout = UICollectionViewLeftAlignedLayout()
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         self.professionCollectionView.collectionViewLayout = flowLayout
+        
+        // Set background color
         self.professionCollectionView.backgroundColor = UIColor.whiteColor()
         
         // Set delegates
@@ -63,34 +92,41 @@ class ProfessionListViewController: UIViewController {
         
         // Register collection cell
         self.professionCollectionView.registerNib(UINib(nibName: "ProfileCollectionCell", bundle: nil),
-                                     forCellWithReuseIdentifier: "ProfileCollectionCell")
+                                                  forCellWithReuseIdentifier: "ProfileCollectionCell")
         self.professionCollectionView.registerNib(UINib(nibName: "ProfessionSectionHeader", bundle: nil),
-                                     forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                            withReuseIdentifier: "ProfessionSectionHeader")
-        
-        // Fetch profession data
-        self.loadProfessions()
+                                                  forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                                  withReuseIdentifier: "ProfessionSectionHeader")
     }
     
     // MARK: Actions
     
+    /**
+     Action when end-user clicks "Done" button.
+     View controller will return to main parent view controller with new selected professions.
+     
+     - Parameters:
+        - sender: The sender component who trigger the event.
+     */
     @IBAction func done(sender: AnyObject) {
-        if let delegate = self.professionDelegate {
-            delegate.finishProfessionSelection(selectedProfessions)
+        if let delegate = self.delegate {
+            delegate.finishProfessionSelection(self.selectedProfessions)
         }
         self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: Help functions
     
+    /**
+     Load profession list asynchronously.
+     */
     private func loadProfessions() {
         Profession.loadAllProfessions { (results, error) -> Void in
-            guard let allProfessions = results as? [Profession] where results.count >= 0 && error == nil else {
-                print("\(error)")
+            guard results.count >= 0 && error == nil else {
+                ErrorHandler.log(error?.error)
                 return
             }
             
-            self.professions = allProfessions.groupBy { (profession) -> String in
+            self.professions = results.groupBy { (profession) -> String in
                 return profession.category!
             }
                 
@@ -116,15 +152,15 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let dequeueCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell", forIndexPath: indexPath)
+        let dequeueCell = collectionView.dequeueReusableCellWithReuseIdentifier("ProfileCollectionCell",
+                                                                                forIndexPath: indexPath)
         
-        
-        guard let cell = dequeueCell as? ProfileCollectionCell,
-            key = self.professionCategories[safe: indexPath.section],
+        guard let cell = dequeueCell as? ProfileCollectionCell, key = self.professionCategories[safe: indexPath.section],
             profession = self.professions[key]?[indexPath.row] else {
                 return dequeueCell
         }
-
+        
+        // Set profession name
         cell.cellLabel.text = profession.name
         
         // Set styles for selected/unselected cells
@@ -147,12 +183,14 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader,
-                                                      withReuseIdentifier: "ProfessionSectionHeader",
-                                                             forIndexPath: indexPath)
+                                                                           withReuseIdentifier: "ProfessionSectionHeader",
+                                                                           forIndexPath: indexPath)
         
         guard let sectionHeader = header as? ProfessionSectionHeader, key = self.professionCategories[safe: indexPath.section] else {
             return header
         }
+        
+        // Set category name as section header
         sectionHeader.titleLabel.text = key.uppercaseString
         
         return sectionHeader
@@ -164,27 +202,29 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
     
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        guard let key = self.professionCategories[safe: indexPath.section], profession = self.professions[key]?[indexPath.row], text = profession.name else {
+        guard let key = self.professionCategories[safe: indexPath.section],
+            profession = self.professions[key]?[indexPath.row], text = profession.name else {
                 return CGSizeZero
         }
         
-        return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16, height: 24)
+        return CGSize(width: text.getSizeWithFont(Constants.General.Font.ProfileCollectionFont).width + 16,
+                      height: 24)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 34)
+        return CGSize(width: collectionView.frame.width,
+                      height: 34)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        guard let key = self.professionCategories[safe: indexPath.section],
-            categoryList = self.professions[key],
-            profession = categoryList[safe: indexPath.row],
-            cell = collectionView.cellForItemAtIndexPath(indexPath) as? ProfileCollectionCell else { return }
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ProfileCollectionCell, key = self.professionCategories[safe: indexPath.section],
+            categoryList = self.professions[key], profession = categoryList[safe: indexPath.row] else { return }
         
+        // Set behaviors for different style of cells
         switch (cell.style) {
         case .Original:
-            if self.selectedProfessions.count < 3 {
-                self.selectedProfessions.insert(profession)
+            if self.selectedProfessions.count < Constants.General.Value.MaxProfessionCount {
+                self.selectedProfessions.append(profession)
                 cell.style = .Selected
             }
             else {
@@ -193,7 +233,7 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
         case .Selected:
             for selectedProfession in self.selectedProfessions {
                 if selectedProfession == profession {
-                    self.selectedProfessions.remove(selectedProfession)
+                    self.selectedProfessions.removeObject(selectedProfession)
                     break
                 }
             }
@@ -205,5 +245,11 @@ extension ProfessionListViewController: UICollectionViewDelegate, UICollectionVi
 // MARK: Custome delegate
 
 protocol ProfessionListDelegate {
-    func finishProfessionSelection(selectedProfessions: Set<Profession>)
+    /**
+     Event when user clicks Done button and navigate back to its parent view controller.
+     
+     - Parameters:
+        - selectedProfessions: Array of new selected professions.
+     */
+    func finishProfessionSelection(selectedProfessions: [Profession])
 }

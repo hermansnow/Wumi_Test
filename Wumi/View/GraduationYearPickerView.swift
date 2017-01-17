@@ -19,6 +19,10 @@ class GraduationYearPickerView: UIView {
     /// Array of selectable years.
     private lazy var years = [Int]()
     
+    /// GraduationYearPicker delegate
+    var delegate: GraduationYearPickerDelegate?
+    /// Launch textfield
+    var launchTextField: UITextField?
     /// Current selected year
     var year: Int = 0 {
         didSet {
@@ -27,13 +31,6 @@ class GraduationYearPickerView: UIView {
     }
     
     // Closures passed in from caller. These closures are used by callers to define view behaviors
-    
-    /// Action when a year is selected.
-    var onYearSelected: ((year: Int) -> Void)?
-    /// Action when confirm button is clicked.
-    var comfirmSelection: (() -> Void)?
-    /// Action when cancel button is clicked.
-    var cancelSelection: (() -> Void)?
     
     // MARK: Initializers
     
@@ -64,15 +61,15 @@ class GraduationYearPickerView: UIView {
         // Set up top toolbar
         let cancelButton: UIBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                             style: .Plain,
-                                                           target: self,
-                                                           action: #selector(cancel(_:)))
+                                                            target: self,
+                                                            action: #selector(self.cancel))
         let confirmButton: UIBarButtonItem = UIBarButtonItem(title: "Confirm",
                                                              style: .Plain,
-                                                            target: self,
-                                                            action: #selector(confirm(_:)))
+                                                             target: self,
+                                                             action: #selector(self.confirm))
         let flexibleSpaceBarItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
-                                                                                 target: nil,
-                                                                                 action: nil)
+                                                                    target: nil,
+                                                                    action: nil)
         self.toolBar.items = [cancelButton, flexibleSpaceBarItem, confirmButton]
         
         // Set up UIPickerView
@@ -90,19 +87,23 @@ class GraduationYearPickerView: UIView {
     
     // MARK: Actions
     
-    // Click Cancel bar button
-    func cancel(sender: AnyObject) {
-        if let block = cancelSelection {
-            block()
-        }
+    /**
+     Action when clicking Cancel bar button.
+     */
+    func cancel() {
+        guard let delegate = self.delegate, cancelSelection = delegate.cancelSelection else { return }
+        
+        cancelSelection(self, launchTextField: self.launchTextField)
         self.removeFromSuperview()
     }
     
-    // Click Confirm bar button
-    func confirm(sender: AnyObject) {
-        if let block = comfirmSelection {
-            block()
-        }
+    /**
+     Action when clicking Confirm bar button.
+     */
+    func confirm() {
+        guard let delegate = self.delegate, confirmSelection = delegate.confirmSelection else { return }
+        
+        confirmSelection(self, launchTextField: self.launchTextField)
         self.removeFromSuperview()
     }
     
@@ -172,10 +173,42 @@ extension GraduationYearPickerView: UIPickerViewDelegate, UIPickerViewDataSource
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         guard let year = self.years[safe: self.graduationYearPicker.selectedRowInComponent(component)] else { return }
-        
-        if let block = self.onYearSelected {
-            block(year: year)
-        }
         self.year = year
+        
+        if let delegate = self.delegate, yearSelection = delegate.onYearSelected {
+            yearSelection(self, launchTextField: self.launchTextField, Year: year)
+        }
     }
+}
+
+// MARK: GraduationYearPickerDelegate
+
+@objc protocol GraduationYearPickerDelegate {
+    /** 
+     Action when a year is selected.
+     
+     - Parameters:
+        - picker: GraduationYearPickerView being used.
+        - launchTextField: UItextfield launches the picker.
+        - year: Year selected.
+     */
+    optional func onYearSelected(picker: GraduationYearPickerView, launchTextField: UITextField?, Year year: Int)
+    
+    /**
+     Action when confirm button is clicked.
+     
+     - Parameters:
+        - picker: GraduationYearPickerView being used.
+        - launchTextField: UItextfield launches the picker.
+     */
+    optional func confirmSelection(picker: GraduationYearPickerView, launchTextField: UITextField?)
+    
+    /**
+     Action when cancel button is clicked.
+     
+     - Parameters:
+        - picker: GraduationYearPickerView being used.
+        - launchTextField: UItextfield launches the picker.
+     */
+    optional func cancelSelection(picker: GraduationYearPickerView, launchTextField: UITextField?)
 }

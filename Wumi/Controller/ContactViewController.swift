@@ -56,7 +56,6 @@ class ContactViewController: DataLoadingViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationItem.backBarButtonItem?.enabled = true
         
-        
         // Add delegates
         self.favoriteButton.delegate = self
         

@@ -51,3 +51,34 @@ extension Array {
         }
     }
 }
+
+
+extension Array where Element : Equatable {
+    /**
+     Compare the array with equatable elements with another same type of array.
+     
+     - Returns:
+        True if two arrays include same elements, otherwise false.
+     */
+    func compare(chs: Array<Array.Generator.Element>) -> Bool {
+        if self.count != chs.count {
+            return false
+        }
+        var compareSet = chs
+        for lItem in self {
+            var found = false
+            for rItem in compareSet {
+                if lItem == rItem {
+                    found = true
+                    compareSet.removeObject(rItem)
+                    break
+                }
+            }
+            if !found {
+                return false
+            }
+        }
+        
+        return true
+    }
+}

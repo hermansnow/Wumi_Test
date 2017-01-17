@@ -76,6 +76,10 @@ struct Constants {
                 static let WidthHeightRatio = 375.0 / 240.0
             }
         }
+        
+        struct Value {
+            static let MaxProfessionCount = 3
+        }
     }
     
     struct SignIn {
