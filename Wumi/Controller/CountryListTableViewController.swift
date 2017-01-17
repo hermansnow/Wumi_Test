@@ -98,20 +98,15 @@ class CountryListTableViewController: LocationListTableViewController {
             if !CLLocationManager.locationServicesEnabled() ||
                 CLLocationManager.authorizationStatus() == .Denied ||
                 CLLocationManager.authorizationStatus() == .Restricted {
-                    let footerView = UITableViewHeaderFooterView()
-                    
-                    let warningLable = UILabel(frame: CGRect(x: 40,
-                                                             y: 10,
-                                                             width: tableView.frame.width - 80,
-                                                             height: tableView.sectionFooterHeight))
-                    warningLable.font = UIFont.boldSystemFontOfSize(10)
+                    let warningLable = UILabel()
+                    warningLable.backgroundColor = Constants.General.Color.LightBackgroundColor
+                    warningLable.font = Constants.General.Font.ErrorFont
                     warningLable.text = "Enable access for Wumi in \"Settings\" - \"Privacy\" - \"Location Service\" on your device"
                     warningLable.lineBreakMode = .ByWordWrapping
                     warningLable.textAlignment = .Center
                     warningLable.numberOfLines = 0
-                    
-                    footerView.addSubview(warningLable)
-                    return footerView
+                
+                    return warningLable
             }
             return nil
         
@@ -151,6 +146,7 @@ class CountryListTableViewController: LocationListTableViewController {
                 else {
                     cell.title = "Unable to access your location"
                 }
+                cell.selectionStyle = .None
             }
             else if let locationPlacemark = self.currentLocation {
                 let location = Location(CountryCode: locationPlacemark.ISOcountryCode,
@@ -163,6 +159,8 @@ class CountryListTableViewController: LocationListTableViewController {
                     cell.detail = "Selected"
                 }
             }
+            cell.accessoryType = .None
+            
             return  cell
             
         default:

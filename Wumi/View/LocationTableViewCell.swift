@@ -51,5 +51,7 @@ class LocationTableViewCell: UITableViewCell {
     func reset() {
         self.title = nil
         self.detail = nil
+        self.accessoryType = .None
+        self.selectionStyle = .Default
     }
 }

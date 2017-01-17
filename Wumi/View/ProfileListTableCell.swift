@@ -45,6 +45,9 @@ class ProfileListTableCell: ProfileTableCell {
                                  height: 1.0)
     }
     
+    /**
+     Reset cell data.
+     */
     func reset() {
         self.titleLabel.text = nil
         self.addButton.removeTarget(nil, action: nil, forControlEvents: .AllTouchEvents)
@@ -62,11 +65,12 @@ class ProfileListTableCell: ProfileTableCell {
     }
     
     override func systemLayoutSizeFittingSize(targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        // Force collection view relayout with the shown size (width)
+        self.collectionView.layoutIfNeeded()
         
         let minHeight = max(24, self.collectionView.collectionViewLayout.collectionViewContentSize().height)
-        
         let size = CGSize(width: targetSize.width,
-                         height: minHeight + self.collectionView.frame.origin.y + 10)
+                          height: minHeight + self.collectionView.frame.origin.y + 10)
         
         return super.systemLayoutSizeFittingSize(size, withHorizontalFittingPriority: horizontalFittingPriority, verticalFittingPriority: verticalFittingPriority)
     }
