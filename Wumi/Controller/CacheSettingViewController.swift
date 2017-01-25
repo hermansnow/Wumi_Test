@@ -119,7 +119,7 @@ class CacheSettingTableViewController: UITableViewController {
     private func clearAllCache() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Clear", style: .Default) { (UIAlertAction) in
-            // Clean disk memory cache
+            // Clean memory cache
             DataManager.sharedDataManager.cleanMemoryCache()
             
             // Clean user defaults
@@ -127,7 +127,7 @@ class CacheSettingTableViewController: UITableViewController {
                 NSUserDefaults.standardUserDefaults().removePersistentDomainForName(bundle)
             }
             
-            // Clean cached files
+            // Clean cached files on disk
             self.clearCacheLargerThan(0)
             
             // Re-calculate usage of cache
@@ -144,7 +144,7 @@ class CacheSettingTableViewController: UITableViewController {
     private func clearLargeFiles() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Clear", style: .Default) { (UIAlertAction) in
-                // Clean cached files
+                // Clean cached files on disk
                 self.clearCacheLargerThan(self.largeFileSize)
             
                 // Re-calculate size of cached files

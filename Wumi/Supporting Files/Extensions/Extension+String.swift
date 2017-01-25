@@ -73,7 +73,40 @@ extension String {
         }
     }
     
-    // Return Chinese pinyin lowcase string
+    /**
+     Return initial of an uppercase string composed with the first letter of first and last components of it, for example "HC" for "Herman Cheng".
+     In terms of string with Chinese character, this api will only return the first character.
+     
+     - Returns:
+        Initial string.
+     */
+    func initials() -> String {
+        if self.containChinese() {
+            return self.substringToIndex(self.startIndex.advancedBy(1))
+        }
+        
+        let names = self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        var value = ""
+        
+        guard let firstName = names.first else {
+            return value
+        }
+        
+        value = firstName.substringToIndex(firstName.startIndex.advancedBy(1))
+        
+        if let lastName = names.last where names.count > 1 {
+            value += " " + lastName.substringToIndex(lastName.startIndex.advancedBy(1))
+        }
+        
+        return value.uppercaseString
+    }
+    
+    /**
+     Return Chinese pinyin string in lowcase.
+     
+     - Returns:
+        Chinese pinyin string.
+     */
     func toChinesePinyin() -> String {
         // Try parse the name as Mandarin Chinese
         let formatingStr = NSMutableString(string: self) as CFMutableString

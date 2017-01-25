@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SDWebImage
 
 class DataManager {
     
@@ -19,8 +20,10 @@ class DataManager {
     
     // MARK: In-memory cache
     
-    /// NSCache object for in-memory cache
+    /// NSCache object for in-memory cache.
     lazy var cache = NSCache()
+    /// SDImageCache object for local image cache.
+    lazy var imageCache = SDImageCache()
     
     // MARK: Disk File Manager
     
@@ -73,10 +76,11 @@ class DataManager {
     }
     
     /**
-     Clean disk cache.
+     Clean memory cache.
      */
     func cleanMemoryCache() {
         self.cache.removeAllObjects()
+        self.imageCache.clearMemory()
     }
     
     // MARK: Core Data

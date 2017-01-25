@@ -237,6 +237,11 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
      */
     func loadAvatarThumbnail(ScaleToSize size: CGSize? = nil, block: (avatar: UIImage?, error: WumiError?) -> Void) {
         guard let file = self.avatarThumbnail else {
+            if let name = self.name, cachedImage = DataManager.sharedDataManager.imageCache.imageFromDiskCacheForKey("avatarThumbnail_\(name.initials())"){
+                print("Loaded image \(name.initials()) from cache")
+                block(avatar: cachedImage, error: nil)
+            }
+            
             block(avatar: nil, error: WumiError(type: .Image, error: "No avatar thumbnail image for this user."))
             return
         }
@@ -246,7 +251,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         }
     }
     
-    /** 
+    /**
     Save avatar to the user on server asynchronously.
      
     - Parameters:

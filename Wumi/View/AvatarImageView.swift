@@ -23,6 +23,7 @@ class AvatarImageView: UIView {
         }
     }
     
+    /// Avatar image.
     var image: UIImage? {
         get {
             return self.containerImageView.image
@@ -63,6 +64,74 @@ class AvatarImageView: UIView {
     override func layoutSubviews() {
         self.containerImageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: self.frame.size)
         self.layer.cornerRadius = self.frame.size.height / 2
+    }
+    
+    /**
+     Show an image with name initial as avatar.
+     
+     - Parameters:
+        - name: name string to be displayed.
+     */
+    func showNameAvatar(name: String) {
+        let initial = name.initials()
+        self.containerImageView.image = self.imageSnapshot(fromText: initial,
+                                                           backgroundColor: Constants.General.Color.ThemeColor,
+                                                           textAttributes: [NSFontAttributeName: UIFont.systemFontOfSize(14),
+                                                                            NSForegroundColorAttributeName: UIColor.whiteColor()])
+        
+        // Cache avatar image
+        if let image = self.containerImageView.image {
+            DataManager.sharedDataManager.imageCache.storeImage(image, forKey: "avatarThumbnail_\(initial)")
+        }
+    }
+    
+    /**
+     Generate an image with string in the avatar view.
+     
+     - Parameters:
+        - fromText: text string to be used to generate the image.
+        - backgroundColor: background color of image.
+        - textAttribute: attributes of text string.
+     
+     - Returns:
+        New image or nil if failed.
+     */
+    private func imageSnapshot(fromText text:String, backgroundColor:UIColor, textAttributes: [String: AnyObject]) -> UIImage? {
+        let scale = UIScreen.mainScreen().scale
+        var size = self.bounds.size
+        
+        if self.containerImageView.contentMode == .ScaleToFill ||
+            self.containerImageView.contentMode == .ScaleAspectFill ||
+            self.containerImageView.contentMode == .ScaleAspectFit ||
+            self.containerImageView.contentMode == .Redraw {
+            
+            size.width = CGFloat(floorf(Float(size.width * scale)) / Float(scale))
+            size.height = CGFloat(floorf(Float(size.height * scale)) / Float(scale))
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        
+        // Fill background of context
+        CGContextSetFillColorWithColor(context, backgroundColor.CGColor)
+        CGContextFillRect(context, CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            
+        // Draw text in the context
+        let myString: NSString = text as NSString
+        let textSize: CGSize = myString.sizeWithAttributes(textAttributes)
+        let bounds = self.bounds
+        
+        myString.drawInRect(CGRect(x: bounds.size.width/2 - textSize.width / 2,
+                                   y: bounds.size.height / 2 - textSize.height / 2,
+                                   width: textSize.width,
+                                   height: textSize.height),
+                            withAttributes: textAttributes)
+        
+        let snapshot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+            
+        return snapshot
     }
 }
 

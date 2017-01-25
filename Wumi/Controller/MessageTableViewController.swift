@@ -182,6 +182,12 @@ class MessageTableViewController: UITableViewController {
         user.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
             guard imageError == nil && avatarImage != nil else {
                 print("\(imageError)")
+                
+                // Show name intials
+                if let name = user.name {
+                    cell.avatarImageView.showNameAvatar(name)
+                }
+                
                 return
             }
             cell.avatarImageView.image = avatarImage
