@@ -210,14 +210,13 @@ class PIKAImageCropViewController: UIViewController {
             
             var croppedImage: UIImage?
             var thumbnail: UIImage?
-            if let image = self.image, cgImage = image.CGImage, imageRef = CGImageCreateWithImageInRect(cgImage, visibleImageRect) {
-                croppedImage = UIImage(CGImage: imageRef)
-                
+            if let image = self.image {
+                croppedImage = image.cropImageWithRect(visibleImageRect)
                 // Generate thumbnail if needed
-                if let thumbnailSize = self.thumbnailSize {
-                    let rect = CGRect(x: 0, y: 0, width: thumbnailSize.width, height: thumbnailSize.height)
-                    UIGraphicsBeginImageContext(thumbnailSize)
-                    croppedImage?.drawInRect(rect)
+                if let image = croppedImage, size = self.thumbnailSize {
+                    let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+                    UIGraphicsBeginImageContext(size)
+                    image.drawInRect(rect)
                     thumbnail = UIGraphicsGetImageFromCurrentImageContext()
                     UIGraphicsEndImageContext()
                 }

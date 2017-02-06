@@ -420,20 +420,18 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
      */
     func fetchUserInBackgroundWithBlock(block: (success: Bool, error: WumiError?) -> Void) {
         super.fetchInBackgroundWithBlock { (result, error) in
-            guard let user = result as? User where error == nil else {
+            guard let _ = result as? User where error == nil else {
                 block(success: false, error: ErrorHandler.parseError(error))
                 return
             }
             
             // Fetch professions
-            Profession.fetchAllInBackground(user.professions) { (results, error) in
-                guard let professions = results as? [Profession] where error == nil else {
+            Profession.fetchAllInBackground(self.professions) { (results, error) in
+                guard let _ = results as? [Profession] where error == nil else {
                     block(success: false, error: ErrorHandler.parseError(error))
                     return
                 }
                 
-                self.professions = professions
-                user.professions = professions
                 block(success: true, error: nil)
             }
         }

@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var reachability: Reachability?
     var launchPostId: String?
+    var backgroundedDate: NSDate?
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -70,7 +71,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
+        self.backgroundedDate = NSDate() // Log current time of entering background
         DataManager.sharedDataManager.cleanMemoryCache()
+    }
+    
+    func applicationWillEnterForeground(application: UIApplication) {
+        // Force automatically log out if the application stayed on background for more than a day
+        if let backgroundedDate = self.backgroundedDate where abs(backgroundedDate.timeIntervalSinceNow) > 60 * 60 * 24 {
+            Helper.LogOut()
+        }
     }
     
     func applicationWillTerminate(application: UIApplication) {

@@ -151,4 +151,36 @@ extension UIImage {
             })
         }
     }
+    
+    /**
+     Normalize the image to respect orientation.
+     
+     - Returns:
+        Normalized image. Nil if nothing.
+     */
+    func normalizeImage() -> UIImage? {
+        guard self.imageOrientation != UIImageOrientation.Up else { return self }
+        
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        self.drawInRect(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+    /**
+     Crop the image with a rect.
+     
+     - Parameters:
+        - rect: rect to be used for cropping.
+     
+     - Returns:
+        Cropped image.
+     */
+    func cropImageWithRect(rect: CGRect) -> UIImage? {
+        guard let normalizedImage = self.normalizeImage(), cgImage = normalizedImage.CGImage, imageRef = CGImageCreateWithImageInRect(cgImage, rect) else { return nil }
+        
+        return UIImage(CGImage: imageRef)
+    }
 }
