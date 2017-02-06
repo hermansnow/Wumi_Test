@@ -46,13 +46,11 @@ class InvitationCode: AVObject, AVSubclassing {
         - block: Block with a boolean flag to indicate whether generation succeed and a wumi error if failed.
      */
     func generateNewCode(block: (success: Bool, error: WumiError?) -> Void) {
-        self.invitationCode = nil // Clean invitation code
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { 
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             // Generate new unique code
-            while InvitationCode.findCode(self.invitationCode) != nil {
+            repeat {
                 self.invitationCode = self.randomAlphaNumericString(6)
-            }
+            } while InvitationCode.findCode(self.invitationCode) != nil
             self.numberOfUse = 0
             
             dispatch_async(dispatch_get_main_queue(), { 
@@ -67,7 +65,7 @@ class InvitationCode: AVObject, AVSubclassing {
     /**
      Generate a random string.
      
-     - Pamameters:
+     - Parameters:
         - length: Length of the string.
      */
     private func randomAlphaNumericString(length: Int) -> String {
@@ -80,7 +78,6 @@ class InvitationCode: AVObject, AVSubclassing {
             let newCharacter = allowedChars[allowedChars.startIndex.advancedBy(randomNum)]
             randomString += String(newCharacter)
         }
-        print("DEBUG: random String: \(randomString)")
         return randomString
     }
     
