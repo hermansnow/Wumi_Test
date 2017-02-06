@@ -6,11 +6,9 @@
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
-import UIKit
 import MapKit
 
 class ContactPoint: NSObject, MKAnnotation {
-    
     /// Title of annotation.
     var title: String?
     /// Detailed description of annotation.

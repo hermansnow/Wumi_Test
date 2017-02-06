@@ -21,6 +21,8 @@ class ContactMapViewController: UIViewController {
     private var regionRadius: CLLocationDistance = 50000
     /// CLLocation manager.
     private var locationManager = CLLocationManager()
+    /// Contact map manager.
+    private var contactManager = ContactMapManager()
     
     // MARK: Lifecycle methods
     
@@ -71,18 +73,43 @@ class ContactMapViewController: UIViewController {
      Load all contacts needed to be displayed.
      */
     private func loadContacts() {
+        let taskGroup = dispatch_group_create()
+        
+        var contactPoints = [ContactPoint]()
+        
+        // Calculate a contact point's coordinates for each contact
         for contact in self.displayContacts {
-            // Initilize an annotation for each contact
+            dispatch_group_enter(taskGroup)
             contact.location.calculateCoordinate { (results: [CLPlacemark]?, error: NSError?) in
-                guard let placemarks = results, placemark = placemarks.first, location = placemark.location else { return }
-                
+                guard let placemarks = results, placemark = placemarks.first, location = placemark.location else {
+                    dispatch_group_leave(taskGroup)
+                    return
+                }
+                    
                 let contactPoint = ContactPoint(Contact: contact)
                 contactPoint.coordinate = location.coordinate
-                self.mapView.addAnnotation(contactPoint)
+                
+                contactPoints.append(contactPoint)
+                dispatch_group_leave(taskGroup)
             }
+        }
+        
+        // Cluster contact points into annotations
+        dispatch_group_notify(taskGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            let mapBoundsWidth = Double(self.mapView.bounds.size.width)
+            let mapRectWidth = self.mapView.visibleMapRect.size.width
+            let scale = mapBoundsWidth / mapRectWidth
+            self.contactManager.addContactPoints(contactPoints)
+            let annotations = self.contactManager.clusterContactPointsToAnnotions(withRect: self.mapView.visibleMapRect, zoomScale: scale)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.contactManager.showClusterAnnotations(annotations, onMapView: self.mapView)
+            })
         }
     }
 }
+
+// MARK: MKMapView delegate
 
 extension ContactMapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
@@ -93,32 +120,52 @@ extension ContactMapViewController: MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let contactPoint = annotation as? ContactPoint else { return nil }
-        
-        // Initialize annotation view
-        let identifier = "contact"
-        var view: ContactAnnotationView
-        if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? ContactAnnotationView {
-            dequeuedView.annotation = contactPoint
-            view = dequeuedView
+        // Show a contact point annotation view
+        if let contactPoint = annotation as? ContactPoint {
+            let identifier = "contact"
+            var view: ContactAnnotationView
+            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? ContactAnnotationView {
+                dequeuedView.annotation = contactPoint
+                view = dequeuedView
+            }
+            else {
+                view = ContactAnnotationView(annotation: contactPoint, reuseIdentifier: identifier)
+            }
+            
+            // Load contact data
+            if let contact = contactPoint.contact {
+                contact.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
+                    guard imageError == nil && avatarImage != nil else {
+                        ErrorHandler.log("\(imageError)")
+                        return
+                    }
+                    view.avatarImage = avatarImage
+                }
+            }
+            view.detail = contactPoint.detail
+            
+            return view
+        }
+        // Show a clustered contacts annotation view
+        else if let clusteredContacts = annotation as? ClusteredContacts {
+            let identifier = "cluster"
+            var view: ClusteredContactsAnnotationView
+            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? ClusteredContactsAnnotationView {
+                dequeuedView.annotation = clusteredContacts
+                view = dequeuedView
+            }
+            else {
+                view = ClusteredContactsAnnotationView(annotation: clusteredContacts, reuseIdentifier: identifier)
+            }
+            
+            // Load cluster data
+            view.clusterCount = clusteredContacts.contactPoints.count
+            
+            return view
         }
         else {
-            view = ContactAnnotationView(annotation: contactPoint, reuseIdentifier: identifier)
+            return nil
         }
-        
-        // Load contact data
-        if let contact = contactPoint.contact {
-            contact.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
-                guard imageError == nil && avatarImage != nil else {
-                    print("\(imageError)")
-                    return
-                }
-                view.avatarImageView.image = avatarImage
-            }
-        }
-        view.detail = contactPoint.detail
-        
-        return view
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -126,8 +173,22 @@ extension ContactMapViewController: MKMapViewDelegate {
         self.performSegueWithIdentifier("Show Contact", sender: view)
     }
     
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        // Re-cluster contact points when visible region is changed
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            let mapBoundsWidth = Double(self.mapView.bounds.size.width)
+            let mapRectWidth = self.mapView.visibleMapRect.size.width
+            let scale = mapBoundsWidth / mapRectWidth
+            let annotations = self.contactManager.clusterContactPointsToAnnotions(withRect: self.mapView.visibleMapRect, zoomScale: scale)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.contactManager.showClusterAnnotations(annotations, onMapView: self.mapView)
+            })
+        }
+    }
+    
     /**
-     Get current device's location and show it on map.
+     Get current device's location and show it on map as user location.
      */
     private func getCurrentLocation() {
         if Double(UIDevice.currentDevice().systemVersion) > 8.0 {

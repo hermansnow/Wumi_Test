@@ -439,6 +439,13 @@
 		FF3919AA1DFF63C5002AC4E5 /* ContactPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */; };
 		FF3919AC1E01D710002AC4E5 /* ContactAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */; };
 		FF3BCA2B1E03601300741D38 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3BCA2A1E03601300741D38 /* ErrorHandler.swift */; };
+		FF4317891E3AACD5002E1F0F /* PIKAQuadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4317881E3AACD5002E1F0F /* PIKAQuadData.swift */; };
+		FF43178B1E3AAD02002E1F0F /* PIKAQuadBoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF43178A1E3AAD02002E1F0F /* PIKAQuadBoundingBox.swift */; };
+		FF43178D1E3AAD2C002E1F0F /* PIKAQuadTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF43178C1E3AAD2C002E1F0F /* PIKAQuadTreeNode.swift */; };
+		FF43178F1E3AAD7F002E1F0F /* PIKAQuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF43178E1E3AAD7F002E1F0F /* PIKAQuadTree.swift */; };
+		FF4317911E3AAF6F002E1F0F /* ContactMapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4317901E3AAF6F002E1F0F /* ContactMapManager.swift */; };
+		FF4317931E3AE310002E1F0F /* ClusteredContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4317921E3AE310002E1F0F /* ClusteredContacts.swift */; };
+		FF45963F1E41250F00A11482 /* ClusteredContactsAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF45963E1E41250F00A11482 /* ClusteredContactsAnnotationView.swift */; };
 		FF51601E1DF9FE2D00AD872B /* ButtomBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */; };
 		FF5160241DFA212B00AD872B /* country_code.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160231DFA212B00AD872B /* country_code.plist */; };
 		FF5160261DFA2CBB00AD872B /* country_state_city.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF5160251DFA2CBB00AD872B /* country_state_city.plist */; };
@@ -1016,6 +1023,13 @@
 		FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactPoint.swift; path = Model/ContactPoint.swift; sourceTree = "<group>"; };
 		FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactAnnotationView.swift; path = View/ContactAnnotationView.swift; sourceTree = "<group>"; };
 		FF3BCA2A1E03601300741D38 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = Model/ErrorHandler.swift; sourceTree = "<group>"; };
+		FF4317881E3AACD5002E1F0F /* PIKAQuadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PIKAQuadData.swift; path = Model/PIKAQuadData.swift; sourceTree = "<group>"; };
+		FF43178A1E3AAD02002E1F0F /* PIKAQuadBoundingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PIKAQuadBoundingBox.swift; sourceTree = "<group>"; };
+		FF43178C1E3AAD2C002E1F0F /* PIKAQuadTreeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PIKAQuadTreeNode.swift; sourceTree = "<group>"; };
+		FF43178E1E3AAD7F002E1F0F /* PIKAQuadTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PIKAQuadTree.swift; sourceTree = "<group>"; };
+		FF4317901E3AAF6F002E1F0F /* ContactMapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactMapManager.swift; sourceTree = "<group>"; };
+		FF4317921E3AE310002E1F0F /* ClusteredContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClusteredContacts.swift; path = Model/ClusteredContacts.swift; sourceTree = "<group>"; };
+		FF45963E1E41250F00A11482 /* ClusteredContactsAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClusteredContactsAnnotationView.swift; path = View/ClusteredContactsAnnotationView.swift; sourceTree = "<group>"; };
 		FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtomBorderView.swift; path = View/ButtomBorderView.swift; sourceTree = "<group>"; };
 		FF5160231DFA212B00AD872B /* country_code.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_code.plist; sourceTree = "<group>"; };
 		FF5160251DFA2CBB00AD872B /* country_state_city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country_state_city.plist; sourceTree = "<group>"; };
@@ -2080,6 +2094,7 @@
 		DF5E3D381BE9457900F44FFF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FF4317871E3AACAE002E1F0F /* PIKAQuadTree */,
 				DF4314271D79262D002E21D5 /* SocialNetwork Services */,
 				02932A9B1CEE6DE2001220E8 /* PushNotification.swift */,
 				DF5E3D441BE9465000F44FFF /* User.swift */,
@@ -2088,6 +2103,8 @@
 				DFB250791CAB9C9800413D52 /* PostCategory.swift */,
 				DFB612A81CA62CAD00B3271B /* Comment.swift */,
 				FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */,
+				FF4317921E3AE310002E1F0F /* ClusteredContacts.swift */,
+				FF4317901E3AAF6F002E1F0F /* ContactMapManager.swift */,
 				DFB220B41DAF2C49008FB503 /* Area.swift */,
 				DF9F060D1C7B7280008CA6DC /* Location.swift */,
 				DFC754251CBCE7C900C7E111 /* DataManager.swift */,
@@ -2132,6 +2149,7 @@
 				DF86A2B31CE3B00800F67F48 /* PostContentTextView.swift */,
 				DF0180831D4882BF00935A60 /* LoadingIndicatorView.swift */,
 				FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */,
+				FF45963E1E41250F00A11482 /* ClusteredContactsAnnotationView.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -2248,6 +2266,17 @@
 				DF5EF1591D2EDBAC00C9B2F2 /* Components */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		FF4317871E3AACAE002E1F0F /* PIKAQuadTree */ = {
+			isa = PBXGroup;
+			children = (
+				FF4317881E3AACD5002E1F0F /* PIKAQuadData.swift */,
+				FF43178A1E3AAD02002E1F0F /* PIKAQuadBoundingBox.swift */,
+				FF43178C1E3AAD2C002E1F0F /* PIKAQuadTreeNode.swift */,
+				FF43178E1E3AAD7F002E1F0F /* PIKAQuadTree.swift */,
+			);
+			name = PIKAQuadTree;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2666,6 +2695,7 @@
 				DFB6129F1CA5078E00B3271B /* NewPostViewController.swift in Sources */,
 				B1ECD74B1CCC1F3F00CED9C4 /* EmojiEmoticons.m in Sources */,
 				DF5E3D411BE9463F00F44FFF /* SigninViewController.swift in Sources */,
+				FF43178F1E3AAD7F002E1F0F /* PIKAQuadTree.swift in Sources */,
 				FF23804F1DFE7AA800C82027 /* ContactMapViewController.swift in Sources */,
 				B1ECD79B1CCC1F4000CED9C4 /* XHMessageTableView.m in Sources */,
 				B1ECD7641CCC1F4000CED9C4 /* XHBaseTableViewController.m in Sources */,
@@ -2705,6 +2735,7 @@
 				DF01807E1D459E6100935A60 /* ReplyTextView.swift in Sources */,
 				B1ECD76F1CCC1F4000CED9C4 /* XHOperationNetworkKit.m in Sources */,
 				DFC754261CBCE7C900C7E111 /* DataManager.swift in Sources */,
+				FF43178D1E3AAD2C002E1F0F /* PIKAQuadTreeNode.swift in Sources */,
 				B1ECD7971CCC1F4000CED9C4 /* XHBubblePhotoImageView.m in Sources */,
 				B1ECD7691CCC1F4000CED9C4 /* XHDisplayMediaViewController.m in Sources */,
 				B1ECD7A41CCC1F4000CED9C4 /* XHShareMenuView.m in Sources */,
@@ -2760,9 +2791,11 @@
 				FFF6CAD91E2E07C600FED3CB /* LocationTableViewCell.swift in Sources */,
 				B1ECD6A21CCC1F3F00CED9C4 /* AVIMConversation+Custom.m in Sources */,
 				B1ECD7901CCC1F4000CED9C4 /* XHViewState.m in Sources */,
+				FF45963F1E41250F00A11482 /* ClusteredContactsAnnotationView.swift in Sources */,
 				B1ECD7871CCC1F4000CED9C4 /* SETextGeometry.m in Sources */,
 				B1ECD76B1CCC1F4000CED9C4 /* XHMessageTableViewController.m in Sources */,
 				FF6067591E1B92DB003116FA /* ActionButton.swift in Sources */,
+				FF4317891E3AACD5002E1F0F /* PIKAQuadData.swift in Sources */,
 				DF2692001CAB8F420081D363 /* PostCategoryTableViewController.swift in Sources */,
 				DFBD2D3E1BEC626800D6FEBC /* SignUpAccountViewController.swift in Sources */,
 				DFB220A71DAD8228008FB503 /* Extension+NSAttributedString.swift in Sources */,
@@ -2785,6 +2818,7 @@
 				DF7E3B4D1C923C0A000E8741 /* ProfessionListViewController.swift in Sources */,
 				FF848E7C1E07F26400A09DA5 /* WumiError.swift in Sources */,
 				B1ECD7581CCC1F3F00CED9C4 /* UIScrollView+XHkeyboardControl.m in Sources */,
+				FF43178B1E3AAD02002E1F0F /* PIKAQuadBoundingBox.swift in Sources */,
 				B175B2521CB872B800C95B33 /* CommentTextView.swift in Sources */,
 				DF7E3B4B1C92324D000E8741 /* Profession.swift in Sources */,
 				DF5E3D451BE9465000F44FFF /* User.swift in Sources */,
@@ -2797,6 +2831,7 @@
 				B1ECD7AA1CCC1F4000CED9C4 /* UIImage+Icon.m in Sources */,
 				B1ECD7611CCC1F3F00CED9C4 /* XHVoiceCommonHelper.m in Sources */,
 				B1ECD7A61CCC1F4000CED9C4 /* XHRefreshCircleView.m in Sources */,
+				FF4317911E3AAF6F002E1F0F /* ContactMapManager.swift in Sources */,
 				DF1BE2691C9F9C7500F934EE /* Post.swift in Sources */,
 				DF4F53321CD59444009F3D2E /* PhoneButton.swift in Sources */,
 				DFF712BB1CD6D57F00EAEFD2 /* PhotoButton.swift in Sources */,
@@ -2850,6 +2885,7 @@
 				B1ECD6A01CCC1F3F00CED9C4 /* CDChatListVC.m in Sources */,
 				B1ECD7921CCC1F4000CED9C4 /* XHPathCover.m in Sources */,
 				B1ECD7561CCC1F3F00CED9C4 /* UIImage+XHAnimatedFaceGif.m in Sources */,
+				FF4317931E3AE310002E1F0F /* ClusteredContacts.swift in Sources */,
 				B1ECD7891CCC1F4000CED9C4 /* SETextLayout.m in Sources */,
 				B1ECD7BD1CCC2B2B00CED9C4 /* IMUserFactory.swift in Sources */,
 				DF0180751D3DF77F00935A60 /* Extension+NSObject.swift in Sources */,
