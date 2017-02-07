@@ -24,6 +24,8 @@ class ContactMapViewController: DataLoadingViewController {
     private var currentLocation: CLLocation?
     /// Radius for visible region.
     private var regionRadius: CLLocationDistance = 50000
+    /// Flag to indicate whether we need to centerize user location
+    private var centerUserLocation: Bool = true
     /// CLLocation manager.
     private var locationManager = CLLocationManager()
     /// Contact map manager.
@@ -65,6 +67,7 @@ class ContactMapViewController: DataLoadingViewController {
         self.mapView.mapType = .Standard
         self.mapView.delegate = self
         self.locationManager.delegate = self
+        self.centerUserLocation = true
         
         // Re-use existing cached map center
         if let centerLocation = MKMapView.getMapCenterCache() {
@@ -174,8 +177,9 @@ class ContactMapViewController: DataLoadingViewController {
 extension ContactMapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         // Set user location as center location
-        if let userLocation = userLocation.location {
+        if let userLocation = userLocation.location where self.centerUserLocation {
             mapView.centerMapOnLocation(userLocation, WithRadius: self.regionRadius)
+            self.centerUserLocation = false
         }
     }
     
@@ -202,7 +206,7 @@ extension ContactMapViewController: MKMapViewDelegate {
                     view.avatarImage = avatarImage
                 }
             }
-            view.detail = contactPoint.detail
+            view.delegate = self
             
             return view
         }
@@ -251,7 +255,7 @@ extension ContactMapViewController: MKMapViewDelegate {
      Get current device's location and show it on map as user location.
      */
     private func getCurrentLocation() {
-        if Double(UIDevice.currentDevice().systemVersion) > 8.0 {
+        if #available(iOS 8, *) {
             self.locationManager.requestWhenInUseAuthorization()
         }
         else {
@@ -270,5 +274,14 @@ extension ContactMapViewController: CLLocationManagerDelegate {
         default:
             break
         }
+    }
+}
+
+// MARK: ContactAnnotationVie delegate
+
+extension ContactMapViewController: ContactAnnotationViewDelegate {
+    func tapCallout(view: ContactAnnotationView) {
+        // Show a specific contact
+        self.performSegueWithIdentifier("Show Contact", sender: view)
     }
 }

@@ -278,7 +278,7 @@ extension CountryListTableViewController: CLLocationManagerDelegate {
      Enable CLLocation Manager to get current device location.
      */
     private func getCurrentLocation() {
-        if Double(UIDevice.currentDevice().systemVersion) > 8.0 {
+        if #available(iOS 8, *) {
             locationManager.requestWhenInUseAuthorization()
         }
         else {
