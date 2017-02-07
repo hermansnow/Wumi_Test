@@ -29,7 +29,13 @@ struct ContactMapManager {
         for contactPoint in contactPoints {
             self.quadTree.insert(PIKAQuadData(contactPoint: contactPoint))
         }
-        self.quadTree.showClusters()
+    }
+    
+    /**
+     Remove all contact points.
+     */
+    func removeAllContactPoints() {
+        self.quadTree.cleanTree()
     }
     
     /**

@@ -445,7 +445,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         }
         
         // Try fetch data from memory by objectId
-        if let user = DataManager.sharedDataManager.cache["user_" + self.objectId] as? User {
+        if let user = DataManager.sharedDataManager.cache[user: "user_" + self.objectId] as? User {
             print("Found \(user.name) in memory cache")
             block(user: user, error: nil)
             return
@@ -479,7 +479,7 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         // Set up cache age
         user.maxCacheAge = 3600 * 24
         
-        DataManager.sharedDataManager.cache["user_" + user.objectId] = user
+        DataManager.sharedDataManager.cache[user: "user_" + user.objectId] = user
         
         DataManager.log("Cached \(user.name) in memory")
     }

@@ -23,8 +23,9 @@ class ClusteredContactsAnnotationView : MKAnnotationView {
         }
         set {
             self.countLabel.text = "\(newValue)"
-            // Resize annotation frame based on numnber of contacts, larger annotation indicates more contacts: width/height = 20 + 10 * count.
-            self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: 20 + 10 * newValue, height: 20 + 10 * newValue))
+            let expandSize = min(newValue, 10)
+            // Resize annotation frame based on numnber of contacts, larger annotation indicates more contacts: width/height = 20 + 5 * count.
+            self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: 20 + 5 * expandSize, height: 20 + 5 * expandSize))
             // Redraw
             self.setNeedsLayout()
         }

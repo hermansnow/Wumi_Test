@@ -42,8 +42,7 @@ class IMUserFactory: NSObject, CDUserDelegate {
     
     func getUserById(userId: String!) -> CDUserModelDelegate! {
         let imUser = IMUser()
-        if let user = DataManager.sharedDataManager.cache["user_" + userId] as? User {
-//            print("Found \(user.name) in memory cache")
+        if let user = DataManager.sharedDataManager.cache[user: "user_\(userId)"] as? User {
             imUser.setUserId(userId)
             imUser.setUsername(user.name)
             imUser.setAvatarUrl(user.avatarThumbnail?.url)

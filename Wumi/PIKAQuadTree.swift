@@ -50,6 +50,16 @@ struct PIKAQuadTree {
         return self.root.getAllData(inBox: box)
     }
     
+    /**
+     Clean the tree.
+     */
+    func cleanTree() {
+        self.root.removeAllData()
+    }
+    
+    /**
+     Print out cluster information.
+     */
     func showClusters() {
         self.root.showCluster()
     }

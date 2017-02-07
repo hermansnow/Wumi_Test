@@ -125,6 +125,26 @@ class PIKAQuadTreeNode {
     }
     
     /**
+     Remove all data from the sub quad-tree with this node as root.
+     */
+    func removeAllData() {
+        guard !self.isLeaf() else {
+            self.data.removeAll()
+            return
+        }
+        
+        self.northWest!.removeAllData()
+        self.northWest = nil
+        self.northEast!.removeAllData()
+        self.northEast = nil
+        self.southWest!.removeAllData()
+        self.southWest = nil
+        self.southEast!.removeAllData()
+        self.southEast = nil
+        self.data.removeAll()
+    }
+    
+    /**
      Divide this node into four subnodes.
      */
     private func divide() {

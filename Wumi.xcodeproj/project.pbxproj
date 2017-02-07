@@ -2105,9 +2105,9 @@
 				FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */,
 				FF4317921E3AE310002E1F0F /* ClusteredContacts.swift */,
 				FF4317901E3AAF6F002E1F0F /* ContactMapManager.swift */,
+				DFC754251CBCE7C900C7E111 /* DataManager.swift */,
 				DFB220B41DAF2C49008FB503 /* Area.swift */,
 				DF9F060D1C7B7280008CA6DC /* Location.swift */,
-				DFC754251CBCE7C900C7E111 /* DataManager.swift */,
 				DFB0DC721C99CB87006BCD07 /* ProfileRow.swift */,
 				DFBD2D401BEC671200D6FEBC /* InvitationCode.swift */,
 				DFBD2D441BEEF8F800D6FEBC /* Setting.swift */,
@@ -2212,8 +2212,8 @@
 			isa = PBXGroup;
 			children = (
 				B15824021C82C40F00D314B3 /* ContactTableViewController.swift */,
-				DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */,
 				FF23804E1DFE7AA800C82027 /* ContactMapViewController.swift */,
+				DFAE491B1C878F5400DDEE90 /* ContactViewController.swift */,
 			);
 			name = Contact;
 			sourceTree = "<group>";

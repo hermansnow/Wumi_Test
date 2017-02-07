@@ -123,6 +123,7 @@ class ContactTableViewController: DataLoadingTableViewController {
         }
         else if let mapVC = segue.destinationViewController as? ContactMapViewController where segue.identifier == "Show Map" {
             mapVC.displayContacts = self.displayContacts
+            mapVC.searchType = self.searchType
             mapVC.hidesBottomBarWhenPushed = true
         }
     }

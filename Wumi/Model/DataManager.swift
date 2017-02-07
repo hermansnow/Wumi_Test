@@ -115,7 +115,7 @@ protocol TimeBaseCacheable: AnyObject {
 }
 
 extension NSCache {
-    subscript(key: AnyObject) -> TimeBaseCacheable? {
+    subscript(user key: AnyObject) -> TimeBaseCacheable? {
         get {
             if let obj = objectForKey(key) as? TimeBaseCacheable, expireDate = obj.expireAt {
                 if  NSDate().compare(expireDate) == .OrderedDescending {

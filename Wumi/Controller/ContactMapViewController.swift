@@ -8,13 +8,18 @@
 
 import UIKit
 import MapKit
+import BTNavigationDropdownMenu
 
-class ContactMapViewController: UIViewController {
+class ContactMapViewController: DataLoadingViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
+    /// Current login user.
+    private lazy var currentUser = User.currentUser()
     /// Array of contacts to be displayed on the map.
     var displayContacts = [User]()
+    /// Search type. Check category list in ContactSearchType.
+    var searchType: ContactSearchType = .All
     /// Current location of device.
     private var currentLocation: CLLocation?
     /// Radius for visible region.
@@ -28,6 +33,9 @@ class ContactMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Add dropdown list
+        self.addDropdownList()
         
         // Add MKMapView instance
         self.setMapView()
@@ -67,7 +75,51 @@ class ContactMapViewController: UIViewController {
         self.getCurrentLocation()
     }
     
+    /**
+     Add a dropdown list includes filter categories to navigation title view.
+     [Credential and reference](https://github.com/PhamBaTho/BTNavigationDropdownMenu).
+     */
+    private func addDropdownList() {
+        // Initial a dropdown list with options
+        let optionTitles = ["All", "Favorites", "Graduation Year"]
+        let optionSearchTypes: [ContactSearchType] = [.All, .Favorites, .Graduation]
+        
+        // Initial title
+        guard let index = optionSearchTypes.indexOf(self.searchType), title = optionTitles[safe: index] else { return }
+        
+        let menuView = BTNavigationDropdownMenu(navigationController: self.navigationController, title: title, items: optionTitles)
+        
+        // Add the dropdown list to the navigation bar
+        self.navigationItem.titleView = menuView
+        
+        // Set action closure
+        menuView.didSelectItemAtIndexHandler = {(indexPath: Int) -> () in
+            guard let searchType = optionSearchTypes[safe: indexPath] else { return }
+            
+            if self.searchType != searchType {
+                self.searchType = searchType
+                self.updateSearchType() // Reload displaying contacts
+            }
+        }
+    }
+    
     // MARK: Help functions
+    
+    private func updateSearchType() {
+        // Show loading indicator
+        self.showLoadingIndicator()
+        
+        // Load users
+        User.loadUsers(type: self.searchType, forUser: self.currentUser) { (results, error) -> Void in
+            // Dismiss loading indicator
+            self.dismissLoadingIndicator()
+            
+            guard error == nil else { return }
+            
+            self.displayContacts = results
+            self.loadContacts()
+        }
+    }
     
     /**
      Load all contacts needed to be displayed.
@@ -77,17 +129,20 @@ class ContactMapViewController: UIViewController {
         
         var contactPoints = [ContactPoint]()
         
+        // Show loading indicator
+        self.showLoadingIndicator()
+        
         // Calculate a contact point's coordinates for each contact
         for contact in self.displayContacts {
             dispatch_group_enter(taskGroup)
-            contact.location.calculateCoordinate { (results: [CLPlacemark]?, error: NSError?) in
-                guard let placemarks = results, placemark = placemarks.first, location = placemark.location else {
+            contact.location.calculateCoordinate { (result: Area?, error: NSError?) in
+                guard let area = result where error == nil else {
                     dispatch_group_leave(taskGroup)
                     return
                 }
                     
                 let contactPoint = ContactPoint(Contact: contact)
-                contactPoint.coordinate = location.coordinate
+                contactPoint.coordinate = CLLocationCoordinate2D(latitude: area.latitude, longitude: area.longitude)
                 
                 contactPoints.append(contactPoint)
                 dispatch_group_leave(taskGroup)
@@ -99,11 +154,16 @@ class ContactMapViewController: UIViewController {
             let mapBoundsWidth = Double(self.mapView.bounds.size.width)
             let mapRectWidth = self.mapView.visibleMapRect.size.width
             let scale = mapBoundsWidth / mapRectWidth
+            self.contactManager.removeAllContactPoints()
             self.contactManager.addContactPoints(contactPoints)
             let annotations = self.contactManager.clusterContactPointsToAnnotions(withRect: self.mapView.visibleMapRect, zoomScale: scale)
             
             dispatch_async(dispatch_get_main_queue(), {
                 self.contactManager.showClusterAnnotations(annotations, onMapView: self.mapView)
+                
+                // Dismiss loading indicator
+                self.dismissLoadingIndicator()
+                
             })
         }
     }

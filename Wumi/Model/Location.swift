@@ -14,6 +14,7 @@ struct Location: CustomStringConvertible {
     var countryName: String?
     var state: String?
     var city: String?
+    private let geocoder = CLGeocoder()
     
     var description: String {
         return Location.show(CountryName: self.countryName, State: self.state, City: self.city)
@@ -38,9 +39,26 @@ struct Location: CustomStringConvertible {
         return [city, state, countryName].flatMap{ $0 }.joinWithSeparator(", ")
     }
     
-    func calculateCoordinate(completionHandler: CLGeocodeCompletionHandler) {
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(self.description, completionHandler: completionHandler)
+    func calculateCoordinate(completionHandler: (Area?, NSError?) -> Void) {
+        if let latitude = DataManager.sharedDataManager.cache.objectForKey("loc_\(self.shortDiscription)_lat") as? Double,
+            longitude = DataManager.sharedDataManager.cache.objectForKey("loc_\(self.shortDiscription)_log") as? Double {
+            completionHandler(Area(name: "", latitude: latitude, longitude: longitude), nil)
+                return
+        }
+        
+        self.geocoder.geocodeAddressString(self.description) { (results, error) in
+            guard let places = results, place = places.first, location = place.location where error == nil else {
+                completionHandler(nil, error)
+                return
+            }
+            
+            let latitude = Double(location.coordinate.latitude)
+            let longitude = Double(location.coordinate.longitude)
+            DataManager.sharedDataManager.cache.setObject(latitude, forKey: "loc_\(self.shortDiscription)_lat")
+            DataManager.sharedDataManager.cache.setObject(longitude, forKey: "loc_\(self.shortDiscription)_log")
+            
+            completionHandler(Area(name: "", latitude: latitude, longitude: longitude), nil)
+        }
     }
 }
 
