@@ -77,7 +77,12 @@ class ContactViewController: DataLoadingViewController {
         // Set up subview components
         self.setupImageView()
         self.setupLabels()
-        self.addPrivateMessageInputField()
+        if self.contact != self.currentUser {
+            self.setupPrivateMessageInputField()
+        }
+        else {
+            self.privateMessageWrapperView.hidden = true
+        }
         
         // Add notification observer
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -150,7 +155,7 @@ class ContactViewController: DataLoadingViewController {
     /**
      Set up private message input field.
      */
-    private func addPrivateMessageInputField() {
+    private func setupPrivateMessageInputField() {
         self.privateMessageWrapperView.backgroundColor = Constants.General.Color.BackgroundColor
         self.privateMessageTextInputField.font = Constants.General.Font.InputFont
         self.privateMessageTextInputField.placeholder = "Send Message..."

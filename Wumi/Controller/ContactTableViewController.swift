@@ -235,6 +235,7 @@ class ContactTableViewController: DataLoadingTableViewController {
         }
         if contact == self.currentUser {
             cell.favoriteButton.enabled = false
+            cell.privateMessageButton.enabled = false
         }
         return cell
     }
