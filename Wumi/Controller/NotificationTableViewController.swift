@@ -10,26 +10,25 @@ import UIKit
 import FormatterKit
 import HexColors
 
-class NotificationTableViewController: UITableViewController {
+class NotificationTableViewController: DataLoadingTableViewController {
+    /// Current login user.
+    private lazy var currentUser = User.currentUser()
+    /// An array of pushed notifications.
+    private lazy var pushNotifications = [PushNotification]()
     
-    var currentUser = User.currentUser()
-    lazy var pushNotifications = [PushNotification]() // array for push notifications
-    var updatedAtDateFormatter = NSDateFormatter()
-
     
+    // MARK: Initializers
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        self.navigationController!.tabBarItem = UITabBarItem(title: "Notification", image: Constants.Notification.Image.TabBarIcon,  tag: 1)
-        
-        PushNotification.loadPushNotifications(currentUser){ (results, error) -> Void in
-            guard results.count > 0 && error == nil else { return }
-            
-            if let navigationController = self.navigationController {
-                navigationController.tabBarItem.badgeValue = String(results.count)
-            }
+        // Add tab bar item
+        if let navigationController = self.navigationController {
+            navigationController.tabBarItem = UITabBarItem(title: "Notification", image: Constants.Notification.Image.TabBarIcon,  tag: 1)
         }
+        
+        // Load badge
+        self.updatePushNotificationBadge()
     }
     
     // MARK: Lifecycle methods
@@ -47,19 +46,12 @@ class NotificationTableViewController: UITableViewController {
         self.tableView.backgroundColor = UIColor.whiteColor()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 50
-
-         self.currentUser.pushNotificationsArray.removeAll()
-        self.updatedAtDateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
-         self.navigationController!.tabBarItem.badgeValue = nil
+        
+        // Add Refresh Control
+        self.addRefreshControl()
         
         // Load data
-        PushNotification.loadPushNotifications(self.currentUser) { (results, error) -> Void in
-            guard results.count > 0 && error == nil else { return }
-            
-             self.navigationController!.tabBarItem.badgeValue = String(results.count)
-            // Reload table data
-            self.tableView.reloadData()
-        }
+        self.loadPushNotifications()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -67,11 +59,82 @@ class NotificationTableViewController: UITableViewController {
             
             guard let cell = sender as? UITableViewCell else { return }
             guard let indexPath = tableView.indexPathForCell(cell) else { return }
-            let pushNotification = User.currentUser().pushNotificationsArray[indexPath.row]
+            let pushNotification = self.pushNotifications[indexPath.row]
             let post = Post.query().getObjectWithId(pushNotification.post!.objectId) as? Post
             postVC.post = post
                        
             }
+    }
+    
+    // MARK: UI Functions
+    
+    /**
+     Set up refresh controller for the table view. Allow pull-to-refresh.
+     */
+    private func addRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        if let refreshControl = self.refreshControl {
+            refreshControl.addTarget(self, action: #selector(self.loadPushNotifications), forControlEvents: .ValueChanged)
+        }
+    }
+    
+    // MARK: Helper functions
+    
+    /**
+     Update the tab badge with the number of new notifications.
+     */
+    func updatePushNotificationBadge() {
+        PushNotification.hasNewPushNotification(self.currentUser) { (count, error) in
+            guard let navigationController = self.navigationController where error == nil else {
+                ErrorHandler.log(error)
+                return
+            }
+            
+            if count > 0 {
+                navigationController.tabBarItem.badgeValue = "\(count)"
+            }
+            else {
+                navigationController.tabBarItem.badgeValue = nil
+            }
+        }
+    }
+    
+    /**
+     Load and display all new notifications.
+     */
+    func loadPushNotifications() {
+        // Clean current data
+        self.pushNotifications.removeAll()
+        
+        // Start loading indicator if no running refresh controller
+        if self.refreshControl?.refreshing == false {
+            self.showLoadingIndicator()
+        }
+    
+        // Load data
+        PushNotification.loadPushNotifications(self.currentUser) { (results, error) -> Void in
+            self.refreshControl?.endRefreshing()
+            self.dismissLoadingIndicator()
+            
+            guard let notifications = results where error == nil else {
+                ErrorHandler.log(error)
+                return
+            }
+            
+            self.pushNotifications = notifications
+            // Update badge number
+            if let navigationController = self.navigationController {
+                if self.pushNotifications.count > 0 {
+                    navigationController.tabBarItem.badgeValue = "\(notifications.count)"
+                }
+                else {
+                    navigationController.tabBarItem.badgeValue = nil
+                }
+            }
+    
+            // Reload table data
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: TableView delegate & data source
@@ -81,18 +144,26 @@ class NotificationTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.currentUser.pushNotificationsArray.count
+        return self.pushNotifications.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-       let cell = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell", forIndexPath: indexPath) as! NotificationTableViewCell
+        var cell: NotificationTableViewCell
+        if let dequeueCell = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell", forIndexPath: indexPath) as? NotificationTableViewCell {
+            cell = dequeueCell
+        }
+        else {
+            cell = NotificationTableViewCell()
+        }
         
-        let pushNotification = self.currentUser.pushNotificationsArray[indexPath.row]
+        guard let pushNotification = self.pushNotifications[safe: indexPath.row] else {
+            return cell
+        }
         
         if let fromUser = pushNotification.fromUser, fromUserName = fromUser.name, post = pushNotification.post {
             
             var postTitle: String
-            if let title = post.title where title.characters.count > 0 {
+            if let title = post.title where !title.isEmpty {
                 postTitle = title
             }
             else {
@@ -109,16 +180,8 @@ class NotificationTableViewController: UITableViewController {
             cell.contentLabel.attributedText = pushMessage
         }
         
-        let intervalSinceNow = pushNotification.createdAt.timeIntervalSinceNow
         // Display post date when the post is more than one day ago, otherwise display relative date.
-        if (intervalSinceNow < -24*60*60)
-        {
-            cell.timeStampLabel.text = self.updatedAtDateFormatter.stringFromDate(pushNotification.createdAt)
-        }
-        else
-        {
-            cell.timeStampLabel.text = FormatterKit.TTTTimeIntervalFormatter().stringForTimeInterval(intervalSinceNow)
-        }
+        cell.timeStampLabel.text = pushNotification.createdAt.timeAgo()
         
         return cell
     }

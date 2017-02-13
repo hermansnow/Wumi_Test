@@ -91,13 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        guard let currentUser = User.currentUser() else { return }
-        PushNotification.loadPushNotifications(currentUser) { (results, error) -> Void in
-            guard results.count > 0 && error == nil else { return }
-            
-            NSNotificationCenter.defaultCenter().postNotificationName(APNSReceivedNotificationIdentifier, object:nil)
-        }
-        
+        // Broadcast APN received notification
+        NSNotificationCenter.defaultCenter().postNotificationName(APNSReceivedNotificationIdentifier, object:nil)
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
@@ -234,6 +229,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //AVOSCloud.setServiceRegion(.CN)
         //AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
         
+        // Use Dev mode notification now. TODO: Change to production when release
+        AVPush.setProductionMode(false)
         AVOSCloud.registerForRemoteNotification()
     }
     

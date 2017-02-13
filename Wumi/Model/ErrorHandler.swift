@@ -13,10 +13,25 @@ struct ErrorHandler {
      Log error message
      
     - Parameters:
-        - errorMessage: error message string
+        - errorMessage: error message string.
      */
     static func log(errorMessage: String?) {
         print(errorMessage)
+    }
+    
+    /**
+     Log a wumi error
+     
+     - Parameters:
+        - error: Wumi error instance.
+     */
+    static func log(error: WumiError?) {
+        if let wumiError = error {
+            print("\(wumiError.error)")
+        }
+        else {
+            print("Unknow error.")
+        }
     }
     
     /**

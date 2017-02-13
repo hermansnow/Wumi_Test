@@ -411,7 +411,7 @@ class EditProfileViewController: DataLoadingViewController {
             // Load profile image asynchronously
             self.currentUser.loadAvatar() { (image, error) -> Void in
                 guard error == nil else {
-                    ErrorHandler.log(error?.error)
+                    ErrorHandler.log(error)
                     return
                 }
                 self.profileImageView.image = image

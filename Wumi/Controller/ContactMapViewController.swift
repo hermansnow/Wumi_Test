@@ -27,9 +27,9 @@ class ContactMapViewController: DataLoadingViewController {
     /// Flag to indicate whether we need to centerize user location
     private var centerUserLocation: Bool = true
     /// CLLocation manager.
-    private var locationManager = CLLocationManager()
+    private lazy var locationManager = CLLocationManager()
     /// Contact map manager.
-    private var contactManager = ContactMapManager()
+    private lazy var contactManager = ContactMapManager()
     
     // MARK: Lifecycle methods
     
@@ -200,7 +200,7 @@ extension ContactMapViewController: MKMapViewDelegate {
             if let contact = contactPoint.contact {
                 contact.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
                     guard imageError == nil && avatarImage != nil else {
-                        ErrorHandler.log("\(imageError)")
+                        ErrorHandler.log(imageError)
                         return
                     }
                     view.avatarImage = avatarImage

@@ -122,7 +122,7 @@ class ProfessionListViewController: UIViewController {
     private func loadProfessions() {
         Profession.loadAllProfessions { (results, error) -> Void in
             guard results.count >= 0 && error == nil else {
-                ErrorHandler.log(error?.error)
+                ErrorHandler.log(error)
                 return
             }
             

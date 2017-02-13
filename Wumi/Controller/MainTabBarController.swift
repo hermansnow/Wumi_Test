@@ -11,6 +11,14 @@ import UIKit
 class MainTabBarController: UITabBarController {
     var lastItem: UITabBarItem?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(MainTabBarController.refreshUponReceivingAPNS(_:)),
+                                                         name:APNSReceivedNotificationIdentifier, object: nil)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -20,25 +28,33 @@ class MainTabBarController: UITabBarController {
         let currentInstallation = AVInstallation.currentInstallation();
         currentInstallation["owner"] = User.currentUser()
         currentInstallation.saveInBackground()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainTabBarController.refreshUponReceivingAPNS(_:)), name:APNSReceivedNotificationIdentifier, object: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
+    deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func refreshUponReceivingAPNS (notification: NSNotification) {
-        let notificationNavigationController = self.viewControllers![3] as? UINavigationController
-        let notificationController = notificationNavigationController?.topViewController as? NotificationTableViewController
-        notificationController?.tableView.reloadData()
-        self.selectedIndex = 3
-        notificationNavigationController?.tabBarItem.badgeValue = String(notificationController!.currentUser.pushNotificationsArray.count)
+    /**
+     Refresh controller view after receiving remote notification.
+     
+     - Parameter:
+        - notification: Notification broadcasted for APN received event.
+     */
+    func refreshUponReceivingAPNS(notification: NSNotification) {
+        guard let viewControllers = self.viewControllers,
+            notificationNavigationController = viewControllers[safe: 3] as? UINavigationController,
+            notificationController = notificationNavigationController.topViewController as? NotificationTableViewController else { return }
+        
+        if self.selectedViewController == notificationNavigationController {
+            notificationController.loadPushNotifications() // Load push notification if we are showing the notification tab
+        }
+        else {
+            notificationController.updatePushNotificationBadge() // Just update notification tab's badge if we are not showing it
+        }
     }
     
-    // MARK: UITabBarDelegate
+    // MARK: UITabBar delegate
+    
     override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
         // Post notification for clicking current selected tab bar item
         if self.lastItem == item {

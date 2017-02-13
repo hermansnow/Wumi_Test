@@ -428,7 +428,7 @@ class PostViewController: DataLoadingTableViewController {
                 {
                     if(!(user == self.currentUser))
                     {
-                        PushNotification(fromUser: self.currentUser, toUser: user, post: post, isPostAuthor: false).sendPushForPost(self)
+                        PushNotification(fromUser: self.currentUser, toUser: user, post: post, isPostAuthor: false).sendPushForPost()
                     }
                 }
             }
@@ -436,7 +436,7 @@ class PostViewController: DataLoadingTableViewController {
             // Send push notification to the author of this post
             guard let toUser = post.author else { return }
             if(toUser == self.currentUser) {return}
-            PushNotification(fromUser: self.currentUser, toUser: toUser, post: post, isPostAuthor: true).sendPushForPost(self)
+            PushNotification(fromUser: self.currentUser, toUser: toUser, post: post, isPostAuthor: true).sendPushForPost()
         }
     }
     

@@ -36,7 +36,6 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     var confirmPassword: String?
     lazy var favoriteUsersArray: [User] = []
     lazy var savedPostsArray: [Post] = []
-    lazy var pushNotificationsArray: [PushNotification] = []
     var maxCacheAge: NSTimeInterval? = 3600 * 48
     var expireAt: NSDate? = nil
     

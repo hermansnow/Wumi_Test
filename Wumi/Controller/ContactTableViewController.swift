@@ -208,7 +208,7 @@ class ContactTableViewController: DataLoadingTableViewController {
         // Load avatar image
         contact.loadAvatarThumbnail() { (avatarImage, imageError) -> Void in
             guard imageError == nil else {
-                ErrorHandler.log(imageError.debugDescription)
+                ErrorHandler.log(imageError)
                 
                 // Show name initials
                 if let name = contact.name {

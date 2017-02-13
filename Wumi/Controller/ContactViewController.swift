@@ -211,7 +211,7 @@ class ContactViewController: DataLoadingViewController {
         // Fetch contact data
         User.loadUserInBackground(objectId: contactId) { (user, error) in
             guard let contact = user where error == nil else {
-                ErrorHandler.log("\(error)")
+                ErrorHandler.log(error)
                 self.dismissLoadingIndicator() // Dismiss loading indicator
                 return
             }
@@ -219,7 +219,7 @@ class ContactViewController: DataLoadingViewController {
             // Load avatar image
             contact.loadAvatar { (image, error) in
                 guard let avatar = image where error == nil else {
-                    ErrorHandler.log("\(error)")
+                    ErrorHandler.log(error)
                     return
                 }
                 self.backgroundImageView.image = avatar
@@ -544,7 +544,7 @@ extension ContactViewController: PrivateMessageButtonDelegate {
         
         CDChatManager.sharedManager().sendWelcomeMessageToOther(contact.objectId, text: text) {(result, error) in
             guard error == nil else {
-                ErrorHandler.log("\(error)")
+                ErrorHandler.log(error.localizedDescription)
                 return
             }
             
@@ -553,7 +553,7 @@ extension ContactViewController: PrivateMessageButtonDelegate {
                 self.dismissInputView()
                 
                 guard error == nil else {
-                    ErrorHandler.log("\(error)")
+                    ErrorHandler.log(error.localizedDescription)
                     return
                 }
                 
