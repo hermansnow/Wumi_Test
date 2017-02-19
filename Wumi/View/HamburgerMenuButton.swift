@@ -10,7 +10,7 @@ import UIKit
 import SWRevealViewController
 
 class HamburgerMenuButton: UIButton {
-    
+    /// Hamburger menu button delegete.
     var delegate: SWRevealViewController? {
         didSet {
             self.addTarget()
@@ -37,11 +37,20 @@ class HamburgerMenuButton: UIButton {
         self.addTarget()
     }
     
+    // MARK: Help functions
+    
+    /**
+     Private function to be called after initialization to set up properties for this view and its subviews.
+     */
     private func setProperty() {
-        self.setBackgroundImage(UIImage(named: "Hamburger_Menu"), forState: .Normal)
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.Hamburger_Menu),
+                                forState: .Normal)
         self.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
     }
     
+    /**
+     Add hamburger menu button's taget when clicking.
+     */
     private func addTarget() {
         guard let delegate = self.delegate else { return }
         

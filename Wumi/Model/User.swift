@@ -610,48 +610,47 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     
     // MARK: Saved post queries
     
-    func savePost(post: Post!, block: AVBooleanResultBlock?) {
-        guard let savedPosts = self.savedPosts else {
-            if block != nil {
-                return block!(false, NSError(domain: "wumi.com", code: 1, userInfo: nil))
-            }
-            else {
-                return
-            }
+    /**
+     User saves a post.
+     
+     - Parameters:
+        - post: post to be saved.
+        - block: closure indicates whether save a post successfully or a wumi error if failed.
+     */
+    func savePost(post: Post, block: (Bool, WumiError?) -> Void) {
+        guard let _ = self.savedPosts else {
+            return block(false, WumiError(type: .Query, error: "Unable to save post."))
         }
         
-        savedPosts.addObject(post)
+        self.savedPosts!.addObject(post)
         
         self.saveInBackgroundWithBlock { (success, error) -> Void in
             defer {
-                if block != nil {
-                    block!(success, error)
-                }
+                block(success, ErrorHandler.parseError(error))
             }
-            
             guard success && error == nil else { return }
             
             self.savedPostsArray.appendUniqueObject(post)
         }
     }
     
-    func unsavePost(post: Post!, block: AVBooleanResultBlock?) {
-        guard let savedPosts = self.savedPosts else {
-            if block != nil {
-                return block!(false, NSError(domain: "wumi.com", code: 1, userInfo: nil))
-            }
-            else {
-                return
-            }
+    /**
+     User unsaves a post.
+     
+     - Parameters:
+        - post: post to be saved.
+        - block: closure indicates whether unsave a post successfully or a wumi error if failed.
+     */
+    func unsavePost(post: Post, block: (Bool, WumiError?) -> Void) {
+        guard let _ = self.savedPosts else {
+            return block(false, WumiError(type: .Query, error: "Unable to unsave post."))
         }
         
-        savedPosts.removeObject(post)
+        self.savedPosts!.removeObject(post)
         
         self.saveInBackgroundWithBlock { (success, error) -> Void in
             defer {
-                if block != nil {
-                    block!(success, error)
-                }
+                block(success, ErrorHandler.parseError(error))
             }
             
             guard success && error == nil else { return }
@@ -660,24 +659,34 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
         }
     }
     
-    func loadSavedPosts(block: AVArrayResultBlock!) {
+    /**
+     Load saved posts for this user asynchronously.
+     
+     - Parameters:
+        - block: closure includes array of saved posts or a wumi error if failed.
+     */
+    func loadSavedPosts(block: ([Post], WumiError?) -> Void) {
         guard let savedPosts = self.savedPosts else {
             self.savedPostsArray.removeAll()
-            block([], NSError(domain: "wumi.com", code: 1, userInfo: nil))
+            block([], nil)
             return
         }
         
         // Load saved posts
         let query = savedPosts.query()
         
+        // Query cache policy
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 3600 * 24 * 30
         
         query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-            guard let savedPosts = results as? [Post] else { return }
+            guard let savedPosts = results as? [Post] where error == nil else {
+                block([], ErrorHandler.parseError(error))
+                return
+            }
             
             self.savedPostsArray = savedPosts
-            block(results, error)
+            block(savedPosts, ErrorHandler.parseError(error))
         }
     }
 }

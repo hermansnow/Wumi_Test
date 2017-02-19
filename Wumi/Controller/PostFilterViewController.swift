@@ -136,19 +136,19 @@ class PostFilterViewController: UITableViewController {
         guard let homeVC = self.navigationController?.viewControllers.filter({ $0 is HomeViewController }).first as? HomeViewController else { return }
         
         if let button = self.selectedCategoryButton, category = self.categories[safe: button.tag] {
-            homeVC.category = category
+            homeVC.searchFilter.category = category
             homeVC.needResearch = true
         }
         else {
-            homeVC.category = nil
+            homeVC.searchFilter.category = nil
         }
         
         if let button = self.selectedAreaButton, area = self.areas[safe: button.tag] {
-            homeVC.area = area
+            homeVC.searchFilter.area = area
             homeVC.needResearch = true
         }
         else {
-            homeVC.area = nil
+            homeVC.searchFilter.area = nil
         }
         
         self.navigationController?.popToViewController(homeVC, animated: true)

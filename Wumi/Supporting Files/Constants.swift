@@ -65,6 +65,7 @@ struct Constants {
             static let Private_Message = "Private_Message"
             static let Private_Message_Selected = "Private_Message_Selected"
             static let Private_Message_Disabled = "Private_Message_Inactive"
+            static let Hamburger_Menu = "Hamburger_Menu"
         }
         
         struct Size {

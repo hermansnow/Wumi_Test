@@ -58,44 +58,72 @@ class Post: AVObject, AVSubclassing {
     }
     
     // MARK: Queries
-    class func countNewPosts(type: PostSearchType = .All, cutoffTime: NSDate? = nil, user: User? = nil, category: PostCategory? = nil, block: AVIntegerResultBlock!) {
-        guard let query = Post.getQueryFromSearchType(type, forUser: user) else {
-            block(0, NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
+    
+    /**
+     Return number of new posts after a cut-off time.
+     
+     - Parameters:
+        - filter: post search filter.
+        - cutoffTime: cut-off time for determining post is new or not.
+        - user: user to search.
+        - block: closure includes number of new posts or a wumi error if failed.
+     */
+    class func countNewPosts(filter filter: PostSearchFilter, cutoffTime: NSDate? = nil, user: User? = nil, block: (Int, WumiError?) -> Void) {
+        guard let query = Post.getQueryFromSearchType(filter.searchType, forUser: user) else {
+            block(0, WumiError(type: .Query, error: "Failed in starting query"))
             return
         }
         
-        let index = "updatedAt" // Sort based on last update time
+        // Sort based on last update time
+        let index = "updatedAt"
+        query.orderByDescending(index)
         
         // Load posts earlier than a cut-off timestamp
         if let cutoffTime = cutoffTime {
             query.whereKey(index, greaterThan: cutoffTime)
         }
         
-        if let category = category where type == .Filter {
+        // Support custom filters
+        if let category = filter.category where filter.searchType == .Filter {
             query.whereKey("categories", equalTo: category)
         }
         
-        query.orderByDescending(index)
+        // This search is network only, does not support cache
         query.cachePolicy = .NetworkOnly
         
-        query.countObjectsInBackgroundWithBlock(block)
+        query.countObjectsInBackgroundWithBlock { (count, error) in
+            block(count, ErrorHandler.parseError(error))
+        }
     }
     
-    // Search post based on several filters
-    class func loadPosts(limit limit: Int = 10, type: PostSearchType = .All, cutoffTime: NSDate? = nil, searchString: String = "", user: User? = nil, category: PostCategory? = nil, area: Area? = nil, block: AVArrayResultBlock!) {
-        guard var query = Post.getQueryFromSearchType(type, forUser: user) else {
-            block([], NSError(domain: "wumi.com", code: 1, userInfo: ["message": "Failed in starting query"]))
+    /**
+     Search post based on several filters asynchronously.
+     
+     - Parameters:
+        - limit: limit of search result numbers.
+        - filter: post search filter.
+        - cutoffTime: cut-off time for determining post is new or not.
+        - user: user to search.
+        - block: closure includes array of result posts or a wumi error if failed.
+     */
+    class func loadPosts(limit limit: Int = 10, filter: PostSearchFilter, cutoffTime: NSDate? = nil, user: User? = nil, block: ([Post], WumiError?) -> Void) {
+        guard var query = Post.getQueryFromSearchType(filter.searchType, forUser: user) else {
+            block([], WumiError(type: .Query, error: "Failed in starting query"))
             return
         }
         
         // Handler search string
-        if let titleQuery = Post.getQueryFromSearchType(type, forUser: user), contentQuery = Post.getQueryFromSearchType(type, forUser: user) where !searchString.isEmpty {
-            titleQuery.whereKey("title", matchesRegex: searchString, modifiers: "im")
-            contentQuery.whereKey("content", matchesRegex: searchString, modifiers: "im")
+        if let titleQuery = Post.getQueryFromSearchType(filter.searchType, forUser: user),
+            contentQuery = Post.getQueryFromSearchType(filter.searchType, forUser: user) where !filter.searchString.isEmpty {
+            
+            titleQuery.whereKey("title", matchesRegex: filter.searchString, modifiers: "im")
+            contentQuery.whereKey("content", matchesRegex: filter.searchString, modifiers: "im")
             query = AVQuery.orQueryWithSubqueries([titleQuery, contentQuery])
         }
         
-        let index = "updatedAt" // Sort based on last update time
+        // Sort based on last update time
+        let index = "updatedAt"
+        query.orderByDescending(index)
         
         // Load posts earlier than a cut-off timestamp
         if let cutoffTime = cutoffTime {
@@ -103,12 +131,12 @@ class Post: AVObject, AVSubclassing {
         }
         
         // Apply category filter
-        if let category = category where type == .Filter {
+        if let category = filter.category where filter.searchType == .Filter {
             query.whereKey("categories", equalTo: category)
         }
         
         // Apply location filter
-        if let area = area where type == .Filter {
+        if let area = filter.area where filter.searchType == .Filter {
             query.whereKey("location", nearGeoPoint: AVGeoPoint(latitude: area.latitude, longitude: area.longitude), withinMiles: 600.0)
         }
         
@@ -116,14 +144,21 @@ class Post: AVObject, AVSubclassing {
         query.includeKey("mediaThumbnails")
         query.includeKey("categories")
         
-        query.orderByDescending(index)
-        
+        // Set search limit
         query.limit = limit
         
+        // Set cache policy
         query.cachePolicy = .NetworkElseCache
         query.maxCacheAge = 3600 * 24
         
-        query.findObjectsInBackgroundWithBlock(block)
+        query.findObjectsInBackgroundWithBlock { (results, error) in
+            guard let posts = results as? [Post] where error == nil else {
+                block([], ErrorHandler.parseError(error))
+                return
+            }
+            
+            block(posts, nil)
+        }
     }
     
     class func findPost(objectId id: String) -> Bool {
@@ -398,10 +433,52 @@ func ==(lhs: Post, rhs: Post) -> Bool {
     return lhs.objectId == rhs.objectId
 }
 
-// MARK: Post Search Type enum
+// MARK: Post Search structures
 
-enum PostSearchType {
-    case All
-    case Saved
-    case Filter
+/**
+ Enum for post search type:
+    * All - search from all posts.
+    * Saved - search from saved posts.
+    * Filter - search with a custom filter.
+ */
+enum PostSearchType: String {
+    /// Search from all posts.
+    case All = "All"
+    /// Search from saved posts.
+    case Saved = "Saved"
+    /// Search with a custom filter.
+    case Filter = "Custom Filter"
+    
+    /// Array of all post search types.
+    static let allTypes: [PostSearchType] = [.All, .Saved, .Filter]
+    
+    /// Array of all post search types' title.
+    static var allTitles: [String] {
+        var titles = [String]()
+        for value in self.allTypes {
+            titles.append(value.rawValue)
+        }
+        return titles
+    }
+}
+
+/**
+ Structure includes post search filter's criteria.
+ */
+struct PostSearchFilter {
+    /// Search string of current search.
+    var searchString: String = ""
+    /// Short-cut search type of current search.
+    var searchType: PostSearchType = .All
+    /// Search by post category.
+    var category: PostCategory?
+    /// Search in a specific area.
+    var area: Area?
+    
+    /**
+     Whether this post search filter has custom filter (category or area) or not?
+     */
+    func hasCustomFilter() -> Bool {
+        return self.category != nil || self.area != nil
+    }
 }
