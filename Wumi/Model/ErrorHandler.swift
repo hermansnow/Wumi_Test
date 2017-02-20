@@ -76,6 +76,8 @@ struct ErrorHandler {
         }
         
         switch error.domain {
+        case NSURLErrorDomain:
+            return WumiError(type: .Connection, error: Constants.SignIn.String.ErrorMessages.connection)
         case "AVOS Cloud Error Domain":
             return ErrorHandler.leanCloudError(error)
         case "Wumi":
@@ -108,7 +110,7 @@ struct ErrorHandler {
             type = .Email
         case 200, 202, 217:
             type = .Name
-        case 210:
+        case 210, 211:
             type = .Password
         case 122, 430:
             type = .Image

@@ -314,6 +314,20 @@ class User: AVUser, NSCoding, TimeBaseCacheable {
     
     // MARK: User queries
     
+    class func logInWithUsernameInBackground(username: String, password: String, completionHandler: (WumiError?) -> Void) {
+        super.logInWithUsernameInBackground(username, password: password) { (user, error) in
+            guard error == nil else {
+                completionHandler(ErrorHandler.parseError(error))
+                return
+            }
+            guard let _ = user as? User else {
+                completionHandler(WumiError(type: .Unknown, error: Constants.SignIn.String.ErrorMessages.unknown))
+                return
+            }
+            completionHandler(nil)
+        }
+    }
+    
     /**
      Load user records asynchonously.
      

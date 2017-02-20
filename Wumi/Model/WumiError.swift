@@ -20,6 +20,7 @@ class WumiError: NSError {
         case DisplayName
         case GraduationYear
         case Query
+        case Connection
     }
     
     /// Type of this Wumi error

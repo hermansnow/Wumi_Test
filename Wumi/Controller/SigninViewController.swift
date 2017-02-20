@@ -177,9 +177,19 @@ class SigninViewController: DataLoadingViewController {
         self.showLoadingIndicator()
         
         User.logInWithUsernameInBackground(userName,
-                                           password: userPassword) { (result, error) in
-            guard let _ = result as? User else {
-                self.passwordTextField.errorText = Constants.SignIn.String.ErrorMessages.incorrectPassword
+                                           password: userPassword) { (error) in
+            guard error == nil else {
+                var errorMessage: String?
+                switch error!.type {
+                case .Connection:
+                    errorMessage = error!.error
+                case .Password:
+                    errorMessage = Constants.SignIn.String.ErrorMessages.incorrectPassword
+                default:
+                    errorMessage = Constants.SignIn.String.ErrorMessages.unknown
+                    break
+                }
+                self.passwordTextField.errorText =  errorMessage
                 self.passwordTextField.actionView = self.forgotPasswordButton
                 self.forgotPasswordButton.hidden = false
                 self.dismissLoadingIndicator()

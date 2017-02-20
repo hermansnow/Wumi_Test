@@ -114,6 +114,8 @@ struct Constants {
              Struct includes error messages for sign in/up.
              */
             struct ErrorMessages {
+                /// Error message to connection issue.
+                static let connection = "Connection issue"
                 /// Error message to indicate unknow error.
                 static let unknown = "Unknow issue occurred"
                 /// Error message to indicate username is blank.
