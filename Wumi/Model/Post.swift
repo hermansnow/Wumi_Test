@@ -36,6 +36,11 @@ class Post: AVObject, AVSubclassing {
         }
     }
     
+    /// Whether this post has any thumbnail or not.
+    var hasThumbnail: Bool {
+        return self.attachedThumbnails.count > 0 || self.mediaThumbnails.count > 0
+    }
+    
     // MARK: Initializer and subclassing functions
     
     // Must have this init for subclassing AVObject
@@ -187,7 +192,7 @@ class Post: AVObject, AVSubclassing {
             
             post.decodeAttributedContent()
             
-            post.loadExternalUrlContentWithBlock(requirePreviewImage: false) { (found) in
+            post.loadContentWithBlock(requestPreviewImage: false) { (found, foundUrl) in
                 post.loadMediaAttachmentsWithBlock { (success, error) in
                     guard success && error == nil else {
                         block(nil, error)
@@ -196,6 +201,29 @@ class Post: AVObject, AVSubclassing {
                     
                     block(post, error)
                 }
+            }
+        }
+    }
+    
+    /**
+     Fetch external data for a post asynchronously in background.
+     */
+    func fetchDataInBackground() {
+        // Fetch content if needed
+        self.loadContentWithBlock(requestPreviewImage: true) { (_, _) in }
+        
+        // Load preview image from attachment media or external URL
+        if self.hasThumbnail {
+            self.loadFirstThumbnailWithBlock { (_, _) in }
+        }
+        
+        // Fetch author information
+        if let author = self.author {
+            author.loadIfNeededInBackgroundWithBlock { (result, error) in
+                guard let user = result where error == nil else { return }
+                
+                // Load avatar of author
+                user.loadAvatarThumbnail { (_, _) in }
             }
         }
     }
@@ -230,6 +258,8 @@ class Post: AVObject, AVSubclassing {
             })
         }
     }
+    
+    // MARK: Post attachments queries
     
     // Save attached images as AVFiles synchronously
     private func saveMediaAttachmentsWithBlock(block: AVBooleanResultBlock!) {
@@ -283,20 +313,13 @@ class Post: AVObject, AVSubclassing {
         }
     }
     
-    func loadExternalUrlContentWithBlock(requirePreviewImage requirePreviewImage: Bool, block: (found: Bool) -> Void) {
-        guard let content = self.content else {
-            block(found: false)
-            return
-        }
-        
-        self.attributedContent = NSMutableAttributedString(string: content)
-        self.attributedContent?.replaceLink(requirePreviewImage: requirePreviewImage) { (found, url) in
-            self.externalPreviewImageUrl = url
-            block(found: found)
-        }
-    }
-    
-    func loadFirstThumbnailWithBlock(block: AVImageResultBlock) {
+    /**
+     Load the first thumbnail asynchronously.
+     
+     - Parameters:
+        - block: closure with an image if success or wumi error if failed.
+     */
+    func loadFirstThumbnailWithBlock(block: (UIImage?, WumiError?) -> Void) {
         // Return first image if we have any stored in local object
         if self.attachedThumbnails.count > 0 {
             block(self.attachedThumbnails.first, nil)
@@ -308,7 +331,33 @@ class Post: AVObject, AVSubclassing {
             return
         }
         
-        AVFile.loadImageFile(firstImageFile, block: block)
+        AVFile.loadImageFile(firstImageFile) { (image, error) in
+            guard error == nil else {
+                block(nil, ErrorHandler.parseError(error))
+                return
+            }
+            block(image, ErrorHandler.parseError(error))
+        }
+    }
+    
+    /**
+     Load post content asynchronously.
+     
+     - Parameters:
+        - requestPreviewImage: whether request preview image URL or not.
+        - block: closure indicates whether we succssfully loaded content or not.
+     */
+    func loadContentWithBlock(requestPreviewImage requestPreviewImage: Bool, block: (isLoaded: Bool, foundUrl: Bool) -> Void) {
+        guard let content = self.content else {
+            block(isLoaded: false, foundUrl: false)
+            return
+        }
+        
+        self.attributedContent = PostTableViewCell.attributedText(NSAttributedString(string: content))
+        self.attributedContent?.replaceLink(requestMetadataImage: requestPreviewImage) { (found, url) in
+            self.externalPreviewImageUrl = url
+            block(isLoaded: true, foundUrl: found)
+        }
     }
     
     // Convert attached AVFiles to local images

@@ -574,7 +574,7 @@ extension PostViewController: KIImagePagerDelegate {
 extension PostViewController: UITextViewDelegate {
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
         // Launch application if it can be handled by any app installed
-        if URL.willOpenInApp() != nil {
+        if URL.willOpenInApp != nil {
             UIApplication.sharedApplication().openURL(URL)
         }
         // Otherwise, request it in web viewer

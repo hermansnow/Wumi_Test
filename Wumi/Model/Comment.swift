@@ -82,7 +82,7 @@ class Comment: AVObject, AVSubclassing {
         }
         
         self.attributedContent = NSMutableAttributedString(string: content)
-        self.attributedContent?.replaceLink(requirePreviewImage: false) { (found, url) in
+        self.attributedContent?.replaceLink(requestMetadataImage: false) { (found, url) in
             block(found: found)
         }
     }

@@ -56,7 +56,7 @@ extension String {
             
             dispatch_group_async(taskGroup, taskQueue) {
                 // Add link description based on url
-                if url.willOpenInApp() == nil {
+                if url.willOpenInApp == nil {
                     url.fetchPageInfo() { (title, previewImageURL) in
                         if previewImageURL != nil {
                             urls.append(previewImageURL!)

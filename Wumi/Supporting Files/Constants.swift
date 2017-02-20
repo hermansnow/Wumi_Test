@@ -48,7 +48,7 @@ struct Constants {
         }
         
         struct ImageName {
-            static let Logo = UIImage(named: "Logo")
+            static let Logo = "Logo"
             static let AnonymousAvatar = "Anonymous"
             static let Check = "Checkmark"
             static let Uncheck = "Uncheck"

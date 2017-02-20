@@ -24,7 +24,7 @@ class ChatRoomViewController: CDChatRoomVC {
     override func textView(textView: SETextView, clickedOnLink link: SELinkText, atIndex charIndex: UInt) -> Bool {
         guard let URL = NSURL(string: link.text) else { return false }
         // Launch application if it can be handled by any app installed
-        if URL.willOpenInApp() != nil {
+        if URL.willOpenInApp != nil {
             UIApplication.sharedApplication().openURL(URL)
         }
             // Otherwise, request it in web viewer

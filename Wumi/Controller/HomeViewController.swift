@@ -665,20 +665,44 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         guard let post = self.displayPosts[safe: indexPath.row] else { return 0}
         
-        var textHeight: CGFloat = 0.0
-        if let content = post.content {
-            let attributeString = PostTableViewCell.attributedText(NSAttributedString(string: content))
+        // Try get cached height
+        if let cachedHeight = DataManager.sharedDataManager.cache.objectForKey("post_\(post.objectId)_cellHeight") as? CGFloat {
+            return cachedHeight
+        }
         
-            textHeight = TTTAttributedLabel.sizeThatFitsAttributedString(attributeString,
+        var textHeight: CGFloat = 0.0
+        var attributedString: NSAttributedString?
+        if let attributedContent = post.attributedContent {
+            attributedString = attributedContent
+        }
+        else if let content = post.content {
+            attributedString = PostTableViewCell.attributedText(NSAttributedString(string: content))
+        }
+        
+        if let content = attributedString {
+            textHeight = TTTAttributedLabel.sizeThatFitsAttributedString(content,
                                                                          withConstraints: CGSize(width: tableView.contentSize.width, height: 400),
                                                                          limitedToNumberOfLines: 3).height
         }
         
-        if post.attachedThumbnails.count > 0 || post.mediaThumbnails.count > 0 || post.hasPreviewImage {
-            textHeight = textHeight > PostTableViewCell.fixedImagePreviewHeight() ? textHeight : PostTableViewCell.fixedImagePreviewHeight()
+        if post.hasThumbnail || post.hasPreviewImage {
+            textHeight = max(textHeight, PostTableViewCell.fixedImagePreviewHeight)
         }
         
-        return PostTableViewCell.fixedHeight() + textHeight
+        let cellHeight = PostTableViewCell.fixedHeight + textHeight
+        // Cache cell height
+        if post.attributedContent != nil {
+            DataManager.sharedDataManager.cache.setObject(cellHeight, forKey: "post_\(post.objectId)_cellHeight")
+        }
+        
+        return cellHeight
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        guard let post = self.displayPosts[safe: indexPath.row] else { return }
+        
+        // Cache cell height again before displaying
+        DataManager.sharedDataManager.cache.setObject(cell.frame.size.height, forKey: "post_\(post.objectId)_cellHeight")
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -687,11 +711,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
         }
         
-        cell.reset()
-        
         // Highlight searching string
         cell.highlightedString = self.searchFilter.searchString
         
+        // Set title
         if let title = post.title where !title.isEmpty {
             cell.title = title
         }
@@ -699,39 +722,39 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.title = "No Title"
         }
         
-        cell.hideImageView = post.attachedThumbnails.count == 0 && post.mediaThumbnails.count == 0 && !post.hasPreviewImage
+        // Hide image preview if there is no thumbnail or url preview image.
+        cell.hideImageView = !post.hasThumbnail && !post.hasPreviewImage
         
-        // Fetch content
-        if post.attributedContent == nil {
-            post.loadExternalUrlContentWithBlock(requirePreviewImage: true) { (foundUrl) in
-                guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell else { return }
-                
-                cell.content = post.attributedContent
-                
+        // Set content
+        if post.attributedContent != nil {
+            cell.content = post.attributedContent
+        }
+        else {
+            // Fetch content if needed
+            post.loadContentWithBlock(requestPreviewImage: true) { (found, foundUrl) in
                 // Reload cell if text changed
-                if foundUrl {
+                if found {
                     self.postTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 }
             }
         }
-        else {
-            cell.content = post.attributedContent
-        }
         
-        // Load preview image from attachment media
-        if post.attachedThumbnails.count > 0 || post.mediaThumbnails.count > 0 {
+        // Load preview image from attachment media or external URL
+        if post.hasThumbnail {
             post.loadFirstThumbnailWithBlock { (result, error) in
-                guard let image = result, cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell where error == nil else { return }
-            
-                cell.previewImage = image.scaleToHeight(100)
+                guard let image = result, cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell where error == nil else {
+                    ErrorHandler.log(error)
+                    return
+                }
+                
+                // Scale thumbnail to a new image with height 80.
+                cell.previewImage = image.scaleToHeight(80)
             }
         }
         else if let url = post.externalPreviewImageUrl{
-            cell.imagePreview.sd_setImageWithURL(url, placeholderImage: Constants.General.ImageName.Logo)
+            cell.imagePreview.sd_setImageWithURL(url,
+                                                 placeholderImage: UIImage(named: Constants.General.ImageName.Logo))
         }
-        
-        cell.timeStamp = post.updatedAt.timeAgo()
-        cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
         // Fetch author information
         if let author = post.author {
@@ -740,22 +763,31 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 cell.authorView.detailLabel.text = user.shortUserBannerDesc
                 cell.authorView.userObjectId = user.objectId
+                cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.showContact(_:))))
                 
+                // Load avatar of author
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
-                    guard let image = imageResult where imageError == nil else { return }
+                    guard let image = imageResult where imageError == nil else {
+                        ErrorHandler.log(error)
+                        return
+                    }
                     cell.authorView.avatarImageView.image = image
                 }
-                
-                cell.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.showContact(_:))))
             }
         }
         
-        // Set up buttons
+        // Set other components
+        cell.timeStamp = post.updatedAt.timeAgo()
         cell.isSaved = self.currentUser.savedPostsArray.contains( { $0 == post} )
-        cell.saveButton.delegate = self
-        cell.replyButton.delegate = self
+        cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
         
+        // Set delegate
         cell.delegate = self
+        
+        // Preload post + 5
+        if let preloadPost = self.displayPosts[safe: indexPath.row + 5] {
+            preloadPost.fetchDataInBackground()
+        }
         
         return cell
     }
@@ -927,7 +959,7 @@ extension HomeViewController: ReplyButtonDelegate {
 extension HomeViewController: TTTAttributedLabelDelegate {
     func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
         // Launch application if it can be handled by any app installed
-        if url.willOpenInApp() != nil {
+        if url.willOpenInApp != nil {
             UIApplication.sharedApplication().openURL(url)
         }
         // Otherwise, request it in web viewer

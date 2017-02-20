@@ -46,6 +46,15 @@ extension UIImage {
         return scale(scaleSize)
     }
     
+    /**
+     Scale image to a specific width with original ratio.
+     
+     - Parameters:
+        - width: target width to be scaled to.
+     
+     - Returns:
+        Scaled image.
+     */
     func scaleToWidth(width: CGFloat) -> UIImage {
         let scaleFactor = width / self.size.width
         let newHeight = self.size.height * scaleFactor
@@ -54,6 +63,15 @@ extension UIImage {
         return scale(scaleSize)
     }
     
+    /**
+     Scale image to a specific height with original ratio.
+     
+     - Parameters:
+        - height: target height to be scaled to.
+     
+     - Returns:
+        Scaled image.
+     */
     func scaleToHeight(height: CGFloat) -> UIImage {
         let scaleFactor = height / self.size.height
         let newWidth = self.size.width * scaleFactor

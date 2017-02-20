@@ -212,7 +212,7 @@ extension WebFullScreenViewController:  WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         guard let url = navigationAction.request.URL else { return }
         
-        if url.willOpenInApp() != nil {
+        if url.willOpenInApp != nil {
             decisionHandler(.Cancel)
             return
         }
