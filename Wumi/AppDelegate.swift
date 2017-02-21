@@ -230,7 +230,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //AVOSCloud.setApplicationId("ts61qva17BjxVjuLvLk3Vh5o-gzGzoHsz", clientKey: "46fHDW8yFvxaVo5DoTjT0yPE")
         
         // Use Dev mode notification now. TODO: Change to production when release
-        AVPush.setProductionMode(false)
+        //AVPush.setProductionMode(false)
         AVOSCloud.registerForRemoteNotification()
     }
     
