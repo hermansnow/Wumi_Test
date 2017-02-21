@@ -522,8 +522,9 @@ class HomeViewController: DataLoadingViewController {
      */
     func reloadTable(sender: AnyObject) {
         self.postTableView.setContentOffset(CGPoint(x: 0,
-                                                    y: -self.refreshControl.frame.size.height - self.currentUserBanner.frame.size.height),
+                                                        y: -self.refreshControl.frame.size.height - self.currentUserBanner.frame.size.height),
                                             animated:true)
+        self.refreshControl.beginRefreshing()
         self.loadPosts()
     }
     
@@ -602,7 +603,9 @@ class HomeViewController: DataLoadingViewController {
         self.newPostNotificationView.hidden = true
         
         // Start refreshing
-        self.showLoadingIndicator()
+        if !self.refreshControl.refreshing {
+            self.showLoadingIndicator()
+        }
         
         Post.loadPosts(limit: Constants.Query.LoadPostLimit,
                        filter: self.searchFilter,
@@ -610,6 +613,7 @@ class HomeViewController: DataLoadingViewController {
         { (posts, error) in
             // End refreshing
             self.dismissLoadingIndicator()
+            self.refreshControl.endRefreshing()
             
             guard error == nil else {
                 ErrorHandler.log(error)
