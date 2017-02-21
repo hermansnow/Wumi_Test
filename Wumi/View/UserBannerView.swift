@@ -49,9 +49,6 @@ class UserBannerView: UIView {
                       attribute: .Width,
                      multiplier: 1,
                        constant: 0).active = true
-        
-        // Add default image
-        self.avatarImageView.image = UIImage(named: Constants.General.ImageName.AnonymousAvatar)
     }
     
     override func drawRect(rect: CGRect) {
@@ -60,7 +57,6 @@ class UserBannerView: UIView {
     }
     
     func reset() {
-        self.avatarImageView.image = UIImage(named: Constants.General.ImageName.AnonymousAvatar)
         self.detailLabel.text = nil
     }
     

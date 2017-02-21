@@ -202,6 +202,12 @@ class PostTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         // Reset values for reuse
+        self.userInteractionEnabled = true
+        self.buttonStack.hidden = false
+        self.titleLabel.backgroundColor = UIColor.clearColor()
+        self.authorView.backgroundColor = UIColor.clearColor()
+        self.contentTextView.backgroundColor = UIColor.clearColor()
+        self.timeStampLabel.backgroundColor = UIColor.clearColor()
         self.title = nil
         self.content = nil
         self.highlightedString = nil
@@ -245,5 +251,14 @@ class PostTableViewCell: UITableViewCell {
         }
     
         return attributeContent
+    }
+    
+    func showDefault() {
+        self.titleLabel.backgroundColor = Constants.General.Color.LightBackgroundColor
+        self.authorView.backgroundColor = Constants.General.Color.LightBackgroundColor
+        self.contentTextView.backgroundColor = Constants.General.Color.LightBackgroundColor
+        self.timeStampLabel.backgroundColor = Constants.General.Color.LightBackgroundColor
+        self.buttonStack.hidden = true
+        self.userInteractionEnabled = false
     }
 }

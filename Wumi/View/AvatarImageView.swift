@@ -74,9 +74,11 @@ class AvatarImageView: UIView {
      */
     func showNameAvatar(name: String) {
         let initial = name.initials()
+        let fontSize: CGFloat = self.frame.size.height * 0.35
+        
         self.containerImageView.image = self.imageSnapshot(fromText: initial,
                                                            backgroundColor: Constants.General.Color.ThemeColor,
-                                                           textAttributes: [NSFontAttributeName: UIFont.systemFontOfSize(14),
+                                                           textAttributes: [NSFontAttributeName: UIFont.systemFontOfSize(fontSize),
                                                                             NSForegroundColorAttributeName: UIColor.whiteColor()])
         
         // Cache avatar image

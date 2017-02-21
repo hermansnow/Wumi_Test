@@ -19,16 +19,15 @@ class DataLoadingViewController: UIViewController {
     }
     
     /// Whether the controller is loading or not.
-    var isLoading: Bool {
-        return self.loadingView.animating
-    }
+    var isLoading: Bool = false
     
     /**
      Show loading indicator.
      */
     func showLoadingIndicator() {
         self.loadingView.startAnimating()
-        self.view.addSubview(loadingView)
+        self.view.addSubview(self.loadingView)
+        self.isLoading = true
     }
     
     /**
@@ -37,5 +36,6 @@ class DataLoadingViewController: UIViewController {
     func dismissLoadingIndicator() {
         self.loadingView.stopAnimating()
         self.loadingView.removeFromSuperview()
+        self.isLoading = false
     }
 }

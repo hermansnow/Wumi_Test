@@ -53,9 +53,11 @@ class HomeViewController: DataLoadingViewController {
     /// Whether the post table is showing search bar or not.
     private var isShowingSearchBar: Bool = false
     /// Whether is loading posts or not.
-    override var isLoading: Bool {
-        return super.isLoading || self.refreshControl.refreshing
+    private var isLoadingPost: Bool {
+        return self.isLoading || self.refreshControl.refreshing
     }
+    /// Whether show default table or not.
+    private var showDefaultTable: Bool = false
     /// Search filter
     lazy var searchFilter = PostSearchFilter()
     /// Previous search filter
@@ -439,6 +441,29 @@ class HomeViewController: DataLoadingViewController {
         self.view.layoutIfNeeded()
     }
     
+    /**
+     Show empty view for post table.
+     */
+    private func showEmptyView() {
+        let emptyView = EmptyPostView(frame: CGRect(x: 0,
+                                                    y: 0,
+                                                    width: self.postTableView.frame.size.width,
+                                                    height: self.postTableView.frame.size.height))
+        // Set message
+        if self.searchFilter.searchString.isEmpty {
+            if self.searchController.active {
+                emptyView.text = "" // Don't show message if end-user is search results are displayed
+            }
+            else {
+                emptyView.text = "Wumi has no post data"
+            }
+        }
+        else {
+            emptyView.text = "Sorry, no post was found with your searching words: \"\(self.searchFilter.searchString)\""
+        }
+        self.postTableView.backgroundView = emptyView
+    }
+    
     // MARK: Action
     
     /**
@@ -583,9 +608,11 @@ class HomeViewController: DataLoadingViewController {
                        filter: self.searchFilter,
                        user: self.currentUser)
         { (posts, error) in
+            // End refreshing
+            self.dismissLoadingIndicator()
+            
             guard error == nil else {
                 ErrorHandler.log(error)
-                self.dismissLoadingIndicator()
                 return
             }
                     
@@ -594,9 +621,6 @@ class HomeViewController: DataLoadingViewController {
             self.previousSearchFilter = self.searchFilter
             
             self.postTableView.reloadData()
-            
-            // End refreshing 
-            self.dismissLoadingIndicator()
         }
     }
     
@@ -637,33 +661,32 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Show empty view if there is no post for displaying
         if self.displayPosts.count == 0 {
-            let emptyView = EmptyPostView(frame: CGRect(x: 0,
-                                                        y: 0,
-                                                        width: self.postTableView.frame.size.width,
-                                                        height: self.postTableView.frame.size.height))
-            // Set message
-            if self.searchFilter.searchString.isEmpty {
-                if self.searchController.active {
-                    emptyView.text = "" // Don't show message if end-user is search results are displayed
-                }
-                else if self.isLoading {
-                    emptyView.text = "" // Don't show message if we are loading data
-                }
-                else {
-                    emptyView.text = "Wumi has no post data"
-                }
+            if self.isLoadingPost {
+                self.showDefaultTable = true
+                self.postTableView.userInteractionEnabled = false
+                return 5
             }
             else {
-                emptyView.text = "Sorry, no post was found with your searching words: \"\(self.searchFilter.searchString)\""
+                self.showDefaultTable = false
+                self.postTableView.userInteractionEnabled = false
+                self.showEmptyView()
             }
-            self.postTableView.backgroundView = emptyView
+        }
+        else {
+            self.showDefaultTable = false
+            self.postTableView.userInteractionEnabled = true
         }
         
         return self.displayPosts.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        guard let post = self.displayPosts[safe: indexPath.row] else { return 0}
+        // Return height for default table cell
+        guard !self.showDefaultTable else {
+            return PostTableViewCell.fixedHeight
+        }
+        
+        guard let post = self.displayPosts[safe: indexPath.row] else { return 0 }
         
         // Try get cached height
         if let cachedHeight = DataManager.sharedDataManager.cache.objectForKey("post_\(post.objectId)_cellHeight") as? CGFloat {
@@ -706,9 +729,18 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as? PostTableViewCell,
-            post = self.displayPosts[safe: indexPath.row] else {
-                return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as? PostTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        // Show default table
+        guard !self.showDefaultTable else {
+            cell.showDefault()
+            return cell
+        }
+        
+        guard let post = self.displayPosts[safe: indexPath.row] else {
+            return cell
         }
         
         // Highlight searching string
@@ -768,9 +800,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 // Load avatar of author
                 user.loadAvatarThumbnail { (imageResult, imageError) -> Void in
                     guard let image = imageResult where imageError == nil else {
-                        ErrorHandler.log(error)
+                        // Show name initials
+                        if let name = user.name {
+                            cell.authorView.avatarImageView.showNameAvatar(name)
+                        }
                         return
                     }
+                    
                     cell.authorView.avatarImageView.image = image
                 }
             }
@@ -804,14 +840,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 extension HomeViewController: UIScrollViewDelegate {
     // Load more users when dragging to bottom
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard !self.isLoading && self.hasMoreResults else { return }
+        guard !self.isLoadingPost && self.hasMoreResults else { return }
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
         
         // Change 10.0 to adjust the distance from bottom
-        if maximumOffset - currentOffset <= 10.0 {
+        if maximumOffset - currentOffset <= (PostTableViewCell.fixedHeight + PostTableViewCell.fixedImagePreviewHeight) * 2 {
             self.loadMorePosts()
         }
     }
