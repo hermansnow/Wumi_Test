@@ -93,6 +93,11 @@ class Post: AVObject, AVSubclassing {
             query.whereKey("categories", equalTo: category)
         }
         
+        // Apply location filter
+        if let area = filter.area where filter.searchType == .Filter {
+            query.whereKey("location", nearGeoPoint: AVGeoPoint(latitude: area.latitude, longitude: area.longitude), withinMiles: 600.0)
+        }
+        
         // This search is network only, does not support cache
         query.cachePolicy = .NetworkOnly
         
@@ -524,10 +529,27 @@ struct PostSearchFilter {
     /// Search in a specific area.
     var area: Area?
     
+    init() { }
+    
+    init(searchType: PostSearchType) {
+        self.searchType = searchType
+    }
+    
     /**
      Whether this post search filter has custom filter (category or area) or not?
+     
+     - Returns:
+        True if has custom filter, otherwise false.
      */
     func hasCustomFilter() -> Bool {
         return self.category != nil || self.area != nil
+    }
+    
+    /**
+     Clear post custom filters (category and area).
+     */
+    mutating func clearCustomFilter() {
+        self.category = nil
+        self.area = nil
     }
 }

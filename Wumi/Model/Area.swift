@@ -13,3 +13,10 @@ struct Area {
     var latitude: Double
     var longitude: Double
 }
+
+// MARK: Equatable
+
+func ==(lhs: Area, rhs: Area) -> Bool {
+    return lhs.name == rhs.name
+}
+

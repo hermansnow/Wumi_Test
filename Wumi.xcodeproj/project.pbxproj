@@ -458,6 +458,7 @@
 		FFF6CAD61E2CC41B00FED3CB /* LocationListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF6CAD51E2CC41B00FED3CB /* LocationListTableViewController.swift */; };
 		FFF6CAD91E2E07C600FED3CB /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF6CAD71E2E07C500FED3CB /* LocationTableViewCell.swift */; };
 		FFF6CADA1E2E07C600FED3CB /* LocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFF6CAD81E2E07C500FED3CB /* LocationTableViewCell.xib */; };
+		FFFF70381E62877F00C33AD0 /* CheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFF70371E62877F00C33AD0 /* CheckButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1042,6 +1043,7 @@
 		FFF6CAD51E2CC41B00FED3CB /* LocationListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationListTableViewController.swift; path = Controller/LocationListTableViewController.swift; sourceTree = "<group>"; };
 		FFF6CAD71E2E07C500FED3CB /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationTableViewCell.swift; path = View/LocationTableViewCell.swift; sourceTree = "<group>"; };
 		FFF6CAD81E2E07C500FED3CB /* LocationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocationTableViewCell.xib; path = View/LocationTableViewCell.xib; sourceTree = "<group>"; };
+		FFFF70371E62877F00C33AD0 /* CheckButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckButton.swift; path = View/CheckButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2076,6 +2078,7 @@
 			isa = PBXGroup;
 			children = (
 				FF6067581E1B92DB003116FA /* ActionButton.swift */,
+				FFFF70371E62877F00C33AD0 /* CheckButton.swift */,
 				DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */,
 				DF0180791D413C5E00935A60 /* ReplyButton.swift */,
 				DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */,
@@ -2767,6 +2770,7 @@
 				DF4314191D755DF8002E21D5 /* MoreButton.swift in Sources */,
 				DF0180781D3DF91E00935A60 /* Extension+NSDate.swift in Sources */,
 				B1ECD7911CCC1F4000CED9C4 /* XHZoomingImageView.m in Sources */,
+				FFFF70381E62877F00C33AD0 /* CheckButton.swift in Sources */,
 				B1ECD6A61CCC1F3F00CED9C4 /* CDEmotionUtils.m in Sources */,
 				B1ECD7A71CCC1F4000CED9C4 /* XHRefreshControl.m in Sources */,
 				B1ECD77C1CCC1F4000CED9C4 /* XHStoreManager.m in Sources */,

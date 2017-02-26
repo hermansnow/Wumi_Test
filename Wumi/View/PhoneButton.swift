@@ -40,7 +40,7 @@ protocol PhoneButtonDelegate {
      Try call a number by clicking this phone button.
      
      - Parameters:
-        - phoneButton: Email Button clicked.
+        - phoneButton: Phone Button clicked.
      */
     func callPhone(phoneButton: PhoneButton)
 }

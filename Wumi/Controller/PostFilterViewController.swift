@@ -8,20 +8,31 @@
 
 import UIKit
 
-class PostFilterViewController: UITableViewController {
+class PostFilterViewController: DataLoadingTableViewController {
     
-    lazy var searchButton = UIBarButtonItem()
+    /// Search buttom on navigation bar.
+    private lazy var searchButton = UIBarButtonItem()
     
-    lazy var categories = [PostCategory]()
-    lazy var areas = [Area]()
-    var selectedCategoryButton: UIButton?
-    var selectedAreaButton: UIButton?
+    /// Current search filter.
+    var searchFilter = PostSearchFilter(searchType: .Filter)
+    /// Filter view delegate:
+    var delegate: PostFilterViewControllerDelegate?
+    /// Array of post category.
+    private lazy var categories = [PostCategory]()
+    /// Array of post area.
+    private lazy var areas = [Area]()
+    /// UIButton for selected post category to be searched.
+    private var selectedCategoryButton: CheckButton?
+    /// UIButton for selected post area to be searched.
+    private var selectedAreaButton: CheckButton?
+    
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Initialize navigation bar
-        self.searchButton = UIBarButtonItem(title: "Search", style: .Done, target: self, action: #selector(searchPost(_:)))
+        self.searchButton = UIBarButtonItem(title: "Search", style: .Done, target: self, action: #selector(self.searchPost(_:)))
         self.navigationItem.rightBarButtonItem = self.searchButton
         
         // Load categories
@@ -38,7 +49,14 @@ class PostFilterViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.categories.count
+        switch section {
+        case 0:
+            return self.categories.count
+        case 1:
+            return self.areas.count
+        default:
+            return 0
+        }
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -53,13 +71,13 @@ class PostFilterViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PostCategoryCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostFilterCell", forIndexPath: indexPath)
         
         switch indexPath.section {
         case 0:
-            self.categoryCell(cell, forRowAtIndexPath: indexPath)
+            self.setupCategoryCell(cell, forRowAtIndexPath: indexPath)
         case 1:
-            self.areaCell(cell, forRowAtIndexPath: indexPath)
+            self.setupAreaCell(cell, forRowAtIndexPath: indexPath)
         default:
             break
         }
@@ -67,35 +85,57 @@ class PostFilterViewController: UITableViewController {
         return cell
     }
     
-    private func categoryCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    /**
+     Set up a post category filter cell.
+     
+     - Parameters:
+        - cell: tableview cell to be set up.
+        - forRowAtIndexPath: cell's index path.
+     */
+    private func setupCategoryCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let category = self.categories[safe: indexPath.row] else { return }
         
         cell.textLabel!.text = category.name
         
-        let checkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        checkButton.setImage(UIImage(named: Constants.General.ImageName.Check),
-                             forState: .Selected)
-        checkButton.setImage(UIImage(named: Constants.General.ImageName.Uncheck),
-                             forState: .Normal)
-        checkButton.tag = indexPath.row
-        checkButton.addTarget(self, action: #selector(selectCategory(_:)), forControlEvents: .TouchUpInside)
+        // Add accessory button
+        let checkButton = CheckButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        checkButton.indexPath = indexPath
+        checkButton.delegate = self
+        if let selectedCategory = self.searchFilter.category where category == selectedCategory {
+            checkButton.selected = true
+            self.selectedCategoryButton = checkButton
+        }
+        else {
+            checkButton.selected = false
+        }
         cell.accessoryView = checkButton
         
         cell.selectionStyle = .None
     }
     
-    private func areaCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    /**
+     Set up an area category filter cell.
+     
+     - Parameters:
+        - cell: tableview cell to be set up.
+        - forRowAtIndexPath: cell's index path.
+     */
+    private func setupAreaCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let area = self.areas[safe: indexPath.row] else { return }
         
         cell.textLabel!.text = area.name
         
-        let checkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        checkButton.setImage(UIImage(named: Constants.General.ImageName.Check),
-                             forState: .Selected)
-        checkButton.setImage(UIImage(named: Constants.General.ImageName.Uncheck),
-                             forState: .Normal)
-        checkButton.tag = indexPath.row
-        checkButton.addTarget(self, action: #selector(selectArea(_:)), forControlEvents: .TouchUpInside)
+        // Add accessory button
+        let checkButton = CheckButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        checkButton.indexPath = indexPath
+        checkButton.delegate = self
+        if let selectedArea = self.searchFilter.area where area == selectedArea {
+            checkButton.selected = true
+            self.selectedAreaButton = checkButton
+        }
+        else {
+            checkButton.selected = false
+        }
         cell.accessoryView = checkButton
         
         cell.selectionStyle = .None
@@ -103,7 +143,13 @@ class PostFilterViewController: UITableViewController {
     
     // MARK: Action
     
-    func selectCategory(sender: UIButton) {
+    /**
+     Action when selecting a category by clicking its accessary button.
+     
+     - Parameters:
+        - sender: UIButton selected.
+     */
+    func selectCategory(sender: CheckButton) {
         if !sender.selected {
             if let button = self.selectedCategoryButton {
                 button.selected = false
@@ -117,7 +163,13 @@ class PostFilterViewController: UITableViewController {
         }
     }
     
-    func selectArea(sender: UIButton) {
+    /**
+     Action when selecting an area by clicking its accessary button.
+     
+     - Parameters:
+        - sender: UIButton selected.
+     */
+    func selectArea(sender: CheckButton) {
         if !sender.selected {
             if let button = self.selectedAreaButton {
                 button.selected = false
@@ -131,48 +183,93 @@ class PostFilterViewController: UITableViewController {
         }
     }
     
+    /**
+     Action when clicking search nagivation button.
+     
+     - Parameter:
+        - sender: Navigation button clicked.
+     */
     func searchPost(sender: AnyObject) {
+        if let button = self.selectedCategoryButton, indexPath = button.indexPath, category = self.categories[safe: indexPath.row] {
+            self.searchFilter.category = category
+        }
+        else {
+            self.searchFilter.category = nil
+        }
+        
+        if let button = self.selectedAreaButton, indexPath = button.indexPath, area = self.areas[safe: indexPath.row] {
+            self.searchFilter.area = area
+        }
+        else {
+            self.searchFilter.area = nil
+        }
+        self.searchFilter.searchType = .Filter
+        
+        if let delegate = self.delegate {
+            delegate.startFilterSearch(self)
+        }
         // Navigate back to home view controller
-        guard let homeVC = self.navigationController?.viewControllers.filter({ $0 is HomeViewController }).first as? HomeViewController else { return }
-        
-        if let button = self.selectedCategoryButton, category = self.categories[safe: button.tag] {
-            homeVC.searchFilter.category = category
-            homeVC.needResearch = true
+        if let homeVC = self.navigationController?.viewControllers.filter({ $0 is HomeViewController }).first as? HomeViewController {
+            self.navigationController?.popToViewController(homeVC, animated: true)
         }
-        else {
-            homeVC.searchFilter.category = nil
-        }
-        
-        if let button = self.selectedAreaButton, area = self.areas[safe: button.tag] {
-            homeVC.searchFilter.area = area
-            homeVC.needResearch = true
-        }
-        else {
-            homeVC.searchFilter.area = nil
-        }
-        
-        self.navigationController?.popToViewController(homeVC, animated: true)
     }
     
     // MARK: Help function
+    
+    /**
+     Load post category list.
+     */
     private func loadPostCategories() {
-        PostCategory.loadCategories { (results, error) -> Void in
-            guard let categories = results as? [PostCategory] where error == nil && categories.count > 0 else { return }
+        PostCategory.loadCategories { (categories, error) -> Void in
+            guard error == nil else {
+                ErrorHandler.log(error)
+                return
+            }
             
             self.categories = categories
-            
             self.tableView.reloadData()
         }
     }
     
+    /**
+     Load post area list asynchronously.
+     */
     private func loadSearchAreas() {
-        guard let plistPath = NSBundle.mainBundle().pathForResource("search_areas", ofType: "plist"),
-            areaDict = NSDictionary.init(contentsOfFile: plistPath) as? [String: [String: Double]] else { return }
-        
-        for area in areaDict {
-            if let latitude = area.1["Latitude"], longitude = area.1["Longitude"] {
-                self.areas.append(Area(name: area.0, latitude: latitude, longitude: longitude))
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            guard let plistPath = NSBundle.mainBundle().pathForResource("search_areas", ofType: "plist"),
+                areaDict = NSDictionary.init(contentsOfFile: plistPath) as? [String: [String: Double]] else { return }
+            
+            for area in areaDict {
+                if let latitude = area.1["Latitude"], longitude = area.1["Longitude"] {
+                    self.areas.append(Area(name: area.0, latitude: latitude, longitude: longitude))
+                }
+            }
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
             }
         }
     }
 }
+
+// MARL: CheckButton delegate
+
+extension PostFilterViewController: CheckButtonDelegate {
+    func check(checkButton: CheckButton) {
+        guard let indexPath = checkButton.indexPath else { return }
+        
+        switch indexPath.section {
+        case 0:
+            self.selectCategory(checkButton)
+        default:
+            self.selectArea(checkButton)
+        }
+    }
+}
+
+// MARK: PostFilterViewController delegate
+
+protocol PostFilterViewControllerDelegate {
+    func startFilterSearch(filterVC: PostFilterViewController)
+}
+

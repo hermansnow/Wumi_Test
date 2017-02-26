@@ -36,15 +36,29 @@ class PostCategory: AVObject, AVSubclassing {
     }
     
     // MARK: Query
-    class func loadCategories(block: AVArrayResultBlock!) {
+    
+    /**
+     Load post category from server asynchronously.
+     
+     - Parameters:
+        - block: closure includes an array of post categories sorted alphabatically or a wumi error if failed.
+     */
+    class func loadCategories(block: ([PostCategory], WumiError?) -> Void) {
         let query = PostCategory.query()
         
-        query.cachePolicy = .NetworkElseCache
-        query.maxCacheAge = 3600 * 24 * 2
+        query.cachePolicy = .CacheElseNetwork
+        query.maxCacheAge = 3600 * 24 * 2 // 2 days
         
         query.orderByAscending("name")
         
-        query.findObjectsInBackgroundWithBlock(block)
+        query.findObjectsInBackgroundWithBlock { (results, error) in
+            guard let postCategories = results as? [PostCategory] else {
+                block([], WumiError(type: .Query, error: "Failed to get post category list."))
+                return
+            }
+            
+            block(postCategories, ErrorHandler.parseError(error))
+        }
     }
     
 }

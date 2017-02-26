@@ -67,8 +67,6 @@ class HomeViewController: DataLoadingViewController {
     private var inputTimer: NSTimer?
     /// Flag to indicate whether we have more search results which haven't been got from server.
     private var hasMoreResults: Bool = false
-    /// Flag to indicate whether re-search is needed or not.
-    var needResearch: Bool = false
     /// Table indexpath for selected post.
     private var selectedPostIndexPath: NSIndexPath?
     
@@ -169,17 +167,6 @@ class HomeViewController: DataLoadingViewController {
         super.viewWillAppear(animated)
         
         self.checkReachability()
-        
-        // Reset search type if there is no filter
-        if let previousSearchFilter = self.previousSearchFilter where self.searchFilter.searchType == .Filter && !self.searchFilter.hasCustomFilter() {
-            self.searchFilter = previousSearchFilter
-            self.addDropdownList()
-        }
-        
-        // Re-search posts if needed.
-        if self.needResearch {
-            self.loadPosts()
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -187,6 +174,9 @@ class HomeViewController: DataLoadingViewController {
         
         // Check new post notification
         self.showNewPostNotificationView()
+        
+        // Reset drop list
+        self.addDropdownList()
         
         // Check launch data
         if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate, postId = appDelegate.launchPostId {
@@ -245,6 +235,11 @@ class HomeViewController: DataLoadingViewController {
         if let newPostVC = segue.destinationViewController as? NewPostViewController where segue.identifier == "Compose Post" {
             newPostVC.hidesBottomBarWhenPushed = true
         }
+        
+        if let filterVC = segue.destinationViewController as? PostFilterViewController where segue.identifier == "Filter Post" {
+            filterVC.searchFilter = self.searchFilter
+            filterVC.delegate = self
+        }
     }
     
     // MARK: UI functions
@@ -288,11 +283,11 @@ class HomeViewController: DataLoadingViewController {
         self.menuView!.didSelectItemAtIndexHandler = {(indexPath: Int) -> () in
             guard let searchType = PostSearchType.allTypes[safe: indexPath] else { return }
             
-            self.searchFilter.searchType = searchType
-            
             switch searchType {
             case .All,
                  .Saved:
+                self.searchFilter.searchType = searchType
+                self.searchFilter.clearCustomFilter()
                 self.loadPosts()
             case .Filter:
                 self.performSegueWithIdentifier("Filter Post", sender: self)
@@ -551,6 +546,7 @@ class HomeViewController: DataLoadingViewController {
     func checkNewPosts() {
         // Do not show new post notification if end-users are actively searching results.
         guard self.searchController.active == false else { return }
+        guard self.isLoadingPost == false else { return }
         
         guard let firstPost = self.displayPosts.first else { return }
         
@@ -751,6 +747,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.highlightedString = self.searchFilter.searchString
         
         // Set title
+        print(post.categories)
         if let title = post.title where !title.isEmpty {
             cell.title = title
         }
@@ -1027,5 +1024,14 @@ extension HomeViewController: PostViewControllerDelegate {
         
         self.displayPosts.removeAtIndex(indexPath.row)
         self.postTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+    }
+}
+
+// MARK: PostFilterViewController delegate
+
+extension HomeViewController: PostFilterViewControllerDelegate {
+    func startFilterSearch(filterVC: PostFilterViewController) {
+        self.searchFilter = filterVC.searchFilter
+        self.loadPosts()
     }
 }
