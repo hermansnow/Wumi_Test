@@ -909,6 +909,8 @@ extension HomeViewController: UISearchBarDelegate, UISearchResultsUpdating {
             }
         }
         else {
+            self.previousSearchFilter = self.searchFilter
+            self.searchFilter.searchString = ""
             self.searchResultPosts.removeAll(keepCapacity: false)
             self.postTableView.reloadData()
         }
