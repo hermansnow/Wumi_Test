@@ -2318,7 +2318,7 @@
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = K2Q6N244WC;
+						DevelopmentTeam = AETS5U7VV8;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -3076,6 +3076,7 @@
 				CODE_SIGN_ENTITLEMENTS = Wumi/Wumi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = AETS5U7VV8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3111,7 +3112,7 @@
 					"-framework",
 					"\"SWRevealViewController\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.wumi.Wumi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wumi.wfls;
 				PRODUCT_NAME = Wumi;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wumi/Wumi-Bridging-Header.h";
@@ -3130,6 +3131,7 @@
 				CODE_SIGN_ENTITLEMENTS = Wumi/Wumi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = AETS5U7VV8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3165,7 +3167,7 @@
 					"-framework",
 					"\"SWRevealViewController\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.wumi.Wumi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wumi.wfls;
 				PRODUCT_NAME = Wumi;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wumi/Wumi-Bridging-Header.h";
