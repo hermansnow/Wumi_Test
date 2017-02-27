@@ -9,11 +9,26 @@
 import UIKit
 
 class ImageFullScreenViewController: UIViewController {
-    
-    var currentIndex = 0
-    var enableSaveImage = false
+    /// Index of current displaying image.
+    var currentIndex = 0 {
+        didSet {
+            self.updateIndexLabel()
+        }
+    }
+    /// Flag indicating whether enable to save image or not.
+    var enableSaveImage = false {
+        didSet {
+            guard let fullscreenView = self.view as? ImageFullScreenView else { return }
+            
+            fullscreenView.actionButton.hidden = !self.enableSaveImage
+        }
+    }
+    /// Array of images to be displayed in this controller.
     lazy var images = [UIImage]()
-    private var imagePageItemVCs = [ImagePageItemViewController]()
+    /// Array of image page view controllers to display each image.
+    private lazy var imagePageItemVCs = [ImagePageItemViewController]()
+    
+    // MARK: Lifecycle methods
     
     override func loadView() {
         super.loadView()
@@ -23,25 +38,37 @@ class ImageFullScreenViewController: UIViewController {
             self.view = view
         }
     }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let fullscreenView = self.view as? ImageFullScreenView {
-            self.addChildViewController(fullscreenView.imagePageVC)
-            fullscreenView.imagePageVC.didMoveToParentViewController(self)
-            fullscreenView.dataSource = self
-            fullscreenView.delegate = self
+        guard let fullscreenView = self.view as? ImageFullScreenView else { return }
+        
+        self.addChildViewController(fullscreenView.imagePageVC)
+        fullscreenView.imagePageVC.didMoveToParentViewController(self)
+        fullscreenView.dataSource = self
+        fullscreenView.delegate = self
+        fullscreenView.actionButton.hidden = !enableSaveImage
             
-            if !enableSaveImage {
-                fullscreenView.actionButton.hidden = true
-            }
-            
-            self.loadPages()
-        }
+        self.loadPages()
     }
     
+    // MARK: UI functions
+    
+    /**
+     Update index label.
+     */
+    private func updateIndexLabel() {
+        guard let fullscreenView = self.view as? ImageFullScreenView else { return }
+        
+        fullscreenView.indexLabel.text = "\(self.currentIndex + 1)/\(self.images.count)"
+    }
+    
+    // MARK: Helper functions
+    
+    /**
+     Load all image pages.
+     */
     private func loadPages() {
         self.imagePageItemVCs.removeAll()
         
@@ -56,18 +83,13 @@ class ImageFullScreenViewController: UIViewController {
         // Set first page
         if let startVC = imagePageItemVCs[safe: currentIndex],
             fullscreenView = self.view as? ImageFullScreenView {
-            fullscreenView.imagePageVC.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
-            self.updateIndex()
+                fullscreenView.imagePageVC.setViewControllers([startVC],
+                                                              direction: .Forward,
+                                                              animated: true,
+                                                              completion: nil)
+                self.updateIndexLabel()
         }
     }
-    
-    // MARKL Helper functions
-    private func updateIndex() {
-        guard let fullscreenView = self.view as? ImageFullScreenView else { return }
-        
-        fullscreenView.indexLabel.text = "\(self.currentIndex + 1)/\(self.images.count)"
-    }
-    
 }
 
 // MARK: UIPageViewControllerDataSource
@@ -78,7 +100,6 @@ extension ImageFullScreenViewController: UIPageViewControllerDataSource {
             index = self.imagePageItemVCs.indexOf(imagePageItemVC) else { return nil }
         
         self.currentIndex = index
-        self.updateIndex()
         
         return self.imagePageItemVCs[safe: self.currentIndex - 1]
     }
@@ -88,7 +109,6 @@ extension ImageFullScreenViewController: UIPageViewControllerDataSource {
             index = self.imagePageItemVCs.indexOf(imagePageItemVC) else { return nil }
         
         self.currentIndex = index
-        self.updateIndex()
         
         return self.imagePageItemVCs[safe: self.currentIndex + 1]
     }
@@ -119,7 +139,7 @@ extension ImageFullScreenViewController: MoreButtonDelegate {
                 guard let image = self.images[safe: self.currentIndex] else { return }
                 
                 image.saveToLibrary(album: nil, completionHanlder: nil)
-                })
+            })
         }
         
         // Present action sheet if we have any action
@@ -127,7 +147,7 @@ extension ImageFullScreenViewController: MoreButtonDelegate {
             // Add cancel action
             imageActionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
                 imageActionSheet.dismissViewControllerAnimated(true, completion: nil)
-                })
+            })
             self.presentViewController(imageActionSheet, animated: true, completion: nil)
         }
     }

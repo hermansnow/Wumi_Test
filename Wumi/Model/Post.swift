@@ -147,7 +147,9 @@ class Post: AVObject, AVSubclassing {
         
         // Apply location filter
         if let area = filter.area where filter.searchType == .Filter {
-            query.whereKey("location", nearGeoPoint: AVGeoPoint(latitude: area.latitude, longitude: area.longitude), withinMiles: 600.0)
+            query.whereKey("location",
+                           nearGeoPoint: AVGeoPoint(latitude: area.latitude, longitude: area.longitude),
+                           withinMiles: Constants.Post.nearbyPostMiles)
         }
         
         // Include relations
@@ -233,8 +235,13 @@ class Post: AVObject, AVSubclassing {
         }
     }
     
-    // Save a post record asynchronously
-    override func saveInBackgroundWithBlock(block: AVBooleanResultBlock!) {
+    /**
+     Save a post asynchronously.
+     
+     - Parameters:
+        - block: closure includes flag indicating whether post is saved successfully or a wumi error if failed.
+     */
+    func savePostInBackgroundWithBlock(block: (Bool, WumiError?) -> Void) {
         // Set default value
         self.title = self.title ?? "No Title"
         self.commentCount = self.commentCount ?? 0
@@ -246,28 +253,40 @@ class Post: AVObject, AVSubclassing {
         
         // Parse URLS
         if let content = self.content {
-            content.parseWebUrl({ (hasPreviewImage) in
+            content.parseWebUrl { (hasPreviewImage) in
                 self.hasPreviewImage = hasPreviewImage
                 
                 // Save attached files
                 if self.mediaAttachments.count == 0 {
                     self.saveMediaAttachmentsWithBlock { (success, error) in
-                        guard success && error == nil else { return }
+                        guard success && error == nil else {
+                            block(false, error)
+                            return
+                        }
                         
-                        super.saveInBackgroundWithBlock(block)
+                        super.saveInBackgroundWithBlock { (success, error) in
+                            block(success, ErrorHandler.parseError(error))
+                        }
                     }
                 }
                 else {
-                    super.saveInBackgroundWithBlock(block)
+                    super.saveInBackgroundWithBlock { (succes, error) in
+                        block(succes, ErrorHandler.parseError(error))
+                    }
                 }
-            })
+            }
         }
     }
     
     // MARK: Post attachments queries
     
-    // Save attached images as AVFiles synchronously
-    private func saveMediaAttachmentsWithBlock(block: AVBooleanResultBlock!) {
+    /**
+     Save attached images as AVFiles synchronously.
+     
+     - Parameters:
+        - block: closure includes flag indicating whether post is saved successfully or a wumi error if failed.
+     */
+    private func saveMediaAttachmentsWithBlock(block: (Bool, WumiError?) -> Void) {
         // Use dispatch_group to save a list of images
         let taskGroup = dispatch_group_create()
         let taskQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -293,9 +312,9 @@ class Post: AVObject, AVSubclassing {
         
         dispatch_group_notify(taskGroup, taskQueue) { 
             guard let mediaAttachments = images.filter( { $0 != nil }) as? [AVFile] else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    block(false, NSError(domain: "wumi.com", code: 0, userInfo: [:]))
-                })
+                dispatch_async(dispatch_get_main_queue()) {
+                    block(false, WumiError(type: .Image, error: "Unable to save original images."))
+                }
                 return
             }
             
@@ -303,18 +322,18 @@ class Post: AVObject, AVSubclassing {
             self.mediaAttachments.appendContentsOf(mediaAttachments)
             
             guard let mediaThumbnails = thumbnails.filter( { $0 != nil }) as? [AVFile] else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    block(false, NSError(domain: "wumi.com", code: 0, userInfo: [:]))
-                })
+                dispatch_async(dispatch_get_main_queue()) {
+                    block(false, WumiError(type: .Image, error: "Unable to save thumbnail images."))
+                }
                 return
             }
             
             self.mediaThumbnails.removeAll()
             self.mediaThumbnails.appendContentsOf(mediaThumbnails)
             
-            dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue()) {
                 block(true, nil)
-            })
+            }
         }
     }
     

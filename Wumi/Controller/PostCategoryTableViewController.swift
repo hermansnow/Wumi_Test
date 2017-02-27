@@ -8,71 +8,45 @@
 
 import UIKit
 
-class PostCategoryTableViewController: DataLoadingTableViewController {
-    
-    lazy var sendButton = UIBarButtonItem()
-    
+class PostCategoryTableViewController: PostFilterViewController {
+    /// Post to be sent.
     var post = Post()
-    lazy var currentUser = User.currentUser()
-    lazy var categories = [PostCategory]()
-    lazy var areas = [Area]()
-    lazy var selectedCategories = [PostCategory]()
-    var selectedAreaButton: UIButton?
+    /// Current login user to send this post.
+    private lazy var currentUser = User.currentUser()
+    /// Array of selected post category.
+    private lazy var selectedCategories = [PostCategory]()
+    /// CLLocation manager.
+    private lazy var locationManager = CLLocationManager()
+    /// Current location placemark.
+    private var currentLocation: CLPlacemark?
+    /// Flag to indicate whether application is locating current location.
+    private var isLocating = false
     
-    lazy var locationManager = CLLocationManager()
-    var currentLocation: CLPlacemark?
-    var isLocating = false
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Initialize navigation bar
-        self.sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: #selector(sendPost(_:)))
-        self.navigationItem.rightBarButtonItem = self.sendButton
+        if let rightBarButton = navigationItem.rightBarButtonItem {
+            rightBarButton.title = "Send"
+        }
         
-        // Load categories
-        self.loadPostCategories()
-        
-        // Load areas
-        self.loadSearchAreas()
+        // Load current location
+        self.locationManager.delegate = self
+        self.getCurrentLocation()
     }
     
     // MARK: Table view data source
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return self.categories.count
-        case 1:
-            return self.areas.count
-        default:
-            return 0
-        }
-    }
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Category"
-        case 1:
-            return "Area"
-        default:
-            return nil
-        }
-    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostCategoryCell", forIndexPath: indexPath)
         
         switch indexPath.section {
         case 0:
-            self.categoryCell(cell, forRowAtIndexPath: indexPath)
+            self.setupCategoryCell(cell, forRowAtIndexPath: indexPath)
         case 1:
-            self.areaCell(cell, forRowAtIndexPath: indexPath)
+            self.setupAreaCell(cell, forRowAtIndexPath: indexPath)
         default:
             break
         }
@@ -80,60 +54,51 @@ class PostCategoryTableViewController: DataLoadingTableViewController {
         return cell
     }
     
-    private func categoryCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        guard let category = self.categories[safe: indexPath.row] else { return }
+    /**
+     Set up a post category filter cell.
+     
+     - Parameters:
+     - cell: tableview cell to be set up.
+     - forRowAtIndexPath: cell's index path.
+     */
+    override func setupCategoryCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        super.setupCategoryCell(cell, forRowAtIndexPath: indexPath)
         
-        cell.textLabel!.text = category.name
+        guard let category = self.categories[safe: indexPath.row],
+            checkButton = cell.accessoryView as? CheckButton else { return }
         
-        let checkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        checkButton.setImage(UIImage(named: Constants.General.ImageName.Check),
-                             forState: .Selected)
-        checkButton.setImage(UIImage(named: Constants.General.ImageName.Uncheck),
-                             forState: .Normal)
-        checkButton.tag = indexPath.row
-        checkButton.addTarget(self, action: #selector(selectCategory(_:)), forControlEvents: .TouchUpInside)
-        cell.accessoryView = checkButton
-        
-        cell.selectionStyle = .None
-    }
-    
-    private func areaCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 0 {
-            if self.currentLocation == nil {
-                if isLocating {
-                    cell.textLabel!.text = "Location..."
-                }
-                else {
-                    cell.textLabel!.text = "Unable to access your location"
-                }
-            }
-            else if let location = self.currentLocation, city = location.locality {
-                cell.textLabel!.text = "Current location: " + city
-            }
-        }
-        else if let area = self.areas[safe: indexPath.row - 1] {
-            cell.textLabel!.text = area.name
+        if self.selectedCategories.contains(category) {
+            checkButton.selected = true
         }
         else {
-            return
+            checkButton.selected = false
         }
+    }
+    
+    /**
+     Set up an area category filter cell.
+     
+     - Parameters:
+        - cell: tableview cell to be set up.
+        - forRowAtIndexPath: cell's index path.
+     */
+    override func setupAreaCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        super.setupAreaCell(cell, forRowAtIndexPath: indexPath)
         
-        let checkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        checkButton.setImage(UIImage(named: Constants.General.ImageName.Check),
-                             forState: .Selected)
-        checkButton.setImage(UIImage(named: Constants.General.ImageName.Uncheck),
-                             forState: .Normal)
-        checkButton.tag = indexPath.row
-        checkButton.addTarget(self, action: #selector(selectArea(_:)), forControlEvents: .TouchUpInside)
-        cell.accessoryView = checkButton
+        guard let area = self.areas[safe: indexPath.row] else { return }
         
-        cell.selectionStyle = .None
+        if let currentLocation = self.currentLocation, location = currentLocation.location {
+            let distance = location.distanceFromLocation(CLLocation(latitude: area.latitude, longitude: area.longitude)) / Constants.General.Value.MileToMeter
+            if distance <= Constants.Post.nearbyPostMiles {
+                cell.detailTextLabel?.text = "Nearby"
+            }
+        }
     }
     
     // MARK: Action
     
-    func selectCategory(sender: UIButton) {
-        guard let category = self.categories[safe: sender.tag] else { return }
+    override func selectCategory(sender: CheckButton) {
+        guard let indexPath = sender.indexPath, category = self.categories[safe: indexPath.row] else { return }
         
         if sender.selected {
             self.selectedCategories.removeObject(category)
@@ -145,85 +110,49 @@ class PostCategoryTableViewController: DataLoadingTableViewController {
         }
     }
     
-    func selectArea(sender: UIButton) {
-        if !sender.selected {
-            if let button = self.selectedAreaButton {
-                button.selected = false
-            }
-            sender.selected = true
-            self.selectedAreaButton = sender
+    /**
+     Action when clicking search nagivation button.
+     */
+    override func clickRightBarButton() {
+        self.post.author = self.currentUser
+        self.post.categories = self.selectedCategories
+        if let button = self.selectedAreaButton, indexPath = button.indexPath, area = self.areas[safe: indexPath.row] {
+            self.post.area = area
         }
         else {
-            sender.selected = false
-            self.selectedAreaButton = nil
-        }
-    }
-    
-    func sendPost(sender: AnyObject) {
-        post.author = self.currentUser
-        post.categories = self.selectedCategories
-        
-        if let currentLocationMark = self.currentLocation, currentLocation = currentLocationMark.location, name = currentLocationMark.name {
-            
-            let latitude = Double(currentLocation.coordinate.latitude)
-            let longitude = Double(currentLocation.coordinate.longitude)
-            post.area = Area(name: name, latitude: latitude, longitude: longitude)
+            self.post.area = nil
         }
         
-        self.showLoadingIndicator()
-        post.saveInBackgroundWithBlock { (success, error) in
-            self.dismissLoadingIndicator()
+        // Save post
+        self.post.savePostInBackgroundWithBlock { (success, error) in
             guard success && error == nil else {
-                print("\(error)")
+                ErrorHandler.log(error)
                 return
             }
         }
         
         // Navigate back to home view controller
-        if let postTVC = self.navigationController?.viewControllers.filter({ $0 is HomeViewController }).first {
-            self.navigationController?.popToViewController(postTVC, animated: true)
-        }
-    }
-
-    // MARK: Help function
-    private func loadPostCategories() {
-        PostCategory.loadCategories { (results, error) -> Void in
-            guard let categories = results as? [PostCategory] where error == nil && categories.count > 0 else { return }
-            
-            self.categories = categories
-            
-            self.tableView.reloadData()
-        }
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    private func loadSearchAreas() {
-        self.locationManager.delegate = self
-        self.getCurrentLocation()
-        
-        guard let plistPath = NSBundle.mainBundle().pathForResource("search_areas", ofType: "plist"),
-            areaDict = NSDictionary.init(contentsOfFile: plistPath) as? [String: [String: Double]] else { return }
-        
-        for area in areaDict {
-            if let latitude = area.1["Latitude"], longitude = area.1["Longitude"] {
-                self.areas.append(Area(name: area.0, latitude: latitude, longitude: longitude))
-            }
-        }
-    }
-    
-    // Enable CLLocation Manager to get current device location
+    /**
+     Enable CLLocation Manager to get current device location.
+     */
     private func getCurrentLocation() {
-        if Double(UIDevice.currentDevice().systemVersion) > 8.0 {
-            locationManager.requestWhenInUseAuthorization()
+        if #available(iOS 8, *) {
+            self.locationManager.requestWhenInUseAuthorization()
         }
         else {
-            startUpdatingLocation()
+            self.startUpdatingLocation()
         }
     }
     
-    func startUpdatingLocation() {
+    /**
+     Start updating current location.
+     */
+    private func startUpdatingLocation() {
         self.locationManager.startUpdatingLocation()
         self.isLocating = true
-        tableView.reloadData()
         
         // Set timer for timeout
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
@@ -231,10 +160,13 @@ class PostCategoryTableViewController: DataLoadingTableViewController {
         }
     }
     
-    func stopUpdatingLocation() {
+    /**
+     Stop updating current location.
+     */
+    private func stopUpdatingLocation() {
         self.locationManager.stopUpdatingLocation()
         self.isLocating = false
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
 }
 
@@ -246,7 +178,7 @@ extension PostCategoryTableViewController: CLLocationManagerDelegate {
         
         geoCoder.reverseGeocodeLocation(newLocation) { (result, error) -> Void in
             guard let locations = result where locations.count > 0 else {
-                print("\(error)")
+                ErrorHandler.log(error?.localizedDescription)
                 return
             }
             
@@ -256,7 +188,7 @@ extension PostCategoryTableViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("\(error)")
+        ErrorHandler.log(error.localizedDescription)
         self.stopUpdatingLocation()
     }
     

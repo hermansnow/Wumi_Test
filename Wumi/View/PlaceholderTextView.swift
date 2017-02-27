@@ -9,23 +9,26 @@
 import UIKit
 
 class PlaceholderTextView: UITextView {
-    
+    /// Label for placeholder.
     private var placeholderLabel: UILabel = UILabel()
+    /// Array of layout constraints for placeholder label.
     private var placeholderLabelConstraints = [NSLayoutConstraint]()
     
+    /// Maxinum number of characters for this text view.
     var characterLimit: Int?
+    /// Placeholder string of this text view.
     var placeholder: String? {
         didSet {
             self.placeholderLabel.text = self.placeholder
         }
     }
-    
+    /// Content text of this text view.
     override var text: String! {
         didSet {
             self.textDidChange()
         }
     }
-    
+    /// Edge inset for the container of text.
     override var textContainerInset: UIEdgeInsets {
         didSet {
             self.updateConstraintsForPlaceholderLabel()
@@ -54,6 +57,11 @@ class PlaceholderTextView: UITextView {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    // MARK: Draw view
+    
+    /**
+     Private function to be called after initialization to set up properties for this view and its subviews.
+     */
     private func setProperty() {
         self.font = Constants.General.Font.InputFont
         self.dataDetectorTypes = .All
@@ -82,10 +90,16 @@ class PlaceholderTextView: UITextView {
     
     // MARK: Helper functions
     
-    @objc private func textDidChange() {
+    /**
+     Action when text view's content is changed.
+     */
+    func textDidChange() {
         self.placeholderLabel.hidden = !self.text.isEmpty
     }
     
+    /**
+     Update placeholder label's contraint.
+     */
     private func updateConstraintsForPlaceholderLabel() {
         var newConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-(\(self.textContainerInset.left + textContainer.lineFragmentPadding))-[placeholder]",
                                                                             options: [],
@@ -110,6 +124,12 @@ class PlaceholderTextView: UITextView {
         self.placeholderLabelConstraints = newConstraints
     }
     
+    /**
+     Remaining number of characters allowed to be added in.
+     
+     - Returns:
+        Number of characters allowed to be added.
+     */
     func checkRemainingCharacters() -> Int? {
         if let limit = self.characterLimit {
             return limit - self.text.characters.count

@@ -9,26 +9,27 @@
 import UIKit
 
 class SelectedThumbnailImageView: UIButton {
-    
-    private lazy var removeIcon = UIButton()
-    
     // MARK: Properties
     
-    var delegate: SelectedThumbnailImageViewDelegate? {
-        didSet {
-            // Add gestures
-            self.setAction()
-        }
-    }
-    
+    /// Icon for removing this selected image view.
+    private lazy var removeIcon = UIButton()
+    /// SelectedThumbnailImageView delegate.
+    var delegate: SelectedThumbnailImageViewDelegate?
+    /// Remove icon's height
+    private var iconHeight: CGFloat = 16
+    /// Original content image for this selected thumbnail view.
     var image: UIImage? {
         didSet {
-            guard let image = self.image else { return }
-            self.thumbnail = image.scaleToSize(self.bounds.size, aspectRatio: false)
+            if let image = self.image {
+                self.thumbnailImage = image.scaleToSize(self.bounds.size, aspectRatio: false)
+            }
+            else {
+                self.thumbnailImage = nil
+            }
         }
     }
-    
-    var thumbnail: UIImage? {
+    /// Thumbnail image resized from original image for this thumbanil view.
+    private var thumbnailImage: UIImage? {
         get {
             return self.imageForState(.Normal)
         }
@@ -43,44 +44,71 @@ class SelectedThumbnailImageView: UIButton {
         super.init(frame: frame)
         
         self.setProperty()
+        self.setAction()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         self.setProperty()
-        
+        self.setAction()
     }
     
-    // MARK: Help functions
+    // MARK: Draw view
     
+    /**
+     Private function to be called after initialization to set up properties for this view and its subviews.
+     */
     private func setProperty() {
         self.clipsToBounds = true
         self.adjustsImageWhenHighlighted = false
         self.showsTouchWhenHighlighted = false
         self.imageView?.contentMode = .ScaleAspectFit
         
-        self.removeIcon.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-        self.removeIcon.setBackgroundImage(UIImage(named: "Checkmark"), forState: .Normal)
+        // Add remove icon
+        self.removeIcon.frame = CGRect(x: 0,
+                                       y: 0,
+                                       width: self.iconHeight,
+                                       height: self.iconHeight)
+        self.removeIcon.setBackgroundImage(UIImage(named: Constants.General.ImageName.Remove),
+                                           forState: .Normal)
         self.addSubview(self.removeIcon)
         self.bringSubviewToFront(self.removeIcon)
         
-        self.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        self.imageEdgeInsets = UIEdgeInsets(top: self.iconHeight / 2,
+                                            left: self.iconHeight / 2,
+                                            bottom: self.iconHeight  / 2,
+                                            right: self.iconHeight / 2)
     }
     
+    /**
+     Private function to be called after initialization to set up its action.
+     */
     private func setAction() {
-        guard let delegate = self.delegate else { return }
-        
-        self.addTarget(delegate, action: #selector(SelectedThumbnailImageViewDelegate.showImage(_:)), forControlEvents: .TouchUpInside)
+        // Add action to show image when tap
+        self.addTarget(self, action: #selector(self.tapped), forControlEvents: .TouchUpInside)
+        // Add action to remove image when click remove icon.
         self.removeIcon.addTarget(self, action: #selector(self.removeIconClicked), forControlEvents: .TouchUpInside)
     }
     
     // MARK: Actions
     
+    /**
+     Action when remove icon clicked.
+     */
     func removeIconClicked() {
         guard let delegate = self.delegate else { return }
         
         delegate.removeImage(self)
+    }
+    
+    /**
+     Action when view is tapped.
+     */
+    func tapped() {
+        guard let delegate = self.delegate else { return }
+        
+        delegate.showImage(self)
     }
 }
 

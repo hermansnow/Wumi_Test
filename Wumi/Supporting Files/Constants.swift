@@ -52,6 +52,7 @@ struct Constants {
             static let AnonymousAvatar = "Anonymous"
             static let Check = "Checkmark"
             static let Uncheck = "Uncheck"
+            static let Remove = "Remove"
             static let Favorite = "Star_Selected"
             static let Unfavorite = "Star"
             static let More = "More"
@@ -80,6 +81,7 @@ struct Constants {
         
         struct Value {
             static let MaxProfessionCount = 3
+            static let MileToMeter = 1609.344
         }
     }
     
@@ -164,7 +166,10 @@ struct Constants {
     }
     
     struct Post {
-        static let maximumImages = 5 // number of images allows to be attached in a post
+        /// Max number of images allows to be attached in a post.
+        static let maximumImages = 5
+        /// Max miles to be considered as nearby.
+        static let nearbyPostMiles = 200.0
         
         struct Image {
             static let TabBarIcon = UIImage(named: "Notification")

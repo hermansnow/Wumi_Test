@@ -9,22 +9,18 @@
 import UIKit
 
 class PostFilterViewController: DataLoadingTableViewController {
-    
-    /// Search buttom on navigation bar.
-    private lazy var searchButton = UIBarButtonItem()
-    
     /// Current search filter.
     var searchFilter = PostSearchFilter(searchType: .Filter)
     /// Filter view delegate:
     var delegate: PostFilterViewControllerDelegate?
     /// Array of post category.
-    private lazy var categories = [PostCategory]()
+    lazy var categories = [PostCategory]()
     /// Array of post area.
-    private lazy var areas = [Area]()
+    lazy var areas = [Area]()
     /// UIButton for selected post category to be searched.
-    private var selectedCategoryButton: CheckButton?
+    var selectedCategoryButton: CheckButton?
     /// UIButton for selected post area to be searched.
-    private var selectedAreaButton: CheckButton?
+    var selectedAreaButton: CheckButton?
     
     // MARK: Lifecycle methods
     
@@ -32,8 +28,11 @@ class PostFilterViewController: DataLoadingTableViewController {
         super.viewDidLoad()
         
         // Initialize navigation bar
-        self.searchButton = UIBarButtonItem(title: "Search", style: .Done, target: self, action: #selector(self.searchPost(_:)))
-        self.navigationItem.rightBarButtonItem = self.searchButton
+        let searchButton = UIBarButtonItem(title: "Search",
+                                           style: .Done,
+                                           target: self,
+                                           action: #selector(self.clickRightBarButton))
+        self.navigationItem.rightBarButtonItem = searchButton
         
         // Load categories
         self.loadPostCategories()
@@ -92,7 +91,7 @@ class PostFilterViewController: DataLoadingTableViewController {
         - cell: tableview cell to be set up.
         - forRowAtIndexPath: cell's index path.
      */
-    private func setupCategoryCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func setupCategoryCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let category = self.categories[safe: indexPath.row] else { return }
         
         cell.textLabel!.text = category.name
@@ -120,7 +119,7 @@ class PostFilterViewController: DataLoadingTableViewController {
         - cell: tableview cell to be set up.
         - forRowAtIndexPath: cell's index path.
      */
-    private func setupAreaCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func setupAreaCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let area = self.areas[safe: indexPath.row] else { return }
         
         cell.textLabel!.text = area.name
@@ -184,12 +183,9 @@ class PostFilterViewController: DataLoadingTableViewController {
     }
     
     /**
-     Action when clicking search nagivation button.
-     
-     - Parameter:
-        - sender: Navigation button clicked.
+     Action when clicking nagivation right button.
      */
-    func searchPost(sender: AnyObject) {
+    func clickRightBarButton() {
         if let button = self.selectedCategoryButton, indexPath = button.indexPath, category = self.categories[safe: indexPath.row] {
             self.searchFilter.category = category
         }

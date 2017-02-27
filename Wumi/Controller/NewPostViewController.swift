@@ -10,36 +10,39 @@ import UIKit
 import CTAssetsPickerController
 
 class NewPostViewController: UIViewController {
-
-    lazy var composePostView: ComposePostView = ComposePostView()
-    lazy var nextButton = UIBarButtonItem()
-    private var heightConstraint = NSLayoutConstraint()
+    // View for composing new post.
+    private lazy var composePostView: ComposePostView = ComposePostView()
+    /// Height constraint of composePostView.
+    private lazy var composePostViewHeightConstraint = NSLayoutConstraint()
+    /// Array of assets selected from library.
+    private lazy var selectedAssets = [PHAsset]()
     
-    private var selectedAssets = [PHAsset]()
+    // MARK: Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(self.composePostView)
-        
-        // Initialize subject text field
-        self.composePostView.subjectTextField.backgroundColor = Constants.General.Color.BackgroundColor
-        self.composePostView.contentTextView.allowsEditingTextAttributes = true
-        
-        // Add delegate
-        self.composePostView.delegate = self
-        
         // Initialize navigation bar
-        self.nextButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: #selector(next(_:)))
-        self.navigationItem.rightBarButtonItem = self.nextButton
+        let nextButton = UIBarButtonItem(title: "Next",
+                                         style: .Plain,
+                                         target: self,
+                                         action: #selector(self.next))
+        let closeButton = UIBarButtonItem(barButtonSystemItem: .Cancel,
+                                          target: self,
+                                          action: #selector(self.dismiss))
+        self.navigationItem.leftBarButtonItem = closeButton
+        self.navigationItem.rightBarButtonItem = nextButton
+        
+        // Add components
+        self.addComposePostView()
         
         // Setup norification observer
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(keyboardWillShown(_:)),
+                                                         selector: #selector(self.keyboardWillShown(_:)),
                                                          name: UIKeyboardWillShowNotification,
                                                          object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(keyboardWillHiden(_:)),
+                                                         selector: #selector(self.keyboardWillHiden(_:)),
                                                          name: UIKeyboardWillHideNotification,
                                                          object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -47,21 +50,6 @@ class NewPostViewController: UIViewController {
                                                          name: Constants.General.ReachabilityChangedNotification,
                                                          object: nil)
         
-        // Add Constraints
-        self.composePostView.topAnchor.constraintEqualToAnchor(self.view.topAnchor).active = true
-        self.composePostView.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor).active = true
-        self.composePostView.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor).active = true
-        self.heightConstraint = NSLayoutConstraint(item: self.composePostView,
-                                                   attribute: .Height,
-                                                   relatedBy: .Equal,
-                                                   toItem: nil,
-                                                   attribute: .NotAnAttribute,
-                                                   multiplier: 1,
-                                                   constant: self.view.bounds.size.height
-                                                    - (self.navigationController?.navigationBar.frame.size.height)!
-                                                    - UIApplication.sharedApplication().statusBarFrame.size.height)
-        self.composePostView.translatesAutoresizingMaskIntoConstraints = false
-        self.heightConstraint.active = true
     }
     
     deinit {
@@ -85,16 +73,56 @@ class NewPostViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let postCategoryTableViewController = segue.destinationViewController as? PostCategoryTableViewController where segue.identifier == "chooseCategory" {
             let post = Post()
-            post.title = self.composePostView.title
+            post.title = self.composePostView.subject
             post.content = self.composePostView.content
             post.attachedImages = self.composePostView.selectedImages
             postCategoryTableViewController.post = post
         }
     }
     
+    // MARK: UI functions
+    
+    /**
+     Add view for composing post.
+     */
+    private func addComposePostView() {
+        // Add to view
+        self.view.addSubview(self.composePostView)
+        
+        // Initialize subject text field
+        self.composePostView.subjectBackgroundColor = Constants.General.Color.BackgroundColor
+        self.composePostView.allowsContentEditingTextAttributes = true
+        
+        // Add Constraints
+        self.composePostView.topAnchor.constraintEqualToAnchor(self.view.topAnchor).active = true
+        self.composePostView.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor).active = true
+        self.composePostView.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor).active = true
+        self.composePostViewHeightConstraint = NSLayoutConstraint(item: self.composePostView,
+                                                                  attribute: .Height,
+                                                                  relatedBy: .Equal,
+                                                                  toItem: nil,
+                                                                  attribute: .NotAnAttribute,
+                                                                  multiplier: 1,
+                                                                  constant: self.view.bounds.size.height
+                                                                            - (self.navigationController?.navigationBar.frame.size.height)!
+                                                                            - UIApplication.sharedApplication().statusBarFrame.size.height)
+        self.composePostViewHeightConstraint.active = true
+        self.composePostView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add delegate
+        self.composePostView.delegate = self
+    }
+    
     // MARK: Action
     
-    func next(sender: AnyObject) {
+    func dismiss() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    /**
+     Action when clicking Next navigation button.
+     */
+    func next() {
         guard self.composePostView.content.characters.count > 0 else {
             ErrorHandler.popupErrorAlert(self, errorMessage: "Cannot send blank post")
             return
@@ -103,7 +131,12 @@ class NewPostViewController: UIViewController {
         self.performSegueWithIdentifier("chooseCategory", sender: self)
     }
     
-    // Resize text view when showing the keyboard
+    /**
+     Resize text view when showing the keyboard.
+     
+     - Parameters:
+        - notification: NSNotification triggers this action with user info.
+     */
     func keyboardWillShown(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
             keyboardRect = keyboardInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue(),
@@ -115,12 +148,17 @@ class NewPostViewController: UIViewController {
         
         self.composePostView.layoutIfNeeded()
         UIView.animateWithDuration(keyboardDuration, animations: { () -> Void in
-            self.heightConstraint.constant = self.view.bounds.height - keyboardRect.size.height
+            self.composePostViewHeightConstraint.constant = self.view.bounds.height - keyboardRect.size.height
             self.composePostView.layoutIfNeeded()
         })
     }
     
-    // Resize text view when dismissing the keyboard
+    /**
+     Resize text view when dismissing the keyboard.
+     
+     - Parameters:
+        - notification: NSNotification triggers this action with user info.
+    */
     func keyboardWillHiden(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo as? Dictionary<String, NSValue>,
             keyboardDurVal = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey] else { return }
@@ -131,7 +169,7 @@ class NewPostViewController: UIViewController {
         
         self.composePostView.layoutIfNeeded()
         UIView.animateWithDuration(keyboardDuration, animations: { () -> Void in
-            self.heightConstraint.constant = self.view.bounds.size.height
+            self.composePostViewHeightConstraint.constant = self.view.bounds.size.height
             self.composePostView.layoutIfNeeded()
         })
     }
@@ -140,6 +178,9 @@ class NewPostViewController: UIViewController {
 // MARK: ComposePostView delegate
 
 extension NewPostViewController: ComposePostViewDelegate {
+    /**
+     Click add button to select a image from library.
+     */
     func selectImage() {
         let picker = SelectPhotoActionSheet()
         picker.selectedAssets.addObjectsFromArray(self.selectedAssets)
@@ -164,23 +205,35 @@ extension NewPostViewController: ComposePostViewDelegate {
 // MARK: SelectedThumbnailImageView delegate
 
 extension NewPostViewController: SelectedThumbnailImageViewDelegate {
+    /**
+     Remove an image view from attached images view.
+     
+     - Parameters:
+        - imageView: image view to be removed.
+     */
     func removeImage(imageView: SelectedThumbnailImageView) {
-        imageView.removeFromSuperview()
+        self.composePostView.removeImage(imageView)
         
         // Enable add image button if it is disabled
-        if self.composePostView.addImageButton.enabled == false {
-            self.composePostView.addImageButton.enabled = true
+        if self.composePostView.enableAddImage == false && self.composePostView.selectedImages.count < Constants.Post.maximumImages  {
+            self.composePostView.enableAddImage = true
         }
     }
     
+    /**
+     Show image for viewing.
+     
+     - Parameters:
+        - imageView: image view to be displayed.
+     */
     func showImage(imageView: SelectedThumbnailImageView) {
         guard let image = imageView.image, index = self.composePostView.selectedImages.indexOf(image) else { return }
         
         let imagePageVC = ImageFullScreenViewController()
         imagePageVC.images = self.composePostView.selectedImages
         imagePageVC.currentIndex = index
-        
         imagePageVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        
         self.presentViewController(imagePageVC, animated: true, completion: nil)
     }
 }
@@ -206,7 +259,7 @@ extension NewPostViewController: SelectPhotoActionSheetDelegate {
         
         // Disable add image button if reaching maximum
         if self.composePostView.selectedImages.count == Constants.Post.maximumImages {
-            self.composePostView.addImageButton.enabled = false
+            self.composePostView.enableAddImage = false
         }
     }
 }

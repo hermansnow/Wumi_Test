@@ -50,7 +50,7 @@ class HomeViewController: DataLoadingViewController {
     
     // Search variables
     
-    /// Whether the post table is showing search bar or not.
+    /// Whether the post table isf showing search bar or not.
     private var isShowingSearchBar: Bool = false
     /// Whether is loading posts or not.
     private var isLoadingPost: Bool {
@@ -232,7 +232,8 @@ class HomeViewController: DataLoadingViewController {
             contactVC.hidesBottomBarWhenPushed = true
         }
         
-        if let newPostVC = segue.destinationViewController as? NewPostViewController where segue.identifier == "Compose Post" {
+        if let newPostVC = segue.destinationViewController as? UINavigationController where segue.identifier == "Compose Post" {
+            self.definesPresentationContext = true
             newPostVC.hidesBottomBarWhenPushed = true
         }
         
@@ -747,7 +748,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.highlightedString = self.searchFilter.searchString
         
         // Set title
-        print(post.categories)
         if let title = post.title where !title.isEmpty {
             cell.title = title
         }
