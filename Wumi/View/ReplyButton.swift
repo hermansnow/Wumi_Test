@@ -8,42 +8,19 @@
 
 import UIKit
 
-class ReplyButton: UIButton {
+class ReplyButton: ActionButton {
     
+    /// reply button delegate.
     var delegate: ReplyButtonDelegate?
     
-    // MARK: Initializers
-    
-    convenience init() {
-        self.init(frame: CGRectZero)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    internal override func setProperty() {
+        super.setProperty()
         
-        self.setProperty()
-        self.addTarget()
+        self.setBackgroundImage(UIImage(named: Constants.General.ImageName.Reply),
+                                forState: .Normal)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        self.setProperty()
-        self.addTarget()
-    }
-    
-    private func setProperty() {
-        self.setBackgroundImage(UIImage(named: "Reply"), forState: .Normal)
-        
-        self.adjustsImageWhenHighlighted = false
-        self.showsTouchWhenHighlighted = false
-    }
-    
-    private func addTarget() {
-        self.addTarget(self, action: #selector(tapped(_:)), forControlEvents: .TouchUpInside)
-    }
-    
-    func tapped(sender: ReplyButton) {
+    override func tapped(sender: AnyObject) {
         guard let delegate = self.delegate else { return }
         
         delegate.reply(self)

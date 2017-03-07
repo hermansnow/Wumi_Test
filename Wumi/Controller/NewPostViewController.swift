@@ -115,8 +115,11 @@ class NewPostViewController: UIViewController {
     
     // MARK: Action
     
+    /**
+     Dismiss current view controller with animation.
+     */
     func dismiss() {
-        dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     /**
@@ -212,7 +215,11 @@ extension NewPostViewController: SelectedThumbnailImageViewDelegate {
         - imageView: image view to be removed.
      */
     func removeImage(imageView: SelectedThumbnailImageView) {
+        // Remove selected data
         self.composePostView.removeImage(imageView)
+        if let image = imageView.image, index = self.composePostView.selectedImages.indexOf(image) {
+            self.selectedAssets.removeAtIndex(index)
+        }
         
         // Enable add image button if it is disabled
         if self.composePostView.enableAddImage == false && self.composePostView.selectedImages.count < Constants.Post.maximumImages  {

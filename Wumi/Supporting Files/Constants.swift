@@ -53,6 +53,7 @@ struct Constants {
             static let Check = "Checkmark"
             static let Uncheck = "Uncheck"
             static let Remove = "Remove"
+            static let Reply = "Reply"
             static let Favorite = "Star_Selected"
             static let Unfavorite = "Star"
             static let More = "More"
@@ -171,11 +172,10 @@ struct Constants {
         /// Max miles to be considered as nearby.
         static let nearbyPostMiles = 200.0
         
-        struct Image {
-            static let TabBarIcon = UIImage(named: "Notification")
-            static let TabBarSelectedIcon = UIImage(named: "Home")
-            static let Star = UIImage(named: "Star")
-            static let Reply = UIImage(named: "Reply")
+        struct ImageName {
+            static let TabBarIcon = "Notification"
+            static let TabBarIcon_Selected = "Home"
+            static let Up = "Up"
         }
         
         struct Font {

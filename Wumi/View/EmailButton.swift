@@ -26,10 +26,10 @@ class EmailButton: ActionButton {
                                 forState: .Disabled)
     }
     
-    override func tapped(sender: ActionButton) {
+    override func tapped(sender: AnyObject) {
         super.tapped(sender)
         
-        guard let _ = sender as? EmailButton, delegate = self.delegate else { return }
+        guard let delegate = self.delegate else { return }
         
         delegate.sendEmail(self)
     }

@@ -1,14 +1,15 @@
 //
-//  SettingSwitch.swift
+//  PostTableHeaderView.swift
 //  Wumi
 //
-//  Created by Zhe Cheng on 3/11/16.
-//  Copyright © 2016 Parse. All rights reserved.
+//  Created by Zhe Cheng on 3/4/17.
+//  Copyright © 2017 Parse. All rights reserved.
 //
 
 import UIKit
 
-class SettingSwitch: UISwitch {
+class PostTableHeaderView: UIStackView {
+    // MARK: Initialzers
     
     convenience init() {
         self.init(frame: CGRectZero)
@@ -20,8 +21,8 @@ class SettingSwitch: UISwitch {
         self.setProperty()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    required init(coder: NSCoder) {
+        super.init(coder: coder)
         
         self.setProperty()
     }
@@ -32,7 +33,12 @@ class SettingSwitch: UISwitch {
      Private function to be called after initialization to set up properties for this view and its subviews.
      */
     private func setProperty() {
-        self.tintColor = Constants.General.Color.BackgroundColor
-        self.onTintColor = Constants.General.Color.ThemeColor
+        self.backgroundColor = UIColor.blueColor()
+        
+        // Set up stack
+        self.axis = .Vertical
+        self.distribution = .Fill
+        self.alignment = .Fill
+        self.spacing = 3
     }
 }

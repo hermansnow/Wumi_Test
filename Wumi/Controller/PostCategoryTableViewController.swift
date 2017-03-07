@@ -27,20 +27,31 @@ class PostCategoryTableViewController: PostFilterViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initialize navigation bar
-        if let rightBarButton = navigationItem.rightBarButtonItem {
-            rightBarButton.title = "Send"
-        }
-        
         // Load current location
         self.locationManager.delegate = self
         self.getCurrentLocation()
     }
     
+    // MARK: UI functions
+    
+    override func setupNavigationBar() {
+        self.navigationItem.title = "New Post Options"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send",
+                                                                 style: .Done,
+                                                                 target: self,
+                                                                 action: #selector(self.send))
+    }
+    
     // MARK: Table view data source
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PostCategoryCell", forIndexPath: indexPath)
+        let cell: UITableViewCell
+        if let dequeueCell = tableView.dequeueReusableCellWithIdentifier("PostCategoryCell") {
+            cell = dequeueCell
+        }
+        else {
+            cell = UITableViewCell(style: .Default, reuseIdentifier: "PostCategoryCell")
+        }
         
         switch indexPath.section {
         case 0:
@@ -111,9 +122,9 @@ class PostCategoryTableViewController: PostFilterViewController {
     }
     
     /**
-     Action when clicking search nagivation button.
+     Action when clicking send nagivation button.
      */
-    override func clickRightBarButton() {
+    func send() {
         self.post.author = self.currentUser
         self.post.categories = self.selectedCategories
         if let button = self.selectedAreaButton, indexPath = button.indexPath, area = self.areas[safe: indexPath.row] {

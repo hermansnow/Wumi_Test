@@ -29,6 +29,11 @@ class LoadingIndicatorView: NVActivityIndicatorView {
         self.setProperty()
     }
     
+    // MARK: Draw view
+    
+    /**
+     Private function to be called after initialization to set up properties for this view and its subviews.
+     */
     private func setProperty() {
         self.type = .LineSpinFadeLoader
         self.padding = 1.0

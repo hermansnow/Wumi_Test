@@ -195,12 +195,14 @@ class ComposePostView: UIView {
         - image: image attached to this post.
      */
     func insertImage(image: UIImage) {
+        self.selectedImages.append(image)
+        
+        // Genetate image view
         let selectedImageView = SelectedThumbnailImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         selectedImageView.image = image
         selectedImageView.delegate = self.delegate
-        self.selectedImageStackView.insertArrangedSubview(selectedImageView, atIndex: self.selectedImageStackView.arrangedSubviews.count - 2)
-        
-        self.selectedImages.append(image)
+        selectedImageView.index = self.selectedImages.count - 1
+        self.selectedImageStackView.insertArrangedSubview(selectedImageView, atIndex: selectedImageView.index)
     }
     
     /**

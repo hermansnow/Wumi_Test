@@ -51,5 +51,5 @@ class ActionButton: UIButton {
     /**
      Event handler when button is clicked.
      */
-    func tapped(sender: ActionButton) { }
+    func tapped(sender: AnyObject) { }
 }

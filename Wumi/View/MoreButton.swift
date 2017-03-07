@@ -30,10 +30,10 @@ class MoreButton: ActionButton {
     /**
      Event handler when button is clicked.
      */
-    override func tapped(sender: ActionButton) {
+    override func tapped(sender: AnyObject) {
         super.tapped(sender)
         
-        guard let _ = sender as? MoreButton, delegate = self.delegate else { return }
+        guard let delegate = self.delegate else { return }
         
         delegate.showMoreActions(self)
     }

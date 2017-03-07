@@ -435,6 +435,9 @@
 		DFF712BD1CD7060100EAEFD2 /* ProfileLabelTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF712BC1CD7060100EAEFD2 /* ProfileLabelTableCell.swift */; };
 		DFF712BF1CD7076400EAEFD2 /* ProfileLabelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */; };
 		DFF712C01CD70B4A00EAEFD2 /* ProfileListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFA93ACC1C910C4C00ECA503 /* ProfileListTableCell.xib */; };
+		FF1CEA6B1E6B86670000B36B /* PostSelectedFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CEA6A1E6B86670000B36B /* PostSelectedFilterView.swift */; };
+		FF1CEA6E1E6B88E70000B36B /* RemoveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CEA6D1E6B88E70000B36B /* RemoveButton.swift */; };
+		FF1CEA701E6B9A2E0000B36B /* PostTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CEA6F1E6B9A2E0000B36B /* PostTableHeaderView.swift */; };
 		FF23804F1DFE7AA800C82027 /* ContactMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF23804E1DFE7AA800C82027 /* ContactMapViewController.swift */; };
 		FF3919AA1DFF63C5002AC4E5 /* ContactPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */; };
 		FF3919AC1E01D710002AC4E5 /* ContactAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */; };
@@ -1020,6 +1023,9 @@
 		DFF712BC1CD7060100EAEFD2 /* ProfileLabelTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileLabelTableCell.swift; path = View/ProfileLabelTableCell.swift; sourceTree = "<group>"; };
 		DFF712BE1CD7076400EAEFD2 /* ProfileLabelTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileLabelTableCell.xib; path = View/ProfileLabelTableCell.xib; sourceTree = "<group>"; };
 		EF924A8F3A88FA9716BF6670 /* Pods-Wumi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wumi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wumi/Pods-Wumi.release.xcconfig"; sourceTree = "<group>"; };
+		FF1CEA6A1E6B86670000B36B /* PostSelectedFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostSelectedFilterView.swift; path = View/PostSelectedFilterView.swift; sourceTree = "<group>"; };
+		FF1CEA6D1E6B88E70000B36B /* RemoveButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoveButton.swift; path = View/RemoveButton.swift; sourceTree = "<group>"; };
+		FF1CEA6F1E6B9A2E0000B36B /* PostTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostTableHeaderView.swift; path = View/PostTableHeaderView.swift; sourceTree = "<group>"; };
 		FF23804E1DFE7AA800C82027 /* ContactMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactMapViewController.swift; path = Controller/ContactMapViewController.swift; sourceTree = "<group>"; };
 		FF3919A91DFF63C5002AC4E5 /* ContactPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactPoint.swift; path = Model/ContactPoint.swift; sourceTree = "<group>"; };
 		FF3919AB1E01D710002AC4E5 /* ContactAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactAnnotationView.swift; path = View/ContactAnnotationView.swift; sourceTree = "<group>"; };
@@ -2081,6 +2087,7 @@
 				FFFF70371E62877F00C33AD0 /* CheckButton.swift */,
 				DFA93ADC1C91EE0600ECA503 /* FavoriteButton.swift */,
 				DF0180791D413C5E00935A60 /* ReplyButton.swift */,
+				FF1CEA6D1E6B88E70000B36B /* RemoveButton.swift */,
 				DF4F532E1CD30F7E009F3D2E /* EmailButton.swift */,
 				DF4F53311CD59444009F3D2E /* PhoneButton.swift */,
 				DFF712BA1CD6D57F00EAEFD2 /* PhotoButton.swift */,
@@ -2172,6 +2179,8 @@
 				DF01807B1D459E4A00935A60 /* ReplyTextView.xib */,
 				DF01807D1D459E6100935A60 /* ReplyTextView.swift */,
 				FF51601D1DF9FE2D00AD872B /* ButtomBorderView.swift */,
+				FF1CEA6A1E6B86670000B36B /* PostSelectedFilterView.swift */,
+				FF1CEA6F1E6B9A2E0000B36B /* PostTableHeaderView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2782,6 +2791,7 @@
 				B1ECD7B71CCC2AA800CED9C4 /* ChatRoomViewController.swift in Sources */,
 				DFA93AD71C912AFB00ECA503 /* ProfileInputSwitchTableCell.swift in Sources */,
 				02932A9C1CEE6DE2001220E8 /* PushNotification.swift in Sources */,
+				FF1CEA6E1E6B88E70000B36B /* RemoveButton.swift in Sources */,
 				DFD90A151CAB87A1003A3B46 /* ComposePostView.swift in Sources */,
 				DF0180731D3DF75100935A60 /* Extension+UITextField.swift in Sources */,
 				B15824031C82C40F00D314B3 /* ContactTableViewController.swift in Sources */,
@@ -2839,6 +2849,7 @@
 				DF1BE2691C9F9C7500F934EE /* Post.swift in Sources */,
 				DF4F53321CD59444009F3D2E /* PhoneButton.swift in Sources */,
 				DFF712BB1CD6D57F00EAEFD2 /* PhotoButton.swift in Sources */,
+				FF1CEA701E6B9A2E0000B36B /* PostTableHeaderView.swift in Sources */,
 				DF8D51911C9716F5004D808E /* ProfessionSectionHeader.swift in Sources */,
 				B1ECD7631CCC1F4000CED9C4 /* XHBaseNavigationController.m in Sources */,
 				DF72ACF31C64DBFA00F81491 /* AvatarImageView.swift in Sources */,
@@ -2871,6 +2882,7 @@
 				DFB220B91DC1F070008FB503 /* DataLoadingTableViewController.swift in Sources */,
 				B1ECD74C1CCC1F3F00CED9C4 /* LZConversationCell.m in Sources */,
 				DFB220B71DC1ECE7008FB503 /* DataLoadingViewController.swift in Sources */,
+				FF1CEA6B1E6B86670000B36B /* PostSelectedFilterView.swift in Sources */,
 				B1ECD77A1CCC1F4000CED9C4 /* XHMessage.m in Sources */,
 				DF5EF15D1D2EDC4D00C9B2F2 /* ImageFullScreenView.swift in Sources */,
 				DFB7CC0E1BEAB44E00BEACB7 /* DataInputTextField.swift in Sources */,

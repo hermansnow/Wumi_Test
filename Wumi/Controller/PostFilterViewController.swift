@@ -10,7 +10,7 @@ import UIKit
 
 class PostFilterViewController: DataLoadingTableViewController {
     /// Current search filter.
-    var searchFilter = PostSearchFilter(searchType: .Filter)
+    var searchFilter = PostSearchFilter()
     /// Filter view delegate:
     var delegate: PostFilterViewControllerDelegate?
     /// Array of post category.
@@ -28,17 +28,29 @@ class PostFilterViewController: DataLoadingTableViewController {
         super.viewDidLoad()
         
         // Initialize navigation bar
-        let searchButton = UIBarButtonItem(title: "Search",
-                                           style: .Done,
-                                           target: self,
-                                           action: #selector(self.clickRightBarButton))
-        self.navigationItem.rightBarButtonItem = searchButton
+        self.setupNavigationBar()
         
         // Load categories
         self.loadPostCategories()
         
         // Load search areas
         self.loadSearchAreas()
+    }
+    
+    // MARK: UI functions
+    
+    /**
+     Setup navigation bar.
+     */
+    func setupNavigationBar() {
+        self.navigationItem.title = "Select Custom Filter"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search",
+                                                                 style: .Done,
+                                                                 target: self,
+                                                                 action: #selector(self.search))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel,
+                                                                target: self,
+                                                                action: #selector(self.dismiss))
     }
     
     // MARK: Table view data source
@@ -70,7 +82,13 @@ class PostFilterViewController: DataLoadingTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PostFilterCell", forIndexPath: indexPath)
+        let cell: UITableViewCell
+        if let dequeueCell = tableView.dequeueReusableCellWithIdentifier("PostFilterCell") {
+            cell = dequeueCell
+        }
+        else {
+            cell = UITableViewCell(style: .Default, reuseIdentifier: "PostFilterCell")
+        }
         
         switch indexPath.section {
         case 0:
@@ -183,9 +201,16 @@ class PostFilterViewController: DataLoadingTableViewController {
     }
     
     /**
+     Dismiss current view controller with animation.
+     */
+    func dismiss() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    /**
      Action when clicking nagivation right button.
      */
-    func clickRightBarButton() {
+    func search() {
         if let button = self.selectedCategoryButton, indexPath = button.indexPath, category = self.categories[safe: indexPath.row] {
             self.searchFilter.category = category
         }
@@ -199,15 +224,13 @@ class PostFilterViewController: DataLoadingTableViewController {
         else {
             self.searchFilter.area = nil
         }
-        self.searchFilter.searchType = .Filter
         
         if let delegate = self.delegate {
             delegate.startFilterSearch(self)
         }
+        
         // Navigate back to home view controller
-        if let homeVC = self.navigationController?.viewControllers.filter({ $0 is HomeViewController }).first as? HomeViewController {
-            self.navigationController?.popToViewController(homeVC, animated: true)
-        }
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: Help function

@@ -22,7 +22,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet private weak var saveLabel: UILabel!
     @IBOutlet weak var replyButton: ReplyButton!
     @IBOutlet private weak var replyLabel: UILabel!
-    @IBOutlet weak var repliesButton: UIButton!
+    @IBOutlet weak var repliesCntLabel: UILabel!
     @IBOutlet weak var separator: UIView!
     
     /// PostTableView cell delegate.
@@ -137,6 +137,18 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
+    /// Number of replies.
+    var replyCount = 0 {
+        didSet {
+            if self.replyCount <= 0 {
+                self.repliesCntLabel.text = "0 reply"
+            }
+            else {
+                self.repliesCntLabel.text = "\(self.replyCount) replies"
+            }
+        }
+    }
+    
     /// Fixed height of cell.
     class var fixedHeight: CGFloat {
         // Top margin + title label height + space + author view height + space + space + time stamp height + space + button stack height + space + separater height + bottom margin
@@ -187,10 +199,14 @@ class PostTableViewCell: UITableViewCell {
         // Set up buttons
         self.saveLabel.font = Constants.Post.Font.ListButton
         self.saveLabel.textColor = Constants.General.Color.ThemeColor
+        self.saveLabel.addGestureRecognizer(UITapGestureRecognizer(target: self.saveButton, action: #selector(self.saveButton.tapped)))
+        self.saveLabel.userInteractionEnabled = true
         self.replyLabel.font = Constants.Post.Font.ListButton
         self.replyLabel.textColor = Constants.General.Color.ThemeColor
-        self.repliesButton.titleLabel?.font = Constants.Post.Font.ListReply
-        self.repliesButton.titleLabel?.textColor = Constants.General.Color.ThemeColor
+        self.replyLabel.addGestureRecognizer(UITapGestureRecognizer(target: self.replyButton, action: #selector(self.replyButton.tapped)))
+        self.replyLabel.userInteractionEnabled = true
+        self.repliesCntLabel.font = Constants.Post.Font.ListReply
+        self.repliesCntLabel.textColor = Constants.General.Color.ThemeColor
         
         // Set up separator
         self.separator.backgroundColor = Constants.General.Color.BackgroundColor
@@ -216,6 +232,7 @@ class PostTableViewCell: UITableViewCell {
         self.authorView.reset()
         self.hideImageView = true
         self.isSaved = false
+        self.replyCount = 0
     }
     
     // MARK: Helper function

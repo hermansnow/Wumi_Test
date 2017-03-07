@@ -11,8 +11,8 @@ import UIKit
 class SelectedThumbnailImageView: UIButton {
     // MARK: Properties
     
-    /// Icon for removing this selected image view.
-    private lazy var removeIcon = UIButton()
+    /// Index of selected image view.
+    var index: Int = 0
     /// SelectedThumbnailImageView delegate.
     var delegate: SelectedThumbnailImageViewDelegate?
     /// Remove icon's height
@@ -66,14 +66,14 @@ class SelectedThumbnailImageView: UIButton {
         self.imageView?.contentMode = .ScaleAspectFit
         
         // Add remove icon
-        self.removeIcon.frame = CGRect(x: 0,
-                                       y: 0,
-                                       width: self.iconHeight,
-                                       height: self.iconHeight)
-        self.removeIcon.setBackgroundImage(UIImage(named: Constants.General.ImageName.Remove),
-                                           forState: .Normal)
-        self.addSubview(self.removeIcon)
-        self.bringSubviewToFront(self.removeIcon)
+        let removeIcon = RemoveButton(frame: CGRect(x: 0,
+                                                    y: 0,
+                                                    width: self.iconHeight,
+                                                    height: self.iconHeight))
+        self.addSubview(removeIcon)
+        self.bringSubviewToFront(removeIcon)
+        // Add action to remove image when click remove icon.
+        removeIcon.delegate = self
         
         self.imageEdgeInsets = UIEdgeInsets(top: self.iconHeight / 2,
                                             left: self.iconHeight / 2,
@@ -87,8 +87,6 @@ class SelectedThumbnailImageView: UIButton {
     private func setAction() {
         // Add action to show image when tap
         self.addTarget(self, action: #selector(self.tapped), forControlEvents: .TouchUpInside)
-        // Add action to remove image when click remove icon.
-        self.removeIcon.addTarget(self, action: #selector(self.removeIconClicked), forControlEvents: .TouchUpInside)
     }
     
     // MARK: Actions
@@ -109,6 +107,14 @@ class SelectedThumbnailImageView: UIButton {
         guard let delegate = self.delegate else { return }
         
         delegate.showImage(self)
+    }
+}
+
+// MARK: RemoveButton delegate
+
+extension SelectedThumbnailImageView: RemoveButtonDelegate {
+    func remove(removeButton: RemoveButton) {
+        self.removeIconClicked()
     }
 }
 

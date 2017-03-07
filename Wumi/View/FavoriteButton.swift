@@ -34,12 +34,12 @@ class FavoriteButton: ActionButton {
                                 forState: .Selected)
     }
     
-    override func tapped(sender: ActionButton) {
+    override func tapped(sender: AnyObject) {
         super.tapped(sender)
         
-        guard let button = sender as? FavoriteButton, delegate = self.delegate else { return }
+        guard let delegate = self.delegate else { return }
         
-        if button.selected {
+        if self.selected {
             delegate.removeFavorite(self)
         }
         else {

@@ -20,26 +20,19 @@ class HomeViewController: DataLoadingViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var currentUserAvatarView: AvatarImageView!
     @IBOutlet weak var postTableView: UITableView!
-    @IBOutlet weak var newPostNotificationView: UIView!
-    @IBOutlet weak var newPostLabel: UILabel!
     
+    private lazy var newPostNotificationView = UIView()
+    private lazy var newPostLabel = UILabel()
     /// Search controller.
     private lazy var searchController = UISearchController(searchResultsController: nil)
     /// Post table refresh controller.
     private lazy var refreshControl = UIRefreshControl()
-    /// Navigation bar item for searching post.
-    private lazy var searchButton = UIBarButtonItem()
     /// Navigation bar item for composing new post.
     private lazy var composePostButton = UIBarButtonItem()
+    /// Navigation bar item for filter
+    private lazy var filterButton = UIBarButtonItem()
     /// Dropdown menu for short-cut search types.
     private var menuView: BTNavigationDropdownMenu?
-    
-    // Constaints
-    
-    /// Auto-layout constraint for new post notification view's top anchor.
-    private var newPostNotificationTopConstraint: NSLayoutConstraint?
-    /// Auto-layout constrain for new post notification view's bottom anchor.
-    private var newPostNotificationBottomConstraint: NSLayoutConstraint?
     
     /// Current login user.
     private lazy var currentUser = User.currentUser()
@@ -50,8 +43,6 @@ class HomeViewController: DataLoadingViewController {
     
     // Search variables
     
-    /// Whether the post table isf showing search bar or not.
-    private var isShowingSearchBar: Bool = false
     /// Whether is loading posts or not.
     private var isLoadingPost: Bool {
         return self.isLoading || self.refreshControl.refreshing
@@ -105,26 +96,25 @@ class HomeViewController: DataLoadingViewController {
         self.postTableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: nil), forCellReuseIdentifier: "PostTableViewCell")
         
         // Initialize navigation bar
-        self.searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(self.showSearchBar(_:)))
-        self.composePostButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: #selector(self.composePost(_:)))
-        self.navigationItem.rightBarButtonItems = [self.composePostButton, self.searchButton]
+        self.composePostButton = UIBarButtonItem(barButtonSystemItem: .Compose,
+                                                 target: self,
+                                                 action: #selector(self.composePost))
+        self.filterButton = UIBarButtonItem(title: "Filter",
+                                            style: .Done,
+                                            target: self,
+                                            action: #selector(self.applyFilter))
+        self.navigationItem.leftBarButtonItems = [UIBarButtonItem]()
+        self.navigationItem.rightBarButtonItems = [self.composePostButton, self.filterButton]
         
         // Initialize tab bar
         if let navigationController = self.navigationController {
             navigationController.tabBarItem = UITabBarItem(title: "Home",
-                                                           image: Constants.Post.Image.TabBarIcon?.imageWithRenderingMode(.AlwaysOriginal),
-                                                           selectedImage: Constants.Post.Image.TabBarSelectedIcon?.imageWithRenderingMode(.AlwaysOriginal))
+                                                           image: UIImage(named: Constants.Post.ImageName.TabBarIcon)?.imageWithRenderingMode(.AlwaysOriginal),
+                                                           selectedImage: UIImage(named: Constants.Post.ImageName.TabBarIcon_Selected)?.imageWithRenderingMode(.AlwaysOriginal))
         }
         
-        // Initialize tableview
-        self.postTableView.delegate = self
-        self.postTableView.dataSource = self
-        //self.postTableView.estimatedRowHeight = 180
-        //self.postTableView.rowHeight = UITableViewAutomaticDimension
-        self.postTableView.tableFooterView = UIView(frame: CGRectZero)
-        self.postTableView.separatorStyle = .None
-        
         // Add components
+        self.setPostTable()
         self.addSearchController()
         self.addRefreshControl()
         self.addDropdownList()
@@ -138,7 +128,7 @@ class HomeViewController: DataLoadingViewController {
                                                          name: UIApplicationDidBecomeActiveNotification,
                                                          object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(HomeViewController.reloadTable(_:)),
+                                                         selector: #selector(HomeViewController.reloadTable),
                                                          name: Constants.General.TabBarItemDidClickSelf,
                                                          object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -191,6 +181,17 @@ class HomeViewController: DataLoadingViewController {
         self.dismissReachabilityError()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if let labelWidth = self.newPostLabel.text?.widthWithConstrainedHeight(20, font: self.newPostLabel.font) {
+            let width = labelWidth + 24 + 12
+            self.newPostNotificationView.frame.size = CGSize(width: width, height: 20)
+        }
+        self.newPostNotificationView.layer.cornerRadius = self.newPostNotificationView.frame.size.height / 2 // Issue in iOS 10, cornerRadisu does not work in ViewDidLoad, we should call it in viewDidAppear
+        self.updateNotificationView()
+    }
+    
     // MARK: Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -232,18 +233,28 @@ class HomeViewController: DataLoadingViewController {
             contactVC.hidesBottomBarWhenPushed = true
         }
         
-        if let newPostVC = segue.destinationViewController as? UINavigationController where segue.identifier == "Compose Post" {
+        if segue.destinationViewController is UINavigationController && segue.identifier == "Compose Post" {
             self.definesPresentationContext = true
-            newPostVC.hidesBottomBarWhenPushed = true
         }
-        
-        if let filterVC = segue.destinationViewController as? PostFilterViewController where segue.identifier == "Filter Post" {
-            filterVC.searchFilter = self.searchFilter
-            filterVC.delegate = self
+        if let navVC = segue.destinationViewController as? UINavigationController,
+            filterVC = navVC.viewControllers.first as? PostFilterViewController where segue.identifier == "Filter Post" {
+                filterVC.searchFilter = self.searchFilter
+                filterVC.delegate = self
         }
     }
     
     // MARK: UI functions
+    
+    /**
+     Initialize post tableview.
+     */
+    private func setPostTable() {
+        self.postTableView.delegate = self
+        self.postTableView.dataSource = self
+        self.postTableView.tableFooterView = UIView(frame: CGRectZero)
+        self.postTableView.separatorStyle = .None
+        self.postTableView.tableHeaderView = self.searchController.searchBar
+    }
     
     /**
      Add search controller.
@@ -252,12 +263,12 @@ class HomeViewController: DataLoadingViewController {
         self.searchController.searchResultsUpdater = self
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.searchBar.showsCancelButton = true
+        self.searchController.searchBar.showsCancelButton = false
         self.searchController.searchBar.autocapitalizationType = .None
         self.searchController.searchBar.sizeToFit()
         self.searchController.searchBar.tintColor = Constants.General.Color.TitleColor
+        self.searchController.searchBar.placeholder = "Search post with keyword"
         self.searchController.searchBar.delegate = self
-        self.searchController.searchBar.showsCancelButton = false
         self.searchController.automaticallyAdjustsScrollViewInsets = false
     }
     
@@ -290,8 +301,6 @@ class HomeViewController: DataLoadingViewController {
                 self.searchFilter.searchType = searchType
                 self.searchFilter.clearCustomFilter()
                 self.loadPosts()
-            case .Filter:
-                self.performSegueWithIdentifier("Filter Post", sender: self)
             }
         }
         
@@ -322,13 +331,8 @@ class HomeViewController: DataLoadingViewController {
         
         // Add gesture
         self.currentUserBanner.addGestureRecognizer(UITapGestureRecognizer(target: self,
-            action: #selector(HomeViewController.editCurrentUserProfile(_:))))
+                                                                           action: #selector(self.editCurrentUserProfile(_:))))
         
-        // Resize post table content inset to hold place for this banner
-        self.postTableView.contentInset = UIEdgeInsets(top: self.currentUserBanner.frame.size.height,
-                                                       left: 0,
-                                                       bottom: 0,
-                                                       right: 0)
         // Show the banner
         self.updateCurrentUserBanner()
     }
@@ -337,24 +341,44 @@ class HomeViewController: DataLoadingViewController {
      Add a view to notify new posts.
      */
     private func addNewPostNotificationView() {
-        self.newPostNotificationView.backgroundColor = Constants.General.Color.ThemeColor
+        // Set up label
+        self.newPostLabel.textAlignment = .Center
+        self.newPostLabel.backgroundColor = Constants.General.Color.ThemeColor
         self.newPostLabel.textColor = UIColor.whiteColor()
         self.newPostLabel.font = Constants.Post.Font.ListCurrentUserBanner
+        self.newPostNotificationView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.reloadTable)))
+        self.newPostLabel.text = "New Post"
         
-        self.newPostNotificationView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.reloadTable(_:))))
-        
-        self.newPostNotificationView.hidden = true // Hide as default
-        
-        self.view.addSubview(self.newPostNotificationView)
-        self.newPostNotificationTopConstraint = self.newPostNotificationView.topAnchor.constraintEqualToAnchor(self.postTableView.topAnchor, constant: 16)
-        self.newPostNotificationBottomConstraint = self.newPostNotificationView.topAnchor.constraintEqualToAnchor(self.currentUserBanner.bottomAnchor, constant: 16)
-        NSLayoutConstraint(item: self.newPostNotificationView,
-                           attribute: .CenterX,
+        // Set up image
+        let notificationImageView = UIImageView(image: UIImage(named: Constants.Post.ImageName.Up))
+        notificationImageView.contentMode = .ScaleAspectFit
+        NSLayoutConstraint(item: notificationImageView,
+                           attribute: .Height,
                            relatedBy: .Equal,
-                           toItem: self.postTableView,
-                           attribute: .CenterX,
+                           toItem: notificationImageView,
+                           attribute: .Width,
                            multiplier: 1.0,
                            constant: 0).active = true
+        
+        // Set up notification view
+        self.view.addSubview(self.newPostNotificationView)
+        self.newPostNotificationView.backgroundColor = Constants.General.Color.ThemeColor
+        self.newPostNotificationView.layer.masksToBounds = true
+        // Use a stackview for holding components
+        let stackView = UIStackView()
+        stackView.alignment = .Fill
+        stackView.axis = .Horizontal
+        stackView.distribution = .Fill
+        self.newPostNotificationView.addSubview(stackView)
+        stackView.leftAnchor.constraintEqualToAnchor(self.newPostNotificationView.leftAnchor).active = true
+        stackView.rightAnchor.constraintEqualToAnchor(self.newPostNotificationView.rightAnchor).active = true
+        stackView.topAnchor.constraintEqualToAnchor(self.newPostNotificationView.topAnchor).active = true
+        stackView.bottomAnchor.constraintEqualToAnchor(self.newPostNotificationView.bottomAnchor).active = true
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(notificationImageView)
+        stackView.addArrangedSubview(self.newPostLabel)
+        
+        self.newPostNotificationView.hidden = true // Hide as default
     }
     
     /**
@@ -367,7 +391,7 @@ class HomeViewController: DataLoadingViewController {
         revealViewController.rearViewRevealWidth = UIScreen.mainScreen().bounds.width
         let button = HamburgerMenuButton()
         button.delegate = revealViewController
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+        self.navigationItem.leftBarButtonItems?.insert(UIBarButtonItem(customView: button), atIndex: 0)
         
         // Add gesture
         self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
@@ -379,10 +403,10 @@ class HomeViewController: DataLoadingViewController {
     private func showNewPostNotificationView() {
         if let labelWidth = self.newPostLabel.text?.widthWithConstrainedHeight(20, font: self.newPostLabel.font) {
             let width = labelWidth + 24 + 12
-            self.newPostNotificationView.frame.size = CGSize(width: width, height: self.newPostNotificationView.frame.size.height)
+            self.newPostNotificationView.frame.size = CGSize(width: width, height: 20)
         }
-        
         self.newPostNotificationView.layer.cornerRadius = self.newPostNotificationView.frame.size.height / 2 // Issue in iOS 10, cornerRadisu does not work in ViewDidLoad, we should call it in viewDidAppear
+        
         self.checkNewPosts()
     }
     
@@ -391,7 +415,7 @@ class HomeViewController: DataLoadingViewController {
      */
     private func updateCurrentUserBanner () {
         // Hide user banner if search is active
-        if self.isShowingSearchBar {
+        if self.searchController.active {
             self.currentUserBanner.alpha = 0.0
             self.postTableView.contentInset = UIEdgeInsetsZero
             return
@@ -405,36 +429,20 @@ class HomeViewController: DataLoadingViewController {
         
         // Change the alpha of current user banner based on percentage of overlap between banner and table content
         let bannerHeight = self.currentUserBanner.frame.size.height
-        let offset = self.postTableView.contentOffset
-        let previousAlpha = self.currentUserBanner.alpha
-        self.currentUserBanner.alpha = -offset.y / bannerHeight
-        
-        // Update new post notification constraint
-        if previousAlpha > 0.0 && self.currentUserBanner.alpha <= 0.0 {
-            self.updateNewPostNotificationConstraints()
+        var offsetHeight = self.postTableView.contentOffset.y
+        if let header = self.postTableView.tableHeaderView {
+            offsetHeight -= header.frame.size.height
         }
-        else if previousAlpha <= 0.0 && self.currentUserBanner.alpha > 0.0 {
-            self.updateNewPostNotificationConstraints()
-        }
+        self.currentUserBanner.alpha = -offsetHeight / bannerHeight
     }
     
     /**
-     Update new post notification view's contraints.
+     Update new post notification view's frame.
      */
-    private func updateNewPostNotificationConstraints() {
-        guard let topConstraint = self.newPostNotificationTopConstraint,
-            bottomConstraint = self.newPostNotificationBottomConstraint else { return }
-        
-        if self.currentUserBanner.alpha <= 0.0 {
-            topConstraint.active = true
-            bottomConstraint.active = false
-        }
-        else {
-            topConstraint.active = false
-            bottomConstraint.active = true
-        }
-        
-        self.view.layoutIfNeeded()
+    private func updateNotificationView() {
+        let frame = self.newPostNotificationView.frame
+        let offsetY = max(self.currentUserBanner.frame.size.height - (self.postTableView.contentOffset.y + 16) + 10, 10)
+        self.newPostNotificationView.frame = CGRect(x: self.postTableView.center.x - frame.size.width / 2, y: offsetY, width: frame.size.width, height: frame.size.height)
     }
     
     /**
@@ -483,45 +491,22 @@ class HomeViewController: DataLoadingViewController {
     }
     
     /**
-     Show search bar after tapping navigation bar search item.
-     
-     - Parameters:
-        - sender: navigation bar item.
+     Compose a new post after tapping navigation bar compose item.
      */
-    func showSearchBar(sender: AnyObject) {
-        self.isShowingSearchBar = true
-        
-        self.postTableView.tableHeaderView = self.searchController.searchBar // Add search bar to table header
-        self.navigationItem.rightBarButtonItems?.removeObject(self.searchButton) // Hide right search navigation items
-        
-        // Hide current user banner
-        self.updateCurrentUserBanner()
-        
-        self.postTableView.setContentOffset(CGPoint.zero, animated: true) // scroll table back to top to show the search bar
+    func composePost() {
+        self.performSegueWithIdentifier("Compose Post", sender: self)
     }
     
-    /**
-     Compose a new post after tapping navigation bar compose item.
-     
-     - Parameters:
-        - sender: navigation bar item.
-     */
-    func composePost(sender: AnyObject) {
-        self.performSegueWithIdentifier("Compose Post", sender: self)
+    func applyFilter() {
+        self.performSegueWithIdentifier("Filter Post", sender: self)
     }
     
     /**
      Reload post after tapping a component.
-     
-     - Parameters:
-        - sender: navigation bar item.
      */
-    func reloadTable(sender: AnyObject) {
-        self.postTableView.setContentOffset(CGPoint(x: 0,
-                                                        y: -self.refreshControl.frame.size.height - self.currentUserBanner.frame.size.height),
+    func reloadTable() {
+        self.postTableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl.frame.size.height - self.currentUserBanner.frame.size.height),
                                             animated:true)
-        self.refreshControl.beginRefreshing()
-        self.loadPosts()
     }
     
     /**
@@ -569,8 +554,7 @@ class HomeViewController: DataLoadingViewController {
                 
             self.view.bringSubviewToFront(self.newPostNotificationView)
             self.newPostNotificationView.hidden = false
-                
-            self.updateNewPostNotificationConstraints()
+            self.updateNotificationView()
         }
     }
     
@@ -599,7 +583,7 @@ class HomeViewController: DataLoadingViewController {
         self.view.sendSubviewToBack(self.newPostNotificationView)
         self.newPostNotificationView.hidden = true
         
-        // Start refreshing
+        // Show indicator
         if !self.refreshControl.refreshing {
             self.showLoadingIndicator()
         }
@@ -608,10 +592,6 @@ class HomeViewController: DataLoadingViewController {
                        filter: self.searchFilter,
                        user: self.currentUser)
         { (posts, error) in
-            // End refreshing
-            self.dismissLoadingIndicator()
-            self.refreshControl.endRefreshing()
-            
             guard error == nil else {
                 ErrorHandler.log(error)
                 return
@@ -621,7 +601,23 @@ class HomeViewController: DataLoadingViewController {
             self.hasMoreResults = posts.count == Constants.Query.LoadPostLimit
             self.previousSearchFilter = self.searchFilter
             
-            self.postTableView.reloadData()
+            if self.refreshControl.refreshing {
+                UIView.animateWithDuration(0.25, animations: {
+                    self.refreshControl.endRefreshing()
+                    self.dismissLoadingIndicator()
+                    }, completion: { (success) in
+                        UIView.animateWithDuration(0.25, animations: {
+                            self.postTableView.setContentOffset(CGPoint(x: 0,
+                                                                        y: -self.currentUserBanner.frame.size.height),
+                                                                animated: false)
+                            }, completion: { (success) in
+                                self.postTableView.reloadData()
+                        })
+                })
+            }
+            else {
+                self.postTableView.reloadData()
+            }
         }
     }
     
@@ -660,6 +656,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Set default data
+        self.showDefaultTable = false
+        self.postTableView.backgroundView = nil
+        self.postTableView.userInteractionEnabled = true
+        
         // Show empty view if there is no post for displaying
         if self.displayPosts.count == 0 {
             if self.isLoadingPost {
@@ -668,14 +669,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 return 5
             }
             else {
-                self.showDefaultTable = false
                 self.postTableView.userInteractionEnabled = false
                 self.showEmptyView()
             }
-        }
-        else {
-            self.showDefaultTable = false
-            self.postTableView.userInteractionEnabled = true
         }
         
         return self.displayPosts.count
@@ -816,7 +812,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         // Set other components
         cell.timeStamp = post.updatedAt.timeAgo()
         cell.isSaved = self.currentUser.savedPostsArray.contains( { $0 == post} )
-        cell.repliesButton.setTitle("\(post.commentCount) replies", forState: .Normal)
+        cell.replyCount = post.commentCount
         
         // Set delegate
         cell.delegate = self
@@ -855,6 +851,15 @@ extension HomeViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         self.updateCurrentUserBanner() // Update current user banner
+        self.updateNotificationView() // Update notification view
+    }
+    
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        // Programmatically pull to refresh
+        if self.postTableView.contentOffset.y == -self.refreshControl.frame.size.height - self.currentUserBanner.frame.size.height {
+            self.refreshControl.beginRefreshing()
+            self.loadPosts()
+        }
     }
 }
 
@@ -862,23 +867,15 @@ extension HomeViewController: UIScrollViewDelegate {
 
 extension HomeViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.isShowingSearchBar = false
-        
-        self.navigationItem.rightBarButtonItems?.append(self.searchButton) // Add right search navigation items back
-        self.postTableView.tableHeaderView = nil // Remove search bar from table header
-        
         // Show user banner if possible
         self.updateCurrentUserBanner()
-        
-        self.postTableView.setContentOffset(CGPoint(x: 0,
-                                                    y: -self.currentUserBanner.frame.size.height),
-                                            animated: true)
         
         // Reset search string
         self.searchFilter.searchString = ""
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
+        self.updateCurrentUserBanner()
         // Try search results if there is a pause when typing
         self.triggerTextSearch(searchController.searchBar.text, useTimer: true)
     }

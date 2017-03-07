@@ -9,7 +9,6 @@
 import UIKit
 
 class CheckButton: ActionButton {
-
     /// Check button delegate.
     var delegate: CheckButtonDelegate?
     /// Indexpath for button
@@ -24,10 +23,10 @@ class CheckButton: ActionButton {
                       forState: .Normal)
     }
     
-    override func tapped(sender: ActionButton) {
+    override func tapped(sender: AnyObject) {
         super.tapped(sender)
         
-        guard let _ = sender as? CheckButton, delegate = self.delegate else { return }
+        guard let delegate = self.delegate else { return }
         
         delegate.check(self)
     }
@@ -35,7 +34,7 @@ class CheckButton: ActionButton {
 
 protocol CheckButtonDelegate {
     /**
-     Try call a number by clicking this check button.
+     Try select a cell by clicking this check button.
      
      - Parameters:
         - checkButton: Check Button clicked.

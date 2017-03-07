@@ -89,12 +89,12 @@ class Post: AVObject, AVSubclassing {
         }
         
         // Support custom filters
-        if let category = filter.category where filter.searchType == .Filter {
+        if let category = filter.category {
             query.whereKey("categories", equalTo: category)
         }
         
         // Apply location filter
-        if let area = filter.area where filter.searchType == .Filter {
+        if let area = filter.area {
             query.whereKey("location", nearGeoPoint: AVGeoPoint(latitude: area.latitude, longitude: area.longitude), withinMiles: 600.0)
         }
         
@@ -141,12 +141,12 @@ class Post: AVObject, AVSubclassing {
         }
         
         // Apply category filter
-        if let category = filter.category where filter.searchType == .Filter {
+        if let category = filter.category {
             query.whereKey("categories", equalTo: category)
         }
         
         // Apply location filter
-        if let area = filter.area where filter.searchType == .Filter {
+        if let area = filter.area {
             query.whereKey("location",
                            nearGeoPoint: AVGeoPoint(latitude: area.latitude, longitude: area.longitude),
                            withinMiles: Constants.Post.nearbyPostMiles)
@@ -492,8 +492,6 @@ class Post: AVObject, AVSubclassing {
             guard let searchUser = user else { break }
             
             query = searchUser.savedPosts!.query()
-        case .Filter:
-            query = Post.query()
         }
         
         return query
@@ -519,11 +517,9 @@ enum PostSearchType: String {
     case All = "All"
     /// Search from saved posts.
     case Saved = "Saved"
-    /// Search with a custom filter.
-    case Filter = "Custom Filter"
     
     /// Array of all post search types.
-    static let allTypes: [PostSearchType] = [.All, .Saved, .Filter]
+    static let allTypes: [PostSearchType] = [.All, .Saved]
     
     /// Array of all post search types' title.
     static var allTitles: [String] {
